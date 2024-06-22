@@ -1,0 +1,6 @@
+{
+  "name": "@via/external-lib",
+  "type": "module",
+  "main": "index.js",
+  "types": "index.d.ts"
+}

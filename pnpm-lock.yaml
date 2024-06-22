@@ -23,6 +23,9 @@ importers:
 
   apps/sample-console:
     dependencies:
+      '@via/external-lib':
+        specifier: workspace:*
+        version: link:../../packages/external-lib
       '@via/math':
         specifier: workspace:*
         version: link:../../packages/math
@@ -39,6 +42,8 @@ importers:
       typescript:
         specifier: latest
         version: 5.5.2
+
+  packages/external-lib: {}
 
   packages/math:
     devDependencies:

@@ -13,6 +13,7 @@
     "typescript": "latest"
   },
   "dependencies": {
-    "@via/math": "workspace:*"
+    "@via/math": "workspace:*",
+    "@via/external-lib": "workspace:*"
   }
 }
