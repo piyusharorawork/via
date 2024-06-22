@@ -1,0 +1,8 @@
+{
+  "name": "my-package",
+  "scripts": {
+    "build": "tsc",
+    "dev":"tsc --watch"
+  }
+  
+}
