@@ -1,5 +1,5 @@
 {
-  "name": "@repo/typescript-config",
+  "name": "@via/typescript-config",
   "publishConfig": {
     "access": "public"
   }
