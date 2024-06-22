@@ -1,0 +1,18 @@
+{
+  "name": "sample-console",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"tsc --watch\" \"nodemon dist/index.js\"",
+    "build": "tsc",
+    "clean":"rm -rf dist"
+  },
+  "devDependencies": {
+    "@via/typescript-config": "workspace:*",
+    "concurrently": "8.2.2",
+    "nodemon": "3.1.4",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "@via/math": "workspace:*"
+  }
+}
