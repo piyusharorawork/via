@@ -9,10 +9,13 @@
       "cache": false,
       "persistent": true
     },
-    "clean":{
+    "start": {
       "cache": false,
       "persistent": true
-    }  
-    
+    },
+    "clean": {
+      "cache": false,
+      "persistent": true
+    }
   }
 }
