@@ -12,11 +12,12 @@ import { createVideo } from "./create-video.js";
 
     app.post("/create-video", upload.single("file"), async (req, res) => {
       if (req.file) {
-        const url = await createVideo(
-          req.file,
-          req.body.text,
-          Number(req.body.duration)
-        );
+        const url = await createVideo({
+          duration: Number(req.body.duration),
+          file: req.file,
+          resolution: req.body.resolution,
+          text: req.body.text,
+        });
         res.json({
           success: true,
           message: "File uploaded successfully",

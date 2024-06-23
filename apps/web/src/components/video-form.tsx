@@ -1,15 +1,19 @@
 import { Component, Show, createSignal } from "solid-js";
 import axios from "axios";
+import classNames from "classnames";
 
 type Props = {
   onFinish: (videoUrl: string) => void;
 };
+
+type Resolution = "None" | "High" | "Medium" | "Low";
 
 export const VideoForm: Component<Props> = (props) => {
   const [selectedFile, setSelectedFile] = createSignal<File>();
   const [text, setText] = createSignal("");
   const [duration, setDuration] = createSignal(3);
   const [isCreating, setIsCreating] = createSignal(false);
+  const [resolution, setResolution] = createSignal<Resolution>("None");
 
   const handleFileChange = (e: Event) => {
     const input = e.target as HTMLInputElement;
@@ -34,6 +38,7 @@ export const VideoForm: Component<Props> = (props) => {
     formData.append("file", file);
     formData.set("text", text());
     formData.set("duration", duration().toString());
+    formData.set("resolution", resolution());
 
     try {
       setIsCreating(true);
@@ -54,6 +59,10 @@ export const VideoForm: Component<Props> = (props) => {
     }
   };
 
+  const getDisabled = () => {
+    return text().length == 0 || !selectedFile() || resolution() == "None";
+  };
+
   return (
     <div class="card w-96 bg-primary text-primary-content">
       <div class="card-body">
@@ -70,17 +79,44 @@ export const VideoForm: Component<Props> = (props) => {
           onChange={(e) => setText(e.target.value)}
         ></textarea>
 
-        <input
-          type="range"
-          min={1}
-          max="10"
-          value={duration()}
-          class="range"
-          onChange={handleDurationChange}
-        />
+        <div class="flex gap-2 items-center w-full">
+          <span class="bg-slate-950 text-white px-4 py-2 rounded-full shrink-0">
+            {`${duration()} secs`}
+          </span>
+          <input
+            type="range"
+            min={1}
+            max="10"
+            value={duration()}
+            class="range"
+            onChange={handleDurationChange}
+          />
+        </div>
+
+        <div class={classNames("dropdown dropdown-hover w-full")}>
+          <div tabIndex={0} role="button" class="btn m-1">
+            {resolution() == "None"
+              ? "Select Resolution"
+              : `Resolution: ${resolution()}`}
+          </div>
+          <ul
+            tabIndex={0}
+            class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+          >
+            <li onClick={() => setResolution("High")}>
+              <a class="text-white">High</a>
+            </li>
+            <li onClick={() => setResolution("Medium")}>
+              <a class="text-white">Medium</a>
+            </li>
+            <li onClick={() => setResolution("Low")}>
+              <a class="text-white">Low</a>
+            </li>
+          </ul>
+        </div>
 
         <div class="card-actions justify-end">
-          <button class={`btn`} onClick={handleUpload}>
+          <button disabled={getDisabled()} class="btn" onClick={handleUpload}>
             <Show when={isCreating()}>
               <span class="loading loading-spinner"></span>
             </Show>

@@ -2,21 +2,54 @@ import { makeVideo } from "@via/video-maker/make-video";
 import { join } from "path";
 import { v4 as generateId } from "uuid";
 
-export const createVideo = async (
-  file: Express.Multer.File,
-  text: string,
-  duration: number
-): Promise<string> => {
+type CreateVideoInput = {
+  file: Express.Multer.File;
+  text: string;
+  duration: number;
+  resolution: Resolution;
+};
+
+type Resolution = "High" | "Medium" | "Low";
+
+const getWidth = (resolution: Resolution): number => {
+  const width = 1080;
+  switch (resolution) {
+    case "High":
+      return width;
+
+    case "Medium":
+      return width / 2;
+
+    case "Low":
+      return width / 4;
+  }
+};
+
+const getHeight = (resolution: Resolution): number => {
+  const height = 1920;
+  switch (resolution) {
+    case "High":
+      return height;
+
+    case "Medium":
+      return height / 2;
+
+    case "Low":
+      return height / 4;
+  }
+};
+
+export const createVideo = async (input: CreateVideoInput): Promise<string> => {
   const fileName = `${generateId()}.mp4`;
 
   await makeVideo({
-    duration,
-    height: 1920,
+    duration: input.duration,
+    height: getHeight(input.resolution),
     masterVolume: 0.1,
     outPath: join("uploads", fileName),
-    text,
-    videoAssetPath: join("uploads", `${file.filename}`),
-    width: 1080,
+    text: input.text,
+    videoAssetPath: join("uploads", `${input.file.filename}`),
+    width: getWidth(input.resolution),
   });
 
   return `http://localhost:4000/${fileName}`;
