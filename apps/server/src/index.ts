@@ -1,0 +1,40 @@
+import express from "express";
+import cors from "cors";
+import { useMulter } from "./multer.js";
+import { createVideo } from "./create-video.js";
+
+(async () => {
+  try {
+    const app = express();
+    app.use(cors());
+    const upload = useMulter(app);
+    const PORT = process.env.PORT || 4000;
+
+    app.post("/create-video", upload.single("file"), async (req, res) => {
+      if (req.file) {
+        const url = await createVideo(
+          req.file,
+          req.body.text,
+          Number(req.body.duration)
+        );
+        res.json({
+          success: true,
+          message: "File uploaded successfully",
+          file: req.file,
+          url,
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: "No file uploaded",
+        });
+      }
+    });
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+})();
