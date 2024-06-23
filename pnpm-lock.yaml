@@ -23,9 +23,9 @@ importers:
 
   apps/sample-console:
     dependencies:
-      '@via/external-lib':
+      '@via/editly':
         specifier: workspace:*
-        version: link:../../packages/external-lib
+        version: link:../../packages/editly
       '@via/math':
         specifier: workspace:*
         version: link:../../packages/math
@@ -43,7 +43,7 @@ importers:
         specifier: latest
         version: 5.5.2
 
-  packages/external-lib: {}
+  packages/editly: {}
 
   packages/math:
     devDependencies:

@@ -1,5 +1,5 @@
 {
-  "name": "@via/external-lib",
+  "name": "@via/editly",
   "type": "module",
   "main": "index.js",
   "types": "index.d.ts"
