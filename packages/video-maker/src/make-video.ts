@@ -15,17 +15,22 @@ export type MakeVideoInput = {
 
 export const makeVideo = async (input: MakeVideoInput) => {
   try {
-    const tempPath = join("temp", `${generateId()}.mp4`);
+    const temp1Path = join("temp", `${generateId()}.mp4`);
+
+    execSync(
+      `ffmpeg -i ${input.videoAssetPath} -ss 00:00:00 -to 00:00:0${input.duration} ${temp1Path}`
+    );
+
+    const temp2Path = join("temp", `${generateId()}.mp4`);
 
     await EditVideo({
-      outPath: tempPath,
+      outPath: temp2Path,
       clips: [
         {
-          duration: input.duration,
           layers: [
             {
               type: "video",
-              path: input.videoAssetPath,
+              path: temp1Path,
             },
             {
               type: "subtitle",
@@ -41,7 +46,7 @@ export const makeVideo = async (input: MakeVideoInput) => {
     });
 
     execSync(
-      `ffmpeg -i ${tempPath} -y -af volume=${input.masterVolume} ${input.outPath}`
+      `ffmpeg -i ${temp2Path} -y -af volume=${input.masterVolume} ${input.outPath}`
     );
   } catch (error) {
     throw error;

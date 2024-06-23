@@ -86,7 +86,7 @@ export const VideoForm: Component<Props> = (props) => {
           <input
             type="range"
             min={1}
-            max="10"
+            max="9"
             value={duration()}
             class="range"
             onChange={handleDurationChange}
@@ -94,7 +94,7 @@ export const VideoForm: Component<Props> = (props) => {
         </div>
 
         <div class={classNames("dropdown dropdown-hover w-full")}>
-          <div tabIndex={0} role="button" class="btn m-1">
+          <div tabIndex={0} role="button" class="btn m-1 w-full">
             {resolution() == "None"
               ? "Select Resolution"
               : `Resolution: ${resolution()}`}
@@ -115,8 +115,12 @@ export const VideoForm: Component<Props> = (props) => {
           </ul>
         </div>
 
-        <div class="card-actions justify-end">
-          <button disabled={getDisabled()} class="btn" onClick={handleUpload}>
+        <div class="card-actions w-full">
+          <button
+            disabled={getDisabled()}
+            class="btn w-full"
+            onClick={handleUpload}
+          >
             <Show when={isCreating()}>
               <span class="loading loading-spinner"></span>
             </Show>
