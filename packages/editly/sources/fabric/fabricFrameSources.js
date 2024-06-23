@@ -188,10 +188,10 @@ export async function linearGradientFrameSource({ width, height, params }) {
 }
 
 export async function subtitleFrameSource({ width, height, params }) {
-  const { text, textColor = '#ffffff', backgroundColor = 'rgba(0,0,0,0.3)', fontFamily = defaultFontFamily, delay = 0, speed = 1 ,bottomMargin=0} = params;
+  const { text, textColor = '#ffffff', backgroundColor = 'rgba(0,0,0,0)', fontFamily = defaultFontFamily, delay = 0, speed = 1 ,bottomMargin=0} = params;
 
   async function onRender(progress, canvas) {
-    const easedProgress = easeOutExpo(Math.max(0, Math.min((progress - delay) * speed, 1)));
+    const easedProgress = easeOutExpo(Math.max(0, Math.min((progress - delay) * speed, 100)));
 
     const min = Math.min(width, height);
     const padding = 0.05 * min;
@@ -200,14 +200,14 @@ export async function subtitleFrameSource({ width, height, params }) {
       fill: textColor,
       fontFamily,
 
-      fontSize: min / 20,
+      fontSize: min / 10,
       textAlign: 'left',
       width: width - padding * 2,
       originX: 'center',
       originY: 'bottom',
-      left: (width / 2) + (-1 + easedProgress) * padding,
+      left: (width / 2),
       top: height - padding - bottomMargin,
-      opacity: easedProgress,
+      //opacity: easedProgress,
     });
 
     const rect = new fabric.Rect({
@@ -217,7 +217,7 @@ export async function subtitleFrameSource({ width, height, params }) {
       top: height - bottomMargin,
       originY: 'bottom',
       fill: backgroundColor,
-      opacity: easedProgress,
+      //opacity: easedProgress,
     });
 
     canvas.add(rect);
