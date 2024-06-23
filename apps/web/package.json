@@ -8,11 +8,14 @@
     "clean": "rm -rf node_modules"
   },
   "devDependencies": {
+    "@via/typescript-config": "workspace:*",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
     "solid-devtools": "^0.29.2",
+    "tailwindcss": "^3.4.4",
     "typescript": "latest",
     "vite": "^5.0.11",
-    "vite-plugin-solid": "^2.8.2",
-    "@via/typescript-config": "workspace:*"
+    "vite-plugin-solid": "^2.8.2"
   },
   "dependencies": {
     "solid-js": "^1.8.11"
