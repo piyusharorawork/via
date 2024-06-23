@@ -26,28 +26,19 @@ importers:
       '@via/editly':
         specifier: workspace:*
         version: link:../../packages/editly
-      '@via/math':
+      '@via/video-maker':
         specifier: workspace:*
-        version: link:../../packages/math
+        version: link:../../packages/video-maker
     devDependencies:
       '@via/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
-      concurrently:
-        specifier: latest
-        version: 8.2.2
-      nodemon:
-        specifier: 3.1.4
-        version: 3.1.4
       typescript:
         specifier: latest
         version: 5.5.2
 
   apps/sample-console:
     dependencies:
-      '@via/editly':
-        specifier: workspace:*
-        version: link:../../packages/editly
       '@via/math':
         specifier: workspace:*
         version: link:../../packages/math
@@ -136,6 +127,25 @@ importers:
 
   packages/typescript-config: {}
 
+  packages/video-maker:
+    dependencies:
+      '@via/editly':
+        specifier: workspace:*
+        version: link:../editly
+      uuid:
+        specifier: ^10.0.0
+        version: 10.0.0
+    devDependencies:
+      '@types/uuid':
+        specifier: ^10.0.0
+        version: 10.0.0
+      '@via/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: latest
+        version: 5.5.2
+
 packages:
 
   '@babel/code-frame@7.24.7':
@@ -182,6 +192,9 @@ packages:
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
+
+  '@types/uuid@10.0.0':
+    resolution: {integrity: sha512-7gqG38EyHgyP1S+7+xomFtL+ZNHcKv6DwNaCZmJmo1vgMugyF3TCnXVg4t1uk89mLNwnLtnY3TpOpCOyp1/xHQ==}
 
   abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
@@ -1433,6 +1446,10 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
+  uuid@10.0.0:
+    resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
+    hasBin: true
+
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
 
@@ -1588,6 +1605,8 @@ snapshots:
   '@types/minimist@1.2.5': {}
 
   '@types/normalize-package-data@2.4.4': {}
+
+  '@types/uuid@10.0.0': {}
 
   abab@2.0.6:
     optional: true
@@ -2929,6 +2948,8 @@ snapshots:
     optional: true
 
   util-deprecate@1.0.2: {}
+
+  uuid@10.0.0: {}
 
   validate-npm-package-license@3.0.4:
     dependencies:

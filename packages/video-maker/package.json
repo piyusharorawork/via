@@ -1,0 +1,24 @@
+{
+  "name": "@via/video-maker",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "clean": "rm -rf .turbo dist node_modules"
+  },
+  "exports": {
+    "./make-video": {
+      "types": "./src/make-video.ts",
+      "default": "./dist/make-video.js"
+    }
+  },
+  "devDependencies": {
+    "@types/uuid": "^10.0.0",
+    "@via/typescript-config": "workspace:*",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "@via/editly": "workspace:*",
+    "uuid": "^10.0.0"
+  }
+}

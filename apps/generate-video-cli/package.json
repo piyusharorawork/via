@@ -11,6 +11,7 @@
     "typescript": "latest"
   },
   "dependencies": {
-    "@via/editly": "workspace:*"
+    "@via/editly": "workspace:*",
+    "@via/video-maker": "workspace:*"
   }
 }
