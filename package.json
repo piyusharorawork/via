@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "start": "turbo start",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "clean": "concurrently \"rm -rf .turbo node_modules\" \"turbo clean\""
   },
@@ -15,6 +16,6 @@
   },
   "packageManager": "pnpm@9.4.0",
   "engines": {
-    "node": ">=20"
+    "node": ">=18"
   }
 }

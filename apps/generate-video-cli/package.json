@@ -1,0 +1,19 @@
+{
+  "name": "@via/generate-video-cli",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf .turbo dist node_modules",
+    "start": "tsc; node dist/index.js"
+  },
+  "devDependencies": {
+    "@via/typescript-config": "workspace:*",
+    "concurrently": "latest",
+    "nodemon": "3.1.4",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "@via/math": "workspace:*",
+    "@via/editly": "workspace:*"
+  }
+}
