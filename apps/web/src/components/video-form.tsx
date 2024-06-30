@@ -165,7 +165,7 @@ export const VideoForm: Component<Props> = (props) => {
           />
         </div>
 
-        <div class={classNames("dropdown dropdown-hover w-full")}>
+        <div class={classNames("hidden dropdown dropdown-hover w-full")}>
           <div tabIndex={0} role="button" class="btn m-1 w-full">
             {resolution() == "None"
               ? "Select Resolution"
@@ -173,7 +173,7 @@ export const VideoForm: Component<Props> = (props) => {
           </div>
           <ul
             tabIndex={0}
-            class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            class=" dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
           >
             <li onClick={() => setResolution("High")}>
               <a class="text-white">High</a>

@@ -24,7 +24,7 @@ export const makeVideo = async (input: MakeVideoInput) => {
     const temp1Path = join("temp", `${generateId()}.mp4`);
 
     execSync(
-      `ffmpeg -i ${input.videoAssetPath} -ss 00:00:00 -to 00:00:0${input.duration} ${temp1Path}`
+      `ffmpeg -i ${input.videoAssetPath} -ss 00:00:00 -to 00:00:0${input.duration + 1} ${temp1Path}`
     );
 
     const temp2Path = join("temp", `${generateId()}.mp4`);
@@ -54,7 +54,7 @@ export const makeVideo = async (input: MakeVideoInput) => {
     });
 
     execSync(
-      `ffmpeg -i ${temp2Path} -y -af volume=${input.masterVolume} ${input.outPath}`
+      `ffmpeg -i ${temp2Path} -y -af volume=${input.masterVolume} -ss 00:00:00 -to 00:00:0${input.duration} ${input.outPath}`
     );
   } catch (error) {
     throw error;

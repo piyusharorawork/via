@@ -15,7 +15,7 @@ export const VideoPreview: Component<Props> = (props) => {
           </div>
         </Show>
         <Show when={!!props.videoUrl}>
-          <video class="h-full w-full rounded-xl" controls>
+          <video class="h-full w-full rounded-xl" controls loop>
             <source src={props.videoUrl} type="video/mp4" />
           </video>
         </Show>
