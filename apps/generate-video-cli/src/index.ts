@@ -13,6 +13,7 @@ import { join } from "path";
       masterVolume: 0.05,
       bottomMargin: 0,
       fontSize: 16,
+      textColor: "#ffffff",
     };
 
     await makeVideo(input);

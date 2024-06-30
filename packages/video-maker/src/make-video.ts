@@ -13,6 +13,7 @@ export type MakeVideoInput = {
   masterVolume: number;
   bottomMargin: number;
   fontSize: number;
+  textColor: string;
 };
 
 export const makeVideo = async (input: MakeVideoInput) => {
@@ -42,6 +43,7 @@ export const makeVideo = async (input: MakeVideoInput) => {
               bottomMargin: input.bottomMargin,
               text: input.text,
               fontSize: input.fontSize,
+              textColor: input.textColor,
             },
           ],
         },

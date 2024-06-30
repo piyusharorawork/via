@@ -8,6 +8,7 @@ export type HandleSubmitInput = {
   resolution: Resolution;
   bottomMargin: number;
   fontSize: number;
+  textColor: string;
 };
 
 type Props = {
@@ -24,6 +25,7 @@ export const VideoForm: Component<Props> = (props) => {
   const [resolution, setResolution] = createSignal<Resolution>("Low");
   const [bottomMargin, setBottomMargin] = createSignal(16);
   const [fontSize, setFontSize] = createSignal(16);
+  const [textColor, setTextColor] = createSignal("#ffffff");
 
   const handleFileChange = (e: Event) => {
     const input = e.target as HTMLInputElement;
@@ -55,6 +57,7 @@ export const VideoForm: Component<Props> = (props) => {
       text: text(),
       bottomMargin: bottomMargin(),
       fontSize: fontSize(),
+      textColor: textColor(),
     });
   };
 
@@ -66,6 +69,11 @@ export const VideoForm: Component<Props> = (props) => {
   const onFontSizeChange = (e: Event) => {
     const target = e.target as HTMLInputElement;
     setFontSize(Number(target.value));
+  };
+
+  const onTextColorChange = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    setTextColor(target.value);
   };
 
   return (
@@ -118,6 +126,20 @@ export const VideoForm: Component<Props> = (props) => {
             onChange={onFontSizeChange}
           />
           <span>px</span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <label for="hs-color-input" class="block text-sm font-medium mb-2">
+            Text Color
+          </label>
+          <input
+            type="color"
+            class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700"
+            id="hs-color-input"
+            value={textColor()}
+            title="Choose your color"
+            onChange={onTextColorChange}
+          ></input>
         </div>
 
         <div class={classNames("dropdown dropdown-hover w-full")}>

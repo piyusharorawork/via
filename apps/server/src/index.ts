@@ -20,6 +20,7 @@ import { createVideo } from "./create-video.js";
           text: req.body.text,
           bottomMargin: Number(req.body.bottomMargin),
           fontSize: Number(req.body.fontSize),
+          textColor: req.body.textColor,
         });
         res.json({
           success: true,

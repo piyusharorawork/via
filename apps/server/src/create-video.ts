@@ -9,6 +9,7 @@ type CreateVideoInput = {
   resolution: Resolution;
   bottomMargin: number;
   fontSize: number;
+  textColor: string;
 };
 
 type Resolution = "High" | "Medium" | "Low";
@@ -54,6 +55,7 @@ export const createVideo = async (input: CreateVideoInput): Promise<string> => {
     width: getWidth(input.resolution),
     bottomMargin: input.bottomMargin,
     fontSize: input.fontSize,
+    textColor: input.textColor,
   });
 
   return `http://localhost:4000/${fileName}`;
