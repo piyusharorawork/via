@@ -6,6 +6,7 @@ export type HandleSubmitInput = {
   text: string;
   duration: number;
   resolution: Resolution;
+  bottomMargin: number;
 };
 
 type Props = {
@@ -20,6 +21,7 @@ export const VideoForm: Component<Props> = (props) => {
   const [text, setText] = createSignal("");
   const [duration, setDuration] = createSignal(1);
   const [resolution, setResolution] = createSignal<Resolution>("Low");
+  const [bottomMargin, setBottomMargin] = createSignal(16);
 
   const handleFileChange = (e: Event) => {
     const input = e.target as HTMLInputElement;
@@ -49,7 +51,13 @@ export const VideoForm: Component<Props> = (props) => {
       file,
       resolution: resolution(),
       text: text(),
+      bottomMargin: bottomMargin(),
     });
+  };
+
+  const onBottomMarginChange = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    setBottomMargin(Number(target.value));
   };
 
   return (
@@ -79,6 +87,16 @@ export const VideoForm: Component<Props> = (props) => {
             value={duration()}
             class="range"
             onChange={handleDurationChange}
+          />
+        </div>
+
+        <div>
+          <label>bottom margin : </label>
+          <input
+            type="number"
+            class="rounded-md py-2 px-3 w-16 text-white"
+            value={bottomMargin()}
+            onChange={onBottomMarginChange}
           />
         </div>
 

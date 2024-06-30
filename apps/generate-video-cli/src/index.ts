@@ -11,6 +11,7 @@ import { join } from "path";
       videoAssetPath: join("assets", "river.mp4"),
       width: 1080,
       masterVolume: 0.05,
+      bottomMargin: 0,
     };
 
     await makeVideo(input);

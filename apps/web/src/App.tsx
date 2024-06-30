@@ -10,11 +10,14 @@ const App: Component = () => {
   const handleSubmit = async (input: HandleSubmitInput) => {
     setVideoUrl("");
     setIsCreating(true);
+
+    // TODO type safety
     const formData = new FormData();
     formData.append("file", input.file);
     formData.set("text", input.text);
     formData.set("duration", input.duration.toString());
     formData.set("resolution", input.resolution);
+    formData.set("bottomMargin", input.bottomMargin.toString());
 
     try {
       setIsCreating(true);

@@ -17,6 +17,7 @@ import { createVideo } from "./create-video.js";
           file: req.file,
           resolution: req.body.resolution,
           text: req.body.text,
+          bottomMargin: Number(req.body.bottomMargin),
         });
         res.json({
           success: true,

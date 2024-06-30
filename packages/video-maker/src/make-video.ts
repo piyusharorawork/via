@@ -11,10 +11,14 @@ export type MakeVideoInput = {
   width: number;
   height: number;
   masterVolume: number;
+  bottomMargin: number;
 };
 
 export const makeVideo = async (input: MakeVideoInput) => {
   try {
+    console.log("making video ...");
+    console.log(JSON.stringify(input, null, 2));
+
     const temp1Path = join("temp", `${generateId()}.mp4`);
 
     execSync(
@@ -34,7 +38,7 @@ export const makeVideo = async (input: MakeVideoInput) => {
             },
             {
               type: "subtitle",
-              bottomMargin: 300,
+              bottomMargin: input.bottomMargin,
               text: input.text,
             },
           ],
