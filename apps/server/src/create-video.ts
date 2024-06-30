@@ -10,6 +10,7 @@ type CreateVideoInput = {
   bottomMargin: number;
   fontSize: number;
   textColor: string;
+  masterVolume: number;
 };
 
 type Resolution = "High" | "Medium" | "Low";
@@ -48,7 +49,7 @@ export const createVideo = async (input: CreateVideoInput): Promise<string> => {
   await makeVideo({
     duration: input.duration,
     height: getHeight(input.resolution),
-    masterVolume: 0.1,
+    masterVolume: input.masterVolume,
     outPath: join("uploads", fileName),
     text: input.text,
     videoAssetPath: join("uploads", `${input.file.filename}`),

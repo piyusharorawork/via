@@ -20,6 +20,7 @@ const App: Component = () => {
     formData.set("bottomMargin", input.bottomMargin.toString());
     formData.set("fontSize", input.fontSize.toString());
     formData.set("textColor", input.textColor.toString());
+    formData.set("masterVolume", input.masterVolume.toString());
 
     try {
       setIsCreating(true);

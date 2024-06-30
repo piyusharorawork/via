@@ -9,6 +9,7 @@ export type HandleSubmitInput = {
   bottomMargin: number;
   fontSize: number;
   textColor: string;
+  masterVolume: number;
 };
 
 type Props = {
@@ -26,6 +27,7 @@ export const VideoForm: Component<Props> = (props) => {
   const [bottomMargin, setBottomMargin] = createSignal(16);
   const [fontSize, setFontSize] = createSignal(16);
   const [textColor, setTextColor] = createSignal("#ffffff");
+  const [masterVolume, setMasterVolume] = createSignal(0.02);
 
   const handleFileChange = (e: Event) => {
     const input = e.target as HTMLInputElement;
@@ -58,6 +60,7 @@ export const VideoForm: Component<Props> = (props) => {
       bottomMargin: bottomMargin(),
       fontSize: fontSize(),
       textColor: textColor(),
+      masterVolume: masterVolume(),
     });
   };
 
@@ -74,6 +77,11 @@ export const VideoForm: Component<Props> = (props) => {
   const onTextColorChange = (e: Event) => {
     const target = e.target as HTMLInputElement;
     setTextColor(target.value);
+  };
+
+  const onVolumeChange = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    setMasterVolume(Number(target.value));
   };
 
   return (
@@ -140,6 +148,21 @@ export const VideoForm: Component<Props> = (props) => {
             title="Choose your color"
             onChange={onTextColorChange}
           ></input>
+        </div>
+
+        <div class="flex gap-2 items-center w-full">
+          <span class="bg-slate-950 text-white px-4 py-2 rounded-full shrink-0">
+            {`${masterVolume()} db`}
+          </span>
+          <input
+            type="range"
+            min={0}
+            step={0.02}
+            max="5"
+            value={masterVolume()}
+            class="range"
+            onChange={onVolumeChange}
+          />
         </div>
 
         <div class={classNames("dropdown dropdown-hover w-full")}>

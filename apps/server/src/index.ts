@@ -21,6 +21,7 @@ import { createVideo } from "./create-video.js";
           bottomMargin: Number(req.body.bottomMargin),
           fontSize: Number(req.body.fontSize),
           textColor: req.body.textColor,
+          masterVolume: Number(req.body.masterVolume),
         });
         res.json({
           success: true,
