@@ -18,6 +18,7 @@ const App: Component = () => {
     formData.set("duration", input.duration.toString());
     formData.set("resolution", input.resolution);
     formData.set("bottomMargin", input.bottomMargin.toString());
+    formData.set("fontSize", input.fontSize.toString());
 
     try {
       setIsCreating(true);

@@ -188,7 +188,7 @@ export async function linearGradientFrameSource({ width, height, params }) {
 }
 
 export async function subtitleFrameSource({ width, height, params }) {
-  const { text, textColor = '#ffffff', backgroundColor = 'rgba(0,0,0,0)', fontFamily = defaultFontFamily, delay = 0, speed = 1 ,bottomMargin=0} = params;
+  const { text, textColor = '#ffffff', backgroundColor = 'rgba(0,0,0,0)', fontFamily = defaultFontFamily, delay = 0, speed = 1 ,bottomMargin=0 , fontSize = 16} = params;
 
   async function onRender(progress, canvas) {
     const easedProgress = easeOutExpo(Math.max(0, Math.min((progress - delay) * speed, 100)));
@@ -200,7 +200,7 @@ export async function subtitleFrameSource({ width, height, params }) {
       fill: textColor,
       fontFamily,
 
-      fontSize: min / 10,
+      fontSize,
       textAlign: 'left',
       width: width - padding * 2,
       originX: 'center',

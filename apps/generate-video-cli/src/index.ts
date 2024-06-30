@@ -12,6 +12,7 @@ import { join } from "path";
       width: 1080,
       masterVolume: 0.05,
       bottomMargin: 0,
+      fontSize: 16,
     };
 
     await makeVideo(input);

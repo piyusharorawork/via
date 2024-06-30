@@ -7,6 +7,7 @@ export type HandleSubmitInput = {
   duration: number;
   resolution: Resolution;
   bottomMargin: number;
+  fontSize: number;
 };
 
 type Props = {
@@ -22,6 +23,7 @@ export const VideoForm: Component<Props> = (props) => {
   const [duration, setDuration] = createSignal(1);
   const [resolution, setResolution] = createSignal<Resolution>("Low");
   const [bottomMargin, setBottomMargin] = createSignal(16);
+  const [fontSize, setFontSize] = createSignal(16);
 
   const handleFileChange = (e: Event) => {
     const input = e.target as HTMLInputElement;
@@ -52,12 +54,18 @@ export const VideoForm: Component<Props> = (props) => {
       resolution: resolution(),
       text: text(),
       bottomMargin: bottomMargin(),
+      fontSize: fontSize(),
     });
   };
 
   const onBottomMarginChange = (e: Event) => {
     const target = e.target as HTMLInputElement;
     setBottomMargin(Number(target.value));
+  };
+
+  const onFontSizeChange = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    setFontSize(Number(target.value));
   };
 
   return (
@@ -90,14 +98,26 @@ export const VideoForm: Component<Props> = (props) => {
           />
         </div>
 
-        <div>
+        <div class="flex items-center gap-2">
           <label>bottom margin : </label>
           <input
             type="number"
-            class="rounded-md py-2 px-3 w-16 text-white"
+            class="rounded-md py-2 px-3 w-20 text-white"
             value={bottomMargin()}
             onChange={onBottomMarginChange}
           />
+          <span>px</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label>font size : </label>
+          <input
+            type="number"
+            class="rounded-md py-2 px-3 w-20 text-white"
+            value={fontSize()}
+            onChange={onFontSizeChange}
+          />
+          <span>px</span>
         </div>
 
         <div class={classNames("dropdown dropdown-hover w-full")}>

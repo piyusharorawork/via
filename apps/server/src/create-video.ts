@@ -8,6 +8,7 @@ type CreateVideoInput = {
   duration: number;
   resolution: Resolution;
   bottomMargin: number;
+  fontSize: number;
 };
 
 type Resolution = "High" | "Medium" | "Low";
@@ -52,6 +53,7 @@ export const createVideo = async (input: CreateVideoInput): Promise<string> => {
     videoAssetPath: join("uploads", `${input.file.filename}`),
     width: getWidth(input.resolution),
     bottomMargin: input.bottomMargin,
+    fontSize: input.fontSize,
   });
 
   return `http://localhost:4000/${fileName}`;

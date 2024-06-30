@@ -11,6 +11,7 @@ import { createVideo } from "./create-video.js";
     const PORT = process.env.PORT || 4000;
 
     app.post("/create-video", upload.single("file"), async (req, res) => {
+      // TODO need type safey req body
       if (req.file) {
         const url = await createVideo({
           duration: Number(req.body.duration),
@@ -18,6 +19,7 @@ import { createVideo } from "./create-video.js";
           resolution: req.body.resolution,
           text: req.body.text,
           bottomMargin: Number(req.body.bottomMargin),
+          fontSize: Number(req.body.fontSize),
         });
         res.json({
           success: true,
