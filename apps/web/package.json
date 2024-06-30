@@ -2,7 +2,7 @@
   "name": "@via/web",
   "scripts": {
     "start": "vite",
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "serve": "vite preview",
     "clean": "rm -rf node_modules"

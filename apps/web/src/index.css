@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.mobile {
+    width: calc(0.5625*95vh);
+    height : 95vh
+}

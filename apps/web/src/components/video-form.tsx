@@ -1,9 +1,16 @@
 import { Component, Show, createSignal } from "solid-js";
-import axios from "axios";
 import classNames from "classnames";
 
+export type HandleSubmitInput = {
+  file: File;
+  text: string;
+  duration: number;
+  resolution: Resolution;
+};
+
 type Props = {
-  onFinish: (videoUrl: string) => void;
+  onSubmit: (input: HandleSubmitInput) => void;
+  isCreating: boolean;
 };
 
 type Resolution = "None" | "High" | "Medium" | "Low";
@@ -11,9 +18,8 @@ type Resolution = "None" | "High" | "Medium" | "Low";
 export const VideoForm: Component<Props> = (props) => {
   const [selectedFile, setSelectedFile] = createSignal<File>();
   const [text, setText] = createSignal("");
-  const [duration, setDuration] = createSignal(3);
-  const [isCreating, setIsCreating] = createSignal(false);
-  const [resolution, setResolution] = createSignal<Resolution>("None");
+  const [duration, setDuration] = createSignal(1);
+  const [resolution, setResolution] = createSignal<Resolution>("Low");
 
   const handleFileChange = (e: Event) => {
     const input = e.target as HTMLInputElement;
@@ -27,40 +33,23 @@ export const VideoForm: Component<Props> = (props) => {
     setDuration(Number(target.value));
   };
 
-  const handleUpload = async () => {
+  const getDisabled = () => {
+    return text().length == 0 || !selectedFile() || resolution() == "None";
+  };
+
+  const onCreateVideo = () => {
     const file = selectedFile();
+
     if (!file) {
-      console.log("No file selected");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.set("text", text());
-    formData.set("duration", duration().toString());
-    formData.set("resolution", resolution());
-
-    try {
-      setIsCreating(true);
-      const response = await axios.post(
-        "http://localhost:4000/create-video",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      props.onFinish(response.data.url);
-      setIsCreating(false);
-    } catch (error) {
-      console.error("Upload failed:", error);
-    }
-  };
-
-  const getDisabled = () => {
-    return text().length == 0 || !selectedFile() || resolution() == "None";
+    props.onSubmit({
+      duration: duration(),
+      file,
+      resolution: resolution(),
+      text: text(),
+    });
   };
 
   return (
@@ -119,9 +108,9 @@ export const VideoForm: Component<Props> = (props) => {
           <button
             disabled={getDisabled()}
             class="btn w-full"
-            onClick={handleUpload}
+            onClick={onCreateVideo}
           >
-            <Show when={isCreating()}>
+            <Show when={props.isCreating}>
               <span class="loading loading-spinner"></span>
             </Show>
             Create Video
