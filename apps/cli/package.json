@@ -4,7 +4,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf .turbo dist node_modules exports",
-    "start": "tsc; node dist/index.js"
+    "start": "tsc; node dist/cli.js"
   },
   "devDependencies": {
     "@via/typescript-config": "workspace:*",

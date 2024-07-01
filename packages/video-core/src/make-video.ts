@@ -2,9 +2,11 @@ import { EditVideo } from "@via/editly";
 import { execSync } from "child_process";
 import { v4 as generateId } from "uuid";
 import { join } from "path";
+import fs from "fs";
 
 export type MakeVideoInput = {
-  outPath: string;
+  dirPath: string;
+  fileName: string;
   duration: number;
   videoAssetPath: string;
   text: string;
@@ -18,25 +20,24 @@ export type MakeVideoInput = {
 
 export const makeVideo = async (input: MakeVideoInput) => {
   try {
-    console.log("making video ...");
-    console.log(JSON.stringify(input, null, 2));
+    // Cut the video with 1 seconds more
+    const oneMoreSecVideoPath = join("temp", `${generateId()}.mp4`);
 
-    const temp1Path = join("temp", `${generateId()}.mp4`);
-
+    // TODO fix start and end time
     execSync(
-      `ffmpeg -i ${input.videoAssetPath} -ss 00:00:00 -to 00:00:0${input.duration + 1} ${temp1Path}`
+      `ffmpeg -i ${input.videoAssetPath} -ss 00:00:00 -to 00:00:0${input.duration + 1} ${oneMoreSecVideoPath}`
     );
 
-    const temp2Path = join("temp", `${generateId()}.mp4`);
+    const backgroundVideoWithText = join("temp", `${generateId()}.mp4`);
 
     await EditVideo({
-      outPath: temp2Path,
+      outPath: backgroundVideoWithText,
       clips: [
         {
           layers: [
             {
               type: "video",
-              path: temp1Path,
+              path: oneMoreSecVideoPath,
             },
             {
               type: "subtitle",
@@ -53,8 +54,16 @@ export const makeVideo = async (input: MakeVideoInput) => {
       keepSourceAudio: true,
     });
 
+    const isDirExist = fs.existsSync(input.dirPath);
+
+    if (!isDirExist) {
+      fs.mkdirSync(input.dirPath);
+    }
+
+    const filePath = join(input.dirPath, input.fileName);
+
     execSync(
-      `ffmpeg -i ${temp2Path} -y -af volume=${input.masterVolume} -ss 00:00:00 -to 00:00:0${input.duration} ${input.outPath}`
+      `ffmpeg -i ${backgroundVideoWithText} -y -af volume=${input.masterVolume} -ss 00:00:00 -to 00:00:0${input.duration} ${filePath}`
     );
   } catch (error) {
     throw error;
