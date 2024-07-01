@@ -1,5 +1,5 @@
 {
-  "name": "@via/generate-video-cli",
+  "name": "@via/cli",
   "type": "module",
   "scripts": {
     "build": "tsc",
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@via/editly": "workspace:*",
-    "@via/video-maker": "workspace:*"
+    "@via/video-core": "workspace:*",
+    "@via/youtube-downloader": "workspace:*"
   }
 }

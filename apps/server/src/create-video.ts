@@ -1,4 +1,4 @@
-import { makeVideo } from "@via/video-maker/make-video";
+import { makeVideo } from "@via/video-core/make-video";
 import { join } from "path";
 import { v4 as generateId } from "uuid";
 
