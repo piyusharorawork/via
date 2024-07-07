@@ -15,6 +15,13 @@
       "when": 1720352105857,
       "tag": "0001_tan_exodus",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1720355167146,
+      "tag": "0002_fair_night_thrasher",
+      "breakpoints": true
     }
   ]
 }

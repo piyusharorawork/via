@@ -1,8 +1,8 @@
 import { Router, Express } from "express";
 import { useMulter } from "../multer.js";
-import { createFileStore, File } from "@via/store/file-store";
+import { createFileStore } from "@via/store/file-store";
 
-export const getUploadVideoRouter = (app: Express) => {
+export const getUploadFileRouter = (app: Express) => {
   const router = Router();
   const upload = useMulter(app);
   router.post("/", upload.single("file"), async (req, res) => {
@@ -11,7 +11,7 @@ export const getUploadVideoRouter = (app: Express) => {
     }
 
     const fileStore = createFileStore("via.db");
-    await fileStore.insert({
+    const fileId = await fileStore.insert({
       originalName: req.file.originalname,
       destination: req.file.destination,
       fileName: req.file.filename,
@@ -19,10 +19,7 @@ export const getUploadVideoRouter = (app: Express) => {
       path: req.file.path,
     });
 
-    // TODO need to use network hostname
-    const fileURL = `http://localhost:4000/${req.file.filename}`;
-
-    return res.json(fileURL);
+    return res.json(fileId);
   });
   return router;
 };

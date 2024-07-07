@@ -15,7 +15,9 @@ export const filesTable = sqliteTable("files", {
 
 export const videosTable = sqliteTable("videos", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-  url: text("url").notNull(),
+  fileId: integer("file_id").notNull().default(0),
+  name: text("name").notNull().default(""),
+  description: text("description").notNull().default(""),
   createdAt: text("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
@@ -24,3 +26,4 @@ export const videosTable = sqliteTable("videos", {
 export type File = typeof filesTable.$inferSelect;
 export type FileInput = typeof filesTable.$inferInsert;
 export type Video = typeof videosTable.$inferSelect;
+export type VideoInput = typeof videosTable.$inferInsert;

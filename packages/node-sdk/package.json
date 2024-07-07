@@ -8,9 +8,13 @@
     "test": "vitest"
   },
   "exports": {
-    "./upload-video": {
-      "types": "./src/upload-video.ts",
-      "default": "./dist/upload-video.js"
+    "./upload-file": {
+      "types": "./src/upload-file.sdk.ts",
+      "default": "./dist/upload-file.sdk.js"
+    },
+    "./create-video": {
+      "types": "./src/create-video.sdk.ts",
+      "default": "./dist/create-video.sdk.js"
     }
   },
   "devDependencies": {

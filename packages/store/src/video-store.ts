@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import Database from "better-sqlite3";
-import { Video, videosTable } from "./schema.js";
+import { Video, VideoInput, videosTable } from "./schema.js";
 import { migrate } from "drizzle-orm/better-sqlite3/migrator";
 import path from "path";
 import { eq } from "drizzle-orm";
@@ -27,8 +27,8 @@ export const createVideoStore = (databaseName: string) => {
       return videos;
     },
 
-    insert: async (videoURL: string) => {
-      await db.insert(videosTable).values({ url: videoURL });
+    insert: async (input: VideoInput) => {
+      await db.insert(videosTable).values(input);
     },
 
     remove: async (videoId: number) => {

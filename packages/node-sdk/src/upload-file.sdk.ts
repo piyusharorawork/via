@@ -6,7 +6,7 @@ export type UploadVideoOutput = {
   fileURL: string;
 };
 
-export const uploadVideo = async (filePath: string): Promise<string> => {
+export const uploadFile = async (filePath: string): Promise<number> => {
   const file = fs.createReadStream(filePath);
   const formData = new FormData();
   formData.append("file", file);
