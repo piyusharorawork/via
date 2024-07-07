@@ -4,7 +4,8 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf .turbo dist node_modules exports",
-    "start": "tsc; node dist/cli.js"
+    "start": "tsc; node dist/cli.js",
+    "download-video": "tsc; node dist/download-video.cli.js"
   },
   "devDependencies": {
     "@via/typescript-config": "workspace:*",
