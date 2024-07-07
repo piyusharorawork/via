@@ -1,0 +1,27 @@
+{
+  "name": "@via/store",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "clean": "rm -rf .turbo dist node_modules",
+    "test": "vitest",
+    "generate": "drizzle-kit generate --schema src/schema.ts --dialect sqlite --out migrations"
+  },
+  "exports": {
+    "./video-store": {
+      "types": "./src/video-store.ts",
+      "default": "./dist/video-store.js"
+    }
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@via/typescript-config": "workspace:*",
+    "drizzle-kit": "^0.22.8",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.1.2",
+    "drizzle-orm": "^0.31.2"
+  }
+}
