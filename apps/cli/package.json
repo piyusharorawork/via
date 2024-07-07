@@ -15,6 +15,7 @@
     "@via/editly": "workspace:*",
     "@via/video-core": "workspace:*",
     "@via/youtube-downloader": "workspace:*",
-    "@via/store": "workspace:*"
+    "@via/store": "workspace:*",
+    "@via/node-sdk": "workspace:*"
   }
 }

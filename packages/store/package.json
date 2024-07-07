@@ -9,6 +9,10 @@
     "generate": "drizzle-kit generate --schema src/schema.ts --dialect sqlite --out migrations"
   },
   "exports": {
+    "./file-store": {
+      "types": "./src/file-store.ts",
+      "default": "./dist/file-store.js"
+    },
     "./video-store": {
       "types": "./src/video-store.ts",
       "default": "./dist/video-store.js"

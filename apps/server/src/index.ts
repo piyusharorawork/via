@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { useMulter } from "./multer.js";
 import { createVideo } from "./create-video.js";
+import { getUploadVideoRouter } from "./routes/upload-video.route.js";
 
 (async () => {
   try {
@@ -9,6 +10,8 @@ import { createVideo } from "./create-video.js";
     app.use(cors());
     const upload = useMulter(app);
     const PORT = process.env.PORT || 4000;
+
+    app.use("/api/upload-video", getUploadVideoRouter(app));
 
     app.post("/create-video", upload.single("file"), async (req, res) => {
       // TODO need type safey req body

@@ -8,6 +8,13 @@
       "when": 1720340414021,
       "tag": "0000_tidy_gargoyle",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1720352105857,
+      "tag": "0001_tan_exodus",
+      "breakpoints": true
     }
   ]
 }

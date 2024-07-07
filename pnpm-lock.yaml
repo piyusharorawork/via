@@ -26,6 +26,9 @@ importers:
       '@via/editly':
         specifier: workspace:*
         version: link:../../packages/editly
+      '@via/node-sdk':
+        specifier: workspace:*
+        version: link:../../packages/node-sdk
       '@via/store':
         specifier: workspace:*
         version: link:../../packages/store
@@ -64,6 +67,9 @@ importers:
 
   apps/server:
     dependencies:
+      '@via/store':
+        specifier: workspace:*
+        version: link:../../packages/store
       '@via/video-core':
         specifier: workspace:*
         version: link:../../packages/video-core
@@ -201,6 +207,22 @@ importers:
       typescript:
         specifier: latest
         version: 5.5.2
+      vitest:
+        specifier: ^1.6.0
+        version: 1.6.0(@types/node@20.14.8)(jsdom@19.0.0)
+
+  packages/node-sdk:
+    dependencies:
+      axios:
+        specifier: ^1.7.2
+        version: 1.7.2
+    devDependencies:
+      '@via/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: latest
+        version: 5.5.3
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.14.8)(jsdom@19.0.0)
