@@ -5,7 +5,7 @@ import { createVideo } from "./create-video.js";
 import { getUploadFileRouter } from "./routes/upload-file.route.js";
 
 import * as trpcExpress from "@trpc/server/adapters/express";
-import { appRouter } from "./router.js";
+import { appRouter } from "@via/router/router";
 
 (async () => {
   try {

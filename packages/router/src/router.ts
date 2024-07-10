@@ -1,5 +1,6 @@
 import { initTRPC } from "@trpc/server";
 import { z } from "zod";
+import { createVideoInput } from "./inputs.js";
 
 export const t = initTRPC.create();
 
@@ -16,6 +17,7 @@ export const appRouter = t.router({
         name: opts.input.name,
       };
     }),
+  createVideo: t.procedure.input(createVideoInput).mutation(async (opts) => {}),
 });
 
 export type AppRouter = typeof appRouter;

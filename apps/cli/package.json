@@ -12,12 +12,12 @@
     "typescript": "latest"
   },
   "dependencies": {
-    "@trpc/client": "^10.45.2",
     "@via/editly": "workspace:*",
     "@via/node-sdk": "workspace:*",
     "@via/server": "workspace:*",
     "@via/store": "workspace:*",
     "@via/video-core": "workspace:*",
-    "@via/youtube-downloader": "workspace:*"
+    "@via/youtube-downloader": "workspace:*",
+    "@via/router": "workspace:*"
   }
 }

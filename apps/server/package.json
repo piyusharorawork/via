@@ -12,19 +12,19 @@
     }
   },
   "dependencies": {
-    "@trpc/server": "^10.45.2",
     "@via/store": "workspace:*",
     "@via/video-core": "workspace:*",
+    "@via/router": "workspace:*",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "multer": "1.4.5-lts.1",
-    "uuid": "^10.0.0",
-    "zod": "^3.23.8"
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/multer": "^1.4.11",
     "@types/uuid": "^10.0.0",
+    "@trpc/server": "^10.45.2",
     "@via/typescript-config": "workspace:*"
   }
 }
