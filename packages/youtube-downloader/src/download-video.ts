@@ -13,27 +13,57 @@ export type DownloadVideoInput = {
 };
 
 export const downloadYoutubeVideo = async (input: DownloadVideoInput) => {
-  const isDirExist = fs.existsSync(input.dirPath);
+  return new Promise<void>((resolve, reject) => {
+    try {
+      const isDirExist = fs.existsSync(input.dirPath);
 
-  if (!isDirExist) {
-    fs.mkdirSync(input.dirPath);
-  }
+      if (!isDirExist) {
+        fs.mkdirSync(input.dirPath);
+      }
 
-  const filePath = path.join(input.dirPath, input.fileName);
+      const filePath = path.join(input.dirPath, input.fileName);
 
-  const file = fs.createWriteStream(filePath);
+      const file = fs.createWriteStream(filePath);
 
-  ytdl(input.url).pipe(file);
+      const stream = ytdl(input.url, {});
 
-  file.on("close", () => {
-    const temp1Path = path.join("temp", `${generateId()}.mp4`);
+      const writeStream = stream.pipe(file);
 
-    execSync(
-      `ffmpeg -i ${filePath} -ss ${input.start} -to ${input.end} ${temp1Path}`
-    );
+      stream.on("close", () => {
+        console.log("stream close");
+        resolve();
+      });
 
-    fs.unlinkSync(filePath);
+      file.on("close", () => {
+        console.log("file close");
+        resolve();
+      });
 
-    fs.renameSync(temp1Path, filePath);
+      writeStream.on("close", () => {
+        console.log("write stream close");
+        resolve();
+      });
+
+      writeStream.on("finish", () => {
+        console.log("write stream finish");
+        resolve();
+      });
+
+      // writeStream.on("finish", () => {
+      //   const temp1Path = path.join("temp", `${generateId()}.mp4`);
+
+      //   execSync(
+      //     `ffmpeg -i ${filePath} -ss ${input.start} -to ${input.end} ${temp1Path}`
+      //   );
+
+      //   fs.unlinkSync(filePath);
+
+      //   fs.renameSync(temp1Path, filePath);
+
+      //   return resolve();
+      // });
+    } catch (error) {
+      reject(error);
+    }
   });
 };
