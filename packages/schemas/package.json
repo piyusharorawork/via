@@ -1,5 +1,5 @@
 {
-  "name": "@via/router",
+  "name": "@via/schemas",
   "type": "module",
   "scripts": {
     "dev": "tsc --watch",
@@ -8,9 +8,9 @@
     "test": "vitest"
   },
   "exports": {
-    "./router": {
-      "types": "./src/router.ts",
-      "default": "./dist/router.js"
+    "./schema": {
+      "types": "./src/schema.ts",
+      "default": "./dist/schema.js"
     }
   },
   "devDependencies": {
@@ -19,9 +19,6 @@
     "vitest": "^1.6.0"
   },
   "dependencies": {
-    "@trpc/server": "^10.45.2",
-    "zod": "^3.23.8",
-    "@via/store": "workspace:*",
-    "@via/schemas": "workspace:*"
+    "zod": "^3.23.8"
   }
 }

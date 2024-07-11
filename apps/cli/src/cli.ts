@@ -1,28 +1,34 @@
 import { uploadFile } from "@via/node-sdk/upload-file";
-import { createVideo } from "@via/node-sdk/create-video";
+import { addVideo } from "@via/node-sdk/create-video";
 import path from "path";
 import type { AppRouter } from "@via/router/router";
+import { downloadYoutubeVideo } from "@via/youtube-downloader/download-video";
+import { createVideoStore } from "@via/store/video-store";
 
 (async () => {
   try {
-    // const filePath = path.join(path.resolve(), "downloads", "lord-ram-1.mp4");
-    // const fileId = await uploadFile(filePath);
+    const name = "Hanuman Ji";
+    const description = "Video of lord hanuman also known as bajrang bali";
+    const youtubeURL = "https://www.youtube.com/shorts/A4bOUJ9AOEM";
+    const start = "00:00:00";
+    const end = "00:00:04";
 
-    // const trpc = createTRPCProxyClient<AppRouter>({
-    //   links: [
-    //     httpBatchLink({
-    //       url: "http://localhost:4000/trpc",
-    //     }),
-    //   ],
-    // });
+    await downloadYoutubeVideo({
+      dirPath: "downloads",
+      end,
+      start,
+      url: youtubeURL,
+      fileName: "hanuman.mp4",
+    });
 
-    // const res = await trpc.getUser.query(10);
-    // console.log(res);
+    const filePath = "downloads/hanuman.mp4";
+    const fileId = await uploadFile(filePath);
+    await addVideo({ description, name, fileId });
 
-    const res = await createVideo();
-    console.log(res);
+    const videoStore = createVideoStore("sqlite.db");
+    const videos = await videoStore.list();
 
-    // const video = await createVideo();
+    console.log(videos);
   } catch (error) {
     console.error(error);
   }

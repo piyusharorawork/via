@@ -1,6 +1,8 @@
 import { initTRPC } from "@trpc/server";
 import { z } from "zod";
 import { createVideoInput } from "./inputs.js";
+import { addVideo } from "./handlers.js";
+import { addVideoInput } from "@via/schemas/schema";
 
 export const t = initTRPC.create();
 
@@ -17,7 +19,9 @@ export const appRouter = t.router({
         name: opts.input.name,
       };
     }),
-  createVideo: t.procedure.input(createVideoInput).mutation(async (opts) => {}),
+  addVideo: t.procedure.input(addVideoInput).mutation(async (opts) => {
+    await addVideo(opts.input);
+  }),
 });
 
 export type AppRouter = typeof appRouter;
