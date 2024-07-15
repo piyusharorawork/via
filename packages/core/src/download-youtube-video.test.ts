@@ -1,20 +1,30 @@
-import { expect, test } from "vitest";
+import { expect, test, describe } from "vitest";
 import { downloadYoutubeVideo } from "./download-youtube-video";
 
 import fs from "fs";
 
-test("download youtube video", async () => {
-  const oneSecondVideoURL = "https://www.youtube.com/watch?v=MvsAesQ-4zA";
-  const videoPath = "downloads/1-sec-video.mp4";
+describe("download youtube video", () => {
+  const scenerios = [
+    {
+      name: "valid small video",
+      videoURL: "https://www.youtube.com/watch?v=MvsAesQ-4zA",
+      videoPath: "downloads/1-sec-video.mp4",
+      expected: true,
+    },
+  ];
 
-  const isVideoFileExist = fs.existsSync(videoPath);
+  for (const scenerio of scenerios) {
+    test(scenerio.name, async () => {
+      const isVideoFileExist = fs.existsSync(scenerio.videoPath);
 
-  if (isVideoFileExist) {
-    fs.unlinkSync(videoPath);
+      if (isVideoFileExist) {
+        fs.unlinkSync(scenerio.videoPath);
+      }
+
+      await downloadYoutubeVideo(scenerio.videoURL, scenerio.videoPath);
+
+      const isVideoFileCreated = fs.existsSync(scenerio.videoPath);
+      expect(isVideoFileCreated).toBe(scenerio.expected);
+    });
   }
-
-  await downloadYoutubeVideo(oneSecondVideoURL, videoPath);
-
-  const isVideoFileCreated = fs.existsSync(videoPath);
-  expect(isVideoFileCreated).toBe(true);
 });

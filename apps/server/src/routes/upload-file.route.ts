@@ -10,7 +10,8 @@ export const getUploadFileRouter = (app: Express) => {
       return res.json("no files");
     }
 
-    const fileStore = createFileStore("via.db");
+    // TODO Create file store in context
+    const fileStore = createFileStore(process.env.DATABASE_NAME!);
     const fileId = await fileStore.insert({
       originalName: req.file.originalname,
       destination: req.file.destination,
