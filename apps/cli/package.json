@@ -18,6 +18,7 @@
     "@via/store": "workspace:*",
     "@via/video-core": "workspace:*",
     "@via/youtube-downloader": "workspace:*",
-    "@via/router": "workspace:*"
+    "@via/router": "workspace:*",
+    "@via/core": "workspace:*"
   }
 }

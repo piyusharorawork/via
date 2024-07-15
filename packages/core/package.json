@@ -1,0 +1,24 @@
+{
+  "name": "@via/core",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "clean": "rm -rf .turbo dist node_modules",
+    "test": "vitest"
+  },
+  "exports": {
+    "./download-youtube-video": {
+      "types": "./src/download-youtube-video.ts",
+      "default": "./dist/download-youtube-video.js"
+    }
+  },
+  "devDependencies": {
+    "@via/typescript-config": "workspace:*",
+    "typescript": "latest",
+    "vitest": "^1.6.0"
+  },
+  "dependencies": {
+    "ytdl-core": "^4.11.5"
+  }
+}
