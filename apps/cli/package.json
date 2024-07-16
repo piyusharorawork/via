@@ -16,7 +16,6 @@
     "@via/core": "workspace:*",
     "@via/editly": "workspace:*",
     "@via/node-sdk": "workspace:*",
-    "@via/router": "workspace:*",
     "@via/server": "workspace:*",
     "@via/store": "workspace:*",
     "@via/video-core": "workspace:*",

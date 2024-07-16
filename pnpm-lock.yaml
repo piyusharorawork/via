@@ -32,9 +32,6 @@ importers:
       '@via/node-sdk':
         specifier: workspace:*
         version: link:../../packages/node-sdk
-      '@via/router':
-        specifier: workspace:*
-        version: link:../../packages/router
       '@via/server':
         specifier: workspace:*
         version: link:../server
@@ -82,9 +79,6 @@ importers:
 
   apps/server:
     dependencies:
-      '@via/router':
-        specifier: workspace:*
-        version: link:../../packages/router
       '@via/store':
         specifier: workspace:*
         version: link:../../packages/store
@@ -335,37 +329,9 @@ importers:
 
   packages/node-sdk:
     dependencies:
-      '@trpc/client':
-        specifier: ^10.45.2
-        version: 10.45.2(@trpc/server@10.45.2)
-      '@via/router':
-        specifier: workspace:*
-        version: link:../router
       axios:
         specifier: ^1.7.2
         version: 1.7.2
-    devDependencies:
-      '@via/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      typescript:
-        specifier: latest
-        version: 5.5.3
-      vitest:
-        specifier: ^1.6.0
-        version: 1.6.0(@types/node@20.14.8)(jsdom@19.0.0)
-
-  packages/router:
-    dependencies:
-      '@trpc/server':
-        specifier: ^10.45.2
-        version: 10.45.2
-      '@via/store':
-        specifier: workspace:*
-        version: link:../store
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
     devDependencies:
       '@via/typescript-config':
         specifier: workspace:*

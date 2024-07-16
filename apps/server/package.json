@@ -13,7 +13,6 @@
     }
   },
   "dependencies": {
-    "@via/router": "workspace:*",
     "@via/store": "workspace:*",
     "@via/video-core": "workspace:*",
     "@via/workflow": "workspace:*",

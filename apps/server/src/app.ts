@@ -1,8 +1,7 @@
 import * as trpcExpress from "@trpc/server/adapters/express";
 import express from "express";
 import cors from "cors";
-// import { appRouter } from "@via/router/router";
-import { appRouter } from "./router/router.js";
+import { appRouter } from "./router.js";
 import { getUploadFileRouter } from "./routes/upload-file.route.js";
 import { Server, IncomingMessage, ServerResponse } from "http";
 
