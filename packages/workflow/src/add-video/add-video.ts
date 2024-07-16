@@ -2,6 +2,7 @@ import { z } from "zod";
 import { downloadYoutubeVideo } from "@via/core/download-youtube-video";
 import { uploadFile } from "@via/node-sdk/upload-file";
 import { createVideoStore } from "@via/store/video-store";
+import { getDatabaseName, getVideoStore } from "../helpers.js";
 
 export const addVideoInput = z.object({
   uuid: z.string().uuid(),
@@ -23,8 +24,7 @@ export const addVideo = (input: AddVideoInput) => {
       await downloadYoutubeVideo(input.youtubeURL, videoPath);
       // TODO ensure upload server is stable and running
       const fileId = await uploadFile("http://localhost:4000", videoPath);
-      // TODO database name env
-      const videoStore = createVideoStore("workflow.test.db");
+      const videoStore = getVideoStore();
       await videoStore.insert({
         fileId,
         description: input.description,

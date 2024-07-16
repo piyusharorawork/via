@@ -22,8 +22,8 @@ export const createVideoStore = (databaseName: string) => {
   migrate(db, { migrationsFolder });
 
   return {
-    list: async (): Promise<Video[]> => {
-      const videos = await db.select().from(videosTable);
+    list: async (limit: number): Promise<Video[]> => {
+      const videos = await db.select().from(videosTable).limit(limit);
       return videos;
     },
 

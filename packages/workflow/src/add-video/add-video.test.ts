@@ -2,6 +2,7 @@ import { expect, test, describe } from "vitest";
 import { addVideo } from "./add-video";
 import { v4 as generateId } from "uuid";
 import { createVideoStore } from "@via/store/video-store";
+import { getVideoStore } from "../helpers";
 
 describe("add video workflow", () => {
   const scenerios = [
@@ -14,7 +15,7 @@ describe("add video workflow", () => {
   ];
 
   for (const scenerio of scenerios) {
-    const videoStore = createVideoStore("workflow.test.db");
+    const videoStore = getVideoStore();
 
     test(scenerio.name, async () => {
       const videoUUID = generateId();

@@ -16,6 +16,7 @@
   "devDependencies": {
     "@types/uuid": "^10.0.0",
     "@via/typescript-config": "workspace:*",
+    "@via/vitest-config": "workspace:*",
     "typescript": "latest",
     "vitest": "^1.6.0"
   },
