@@ -211,6 +211,15 @@ importers:
       '@via/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
+      autoprefixer:
+        specifier: ^10.4.19
+        version: 10.4.19(postcss@8.4.38)
+      postcss:
+        specifier: ^8.4.38
+        version: 8.4.38
+      tailwindcss:
+        specifier: ^3.4.4
+        version: 3.4.4
       typescript:
         specifier: latest
         version: 5.5.3
