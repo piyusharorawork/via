@@ -21,7 +21,6 @@
   "dependencies": {
     "@trpc/server": "^10.45.2",
     "zod": "^3.23.8",
-    "@via/store": "workspace:*",
-    "@via/schemas": "workspace:*"
+    "@via/store": "workspace:*"
   }
 }

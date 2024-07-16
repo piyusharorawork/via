@@ -1,5 +1,5 @@
 {
-  "name": "@via/schemas",
+  "name": "@via/workflow",
   "type": "module",
   "scripts": {
     "dev": "tsc --watch",
@@ -8,17 +8,21 @@
     "test": "vitest"
   },
   "exports": {
-    "./schema": {
-      "types": "./src/schema.ts",
-      "default": "./dist/schema.js"
+    "./add-video": {
+      "types": "./src/add-video.ts",
+      "default": "./dist/add-video.js"
     }
   },
   "devDependencies": {
+    "@types/uuid": "^10.0.0",
     "@via/typescript-config": "workspace:*",
     "typescript": "latest",
     "vitest": "^1.6.0"
   },
   "dependencies": {
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "@via/store": "workspace:*",
+    "@via/core": "workspace:*",
+    "@via/node-sdk": "workspace:*"
   }
 }

@@ -15,6 +15,7 @@ export const filesTable = sqliteTable("files", {
 
 export const videosTable = sqliteTable("videos", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+  uuid: text("uuid").notNull().default("25bfcda6-2e44-42ee-8743-542f4972b94f"),
   fileId: integer("file_id").notNull().default(0),
   name: text("name").notNull().default(""),
   description: text("description").notNull().default(""),

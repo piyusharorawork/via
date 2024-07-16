@@ -27,12 +27,25 @@ export const createVideoStore = (databaseName: string) => {
       return videos;
     },
 
-    insert: async (input: VideoInput) => {
+    insert: async (input: VideoInput): Promise<void> => {
       await db.insert(videosTable).values(input);
     },
 
-    remove: async (videoId: number) => {
+    remove: async (videoId: number): Promise<void> => {
       await db.delete(videosTable).where(eq(videosTable.id, videoId));
+    },
+
+    get: async (uuid: string): Promise<Video> => {
+      const videos: Video[] = await db
+        .select()
+        .from(videosTable)
+        .where(eq(videosTable.uuid, uuid));
+
+      const video = videos[0];
+      if (!video) {
+        throw "no video found";
+      }
+      return video;
     },
   };
 };
