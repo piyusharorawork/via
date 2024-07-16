@@ -5,7 +5,10 @@ import { createVideoStore } from "@via/store/video-store";
 
 export const addVideoInput = z.object({
   uuid: z.string().uuid(),
-  name: z.string().min(3),
+  name: z
+    .string()
+    .min(3)
+    .refine((s) => !s.includes(" "), "No spaces allowed"),
   youtubeURL: z.string().url(),
   description: z.string().min(10),
 });
@@ -15,6 +18,7 @@ export type AddVideoInput = z.infer<typeof addVideoInput>;
 export const addVideo = (input: AddVideoInput) => {
   return new Promise<void>(async (resolve, reject) => {
     try {
+      await addVideoInput.parseAsync(input);
       const videoPath = `downloads/${input.name}.mp4`;
       await downloadYoutubeVideo(input.youtubeURL, videoPath);
       // TODO ensure upload server is stable and running

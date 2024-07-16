@@ -1,10 +1,5 @@
-// import { uploadFile } from "@via/node-sdk/upload-file";
-// import { addVideo } from "@via/node-sdk/create-video";
-// import path from "path";
-// import type { AppRouter } from "@via/router/router";
-// import { downloadYoutubeVideo } from "@via/youtube-downloader/download-video";
-// import { createVideoStore } from "@via/store/video-store";
-import { downloadYoutubeVideo } from "@via/core/download-youtube-video";
+import { addVideo } from "@via/workflow/add-video";
+import { v4 as generateId } from "uuid";
 
 (async () => {
   try {
@@ -13,8 +8,9 @@ import { downloadYoutubeVideo } from "@via/core/download-youtube-video";
     const youtubeURL = "https://www.youtube.com/shorts/A4bOUJ9AOEM";
     const start = "00:00:00";
     const end = "00:00:04";
+    const uuid = generateId();
 
-    await downloadYoutubeVideo();
+    await addVideo({ uuid, description, name, youtubeURL });
 
     // await downloadYoutubeVideo({
     //   dirPath: "downloads",
