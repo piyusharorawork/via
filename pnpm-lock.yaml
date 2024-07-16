@@ -386,12 +386,6 @@ importers:
         specifier: latest
         version: 5.5.2
 
-  packages/vitest-config:
-    devDependencies:
-      dotenv:
-        specifier: ^16.4.5
-        version: 16.4.5
-
   packages/workflow:
     dependencies:
       '@via/core':
@@ -413,9 +407,6 @@ importers:
       '@via/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@via/vitest-config':
-        specifier: workspace:*
-        version: link:../vitest-config
       typescript:
         specifier: latest
         version: 5.5.3

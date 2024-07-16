@@ -1,9 +1,0 @@
-{
-  "name": "@via/vitest-config",
-  "publishConfig": {
-    "access": "public"
-  },
-  "devDependencies": {
-    "dotenv": "^16.4.5"
-  }
-}

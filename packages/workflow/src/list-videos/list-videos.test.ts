@@ -1,4 +1,4 @@
-import { expect, test, describe } from "vitest";
+import { expect, test, describe, beforeAll } from "vitest";
 import { listVideos } from "./list-videos";
 import { v4 as generateId } from "uuid";
 import { createVideoStore } from "@via/store/video-store";
@@ -9,24 +9,36 @@ describe("list videos workflow", () => {
     {
       name: "get only 1 valid video",
       limit: 1,
+      videoName: "some-video",
+      videoPath: "some/path",
+      expectedURL: "http://localhost:4000/some/path",
+      uuid: generateId(),
     },
   ];
 
   for (const scenerio of scenerios) {
-    // const videoStore = getVideoStore();
-    // const fileStore = getFileStore();
-
     test(scenerio.name, async () => {
-      //   console.log(process.env.DATABASE_NAME);
-      //   const videoUUID = generateId();
-      //   await addVideo({
-      //     name: scenerio.videoName,
-      //     description: scenerio.videoDesciption,
-      //     youtubeURL: scenerio.youtubeURL,
-      //     uuid: videoUUID,
-      //   });
-      //   const video = await videoStore.get(videoUUID);
-      //   expect(video.uuid).toBe(video.uuid);
+      const videoStore = getVideoStore();
+      const fileStore = getFileStore();
+
+      const fileId = await fileStore.insert({
+        destination: "dst",
+        fileName: "file1.txt",
+        mimeType: "textfile",
+        originalName: "file1.txt",
+        path: scenerio.videoPath,
+      });
+
+      await videoStore.insert({
+        fileId,
+        name: scenerio.videoName,
+        description: "some description",
+        uuid: scenerio.uuid,
+      });
+
+      const res = await listVideos({ limit: scenerio.limit });
+      // TODO need indentify more filter to fetch video for a specific sceneri
+      // Expected Res need to validate
     });
   }
 });
