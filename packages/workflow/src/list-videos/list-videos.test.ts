@@ -1,7 +1,6 @@
 import { expect, test, describe, beforeAll } from "vitest";
 import { listVideos } from "./list-videos";
 import { v4 as generateId } from "uuid";
-import { createVideoStore } from "@via/store/video-store";
 import { getFileStore, getVideoStore } from "../helpers";
 
 describe("list videos workflow", () => {
