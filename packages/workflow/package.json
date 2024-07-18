@@ -9,8 +9,12 @@
   },
   "exports": {
     "./add-video": {
-      "types": "./src/add-video.ts",
-      "default": "./dist/add-video.js"
+      "types": "./src/add-video/add-video.ts",
+      "default": "./dist/add-video/add-video.js"
+    },
+    "./list-videos": {
+      "types": "./src/list-videos/list-videos.ts",
+      "default": "./dist/list-videos/list-videos.js"
     }
   },
   "devDependencies": {

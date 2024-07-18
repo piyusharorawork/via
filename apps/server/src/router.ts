@@ -4,10 +4,8 @@ import { createVideoStore } from "@via/store/video-store";
 // import { createVideoInput } from "./inputs.js";
 // import { addVideo } from "./handlers.js";
 //import { addVideoInput } from "@via/schemas/schema";
-import {
-  addVideoInput,
-  addVideo,
-} from "../../../packages/workflow/dist/add-video/add-video.js";
+import { addVideoInput, addVideo } from "@via/workflow/add-video";
+import { listVideosInput, listVideos } from "@via/workflow/list-videos";
 
 export const t = initTRPC.create();
 
@@ -15,9 +13,8 @@ export const appRouter = t.router({
   addVideo: t.procedure.input(addVideoInput).mutation(async (opts) => {
     await addVideo(opts.input);
   }),
-  listVideos: t.procedure.query(async () => {
-    const databaseName = process.env.DATABASE_NAME;
-    const videoStore = createVideoStore();
+  listVideos: t.procedure.input(listVideosInput).query(async (opts) => {
+    await listVideos(opts.input);
   }),
 
   //   getUser: t.procedure.input(z.number()).query((opts) => {
