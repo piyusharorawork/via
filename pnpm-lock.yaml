@@ -241,10 +241,28 @@ importers:
 
   packages/core:
     dependencies:
+      '@via/node-sdk':
+        specifier: workspace:*
+        version: link:../node-sdk
+      '@via/store':
+        specifier: workspace:*
+        version: link:../store
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       ytdl-core:
         specifier: ^4.11.5
         version: 4.11.5
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
     devDependencies:
+      '@types/lodash':
+        specifier: ^4.17.7
+        version: 4.17.7
+      '@types/uuid':
+        specifier: ^10.0.0
+        version: 10.0.0
       '@via/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config

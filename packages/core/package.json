@@ -14,11 +14,17 @@
     }
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.7",
+    "@types/uuid": "^10.0.0",
     "@via/typescript-config": "workspace:*",
     "typescript": "latest",
     "vitest": "^1.6.0"
   },
   "dependencies": {
-    "ytdl-core": "^4.11.5"
+    "@via/node-sdk": "workspace:*",
+    "@via/store": "workspace:*",
+    "lodash": "^4.17.21",
+    "ytdl-core": "^4.11.5",
+    "zod": "^3.23.8"
   }
 }

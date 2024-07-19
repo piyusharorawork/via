@@ -8,5 +8,6 @@
 - get rid of node sdk too
 - add debug config to vitest
 - add utility package for getting lodash getter , generate uuid
+- clean the test db before running any tests
 
 ## Immendiate Next Steps
