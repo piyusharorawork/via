@@ -1,4 +1,5 @@
-import { v4 as generateId } from "uuid";
+import { AppRouter } from "@via/server/app-router";
+import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 
 (async () => {
   try {
@@ -7,7 +8,17 @@ import { v4 as generateId } from "uuid";
     const youtubeURL = "https://www.youtube.com/shorts/A4bOUJ9AOEM";
     const start = "00:00:00";
     const end = "00:00:04";
-    const uuid = generateId();
+
+    const trpc = createTRPCProxyClient<AppRouter>({
+      links: [
+        httpBatchLink({
+          url: "http://localhost:4000",
+        }),
+      ],
+    });
+
+    const res = await trpc.listVideos.query({ limit: 10 });
+    console.log(res);
 
     //await addVideo({ uuid, description, name, youtubeURL });
 

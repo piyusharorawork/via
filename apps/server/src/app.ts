@@ -27,7 +27,9 @@ export class Application {
           })
         );
         const PORT = process.env.PORT;
-        app.get("/", (_, res) => res.json("server running"));
+        app.get("/", (_, res) => {
+          res.json("server running");
+        });
         app.use("/api/upload-file", getUploadFileRouter(app));
         this.server = app.listen(PORT, () => {
           console.log(`Server running on port ...${PORT}`);

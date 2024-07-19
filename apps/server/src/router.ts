@@ -15,9 +15,11 @@ export const t = initTRPC.create();
 
 export const appRouter = t.router({
   addVideo: t.procedure.input(addVideoInput).mutation(async (opts) => {
+    console.log(opts);
     await addVideo(opts.input);
   }),
   listVideos: t.procedure.input(listVideosInput).query(async (opts) => {
+    console.log(opts);
     await listVideos(opts.input);
   }),
 
@@ -37,5 +39,3 @@ export const appRouter = t.router({
   //   await addVideo(opts.input);
   // }),
 });
-
-export type AppRouter = typeof appRouter;

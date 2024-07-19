@@ -23,6 +23,9 @@ importers:
 
   apps/cli:
     dependencies:
+      '@trpc/client':
+        specifier: ^10.45.2
+        version: 10.45.2(@trpc/server@10.45.2)
       '@via/core':
         specifier: workspace:*
         version: link:../../packages/core
