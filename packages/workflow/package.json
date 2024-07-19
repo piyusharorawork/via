@@ -5,7 +5,8 @@
     "dev": "tsc --watch",
     "build": "tsc",
     "clean": "rm -rf .turbo dist node_modules",
-    "test": "vitest"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "exports": {
     "./add-video": {
@@ -18,15 +19,17 @@
     }
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.7",
     "@types/uuid": "^10.0.0",
     "@via/typescript-config": "workspace:*",
     "typescript": "latest",
     "vitest": "^1.6.0"
   },
   "dependencies": {
-    "zod": "^3.23.8",
-    "@via/store": "workspace:*",
     "@via/core": "workspace:*",
-    "@via/node-sdk": "workspace:*"
+    "@via/node-sdk": "workspace:*",
+    "@via/store": "workspace:*",
+    "lodash": "^4.17.21",
+    "zod": "^3.23.8"
   }
 }

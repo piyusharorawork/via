@@ -7,7 +7,6 @@
 - slowly get rid of web app
 - get rid of node sdk too
 - add debug config to vitest
+- add utility package for getting lodash getter , generate uuid
 
 ## Immendiate Next Steps
-
-- add file server not running tests , add tests fialing
