@@ -11,6 +11,7 @@ import {
 import { uploadFile } from "@via/node-sdk/upload-file";
 import { v4 as generateId } from "uuid";
 import _ from "lodash";
+export * from "./video-manager.schema.js";
 
 export const addVideo = (input: AddVideoInput) => {
   return new Promise<AddVideoOutput>(async (resolve, reject) => {

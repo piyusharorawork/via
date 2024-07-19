@@ -1,4 +1,3 @@
-import { addVideo } from "@via/workflow/add-video";
 import { v4 as generateId } from "uuid";
 
 (async () => {
@@ -10,7 +9,7 @@ import { v4 as generateId } from "uuid";
     const end = "00:00:04";
     const uuid = generateId();
 
-    await addVideo({ uuid, description, name, youtubeURL });
+    //await addVideo({ uuid, description, name, youtubeURL });
 
     // await downloadYoutubeVideo({
     //   dirPath: "downloads",

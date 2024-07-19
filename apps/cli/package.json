@@ -19,7 +19,6 @@
     "@via/server": "workspace:*",
     "@via/store": "workspace:*",
     "@via/video-core": "workspace:*",
-    "@via/workflow": "workspace:*",
     "uuid": "^10.0.0"
   }
 }

@@ -11,6 +11,10 @@
     "./video-downloader": {
       "types": "./src/video-downloader/video-downloader.ts",
       "default": "./dist/video-downloader/video-downloader.js"
+    },
+    "./video-manager": {
+      "types": "./src/video-manager/video-manager.ts",
+      "default": "./dist/video-manager/video-manager.js"
     }
   },
   "devDependencies": {

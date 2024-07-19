@@ -4,8 +4,12 @@ import { createVideoStore } from "@via/store/video-store";
 // import { createVideoInput } from "./inputs.js";
 // import { addVideo } from "./handlers.js";
 //import { addVideoInput } from "@via/schemas/schema";
-import { addVideoInput, addVideo } from "@via/workflow/add-video";
-import { listVideosInput, listVideos } from "@via/workflow/list-videos";
+import {
+  addVideo,
+  addVideoInput,
+  listVideos,
+  listVideosInput,
+} from "@via/core/video-manager";
 
 export const t = initTRPC.create();
 

@@ -41,9 +41,6 @@ importers:
       '@via/video-core':
         specifier: workspace:*
         version: link:../../packages/video-core
-      '@via/workflow':
-        specifier: workspace:*
-        version: link:../../packages/workflow
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
@@ -79,15 +76,15 @@ importers:
 
   apps/server:
     dependencies:
+      '@via/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@via/store':
         specifier: workspace:*
         version: link:../../packages/store
       '@via/video-core':
         specifier: workspace:*
         version: link:../../packages/video-core
-      '@via/workflow':
-        specifier: workspace:*
-        version: link:../../packages/workflow
       cors:
         specifier: ^2.8.5
         version: 2.8.5
@@ -403,40 +400,6 @@ importers:
       typescript:
         specifier: latest
         version: 5.5.2
-
-  packages/workflow:
-    dependencies:
-      '@via/core':
-        specifier: workspace:*
-        version: link:../core
-      '@via/node-sdk':
-        specifier: workspace:*
-        version: link:../node-sdk
-      '@via/store':
-        specifier: workspace:*
-        version: link:../store
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
-    devDependencies:
-      '@types/lodash':
-        specifier: ^4.17.7
-        version: 4.17.7
-      '@types/uuid':
-        specifier: ^10.0.0
-        version: 10.0.0
-      '@via/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      typescript:
-        specifier: latest
-        version: 5.5.3
-      vitest:
-        specifier: ^1.6.0
-        version: 1.6.0(@types/node@20.14.8)(jsdom@19.0.0)
 
 packages:
 
