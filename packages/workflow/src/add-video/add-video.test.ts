@@ -18,16 +18,14 @@ describe("add video workflow", () => {
     const videoStore = getVideoStore();
 
     test(scenerio.name, async () => {
-      const videoUUID = generateId();
-      await addVideo({
+      const { videoUUID } = await addVideo({
         name: scenerio.videoName,
         description: scenerio.videoDesciption,
         youtubeURL: scenerio.youtubeURL,
-        uuid: videoUUID,
       });
 
       const video = await videoStore.get(videoUUID);
-      expect(video.uuid).toBe(video.uuid);
+      expect(video.uuid).toBe(videoUUID);
     });
   }
 });
