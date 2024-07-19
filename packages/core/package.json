@@ -8,9 +8,9 @@
     "test": "vitest"
   },
   "exports": {
-    "./download-youtube-video": {
-      "types": "./src/download-youtube-video.ts",
-      "default": "./dist/download-youtube-video.js"
+    "./video-downloader": {
+      "types": "./src/video-downloader/video-downloader.ts",
+      "default": "./dist/video-downloader/video-downloader.js"
     }
   },
   "devDependencies": {

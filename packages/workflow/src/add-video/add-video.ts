@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { downloadYoutubeVideo } from "@via/core/download-youtube-video";
+import { downloadYoutubeVideo } from "@via/core/video-downloader";
 import { uploadFile } from "@via/node-sdk/upload-file";
 import { createVideoStore } from "@via/store/video-store";
 import { getDatabaseName, getVideoStore } from "../helpers.js";

@@ -1,5 +1,5 @@
 import { expect, test, describe } from "vitest";
-import { downloadYoutubeVideo } from "./download-youtube-video";
+import { downloadYoutubeVideo } from "./video-downloader";
 
 import fs from "fs";
 
