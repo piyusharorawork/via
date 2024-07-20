@@ -20,7 +20,6 @@
     "@remix-run/serve": "^2.10.2",
     "@trpc/client": "^10.45.2",
     "@via/server": "workspace:*",
-    "@via/components": "workspace:*",
     "@via/ui": "workspace:*",
     "cross-env": "^7.0.3",
     "express": "^4.19.2",
