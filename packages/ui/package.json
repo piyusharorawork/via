@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
+    "tailwindcss": "^3.4.4",
     "@via/tailwind-config": "workspace:*",
     "@via/typescript-config": "workspace:*",
     "autoprefixer": "^10.4.18",
