@@ -1,7 +1,8 @@
 import { expect, test, describe } from "vitest";
 import { VideoManager } from "./video-manager";
-import { getFileStore, getVideoStore } from "../helpers";
 import { v4 as generateId } from "uuid";
+import { VideoStore } from "@via/store/video-store";
+import { FileStore } from "@via/store/file-store";
 
 const databaseName = "via-test.db";
 
@@ -17,7 +18,7 @@ describe("add video", () => {
   ];
 
   const videoManager = new VideoManager(databaseName);
-  const videoStore = getVideoStore(databaseName);
+  const videoStore = new VideoStore(databaseName);
 
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
@@ -47,8 +48,8 @@ describe("list videos", () => {
   ];
 
   const videoManager = new VideoManager(databaseName);
-  const videoStore = getVideoStore(databaseName);
-  const fileStore = getFileStore(databaseName);
+  const videoStore = new VideoStore(databaseName);
+  const fileStore = new FileStore(databaseName);
 
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
@@ -86,8 +87,8 @@ describe("remove video", () => {
   ];
 
   const videoManager = new VideoManager(databaseName);
-  const videoStore = getVideoStore(databaseName);
-  const fileStore = getFileStore(databaseName);
+  const videoStore = new VideoStore(databaseName);
+  const fileStore = new FileStore(databaseName);
 
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
@@ -131,8 +132,8 @@ describe("view video", () => {
   ];
 
   const videoManager = new VideoManager(databaseName);
-  const videoStore = getVideoStore(databaseName);
-  const fileStore = getFileStore(databaseName);
+  const videoStore = new VideoStore(databaseName);
+  const fileStore = new FileStore(databaseName);
 
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {

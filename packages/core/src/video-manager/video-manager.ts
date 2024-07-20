@@ -1,4 +1,4 @@
-import { formFileURL, getFileStore, getVideoStore } from "../helpers.js";
+import { formFileURL } from "../helpers.js";
 import { downloadYoutubeVideo } from "../video-downloader/video-downloader.js";
 import {
   addVideoInput,
@@ -16,12 +16,16 @@ import {
 import { uploadFile } from "@via/node-sdk/upload-file";
 import { v4 as generateId } from "uuid";
 import _ from "lodash";
+import { VideoStore } from "@via/store/video-store";
+import { FileStore } from "@via/store/file-store";
 export * from "./video-manager.schema.js";
 
 export class VideoManager {
-  private databaseName: string;
+  private videoStore: VideoStore;
+  private fileStore: FileStore;
   constructor(databaseName: string) {
-    this.databaseName = databaseName;
+    this.videoStore = new VideoStore(databaseName);
+    this.fileStore = new FileStore(databaseName);
   }
 
   async addVideo(input: AddVideoInput): Promise<AddVideoOutput> {
@@ -32,8 +36,8 @@ export class VideoManager {
       // TODO ensure upload server is stable and running
       // TODO upload file utility function must be part of workflow itself
       const file = await uploadFile("http://localhost:4000", videoPath);
-      const fileStore = getFileStore(this.databaseName);
-      const fileId = await fileStore.insert({
+
+      const fileId = await this.fileStore.insert({
         destination: file.destination,
         fileName: file.filename,
         mimeType: file.mimetype,
@@ -41,10 +45,9 @@ export class VideoManager {
         path: file.path,
       });
 
-      const videoStore = getVideoStore(this.databaseName);
       const videoUUID = generateId();
 
-      await videoStore.insert({
+      await this.videoStore.insert({
         fileId,
         description: input.description,
         name: input.name,
@@ -60,14 +63,12 @@ export class VideoManager {
 
   async listVideos(input: ListVideosInput): Promise<ListVideosOutput> {
     try {
-      const videoStore = getVideoStore(this.databaseName);
-      const fileStore = getFileStore(this.databaseName);
-      const videos = await videoStore.list(input.limit);
+      const videos = await this.videoStore.list(input.limit);
 
       const videoURLMap: Record<string, string> = {};
       for (const video of videos) {
         // TODO can be optimized more
-        const { found, file } = await fileStore.get(video.fileId);
+        const { found, file } = await this.fileStore.get(video.fileId);
         if (found) {
           const videoURL = formFileURL(file);
           videoURLMap[video.id] = videoURL;
@@ -97,16 +98,14 @@ export class VideoManager {
   async removeVideo(input: RemoveVideoInput): Promise<RemoveVideoOutput> {
     try {
       await removeVideoInput.parseAsync(input);
-      const videoStore = getVideoStore(this.databaseName);
-      const fileStore = getFileStore(this.databaseName);
 
-      const { found, video } = await videoStore.get(input.videoUUID);
+      const { found, video } = await this.videoStore.get(input.videoUUID);
       if (!found) {
         throw "invalid video uuid";
       }
 
-      await fileStore.remove(video.fileId);
-      await videoStore.remove(input.videoUUID);
+      await this.fileStore.remove(video.fileId);
+      await this.videoStore.remove(input.videoUUID);
 
       return { success: true };
     } catch (error) {
@@ -116,16 +115,16 @@ export class VideoManager {
 
   async viewVideo(input: ViewVideoInput): Promise<ViewVideoOutput> {
     try {
-      const videoStore = getVideoStore(this.databaseName);
-      const { found: isVideFound, video } = await videoStore.get(
+      const { found: isVideFound, video } = await this.videoStore.get(
         input.videoUUID
       );
       if (!isVideFound) {
         throw "video not found";
       }
 
-      const fileStore = getFileStore(this.databaseName);
-      const { found: isFileFound, file } = await fileStore.get(video.fileId);
+      const { found: isFileFound, file } = await this.fileStore.get(
+        video.fileId
+      );
 
       if (!isFileFound) {
         throw "file not found";
