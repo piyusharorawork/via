@@ -15,12 +15,11 @@ export const t = initTRPC.create();
 
 export const appRouter = t.router({
   addVideo: t.procedure.input(addVideoInput).mutation(async (opts) => {
-    console.log(opts);
     await addVideo(opts.input);
   }),
   listVideos: t.procedure.input(listVideosInput).query(async (opts) => {
-    console.log(opts);
-    await listVideos(opts.input);
+    const videos = await listVideos(opts.input);
+    return videos;
   }),
 
   //   getUser: t.procedure.input(z.number()).query((opts) => {

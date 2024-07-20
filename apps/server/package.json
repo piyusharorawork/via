@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "concurrently \"tsc --watch\" \"nodemon dist/server.js\"",
     "build": "tsc",
-    "clean": "rm -rf .turbo dist node_modules",
+    "clean": "rm -rf .turbo dist node_modules downloads uploads",
     "test": "vitest"
   },
   "exports": {
@@ -13,13 +13,16 @@
     }
   },
   "dependencies": {
+    "@trpc/client": "^10.45.2",
+    "@via/core": "workspace:*",
     "@via/store": "workspace:*",
     "@via/video-core": "workspace:*",
-    "@via/core": "workspace:*",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "multer": "1.4.5-lts.1",
-    "uuid": "^10.0.0"
+    "node-fetch": "^3.3.2",
+    "uuid": "^10.0.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@trpc/server": "^10.45.2",

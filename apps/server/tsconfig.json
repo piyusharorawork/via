@@ -4,7 +4,10 @@
     "outDir": "dist",
     "rootDir": "src",
     "declaration": false,
-    "declarationMap": false
+    "declarationMap": false,
+    "sourceMap": true,
+    "module": "Node16",
+    "moduleResolution": "Node16"
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

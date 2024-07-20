@@ -1,9 +1,10 @@
 import { AppRouter } from "@via/server/app-router";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
+import nodeFetch from "node-fetch";
 
 (async () => {
   try {
-    const name = "Hanuman Ji";
+    const name = "Hanuman-Ji";
     const description = "Video of lord hanuman also known as bajrang bali";
     const youtubeURL = "https://www.youtube.com/shorts/A4bOUJ9AOEM";
     const start = "00:00:00";
@@ -12,10 +13,13 @@ import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
     const trpc = createTRPCProxyClient<AppRouter>({
       links: [
         httpBatchLink({
-          url: "http://localhost:4000",
+          url: "http://localhost:4000/trpc",
+          fetch: nodeFetch as any,
         }),
       ],
     });
+
+    await trpc.addVideo.mutate({ name, youtubeURL, description });
 
     const res = await trpc.listVideos.query({ limit: 10 });
     console.log(res);

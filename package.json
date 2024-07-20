@@ -2,6 +2,7 @@
   "name": "via",
   "private": true,
   "scripts": {
+    "compile": "turbo compile",
     "build": "turbo build",
     "dev": "turbo dev",
     "start": "turbo start",

@@ -2,9 +2,9 @@
   "name": "@via/core",
   "type": "module",
   "scripts": {
-    "dev": "tsc --watch",
+    "compile": "tsc --watch",
     "build": "tsc",
-    "clean": "rm -rf .turbo dist node_modules",
+    "clean": "rm -rf .turbo dist node_modules downloads",
     "test": "vitest"
   },
   "exports": {

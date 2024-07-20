@@ -2,7 +2,7 @@
   "name": "@via/math",
   "type": "module",
   "scripts": {
-    "dev": "tsc --watch",
+    "compile": "tsc --watch",
     "build": "tsc",
     "clean": "rm -rf .turbo dist node_modules",
     "test": "vitest"

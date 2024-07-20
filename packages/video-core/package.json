@@ -2,6 +2,7 @@
   "name": "@via/video-core",
   "type": "module",
   "scripts": {
+    "compile": "tsc --watch",
     "build": "tsc",
     "clean": "rm -rf .turbo dist node_modules"
   },

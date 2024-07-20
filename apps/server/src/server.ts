@@ -76,3 +76,32 @@ import { Application } from "./app.js";
     console.error(error);
   }
 })();
+
+// import { initTRPC } from "@trpc/server";
+// import { z } from "zod";
+// import express from "express";
+// import * as trpcExpress from "@trpc/server/adapters/express";
+
+// export const t = initTRPC.create();
+
+// export const appRouter = t.router({
+//   hello: t.procedure.input(z.string()).query(({ input }) => {
+//     return `Hello ${input}`;
+//   }),
+// });
+
+// export type AppRouter = typeof appRouter;
+
+// (async () => {
+//   const app = express();
+//   app.use(
+//     "/trpc",
+//     trpcExpress.createExpressMiddleware({
+//       router: appRouter,
+//     })
+//   );
+
+//   app.listen(4000, () => {
+//     console.log("running at 4000");
+//   });
+// })();
