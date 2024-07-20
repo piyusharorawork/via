@@ -19,6 +19,7 @@ export const videosTable = sqliteTable("videos", {
   fileId: integer("file_id").notNull(),
   name: text("name").notNull(),
   description: text("description").notNull(),
+  originalURL: text("descrption").notNull(),
   createdAt: text("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),

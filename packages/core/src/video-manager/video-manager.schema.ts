@@ -31,3 +31,17 @@ export type RemoveVideoInput = z.infer<typeof removeVideoInput>;
 export type RemoveVideoOutput = {
   success: boolean;
 };
+
+export const viewVideoInput = z.object({
+  videoUUID: z.string().uuid(),
+});
+
+export type ViewVideoInput = z.infer<typeof viewVideoInput>;
+export type ViewVideoOutput = {
+  videoUUID: string;
+  name: string;
+  originalURL: string;
+  descrption: string;
+  createdAt: string;
+  videoURL: string;
+};

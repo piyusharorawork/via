@@ -1,5 +1,5 @@
 import { expect, test, describe } from "vitest";
-import { addVideo, listVideos, removeVideo } from "./video-manager";
+import { addVideo, listVideos, removeVideo, viewVideo } from "./video-manager";
 import { getFileStore, getVideoStore } from "../helpers";
 import { v4 as generateId } from "uuid";
 
@@ -60,6 +60,7 @@ describe("list videos", () => {
         name: scenerio.videoName,
         description: "some description",
         uuid: scenerio.uuid,
+        originalURL: "some-original-url",
       });
       const videos = await listVideos({ limit: scenerio.limit });
       // TODO better expectations than just length
@@ -95,6 +96,7 @@ describe("remove video", () => {
         uuid: scenerio.uuid,
         description: "some-description",
         name: "some-name",
+        originalURL: "some-url",
       });
 
       const { success } = await removeVideo({ videoUUID: scenerio.uuid });
@@ -102,6 +104,49 @@ describe("remove video", () => {
       expect(success).toBe(scenerio.expectedSuccess);
       const { found } = await videoStore.get(scenerio.uuid);
       expect(found).toBeFalsy();
+    });
+  }
+});
+
+describe("view video", () => {
+  const scenerios = [
+    {
+      name: "valid video",
+      videoName: "some-name",
+      videoUUID: generateId(),
+      youtubeURL: "http://some-url",
+      videoPath: "/some/path",
+      videoDescription: "some video description",
+      videoURL: "http://localhost:4000/some/path",
+    },
+  ];
+
+  for (const scenerio of scenerios) {
+    test(scenerio.name, async () => {
+      const videoStore = getVideoStore();
+      const fileStore = getFileStore();
+      const fileId = await fileStore.insert({
+        destination: "dst",
+        fileName: "file1.txt",
+        mimeType: "textfile",
+        originalName: "file1.txt",
+        path: scenerio.videoPath,
+      });
+      await videoStore.insert({
+        fileId,
+        uuid: scenerio.videoUUID,
+        description: scenerio.videoDescription,
+        name: scenerio.videoName,
+        originalURL: scenerio.youtubeURL,
+      });
+
+      const video = await viewVideo({ videoUUID: scenerio.videoUUID });
+      expect(video.createdAt.length).toBeGreaterThan(0);
+      expect(video.descrption).toBe(scenerio.videoDescription);
+      expect(video.name).toBe(scenerio.videoName);
+      expect(video.videoUUID).toBe(scenerio.videoUUID);
+      expect(video.originalURL).toBe(scenerio.youtubeURL);
+      expect(video.videoURL).toBe(scenerio.videoURL);
     });
   }
 });

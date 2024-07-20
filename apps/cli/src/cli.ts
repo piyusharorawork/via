@@ -24,6 +24,11 @@ import nodeFetch from "node-fetch";
     let res = await trpc.listVideos.query({ limit: 10 });
     console.log(res);
 
+    const videoDetails = await trpc.viewVideo.query({
+      videoUUID: res[0]!.uuid,
+    });
+    console.log(videoDetails);
+
     await trpc.removeVideo.mutate({ videoUUID: res[0]!.uuid });
 
     res = await trpc.listVideos.query({ limit: 10 });

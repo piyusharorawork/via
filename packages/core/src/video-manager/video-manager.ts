@@ -1,4 +1,4 @@
-import { getFileStore, getVideoStore } from "../helpers.js";
+import { formFileURL, getFileStore, getVideoStore } from "../helpers.js";
 import { downloadYoutubeVideo } from "../video-downloader/video-downloader.js";
 import {
   addVideoInput,
@@ -10,6 +10,9 @@ import {
   removeVideoInput,
   RemoveVideoInput,
   RemoveVideoOutput,
+  ViewVideoInput,
+  viewVideoInput,
+  ViewVideoOutput,
 } from "./video-manager.schema.js";
 import { uploadFile } from "@via/node-sdk/upload-file";
 import { v4 as generateId } from "uuid";
@@ -33,6 +36,7 @@ export const addVideo = (input: AddVideoInput) => {
         description: input.description,
         name: input.name,
         uuid: videoUUID,
+        originalURL: input.youtubeURL,
       });
 
       return resolve({ videoUUID });
@@ -61,7 +65,7 @@ export const listVideos = (input: ListVideosInput) => {
         // TODO can be optimized more
         const { found, file } = await fileStore.get(video.fileId);
         if (found) {
-          const videoURL = `http://localhost:4000/${file.path}`;
+          const videoURL = formFileURL(file);
           videoURLMap[video.id] = videoURL;
         }
       }
@@ -105,6 +109,40 @@ export const removeVideo = (input: RemoveVideoInput) => {
       return resolve({ success: true });
     } catch (error) {
       return reject(error);
+    }
+  });
+};
+
+export const viewVideo = (input: ViewVideoInput) => {
+  return new Promise<ViewVideoOutput>(async (resolve, reject) => {
+    try {
+      const videoStore = getVideoStore();
+      const { found: isVideFound, video } = await videoStore.get(
+        input.videoUUID
+      );
+      if (!isVideFound) {
+        return reject("video not found");
+      }
+
+      const fileStore = getFileStore();
+      const { found: isFileFound, file } = await fileStore.get(video.fileId);
+
+      if (!isFileFound) {
+        return reject("file not found");
+      }
+
+      const videoURL = formFileURL(file);
+
+      return resolve({
+        createdAt: video.createdAt,
+        descrption: video.description,
+        name: video.name,
+        videoUUID: video.uuid,
+        originalURL: video.originalURL,
+        videoURL,
+      });
+    } catch (error) {
+      reject(error);
     }
   });
 };
