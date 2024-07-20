@@ -21,6 +21,7 @@
       "cache": false,
       "persistent": true
     },
-    "test": {}
+    "test": {},
+    "type-check": {}
   }
 }

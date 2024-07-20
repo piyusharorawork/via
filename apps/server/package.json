@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "concurrently \"tsc --watch\" \"nodemon dist/server.js\"",
     "build": "tsc",
-    "clean": "rm -rf .turbo dist node_modules downloads uploads"
+    "clean": "rm -rf .turbo dist node_modules downloads uploads",
+    "type-check": "tsc --noEmit"
   },
   "exports": {
     "./app-router": {

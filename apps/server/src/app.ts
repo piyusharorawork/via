@@ -12,6 +12,8 @@ export class Application {
   start(databaseName: string, port: number) {
     return new Promise<void>(async (resolve, reject) => {
       try {
+        const serverBaseURL = `http://localhost:${port}`;
+
         const createContext = ({
           req,
           res,
@@ -19,7 +21,7 @@ export class Application {
         type Context = Awaited<ReturnType<typeof createContext>>;
         const app = express();
         app.use(cors());
-        const appRouter = createRouter(databaseName);
+        const appRouter = createRouter(databaseName, serverBaseURL);
         app.use(
           "/trpc",
           trpcExpress.createExpressMiddleware({

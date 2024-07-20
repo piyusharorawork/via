@@ -8,8 +8,8 @@ import {
   VideoManager,
 } from "@via/core/video-manager";
 
-export const createRouter = (databaseName: string) => {
-  const videoManager = new VideoManager(databaseName);
+export const createRouter = (databaseName: string, serverBaseURL: string) => {
+  const videoManager = new VideoManager(databaseName, serverBaseURL);
   const t = initTRPC.create();
 
   const appRouter = t.router({
