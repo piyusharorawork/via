@@ -16,7 +16,6 @@
     "@trpc/client": "^10.45.2",
     "@via/core": "workspace:*",
     "@via/editly": "workspace:*",
-    "@via/node-sdk": "workspace:*",
     "@via/server": "workspace:*",
     "@via/store": "workspace:*",
     "@via/video-core": "workspace:*",

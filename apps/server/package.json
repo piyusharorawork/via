@@ -4,9 +4,7 @@
   "scripts": {
     "dev": "concurrently \"tsc --watch\" \"nodemon dist/server.js\"",
     "build": "tsc",
-    "clean": "rm -rf .turbo dist node_modules downloads uploads",
-    "test": "vitest run",
-    "test:watch": "vitest run"
+    "clean": "rm -rf .turbo dist node_modules downloads uploads"
   },
   "exports": {
     "./app-router": {
@@ -27,9 +25,7 @@
   "devDependencies": {
     "@types/multer": "^1.4.11",
     "@types/uuid": "^10.0.0",
-    "@via/node-sdk": "workspace:*",
     "@via/typescript-config": "workspace:*",
-    "dotenv": "^16.4.5",
-    "vitest": "^1.6.0"
+    "dotenv": "^16.4.5"
   }
 }

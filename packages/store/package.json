@@ -5,7 +5,6 @@
     "compile": "tsc --watch",
     "build": "tsc",
     "clean": "rm -rf .turbo dist node_modules",
-    "test": "vitest",
     "migrate": "drizzle-kit generate --schema src/schema.ts --dialect sqlite --out migrations"
   },
   "exports": {

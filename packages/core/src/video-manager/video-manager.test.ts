@@ -5,6 +5,7 @@ import { VideoStore } from "@via/store/video-store";
 import { FileStore } from "@via/store/file-store";
 
 const databaseName = "via-test.db";
+const serverBaseURL = "http://localhost:4000";
 
 describe("add video", () => {
   const scenerios = [
@@ -17,7 +18,7 @@ describe("add video", () => {
     },
   ];
 
-  const videoManager = new VideoManager(databaseName);
+  const videoManager = new VideoManager(databaseName, serverBaseURL);
   const videoStore = new VideoStore(databaseName);
 
   for (const scenerio of scenerios) {
@@ -47,7 +48,7 @@ describe("list videos", () => {
     },
   ];
 
-  const videoManager = new VideoManager(databaseName);
+  const videoManager = new VideoManager(databaseName, serverBaseURL);
   const videoStore = new VideoStore(databaseName);
   const fileStore = new FileStore(databaseName);
 
@@ -86,7 +87,7 @@ describe("remove video", () => {
     },
   ];
 
-  const videoManager = new VideoManager(databaseName);
+  const videoManager = new VideoManager(databaseName, serverBaseURL);
   const videoStore = new VideoStore(databaseName);
   const fileStore = new FileStore(databaseName);
 
@@ -131,7 +132,7 @@ describe("view video", () => {
     },
   ];
 
-  const videoManager = new VideoManager(databaseName);
+  const videoManager = new VideoManager(databaseName, serverBaseURL);
   const videoStore = new VideoStore(databaseName);
   const fileStore = new FileStore(databaseName);
 

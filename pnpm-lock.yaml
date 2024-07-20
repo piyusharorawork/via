@@ -32,9 +32,6 @@ importers:
       '@via/editly':
         specifier: workspace:*
         version: link:../../packages/editly
-      '@via/node-sdk':
-        specifier: workspace:*
-        version: link:../../packages/node-sdk
       '@via/server':
         specifier: workspace:*
         version: link:../server
@@ -116,18 +113,12 @@ importers:
       '@types/uuid':
         specifier: ^10.0.0
         version: 10.0.0
-      '@via/node-sdk':
-        specifier: workspace:*
-        version: link:../../packages/node-sdk
       '@via/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
-      vitest:
-        specifier: ^1.6.0
-        version: 1.6.0(@types/node@20.14.8)(jsdom@19.0.0)
 
   apps/web:
     dependencies:
@@ -244,15 +235,12 @@ importers:
 
   packages/core:
     dependencies:
-      '@via/node-sdk':
-        specifier: workspace:*
-        version: link:../node-sdk
       '@via/store':
         specifier: workspace:*
         version: link:../store
-      dotenv:
-        specifier: ^16.4.5
-        version: 16.4.5
+      axios:
+        specifier: ^1.7.2
+        version: 1.7.2
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -344,22 +332,6 @@ importers:
       typescript:
         specifier: latest
         version: 5.5.2
-      vitest:
-        specifier: ^1.6.0
-        version: 1.6.0(@types/node@20.14.8)(jsdom@19.0.0)
-
-  packages/node-sdk:
-    dependencies:
-      axios:
-        specifier: ^1.7.2
-        version: 1.7.2
-    devDependencies:
-      '@via/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      typescript:
-        specifier: latest
-        version: 5.5.3
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.14.8)(jsdom@19.0.0)

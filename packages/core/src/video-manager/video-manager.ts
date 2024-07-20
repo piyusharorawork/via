@@ -13,19 +13,21 @@ import {
   ViewVideoInput,
   ViewVideoOutput,
 } from "./video-manager.schema.js";
-import { uploadFile } from "@via/node-sdk/upload-file";
 import { v4 as generateId } from "uuid";
 import _ from "lodash";
 import { VideoStore } from "@via/store/video-store";
 import { FileStore } from "@via/store/file-store";
+import { FileUploader } from "../file-uploader/file-uploader.js";
 export * from "./video-manager.schema.js";
 
 export class VideoManager {
   private videoStore: VideoStore;
   private fileStore: FileStore;
-  constructor(databaseName: string) {
+  private fileUploader: FileUploader;
+  constructor(databaseName: string, serverBaseURL: string) {
     this.videoStore = new VideoStore(databaseName);
     this.fileStore = new FileStore(databaseName);
+    this.fileUploader = new FileUploader(serverBaseURL);
   }
 
   async addVideo(input: AddVideoInput): Promise<AddVideoOutput> {
@@ -35,7 +37,7 @@ export class VideoManager {
       await downloadYoutubeVideo(input.youtubeURL, videoPath);
       // TODO ensure upload server is stable and running
       // TODO upload file utility function must be part of workflow itself
-      const file = await uploadFile("http://localhost:4000", videoPath);
+      const file = await this.fileUploader.uploadFile(videoPath);
 
       const fileId = await this.fileStore.insert({
         destination: file.destination,
