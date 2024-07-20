@@ -57,6 +57,7 @@ export default function () {
                 {listVideoQuery.data?.map((video, index) => {
                   return (
                     <tr
+                      key={video.uuid}
                       className="cursor-pointer"
                       onClick={() => navigate(`/videos/${video.uuid}`)}
                     >

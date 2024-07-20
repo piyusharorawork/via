@@ -12,3 +12,5 @@
 - support start and end trim video
 
 ## Immendiate Next Steps
+
+- express static server

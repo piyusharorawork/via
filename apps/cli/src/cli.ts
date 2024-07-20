@@ -22,22 +22,22 @@ import nodeFetch from "node-fetch";
     // ADD ONE VIDEO
     await trpc.addVideo.mutate({ name, youtubeURL, description });
 
-    // LIST ALL VIDEOS
-    let res = await trpc.listVideos.query({ limit: 10 });
-    console.log(res);
+    // // LIST ALL VIDEOS
+    // let res = await trpc.listVideos.query({ limit: 10 });
+    // console.log(res);
 
-    // VIEW ONE VIDEO
-    const videoDetails = await trpc.viewVideo.query({
-      videoUUID: res[0]!.uuid,
-    });
-    console.log(videoDetails);
+    // // VIEW ONE VIDEO
+    // const videoDetails = await trpc.viewVideo.query({
+    //   videoUUID: res[0]!.uuid,
+    // });
+    // console.log(videoDetails);
 
-    // DELETE THAT VIDEO
-    await trpc.removeVideo.mutate({ videoUUID: res[0]!.uuid });
+    // // DELETE THAT VIDEO
+    // await trpc.removeVideo.mutate({ videoUUID: res[0]!.uuid });
 
-    // LIST ALL VIDEOS
-    res = await trpc.listVideos.query({ limit: 10 });
-    console.log(res);
+    // // LIST ALL VIDEOS
+    // res = await trpc.listVideos.query({ limit: 10 });
+    // console.log(res);
   } catch (error) {
     console.error(error);
   }

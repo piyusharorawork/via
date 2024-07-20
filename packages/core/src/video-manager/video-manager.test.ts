@@ -126,7 +126,7 @@ describe("view video", () => {
       videoName: "some-name",
       videoUUID: generateId(),
       youtubeURL: "http://some-url",
-      videoPath: "/some/path",
+      videoPath: "some/path",
       videoDescription: "some video description",
       videoURL: "http://localhost:4000/some/path",
     },

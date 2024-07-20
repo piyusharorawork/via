@@ -19,6 +19,6 @@ export const useMulter = (app: Express) => {
   if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
   }
-  app.use(express.static("uploads"));
+  app.use("/uploads", express.static("uploads"));
   return upload;
 };

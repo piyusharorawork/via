@@ -21,7 +21,9 @@ export class Application {
         type Context = Awaited<ReturnType<typeof createContext>>;
         const app = express();
         app.use(cors());
+
         const appRouter = createRouter(databaseName, serverBaseURL);
+
         app.use(
           "/trpc",
           trpcExpress.createExpressMiddleware({
