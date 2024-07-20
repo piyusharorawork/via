@@ -5,7 +5,8 @@
     "dev": "concurrently \"tsc --watch\" \"nodemon dist/server.js\"",
     "build": "tsc",
     "clean": "rm -rf .turbo dist node_modules downloads uploads",
-    "test": "vitest"
+    "test": "vitest run",
+    "test:watch": "vitest run"
   },
   "exports": {
     "./app-router": {
@@ -13,20 +14,17 @@
     }
   },
   "dependencies": {
-    "@trpc/client": "^10.45.2",
     "@via/core": "workspace:*",
-    "@via/store": "workspace:*",
     "@via/video-core": "workspace:*",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "multer": "1.4.5-lts.1",
-    "node-fetch": "^3.3.2",
     "uuid": "^10.0.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "@trpc/server": "^10.45.2",
+    "@types/cors": "^2.8.17"
   },
   "devDependencies": {
-    "@trpc/server": "^10.45.2",
-    "@types/cors": "^2.8.17",
     "@types/multer": "^1.4.11",
     "@types/uuid": "^10.0.0",
     "@via/node-sdk": "workspace:*",

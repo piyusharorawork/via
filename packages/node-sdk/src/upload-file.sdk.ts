@@ -3,11 +3,16 @@ import fs from "fs";
 import FormData from "form-data";
 
 export type UploadVideoOutput = {
-  fileURL: string;
+  originalname: string;
+  mimetype: string;
+  filename: string;
+  path: string;
+  size: string;
+  destination: string;
 };
 
 export const uploadFile = (serverBaseURL: string, filePath: string) => {
-  return new Promise<number>(async (resolve, reject) => {
+  return new Promise<UploadVideoOutput>(async (resolve, reject) => {
     try {
       const file = fs.createReadStream(filePath);
       const formData = new FormData();

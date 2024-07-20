@@ -82,15 +82,15 @@ importers:
 
   apps/server:
     dependencies:
-      '@trpc/client':
+      '@trpc/server':
         specifier: ^10.45.2
-        version: 10.45.2(@trpc/server@10.45.2)
+        version: 10.45.2
+      '@types/cors':
+        specifier: ^2.8.17
+        version: 2.8.17
       '@via/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@via/store':
-        specifier: workspace:*
-        version: link:../../packages/store
       '@via/video-core':
         specifier: workspace:*
         version: link:../../packages/video-core
@@ -103,9 +103,6 @@ importers:
       multer:
         specifier: 1.4.5-lts.1
         version: 1.4.5-lts.1
-      node-fetch:
-        specifier: ^3.3.2
-        version: 3.3.2
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
@@ -113,12 +110,6 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
-      '@trpc/server':
-        specifier: ^10.45.2
-        version: 10.45.2
-      '@types/cors':
-        specifier: ^2.8.17
-        version: 2.8.17
       '@types/multer':
         specifier: ^1.4.11
         version: 1.4.11

@@ -11,7 +11,6 @@ import {
   RemoveVideoInput,
   RemoveVideoOutput,
   ViewVideoInput,
-  viewVideoInput,
   ViewVideoOutput,
 } from "./video-manager.schema.js";
 import { uploadFile } from "@via/node-sdk/upload-file";
@@ -27,7 +26,16 @@ export const addVideo = (input: AddVideoInput) => {
       await downloadYoutubeVideo(input.youtubeURL, videoPath);
       // TODO ensure upload server is stable and running
       // TODO upload file utility function must be part of workflow itself
-      const fileId = await uploadFile("http://localhost:4000", videoPath);
+      const file = await uploadFile("http://localhost:4000", videoPath);
+      const fileStore = getFileStore();
+      const fileId = await fileStore.insert({
+        destination: file.destination,
+        fileName: file.filename,
+        mimeType: file.mimetype,
+        originalName: file.originalname,
+        path: file.path,
+      });
+
       const videoStore = getVideoStore();
       const videoUUID = generateId();
 
