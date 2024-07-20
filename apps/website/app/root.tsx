@@ -1,11 +1,13 @@
-import React from "react";
 import { Links, Meta, Outlet, Scripts } from "@remix-run/react";
 import { LinksFunction } from "@remix-run/node";
 import stylesheet from "./tailwind.css?url";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
@@ -16,7 +18,9 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <QueryClientProvider client={queryClient}>
+          <Outlet />
+        </QueryClientProvider>
         <Scripts />
       </body>
     </html>
