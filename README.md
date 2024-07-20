@@ -8,5 +8,6 @@
 - add debug config to vitest
 - add utility package for getting lodash getter , generate uuid
 - clean the test db before running any tests
+- run migrate fully via script
 
 ## Immendiate Next Steps

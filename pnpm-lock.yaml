@@ -250,6 +250,9 @@ importers:
       '@via/store':
         specifier: workspace:*
         version: link:../store
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
       lodash:
         specifier: ^4.17.21
         version: 4.17.21

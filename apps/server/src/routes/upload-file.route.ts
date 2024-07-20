@@ -1,6 +1,5 @@
 import { Router, Express } from "express";
 import { useMulter } from "../multer.js";
-import { createFileStore } from "@via/store/file-store";
 
 export const getUploadFileRouter = (app: Express) => {
   const router = Router();

@@ -1,7 +1,9 @@
 import { expect, test, describe } from "vitest";
-import { addVideo, listVideos, removeVideo, viewVideo } from "./video-manager";
+import { VideoManager } from "./video-manager";
 import { getFileStore, getVideoStore } from "../helpers";
 import { v4 as generateId } from "uuid";
+
+const databaseName = "via-test.db";
 
 describe("add video", () => {
   const scenerios = [
@@ -14,11 +16,12 @@ describe("add video", () => {
     },
   ];
 
-  for (const scenerio of scenerios) {
-    const videoStore = getVideoStore();
+  const videoManager = new VideoManager(databaseName);
+  const videoStore = getVideoStore(databaseName);
 
+  for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
-      const { videoUUID } = await addVideo({
+      const { videoUUID } = await videoManager.addVideo({
         name: scenerio.videoName,
         description: scenerio.videoDesciption,
         youtubeURL: scenerio.youtubeURL,
@@ -43,10 +46,12 @@ describe("list videos", () => {
     },
   ];
 
+  const videoManager = new VideoManager(databaseName);
+  const videoStore = getVideoStore(databaseName);
+  const fileStore = getFileStore(databaseName);
+
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
-      const videoStore = getVideoStore();
-      const fileStore = getFileStore();
       const fileId = await fileStore.insert({
         destination: "dst",
         fileName: "some-file.txt",
@@ -62,7 +67,7 @@ describe("list videos", () => {
         uuid: scenerio.uuid,
         originalURL: "some-original-url",
       });
-      const videos = await listVideos({ limit: scenerio.limit });
+      const videos = await videoManager.listVideos({ limit: scenerio.limit });
       // TODO better expectations than just length
       expect(videos.length).toBeGreaterThan(0);
     });
@@ -80,10 +85,12 @@ describe("remove video", () => {
     },
   ];
 
+  const videoManager = new VideoManager(databaseName);
+  const videoStore = getVideoStore(databaseName);
+  const fileStore = getFileStore(databaseName);
+
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
-      const videoStore = getVideoStore();
-      const fileStore = getFileStore();
       const fileId = await fileStore.insert({
         destination: "dst",
         fileName: "file1.txt",
@@ -99,7 +106,9 @@ describe("remove video", () => {
         originalURL: "some-url",
       });
 
-      const { success } = await removeVideo({ videoUUID: scenerio.uuid });
+      const { success } = await videoManager.removeVideo({
+        videoUUID: scenerio.uuid,
+      });
       await videoStore.get(scenerio.uuid);
       expect(success).toBe(scenerio.expectedSuccess);
       const { found } = await videoStore.get(scenerio.uuid);
@@ -121,10 +130,12 @@ describe("view video", () => {
     },
   ];
 
+  const videoManager = new VideoManager(databaseName);
+  const videoStore = getVideoStore(databaseName);
+  const fileStore = getFileStore(databaseName);
+
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
-      const videoStore = getVideoStore();
-      const fileStore = getFileStore();
       const fileId = await fileStore.insert({
         destination: "dst",
         fileName: "file1.txt",
@@ -140,7 +151,9 @@ describe("view video", () => {
         originalURL: scenerio.youtubeURL,
       });
 
-      const video = await viewVideo({ videoUUID: scenerio.videoUUID });
+      const video = await videoManager.viewVideo({
+        videoUUID: scenerio.videoUUID,
+      });
       expect(video.createdAt.length).toBeGreaterThan(0);
       expect(video.descrption).toBe(scenerio.videoDescription);
       expect(video.name).toBe(scenerio.videoName);

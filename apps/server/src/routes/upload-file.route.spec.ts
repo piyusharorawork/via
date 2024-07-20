@@ -4,9 +4,13 @@ import fs from "fs";
 import { uploadFile } from "@via/node-sdk/upload-file";
 
 describe("upload file route", () => {
+  const databaseName = "via-test.db";
+  const port = 9000;
+  const serverBaseURL = `http://localhost:${port}`;
+
   test("upload small text file", async () => {
     const app = new Application();
-    await app.start();
+    await app.start(databaseName, port);
 
     // TODO these can be moved to a utility method
 
@@ -23,7 +27,6 @@ describe("upload file route", () => {
       fs.writeFileSync(filePath, "sample");
     }
 
-    const serverBaseURL = `http://localhost:${process.env.PORT}`;
     const file = await uploadFile(serverBaseURL, filePath);
 
     expect(file.originalname).toBe("sample.txt");

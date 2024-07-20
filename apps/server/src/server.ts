@@ -71,7 +71,8 @@ import { Application } from "./app.js";
 (async () => {
   try {
     const app = new Application();
-    await app.start();
+    const databaseName = "via.db";
+    await app.start(databaseName, 4000);
   } catch (error) {
     console.error(error);
   }
