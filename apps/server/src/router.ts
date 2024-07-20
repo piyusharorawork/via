@@ -9,18 +9,25 @@ import {
   addVideoInput,
   listVideos,
   listVideosInput,
+  removeVideo,
+  removeVideoInput,
 } from "@via/core/video-manager";
 
 export const t = initTRPC.create();
 
 export const appRouter = t.router({
-  addVideo: t.procedure.input(addVideoInput).mutation(async (opts) => {
-    await addVideo(opts.input);
+  addVideo: t.procedure.input(addVideoInput).mutation(async ({ input }) => {
+    await addVideo(input);
   }),
-  listVideos: t.procedure.input(listVideosInput).query(async (opts) => {
-    const videos = await listVideos(opts.input);
+  listVideos: t.procedure.input(listVideosInput).query(async ({ input }) => {
+    const videos = await listVideos(input);
     return videos;
   }),
+  removeVideo: t.procedure
+    .input(removeVideoInput)
+    .mutation(async ({ input }) => {
+      await removeVideo(input);
+    }),
 
   //   getUser: t.procedure.input(z.number()).query((opts) => {
   //     opts.input;

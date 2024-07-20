@@ -21,7 +21,12 @@ import nodeFetch from "node-fetch";
 
     await trpc.addVideo.mutate({ name, youtubeURL, description });
 
-    const res = await trpc.listVideos.query({ limit: 10 });
+    let res = await trpc.listVideos.query({ limit: 10 });
+    console.log(res);
+
+    await trpc.removeVideo.mutate({ videoUUID: res[0]!.uuid });
+
+    res = await trpc.listVideos.query({ limit: 10 });
     console.log(res);
 
     //await addVideo({ uuid, description, name, youtubeURL });
