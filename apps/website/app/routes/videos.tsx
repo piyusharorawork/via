@@ -1,7 +1,7 @@
 import type { AppRouter } from "@via/server/app-router";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import { useQuery, useQueryClient } from "react-query";
-import { Outlet, Link } from "@remix-run/react";
+import { Outlet, Link, useNavigate } from "@remix-run/react";
 
 import { Card } from "@via/ui/card";
 import { SearchInput } from "@via/ui/search-input";
@@ -20,28 +20,59 @@ export default function () {
 
   // const queryClient = useQueryClient();
 
-  // const listVideoQuery = useQuery("list-videos", async () => {
-  //   const trpc = createTRPCProxyClient<AppRouter>({
-  //     links: [
-  //       httpBatchLink({
-  //         url: "http://localhost:4000/trpc",
-  //       }),
-  //     ],
-  //   });
+  const listVideoQuery = useQuery("list-videos", async () => {
+    const trpc = createTRPCProxyClient<AppRouter>({
+      links: [
+        httpBatchLink({
+          url: "http://localhost:4000/trpc",
+        }),
+      ],
+    });
 
-  //   const videos = await trpc.listVideos.query({ limit: 10 });
-  //   return videos;
-  // });
+    const videos = await trpc.listVideos.query({ limit: 10 });
+    return videos;
+  });
+
+  const navigate = useNavigate();
 
   return (
     <div className="flex h-screen ">
-      <section className="h-full w-96  px-8 py-4">
-        <header className="flex gap-2">
+      <section className="h-full w-96 flex flex-col ">
+        <header className="flex justify-center items-center gap-2 px-8 py-4">
           <SearchInput />
           <NewButton />
         </header>
+
+        <main className="flex-grow ">
+          <div className="overflow-x-auto">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Desciption</th>
+                </tr>
+              </thead>
+              <tbody>
+                {listVideoQuery.data?.map((video, index) => {
+                  return (
+                    <tr
+                      className="cursor-pointer"
+                      onClick={() => navigate(`/videos/${video.uuid}`)}
+                    >
+                      <th>{index + 1}</th>
+                      <td>{video.name}</td>
+                      <td>{video.description}</td>
+                    </tr>
+                  );
+                })}
+                {/* row 1 */}
+              </tbody>
+            </table>
+          </div>
+        </main>
       </section>
-      <section className="h-full flex-grow "></section>
+      {/* <section className="h-full flex-grow"></section> */}
 
       {/* <button className="btn" onClick={onAddVideo}>
         Add Video

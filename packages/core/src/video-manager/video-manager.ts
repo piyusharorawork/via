@@ -84,7 +84,7 @@ export class VideoManager {
         }
         const item: ListVideoItem = {
           name: video.name,
-          url,
+          description: video.description,
           uuid: video.uuid,
         };
 
