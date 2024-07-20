@@ -2,6 +2,7 @@ import { Links, Meta, Outlet, Scripts } from "@remix-run/react";
 import { LinksFunction } from "@remix-run/node";
 import stylesheet from "./tailwind.css?url";
 import { QueryClient, QueryClientProvider } from "react-query";
+import "@via/ui/styles.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
