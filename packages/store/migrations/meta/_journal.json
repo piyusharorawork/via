@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1720340414021,
-      "tag": "0000_tidy_gargoyle",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1720352105857,
-      "tag": "0001_tan_exodus",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1720355167146,
-      "tag": "0002_fair_night_thrasher",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1721107637637,
-      "tag": "0003_reflective_oracle",
+      "when": 1721462255255,
+      "tag": "0000_serious_kylun",
       "breakpoints": true
     }
   ]

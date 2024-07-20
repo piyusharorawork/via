@@ -7,3 +7,12 @@ CREATE TABLE `files` (
 	`path` text NOT NULL,
 	`created_at` text DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
+--> statement-breakpoint
+CREATE TABLE `videos` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`uuid` text NOT NULL,
+	`file_id` integer NOT NULL,
+	`name` text NOT NULL,
+	`description` text NOT NULL,
+	`created_at` text DEFAULT CURRENT_TIMESTAMP NOT NULL
+);

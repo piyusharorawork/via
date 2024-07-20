@@ -3,7 +3,7 @@ import Database from "better-sqlite3";
 import { Video, VideoInput, videosTable } from "./schema.js";
 import { migrate } from "drizzle-orm/better-sqlite3/migrator";
 import path from "path";
-import { eq } from "drizzle-orm";
+import { asc, eq, desc } from "drizzle-orm";
 
 export const createVideoStore = (databaseName: string) => {
   const sqlite = new Database(databaseName);
@@ -23,7 +23,12 @@ export const createVideoStore = (databaseName: string) => {
 
   return {
     list: async (limit: number): Promise<Video[]> => {
-      const videos = await db.select().from(videosTable).limit(limit);
+      const videos = await db
+        .select()
+        .from(videosTable)
+        .orderBy(desc(videosTable.createdAt))
+        .limit(limit);
+
       return videos;
     },
 
@@ -31,11 +36,15 @@ export const createVideoStore = (databaseName: string) => {
       await db.insert(videosTable).values(input);
     },
 
-    remove: async (videoId: number): Promise<void> => {
-      await db.delete(videosTable).where(eq(videosTable.id, videoId));
+    remove: async (videoUUID: string): Promise<void> => {
+      await db.delete(videosTable).where(eq(videosTable.uuid, videoUUID));
     },
 
-    get: async (uuid: string): Promise<Video> => {
+    get: async (
+      uuid: string
+    ): Promise<
+      { found: false; video: null } | { found: true; video: Video }
+    > => {
       const videos: Video[] = await db
         .select()
         .from(videosTable)
@@ -43,9 +52,9 @@ export const createVideoStore = (databaseName: string) => {
 
       const video = videos[0];
       if (!video) {
-        throw "no video found";
+        return { found: false, video: null };
       }
-      return video;
+      return { found: true, video };
     },
   };
 };

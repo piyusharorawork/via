@@ -1,1 +1,0 @@
-ALTER TABLE `videos` ADD `uuid` text DEFAULT '25bfcda6-2e44-42ee-8743-542f4972b94f' NOT NULL;

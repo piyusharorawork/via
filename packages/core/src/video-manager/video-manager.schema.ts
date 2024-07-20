@@ -22,3 +22,12 @@ export const listVideosInput = z.object({
 export type ListVideosInput = z.infer<typeof listVideosInput>;
 export type ListVideoItem = { uuid: string; name: string; url: string };
 export type ListVideosOutput = ListVideoItem[];
+
+export const removeVideoInput = z.object({
+  videoUUID: z.string().uuid(),
+});
+
+export type RemoveVideoInput = z.infer<typeof removeVideoInput>;
+export type RemoveVideoOutput = {
+  success: boolean;
+};

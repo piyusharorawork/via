@@ -28,12 +28,14 @@ export const createFileStore = (databaseName: string) => {
       return files;
     },
 
-    insert: async (input: FileInput) => {
+    insert: async (input: FileInput): Promise<number> => {
       const { lastInsertRowid } = await db.insert(filesTable).values(input);
       return lastInsertRowid as number;
     },
 
-    get: async (id: number) => {
+    get: async (
+      id: number
+    ): Promise<{ found: false; file: null } | { found: true; file: File }> => {
       const files = await db
         .select()
         .from(filesTable)
@@ -41,9 +43,13 @@ export const createFileStore = (databaseName: string) => {
 
       const file = files[0];
       if (!file) {
-        throw "no file found for id = " + id;
+        return { found: false, file: null };
       }
-      return file;
+      return { found: true, file };
+    },
+
+    remove: async (id: number) => {
+      await db.delete(filesTable).where(eq(filesTable.id, id));
     },
   };
 };

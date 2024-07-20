@@ -7,10 +7,13 @@ import {
   ListVideoItem,
   ListVideosInput,
   ListVideosOutput,
+  removeVideoInput,
+  RemoveVideoInput,
+  RemoveVideoOutput,
 } from "./video-manager.schema.js";
 import { uploadFile } from "@via/node-sdk/upload-file";
 import { v4 as generateId } from "uuid";
-import _ from "lodash";
+import _, { remove } from "lodash";
 export * from "./video-manager.schema.js";
 
 export const addVideo = (input: AddVideoInput) => {
@@ -56,9 +59,11 @@ export const listVideos = (input: ListVideosInput) => {
       const videoURLMap: Record<string, string> = {};
       for (const video of videos) {
         // TODO can be optimized more
-        const file = await fileStore.get(video.fileId);
-        const videoURL = `http://localhost:4000/${file.path}`;
-        videoURLMap[video.id] = videoURL;
+        const { found, file } = await fileStore.get(video.fileId);
+        if (found) {
+          const videoURL = `http://localhost:4000/${file.path}`;
+          videoURLMap[video.id] = videoURL;
+        }
       }
 
       const videosOutput: ListVideosOutput = videos.map((video) => {
@@ -78,6 +83,28 @@ export const listVideos = (input: ListVideosInput) => {
       return resolve(videosOutput);
     } catch (error) {
       reject(error);
+    }
+  });
+};
+
+export const removeVideo = (input: RemoveVideoInput) => {
+  return new Promise<RemoveVideoOutput>(async (resolve, reject) => {
+    try {
+      await removeVideoInput.parseAsync(input);
+      const videoStore = getVideoStore();
+      const fileStore = getFileStore();
+
+      const { found, video } = await videoStore.get(input.videoUUID);
+      if (!found) {
+        return reject("invalid video uuid");
+      }
+
+      await fileStore.remove(video.fileId);
+      await videoStore.remove(input.videoUUID);
+
+      return resolve({ success: true });
+    } catch (error) {
+      return reject(error);
     }
   });
 };
