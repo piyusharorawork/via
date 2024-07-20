@@ -19,39 +19,25 @@ import nodeFetch from "node-fetch";
       ],
     });
 
+    // ADD ONE VIDEO
     await trpc.addVideo.mutate({ name, youtubeURL, description });
 
+    // LIST ALL VIDEOS
     let res = await trpc.listVideos.query({ limit: 10 });
     console.log(res);
 
+    // VIEW ONE VIDEO
     const videoDetails = await trpc.viewVideo.query({
       videoUUID: res[0]!.uuid,
     });
     console.log(videoDetails);
 
+    // DELETE THAT VIDEO
     await trpc.removeVideo.mutate({ videoUUID: res[0]!.uuid });
 
+    // LIST ALL VIDEOS
     res = await trpc.listVideos.query({ limit: 10 });
     console.log(res);
-
-    //await addVideo({ uuid, description, name, youtubeURL });
-
-    // await downloadYoutubeVideo({
-    //   dirPath: "downloads",
-    //   end,
-    //   start,
-    //   url: youtubeURL,
-    //   fileName: "hanuman.mp4",
-    // });
-
-    // const filePath = "downloads/hanuman.mp4";
-    // const fileId = await uploadFile(filePath);
-    // await addVideo({ description, name, fileId });
-
-    // const videoStore = createVideoStore("sqlite.db");
-    // const videos = await videoStore.list();
-
-    // console.log(videos);
   } catch (error) {
     console.error(error);
   }

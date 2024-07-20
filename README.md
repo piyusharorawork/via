@@ -9,5 +9,6 @@
 - add utility package for getting lodash getter , generate uuid
 - clean the test db before running any tests
 - run migrate fully via script
+- support start and end trim video
 
 ## Immendiate Next Steps
