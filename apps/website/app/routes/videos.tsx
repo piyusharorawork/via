@@ -2,9 +2,10 @@ import type { AppRouter } from "@via/server/app-router";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import { useQuery, useQueryClient } from "react-query";
 import { Outlet, Link } from "@remix-run/react";
-import { NewButton } from "@via/components/new-button";
+
 import { Card } from "@via/ui/card";
-import {SearchInput} from "@via/ui/search-input"
+import { SearchInput } from "@via/ui/search-input";
+import { NewButton } from "@via/ui/new-button";
 
 export default function () {
   // const onAddVideo = async () => {
@@ -33,18 +34,14 @@ export default function () {
   // });
 
   return (
-    <div className="flex h-screen bg-red-900">
-      <section className="h-full w-96 bg-green-950 px-8 py-4">
+    <div className="flex h-screen ">
+      <section className="h-full w-96  px-8 py-4">
         <header className="flex gap-2">
           <SearchInput />
-        {/* <SearchInput /> */}
-
-          {/* 
-
-          <NewButton /> */}
+          <NewButton />
         </header>
       </section>
-      <section className="h-full flex-grow bg-orange-400"></section>
+      <section className="h-full flex-grow "></section>
 
       {/* <button className="btn" onClick={onAddVideo}>
         Add Video
