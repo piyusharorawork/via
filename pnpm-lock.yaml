@@ -177,6 +177,9 @@ importers:
       '@trpc/client':
         specifier: ^10.45.2
         version: 10.45.2(@trpc/server@10.45.2)
+      '@via/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@via/server':
         specifier: workspace:*
         version: link:../server
@@ -198,9 +201,6 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
-      react-query:
-        specifier: ^3.39.3
-        version: 3.39.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
@@ -1843,10 +1843,6 @@ packages:
   better-sqlite3@11.1.2:
     resolution: {integrity: sha512-gujtFwavWU4MSPT+h9B+4pkvZdyOUkH54zgLdIrMmmmd4ZqiBIrRNBzNzYVFO417xo882uP5HBu4GjOfaSrIQw==}
 
-  big-integer@1.6.52:
-    resolution: {integrity: sha512-QxD8cf2eVqJOOz63z6JIN9BzvVs/dlySa5HGSBH5xtR8dPteIRQnBxxKqkNTiT6jbDTF6jAfrd4oMcND9RGbQg==}
-    engines: {node: '>=0.6'}
-
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
@@ -1873,9 +1869,6 @@ packages:
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
-
-  broadcast-channel@3.7.0:
-    resolution: {integrity: sha512-cIAKJXAxGJceNZGTZSBzMxzyOn72cVgPnKx4dc6LRjQgbaJUQqhy5rzL3zbMxkMWsGKkv2hSFkPRMEXfoMZ2Mg==}
 
   browser-process-hrtime@1.0.0:
     resolution: {integrity: sha512-9o5UecI3GhkpM6DrXr69PblIuWxPKk9Y0jHBRhdocZ2y7YECBFCsHm79Pr3OyR2AvjhDkabFJaDJMYRazHgsow==}
@@ -2255,9 +2248,6 @@ packages:
   detect-libc@2.0.3:
     resolution: {integrity: sha512-bwy0MGW55bG41VqxxypOsdSdGqLwXPI/focwgTYCFMbdUiBAxLg9CFzG08sz2aqzknwiX7Hkl0bQENjg8iLByw==}
     engines: {node: '>=8'}
-
-  detect-node@2.1.0:
-    resolution: {integrity: sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==}
 
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
@@ -3052,9 +3042,6 @@ packages:
     resolution: {integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==}
     hasBin: true
 
-  js-sha3@0.8.0:
-    resolution: {integrity: sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==}
-
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -3196,9 +3183,6 @@ packages:
   markdown-extensions@1.1.1:
     resolution: {integrity: sha512-WWC0ZuMzCyDHYCasEGs4IPvLyTGftYwh6wIEOULOF0HXcqZlhwRzrK0w2VUlxWA98xnvb/jszw4ZSkJ6ADpM6Q==}
     engines: {node: '>=0.10.0'}
-
-  match-sorter@6.3.4:
-    resolution: {integrity: sha512-jfZW7cWS5y/1xswZo8VBOdudUiSd9nifYRWphc9M5D/ee4w4AoXLgBEdRbgVaxbMuagBPeUC5y2Hi8DO6o9aDg==}
 
   mdast-util-definitions@5.1.2:
     resolution: {integrity: sha512-8SVPMuHqlPME/z3gqVwWY4zVXn8lqKv/pAhC57FuJ40ImXyBpmO5ukh98zB2v7Blql2FiHjHv9LVztSIqjY+MA==}
@@ -3353,9 +3337,6 @@ packages:
     resolution: {integrity: sha512-LPP/3KorzCwBxfeUuZmaR6bG2kdeHSbe0P2tY3FLRU4vYrjYz5hI4QZwV0njUx3jeuKe67YukQ1LSPZBKDqO/Q==}
     engines: {node: '>=8.6'}
 
-  microseconds@0.2.0:
-    resolution: {integrity: sha512-n7DHHMjR1avBbSpsTBj6fmMGh2AGrifVV4e+WYc3Q9lO+xnSZ3NyhcBND3vzzatt05LFhoKFRxrIyklmLlUtyA==}
-
   mime-db@1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
     engines: {node: '>= 0.6'}
@@ -3492,9 +3473,6 @@ packages:
   nan@2.20.0:
     resolution: {integrity: sha512-bk3gXBZDGILuuo/6sKtr0DQmSThYHLtNCdSdXk9YkxD/jK6X2vmCyyXBBxyqZ4XcnzTyYEAThfX3DCEnLf6igw==}
 
-  nano-time@1.0.0:
-    resolution: {integrity: sha512-flnngywOoQ0lLQOTRNexn2gGSNuM9bKj9RZAWSzhQ+UJYaAFG9bac4DW9VHjUAzrOaIcajHybCTHe/bkvozQqA==}
-
   nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -3625,9 +3603,6 @@ packages:
   object-inspect@1.13.2:
     resolution: {integrity: sha512-IRZSRuzJiynemAXPYtPe5BoI/RESNYR7TYm50MC5Mqbd3Jmw5y790sErYw3V6SryFJD64b74qQQs9wn5Bg/k3g==}
     engines: {node: '>= 0.4'}
-
-  oblivious-set@1.0.0:
-    resolution: {integrity: sha512-z+pI07qxo4c2CulUHCDf9lcqDlMSo72N/4rLUpRXf6fu+q8vjt8y0xS+Tlf8NTJDdTXHbdeO1n3MlbctwEoXZw==}
 
   on-finished@2.3.0:
     resolution: {integrity: sha512-ikqdkGAAyf/X/gPhXGvfgAytDZtDbr+bkNUJ0N9h5MI/dmdgCs3l6hoHrcUv41sRKew3jIwrp4qQDXiK99Utww==}
@@ -3957,18 +3932,6 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
-  react-query@3.39.3:
-    resolution: {integrity: sha512-nLfLz7GiohKTJDuT4us4X3h/8unOh+00MLb2yJoGTPjxKs2bc1iDhkNx2bd5MKklXnOD3NrVZ+J2UXujA5In4g==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: '*'
-      react-native: '*'
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-
   react-refresh@0.14.2:
     resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
     engines: {node: '>=0.10.0'}
@@ -4041,9 +4004,6 @@ packages:
 
   remark-rehype@10.1.0:
     resolution: {integrity: sha512-EFmR5zppdBp0WQeDVZ/b66CWJipB2q2VLNFMabzDSGR66Z2fQii83G5gTBbgGEnEEA0QRussvrFHxk1HWGJskw==}
-
-  remove-accents@0.5.0:
-    resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
 
   repeat-string@1.6.1:
     resolution: {integrity: sha512-PV0dzCYDNfRi1jCDbJzpW7jNNDRuCOG/jI5ctQcGKt/clZD+YcPS3yIlWuTJMmESC8aevCFmWJy5wjAFgNqN6w==}
@@ -4609,9 +4569,6 @@ packages:
   universalify@2.0.1:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
-
-  unload@2.2.0:
-    resolution: {integrity: sha512-B60uB5TNBLtN6/LsgAf3udH9saB5p7gqJwcFfbOEZ8BcBHnGwCf6G/TGiEqkRAxX7zAFIUtzdrXQSdL3Q/wqNA==}
 
   unpipe@1.0.0:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
@@ -6311,8 +6268,6 @@ snapshots:
       bindings: 1.5.0
       prebuild-install: 7.1.2
 
-  big-integer@1.6.52: {}
-
   binary-extensions@2.3.0: {}
 
   bindings@1.5.0:
@@ -6356,17 +6311,6 @@ snapshots:
   braces@3.0.3:
     dependencies:
       fill-range: 7.1.1
-
-  broadcast-channel@3.7.0:
-    dependencies:
-      '@babel/runtime': 7.24.7
-      detect-node: 2.1.0
-      js-sha3: 0.8.0
-      microseconds: 0.2.0
-      nano-time: 1.0.0
-      oblivious-set: 1.0.0
-      rimraf: 3.0.2
-      unload: 2.2.0
 
   browser-process-hrtime@1.0.0:
     optional: true
@@ -6764,8 +6708,6 @@ snapshots:
   destroy@1.2.0: {}
 
   detect-libc@2.0.3: {}
-
-  detect-node@2.1.0: {}
 
   didyoumean@1.2.2: {}
 
@@ -7619,8 +7561,6 @@ snapshots:
 
   jiti@1.21.6: {}
 
-  js-sha3@0.8.0: {}
-
   js-tokens@4.0.0: {}
 
   js-tokens@9.0.0: {}
@@ -7775,11 +7715,6 @@ snapshots:
   map-obj@4.3.0: {}
 
   markdown-extensions@1.1.1: {}
-
-  match-sorter@6.3.4:
-    dependencies:
-      '@babel/runtime': 7.24.7
-      remove-accents: 0.5.0
 
   mdast-util-definitions@5.1.2:
     dependencies:
@@ -8139,8 +8074,6 @@ snapshots:
       braces: 3.0.3
       picomatch: 2.3.1
 
-  microseconds@0.2.0: {}
-
   mime-db@1.52.0: {}
 
   mime-types@2.1.35:
@@ -8270,10 +8203,6 @@ snapshots:
       thenify-all: 1.6.0
 
   nan@2.20.0: {}
-
-  nano-time@1.0.0:
-    dependencies:
-      big-integer: 1.6.52
 
   nanoid@3.3.7: {}
 
@@ -8418,8 +8347,6 @@ snapshots:
   object-hash@3.0.0: {}
 
   object-inspect@1.13.2: {}
-
-  oblivious-set@1.0.0: {}
 
   on-finished@2.3.0:
     dependencies:
@@ -8745,15 +8672,6 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-query@3.39.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      '@babel/runtime': 7.24.7
-      broadcast-channel: 3.7.0
-      match-sorter: 6.3.4
-      react: 18.3.1
-    optionalDependencies:
-      react-dom: 18.3.1(react@18.3.1)
-
   react-refresh@0.14.2: {}
 
   react-router-dom@6.24.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
@@ -8862,8 +8780,6 @@ snapshots:
       '@types/mdast': 3.0.15
       mdast-util-to-hast: 12.3.0
       unified: 10.1.2
-
-  remove-accents@0.5.0: {}
 
   repeat-string@1.6.1: {}
 
@@ -9472,11 +9388,6 @@ snapshots:
     optional: true
 
   universalify@2.0.1: {}
-
-  unload@2.2.0:
-    dependencies:
-      '@babel/runtime': 7.24.7
-      detect-node: 2.1.0
 
   unpipe@1.0.0: {}
 

@@ -1,40 +1,49 @@
 import type { AppRouter } from "@via/server/app-router";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
-import { useQuery, useQueryClient } from "react-query";
+
 import { Outlet, Link, useNavigate } from "@remix-run/react";
 
 import { SearchInput } from "@via/ui/search-input";
 import { NewButton } from "@via/ui/new-button";
 import { VideosTable } from "@via/ui/videos-table";
 import { AddVideoModal } from "@via/ui/add-video-modal";
-
+import { AddVideoInput, ListVideosOutput } from "@via/core/video-manager";
+import { useEffect, useState } from "react";
+import { trpc } from "../trpc";
 const ADD_VIDEO_MODAL_ID = "add-video-modal";
 
-const onNewButtonClick = () => {
-  // TODO fixed any
-  const addVideoModalElement: any = document.getElementById(ADD_VIDEO_MODAL_ID);
-  if (!addVideoModalElement) {
-    return;
-  }
-
-  addVideoModalElement.showModal();
-};
-
 export default function () {
-  const listVideoQuery = useQuery("list-videos", async () => {
-    const trpc = createTRPCProxyClient<AppRouter>({
-      links: [
-        httpBatchLink({
-          url: "http://localhost:4000/trpc",
-        }),
-      ],
-    });
-
-    const videos = await trpc.listVideos.query({ limit: 10 });
-    return videos;
-  });
-
   const navigate = useNavigate();
+
+  const [showLoaderAddVideo, setShowLoaderAddVideo] = useState(false);
+  const [videos, setVideos] = useState<ListVideosOutput>([]);
+
+  const onNewButtonClick = () => {
+    // TODO fixed any
+    const addVideoModalElement: any =
+      document.getElementById(ADD_VIDEO_MODAL_ID);
+    if (!addVideoModalElement) {
+      return;
+    }
+
+    addVideoModalElement.showModal();
+  };
+
+  const fetchVideos = async () => {
+    const videos = await trpc.listVideos.query({ limit: 10 });
+    setVideos(videos);
+  };
+
+  useEffect(() => {
+    fetchVideos();
+  }, []);
+
+  const onAddVideoModalClick = async (input: AddVideoInput) => {
+    setShowLoaderAddVideo(true);
+    await trpc.addVideo.mutate(input);
+    await fetchVideos();
+    setShowLoaderAddVideo(false);
+  };
 
   return (
     <div className="flex h-screen ">
@@ -44,18 +53,16 @@ export default function () {
           <NewButton onClick={onNewButtonClick} />
           <AddVideoModal
             id={ADD_VIDEO_MODAL_ID}
-            showLoader={false}
-            onAddClick={() => {}}
+            showLoader={showLoaderAddVideo}
+            onAddClick={onAddVideoModalClick}
           />
         </header>
 
         <main className="flex-grow ">
-          {listVideoQuery.data && (
-            <VideosTable
-              videos={listVideoQuery.data}
-              onVideoRowClick={(videoId) => navigate(`/videos/${videoId}`)}
-            />
-          )}
+          <VideosTable
+            videos={videos}
+            onVideoRowClick={(videoId) => navigate(`/videos/${videoId}`)}
+          />
         </main>
       </section>
 

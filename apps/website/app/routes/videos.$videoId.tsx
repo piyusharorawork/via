@@ -1,72 +1,38 @@
 import { useParams, useNavigate } from "@remix-run/react";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
+import { ViewVideoOutput } from "@via/core/video-manager";
 import { AppRouter } from "@via/server/app-router";
-import { useMutation, useQuery } from "react-query";
+import { useEffect, useState } from "react";
+import { trpc } from "../trpc";
 
 export default function VideoDetails() {
   const params = useParams();
   const navigate = useNavigate();
 
-  const viewVideoQuery = useQuery("view-video", async () => {
-    const videoId = params.videoId;
-    if (!videoId) {
-      return null;
-    }
+  const [viewVideoLoading, setViewVideoLoading] = useState(false);
+  const [video, setVideo] = useState<ViewVideoOutput>();
+  const videoId = params.videoId!;
 
-    const trpc = createTRPCProxyClient<AppRouter>({
-      links: [
-        httpBatchLink({
-          url: "http://localhost:4000/trpc",
-        }),
-      ],
-    });
+  const fetchVideo = async () => {
+    setViewVideoLoading(true);
+    const video = await trpc.viewVideo.query({ videoUUID: videoId });
+    setVideo(video);
+    setViewVideoLoading(false);
+  };
 
-    const videoDetails = await trpc.viewVideo.query({ videoUUID: videoId });
-    return videoDetails;
-  });
+  useEffect(() => {
+    fetchVideo();
+  }, []);
 
-  const removeVideoMutation = useMutation("remove-video", async () => {
-    const videoId = params.videoId;
-    if (!videoId) {
-      return null;
-    }
-
-    const trpc = createTRPCProxyClient<AppRouter>({
-      links: [
-        httpBatchLink({
-          url: "http://localhost:4000/trpc",
-        }),
-      ],
-    });
-
+  const onRemoveVideoClick = async () => {
     await trpc.removeVideo.mutate({ videoUUID: videoId });
-  });
+    navigate("/videos");
+  };
 
-  if (viewVideoQuery.isLoading) {
+  if (viewVideoLoading || !video) {
     return (
       <div className="w-full flex justify-center items-center">
         <span className="loading loading-dots loading-lg"></span>
-      </div>
-    );
-  }
-
-  if (viewVideoQuery.error) {
-    return (
-      <div role="alert" className="alert alert-error">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 shrink-0 stroke-current"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <span>Unable to load video details</span>
       </div>
     );
   }
@@ -76,20 +42,14 @@ export default function VideoDetails() {
       <div className="card card-compact bg-base-100 w-full shadow-xl py-4 px-8">
         <figure>
           <video className="rounded-xl" controls loop>
-            <source src={viewVideoQuery.data?.videoURL} type="video/mp4" />
+            <source src={video.videoURL} type="video/mp4" />
           </video>
         </figure>
         <div className="card-body">
-          <h2 className="card-title">{viewVideoQuery.data?.name}</h2>
-          <p>{viewVideoQuery.data?.descrption}</p>
+          <h2 className="card-title">{video.name}</h2>
+          <p>{video.descrption}</p>
           <div className="card-actions justify-end">
-            <button
-              className="btn btn-error"
-              onClick={async () => {
-                await removeVideoMutation.mutateAsync();
-                navigate("/videos");
-              }}
-            >
+            <button className="btn btn-error" onClick={onRemoveVideoClick}>
               Delete
               <svg
                 xmlns="http://www.w3.org/2000/svg"
