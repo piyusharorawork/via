@@ -122,6 +122,15 @@ importers:
 
   apps/site:
     dependencies:
+      '@trpc/client':
+        specifier: ^10.45.2
+        version: 10.45.2(@trpc/server@10.45.2)
+      '@via/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@via/server':
+        specifier: workspace:*
+        version: link:../server
       '@via/ui':
         specifier: workspace:*
         version: link:../../packages/ui
