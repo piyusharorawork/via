@@ -1,8 +1,10 @@
-import React from "react";
+type Props = {
+  onClick: () => void;
+};
 
-export const NewButton = () => {
+export const NewButton = (props: Props) => {
   return (
-    <button className="btn">
+    <button className="btn" onClick={() => props.onClick()}>
       New
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -9,9 +9,10 @@
   ],
   "exports": {
     "./styles.css": "./dist/index.css",
-    "./card": "./src/card.tsx",
     "./search-input": "./src/search-input.tsx",
-    "./new-button": "./src/new-button.tsx"
+    "./new-button": "./src/new-button.tsx",
+    "./videos-table": "./src/videos-table.tsx",
+    "./add-video-modal": "./src/add-video-modal.tsx"
   },
   "scripts": {
     "build": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
@@ -29,5 +30,8 @@
     "autoprefixer": "^10.4.18",
     "postcss": "^8.4.35",
     "typescript": "latest"
+  },
+  "dependencies": {
+    "@via/core": "workspace:*"
   }
 }
