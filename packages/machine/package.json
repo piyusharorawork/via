@@ -1,0 +1,26 @@
+{
+  "name": "@via/machine",
+  "type": "module",
+  "scripts": {
+    "compile": "tsc --watch",
+    "build": "tsc",
+    "clean": "rm -rf .turbo dist node_modules",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "exports": {
+    "./videos-machine": {
+      "types": "./src/videos-machine.ts",
+      "default": "./dist/videos-machine.js"
+    }
+  },
+  "devDependencies": {
+    "@via/typescript-config": "workspace:*",
+    "ts-node": "^10.9.2",
+    "typescript": "latest",
+    "vitest": "^1.6.0"
+  },
+  "dependencies": {
+    "xstate": "^5.15.0"
+  }
+}

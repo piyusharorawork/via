@@ -20,6 +20,7 @@
     "@via/store": "workspace:*",
     "@via/video-core": "workspace:*",
     "node-fetch": "^3.3.2",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "@via/machine": "workspace:*"
   }
 }
