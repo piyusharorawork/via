@@ -10,7 +10,7 @@
 - clean the test db before running any tests
 - run migrate fully via script
 - support start and end trim video
+- client side form validation
+-
 
 ## Immendiate Next Steps
-
-- express static server

@@ -29,7 +29,7 @@ import { getVideoManagementActor } from "@via/machine/video-management-machine";
     // });
 
     videoManagementActor.send({
-      type: "ADD_VIDEO",
+      type: "CLICK_ADD_VIDEO",
       input: { description, name, youtubeURL },
     });
 
