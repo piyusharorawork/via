@@ -1,10 +1,15 @@
 import { exec } from "child_process";
+import path from "path";
 
 export const downloadYoutubeVideo = (videoURL: string, videoPath: string) => {
   return new Promise<void>(async (resolve, reject) => {
     try {
       // TODO need to do it in config
-      const downloader = `/Users/piyusharora/projects/audio-video-downloader/bin/yt-dlp_macos`;
+      const downloader = path.join(
+        path.resolve(),
+        "../../",
+        "bin/mac/yt-dlp_macos"
+      );
 
       exec(
         `${downloader} -f mp4 -o ${videoPath} ${videoURL}`,

@@ -6,70 +6,47 @@ import { useEffect, useState } from "react";
 import { trpc } from "./trpc.ts";
 import { VideosTable } from "@via/ui/videos-table";
 import { useActor } from "@xstate/react";
-import { getVideoManagmentMachine } from "@via/machine/videos-management-machine";
+import { getVideoManagementMachine } from "@via/machine/video-management-machine";
 
 const ADD_VIDEO_MODAL_ID = "add-video-modal";
 
-const videoManagementMachine = getVideoManagmentMachine(fetch);
+const videoManagementMachine = getVideoManagementMachine(fetch);
 
 export default function App() {
-  // const [showLoaderAddVideo, setShowLoaderAddVideo] = useState(false);
-  // const [videos, setVideos] = useState<ListVideosOutput>([]);
-
   const [state, send] = useActor(videoManagementMachine);
 
-  // const onNewButtonClick = () => {
-  //   // TODO fixed any
-  //   const addVideoModalElement: any =
-  //     document.getElementById(ADD_VIDEO_MODAL_ID);
-  //   if (!addVideoModalElement) {
-  //     return;
-  //   }
-
-  //   addVideoModalElement.showModal();
-  // };
-
-  // const fetchVideos = async () => {
-  //   const videos = await trpc.listVideos.query({ limit: 10 });
-  //   setVideos(videos);
-  // };
-
   useEffect(() => {
-    send({ type: "INIT" });
+    send({ type: "GET_VIDEOS" });
   }, []);
 
-  // const onAddVideoModalClick = async (input: AddVideoInput) => {
-  //   try {
-  //     setShowLoaderAddVideo(true);
-  //     await trpc.addVideo.mutate(input);
-  //     await fetchVideos();
-  //     setShowLoaderAddVideo(false);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  console.log(state.value);
 
   return (
-    <div className="flex h-screen ">
+    <div className="flex h-screen">
       <section className="h-full w-96 flex flex-col ">
         <header className="flex justify-center items-center gap-2 px-8 py-4">
           <SearchInput />
-          {/* <NewButton onClick={onNewButtonClick} />
+          <NewButton onClick={() => send({ type: "OPEN_ADD_VIDEO_FORM" })} />
           <AddVideoModal
+            open={
+              state.matches("ADD_VIDEO_FORM_OPENED") ||
+              state.matches("ADDING_VIDEO")
+            }
+            onClose={() => send({ type: "CLOSE_ADD_VIDEO_FORM" })}
             id={ADD_VIDEO_MODAL_ID}
-            showLoader={showLoaderAddVideo}
-            onAddClick={onAddVideoModalClick}
-          /> */}
+            showLoader={state.matches("ADDING_VIDEO")}
+            onAddClick={(input) => send({ type: "ADD_VIDEO", input })}
+          />
         </header>
 
         <main className="flex-grow ">
-          {state.matches("FETCHING_LIST_VIDEOS") && (
+          {state.matches("GETTING_VIDEOS") && (
             <div className="w-full flex justify-center">
               <span className="loading loading-dots loading-lg"></span>
             </div>
           )}
 
-          {state.matches("FETCHING_LIST_VIDEOS_FAILED") && (
+          {state.context.errorMessage != null && (
             <div role="alert" className="alert alert-error">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -84,11 +61,10 @@ export default function App() {
                   d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span>Fetching Videos Failed , Please try again in sometime</span>
+              <span>Something went wrong</span>
             </div>
           )}
-
-          {state.matches("FETCHING_LIST_VIDEOS_SUCCESSFUL") && (
+          {state.matches("IDLE") && (
             <VideosTable
               videos={state.context.videos}
               onVideoRowClick={() => {}}

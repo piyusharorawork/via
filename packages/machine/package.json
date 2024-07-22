@@ -9,9 +9,9 @@
     "test:watch": "vitest"
   },
   "exports": {
-    "./videos-management-machine": {
-      "types": "./src/videos-management-machine.ts",
-      "default": "./dist/videos-management-machine.js"
+    "./video-management-machine": {
+      "types": "./src/video-management-machine.ts",
+      "default": "./dist/video-management-machine.js"
     }
   },
   "devDependencies": {

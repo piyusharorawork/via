@@ -1,10 +1,13 @@
 import { AddVideoInput } from "@via/core/video-manager";
 import { useState } from "react";
+import classNames from "classnames";
 
 type Props = {
   id: string;
   showLoader: boolean;
+  open: boolean;
   onAddClick: (input: AddVideoInput) => void;
+  onClose: () => void;
 };
 
 export const AddVideoModal = (props: Props) => {
@@ -13,13 +16,35 @@ export const AddVideoModal = (props: Props) => {
   const [videoDescription, setVideoDescription] = useState("");
 
   return (
-    <dialog id={props.id} className="modal">
+    <dialog
+      id={props.id}
+      className={classNames("modal", { "modal-open": props.open })}
+    >
       <div className="modal-box">
-        <header>
+        <header className="flex justify-between">
           <h3 className="font-bold text-lg">Add New Video</h3>
+          <button
+            className="btn btn-circle btn-outline"
+            onClick={() => props.onClose()}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
         </header>
 
-        <form className="py-4 px-8 my-8 flex flex-col gap-4 w-full">
+        <div className="py-4 px-8 my-8 flex flex-col gap-4 w-full">
           <input
             type="text"
             placeholder="Video Name"
@@ -55,7 +80,7 @@ export const AddVideoModal = (props: Props) => {
               <span className="loading loading-spinner"></span>
             )}
           </button>
-        </form>
+        </div>
       </div>
       <form method="dialog" className="modal-backdrop">
         <button>close</button>

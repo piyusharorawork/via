@@ -2,20 +2,40 @@ import { AppRouter } from "@via/server/app-router";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import nodeFetch from "node-fetch";
 
-import { getVideoManagementActor } from "@via/machine/videos-management-machine";
+import { getVideoManagementActor } from "@via/machine/video-management-machine";
 
 (async () => {
   try {
-    const videoManagerActor = getVideoManagementActor(nodeFetch);
-    videoManagerActor.start();
-    videoManagerActor.subscribe((state) => {
+    // const videoListActor = getVideoListActor(nodeFetch);
+    const videoManagementActor = getVideoManagementActor(nodeFetch);
+    // videoListActor.start();
+    videoManagementActor.start();
+    // videoListActor.subscribe((state) => {
+    //   console.log(state.value);
+    //   console.log(state.context.videos);
+    // });
+    videoManagementActor.subscribe((state) => {
       console.log(state.value);
-      console.log(state.context.videos);
+      console.log(state.context);
     });
-    videoManagerActor.send({ type: "INIT" });
-    // const name = "Hanuman-Ji";
-    // const description = "Video of lord hanuman also known as bajrang bali";
-    // const youtubeURL = "https://www.youtube.com/shorts/A4bOUJ9AOEM";
+    // videoListActor.send({ type: "INIT" });
+
+    const name = "Hanuman-Ji";
+    const description = "Video of lord hanuman also known as bajrang bali";
+    const youtubeURL = "https://www.youtube.com/shorts/A4bOUJ9AOEM";
+
+    // videoManagementActor.send({
+    //   type: "GET_VIDEOS",
+    // });
+
+    videoManagementActor.send({
+      type: "ADD_VIDEO",
+      input: { description, name, youtubeURL },
+    });
+
+    // videoManagementActor.send({
+    //   type: "GET_VIDEOS",
+    // });
     // const start = "00:00:00";
     // const end = "00:00:04";
     // const trpc = createTRPCProxyClient<AppRouter>({
