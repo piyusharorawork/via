@@ -9,23 +9,25 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "@via/ui": "workspace:*",
-    "@via/core": "workspace:*",
     "@trpc/client": "^10.45.2",
-    "@via/server": "workspace:*"
+    "@via/core": "workspace:*",
+    "@via/server": "workspace:*",
+    "@via/ui": "workspace:*",
+    "@xstate/react": "^4.1.1",
+    "@via/machine": "workspace:*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@via/typescript-config": "workspace:*",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@via/tailwind-config": "workspace:*",
+    "@via/typescript-config": "workspace:*",
     "@vitejs/plugin-react": "^4.3.1",
-    "typescript": "latest",
-    "vite": "^5.3.4",
+    "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
-    "autoprefixer": "^10.4.19",
-    "@via/tailwind-config": "workspace:*"
+    "typescript": "latest",
+    "vite": "^5.3.4"
   }
 }
