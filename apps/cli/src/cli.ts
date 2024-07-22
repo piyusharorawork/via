@@ -2,17 +2,16 @@ import { AppRouter } from "@via/server/app-router";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import nodeFetch from "node-fetch";
 
-import { countActor } from "@via/machine/videos-machine";
+import { videoManagerActor } from "@via/machine/videos-management-machine";
 
 (async () => {
   try {
-    countActor.subscribe((state) => {
-      console.log(state.context.count);
+    videoManagerActor.start();
+    videoManagerActor.subscribe((state) => {
+      console.log(state.value);
+      console.log(state.context.videos);
     });
-
-    countActor.send({ type: "INC" });
-    countActor.send({ type: "DEC" });
-    countActor.send({ type: "SET", value: 10 });
+    videoManagerActor.send({ type: "INIT" });
 
     // const name = "Hanuman-Ji";
     // const description = "Video of lord hanuman also known as bajrang bali";
@@ -28,7 +27,7 @@ import { countActor } from "@via/machine/videos-machine";
     //   ],
     // });
     // // ADD ONE VIDEO
-    // await trpc.addVideo.mutate({ name, youtubeURL, description });
+    // // await trpc.addVideo.mutate({ name, youtubeURL, description });
     // // LIST ALL VIDEOS
     // let res = await trpc.listVideos.query({ limit: 10 });
     // console.log(res);

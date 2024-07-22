@@ -9,9 +9,9 @@
     "test:watch": "vitest"
   },
   "exports": {
-    "./videos-machine": {
-      "types": "./src/videos-machine.ts",
-      "default": "./dist/videos-machine.js"
+    "./videos-management-machine": {
+      "types": "./src/videos-management-machine.ts",
+      "default": "./dist/videos-management-machine.js"
     }
   },
   "devDependencies": {
@@ -21,6 +21,10 @@
     "vitest": "^1.6.0"
   },
   "dependencies": {
+    "@trpc/client": "^10.45.2",
+    "@via/core": "workspace:*",
+    "@via/server": "workspace:*",
+    "node-fetch": "^3.3.2",
     "xstate": "^5.15.0"
   }
 }
