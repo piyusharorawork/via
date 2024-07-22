@@ -9,7 +9,7 @@
     "test": "turbo test",
     "type-check": "turbo type-check",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "clean": "concurrently \"rm -rf .turbo node_modules\" \"turbo clean\""
+    "clean": "turbo clean; rm -rf node_modules .turbo"
   },
   "devDependencies": {
     "prettier": "3.3.2",

@@ -3,8 +3,7 @@
   "type": "module",
   "scripts": {
     "compile": "tsc --watch",
-    "build": "tsc",
-    "clean": "rm -rf .turbo dist node_modules"
+    "build": "tsc"
   },
   "exports": {
     "./make-video": {
@@ -13,6 +12,7 @@
     }
   },
   "devDependencies": {
+    "@types/node": "^20.14.11",
     "@types/uuid": "^10.0.0",
     "@via/typescript-config": "workspace:*",
     "typescript": "latest"

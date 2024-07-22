@@ -7,7 +7,6 @@
     "build": "remix vite:build",
     "dev": "node main.js",
     "start": "cross-env NODE_ENV=production node ./server.js",
-    "clean": "rm -rf .turbo build node_modules",
     "type-check": "tsc --noEmit"
   },
   "keywords": [],
