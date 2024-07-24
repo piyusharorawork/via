@@ -61,11 +61,15 @@ export const getVideoManagementMachine = (fetch: any) => {
       ),
     },
     actions: {
+      // client side filtering
       updateVideosMatchingFilter: assign({
         videos: ({ context, event }) => {
           const e = event as { keyword: string };
           const videos = context.originalVideos.filter((video) => {
-            return video.name.includes(e.keyword);
+            return (
+              video.name.includes(e.keyword) ||
+              video.description.includes(e.keyword)
+            );
           });
           return videos;
         },
