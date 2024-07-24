@@ -11,6 +11,7 @@
 - run migrate fully via script
 - support start and end trim video
 - client side form validation
--
+- Reduce some states via reusable child machines
+- Show progress on what exactlly is happening
 
 ## Immendiate Next Steps

@@ -4,6 +4,8 @@ import { assign, createActor, fromPromise, setup } from "xstate";
 import {
   AddVideoInput,
   ListVideosOutput,
+  RemoveVideoInput,
+  RemoveVideoOutput,
   ViewVideoInput,
   ViewVideoOutput,
 } from "@via/core/video-manager";
@@ -22,18 +24,23 @@ export const getVideoManagementMachine = (fetch: any) => {
     types: {
       context: {} as {
         videos: ListVideosOutput;
+        originalVideos: ListVideosOutput;
         errorMessage: string | null;
         videoDetails: ViewVideoOutput | null;
       },
-      events: {} as
+      events: {} as  // All the events invoked by user
         | { type: "LOAD_VIDEOS_PAGE" }
         | { type: "CLICK_NEW_VIDEO_BUTTON" }
         | { type: "CLOSE_ADD_VIDEO_FORM" }
         | { type: "CLICK_ADD_VIDEO"; input: AddVideoInput }
-        | { type: "CLICK_VIDEO_ROW"; input: ViewVideoInput },
+        | { type: "CLICK_VIDEO_ROW"; input: ViewVideoInput }
+        | { type: "CLICK_DELETE_VIDEO"; input: ViewVideoInput }
+        | { type: "SEARCH_VIDEO"; keyword: string },
     },
     actors: {
-      listVideos: fromPromise(async () => {
+      // All the async services
+      listVideos: fromPromise<ListVideosOutput>(async () => {
+        // TODO limit can also be taken from UI
         const videos = await trpc.listVideos.query({ limit: 10 });
         return videos;
       }),
@@ -46,13 +53,31 @@ export const getVideoManagementMachine = (fetch: any) => {
           return video;
         }
       ),
+      deleteVideo: fromPromise<RemoveVideoOutput, RemoveVideoInput>(
+        async ({ input }) => {
+          const video = await trpc.removeVideo.mutate(input);
+          return video;
+        }
+      ),
+    },
+    actions: {
+      updateVideosMatchingFilter: assign({
+        videos: ({ context, event }) => {
+          const e = event as { keyword: string };
+          const videos = context.originalVideos.filter((video) => {
+            return video.name.includes(e.keyword);
+          });
+          return videos;
+        },
+      }),
     },
   }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOgEkARAGQFEBiAcRoBUB9ANUpoHkBlAbQAMAXUSgADgHtYuAC65J+MSAAeiABwAWTSQBsAVl0BGAJyGtJgMwB2XQBoQAT0QAmazpe7dgzS8-r9QRcjAF8QhzQsPEJSSlo6bgAFGgA5VgBBCgoOLm5WADFuACUAWSFRJBApGXlFZTUELR0DYzNdCxt7J0R9axcSQS1vdRdBEyNPUPCQSJwCYhImZmYyFIYcih5eOghFMBICADdJAGt92eiFpZW1ja2EI8lMdFr8cvLlarkFJUqGo0sBhILhMvjMQT8fXUDmcCBBlhIlkGRn06nUJhMLksSM0YQiGDmMUWLBu604mz4dDAACdqZJqSRxAAbF4AM3pqBIF3mpGuqzJuV4D3wx2er3eIk+0m+dT+iABQJBYMCfjcLmh3Thml0JEClk0ln0oN8NkGeJmBMupEy2XJPAKxRKrCSqRoFDoNru3A+lS+r3qiDMRl11iCQesaM0hhhiF0wRI6OsRiCgysaPN3KJnrteUKpWdyRSbroAGEqHwaBksl6HaUfRJpf65Y1tHpDKZzJorLYYwh9H5gX0jEYDer1LoDRnLTzict+V7eAV0mRaO761VGz8AwgR5YTCQDV2I+rDXHLL3h9YBqG3O4TIJdH1NOop1EZ3zbjnF7wAKolks0Lw2zrn6W7Nru+6HiYx7qKeWK9poggIoC0F9PoRgBHG7ivoSCw2vOOY7HsBwiqc5zTlmWQEbkwqii8PwShUDY1GBoANFiV42NYqJot4vToReD7XkE1h3g+T7WDhVokPhn65FStL0oyLKyOy1KcpmeFUXJFK0U89GKIxUosbKbGuDYiKiTx46CPxRgIUhiK6KhLjoZh6r6FJM6yQKFKsL+-6AcBkq+pupmqLGz56F4RqhrunjWIJOqCDe0EohG7QmC+0yada2m+fa+TLqudAgWFvxmQgE7qNFBjQYI8WPg5yHOaJrkYYYHlhNM+CSBAcDKLlxkyhVEUIAAtF0sKTV5RJxDQw1NpV7gIoMKUQqJlguF2Dn9CJSLqKGiEHbNVwktRFK8ItrFjcOlg1V4DVaJ4-bBIlmpYvoJDQZ490mO0RhHbop15bauS1k6LpFhQ13hf8yY1eq97GIhPiAr2+jYoitlmFohi9FoIOzqSC5Liubqw6N-yYwiWjop4ozomiGqwgjwIPiOSbqBMaFTPib5Eh+BV8P5f4AUBlPbiiWN05icapszvbqsGxqCKmfi6ICwM5RRWkUBdPCS82vi9vdwYTNtphq+OW0BETPk1gF4tXaFJlU4giFfT47TBA1hjW+9sLc4ifjjNi95JjY9v5TWRXkzDrsjdumgTN9SLjJiHYNYHiA2A9fidNV6HYd1QA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOgEkARAGQFEBiKgeQEEKB9ANUpsYGU2ACswDiNANoAGALqJQABwD2sXABdcC-LJAAPRACYALAGYSAVgDsp00fMA2UxKMSAjAE5TAGhABPRM+f2JBJ6ABzOIQZWBgYBegC+cV5oWHiEpJS0dADCVGRZANJsAHI0AOqc3IxsAEIAqgAq9YxFkjJIIIrKahpaugiGJhZWNvaOLu5evggheuZmriHWesHmEi7xiSDJOATE5NT0OXmFXBQ8bABKjKWtWp2q6prtfQNmltZ2Dk5unj6IBnpnCRnMtViEbHojDYjAkkhgdml9pkjgU2GdaPUaBUzoxbu17t0nqAXsY3sNPmMfpN9AZbGYDO41uY9O5weZYVt4ak9hl6LwaMwLlkABLYnh4+RKB49Z40wbvEZfca-KauQwkQGmWzgvSmVxrZymDnbbmkUSNMhFYRivh0CAaMAkAgANwUAGtHSbdmaaBarTbeAgXQpMOhCa0JR0pYTevpnBJXEFVnplrZdWtotTphJTCRzMYcxICwZk8aud6SOb6pbraceLw6GAAE5NhRNkhyAA2YYAZm3UCQvYiqzWA0H8K7Q+HpJGCY9Y-144mJMnU+miwYs5YQiRXEYIhm9yEIkbNkO9qx2HWqgAxRgXACybEYAhoJQo2VyqMvNtn0fnsrTEYBhJsEgJquYziQXoW6LCQIS2HYRjxrMzgMrYZYpBWP7Xmwd6Ps+r7vp+fBYjhlR4feD5-l0AHEvothApEyEGOCYRpvmm5-Ag5i8XmCFjOYyGmAhGFnuWiJMKwo64Wc9TMGQVANvahBOhO7qehJexSRQMkUXJClKeOk5ho8EbSHc-4yvRQEgSuYFuKh0FZoxehJvqLFGK4IKuOy4lYZJLC6f6sm+oZDbNq27Zdr2-aDlppA6XpOJomFimBsGU5mTOFn4lZRI6Ig4J2aujmQc53EGBIO5VSEawJlBwSuK4BiYQieyhfJ6VsLwtRZFkNC8A22iwCoYaOugPYqM2yDxkQdDnqQnXhT1fUDUNNHSgVfT6nM1g2CCUGmLqMwuSJ8Hgtqzg2BYhqtf57VLfpaVKXhhk0B+I1jdNJCTdNTazRI82LSQy3dTe70UJtMaAbtZhQtBR0nTB3FGIxJC2I4RgOAsG4Am1pqVr61YhZU-AQ4pH10F942-VNM1zQtCVE36tZk29lNQ7lkq0dZhWLsdGqYyyR0RJCWb6sCISrCJRgsnukRiXCAV7COpM4vwvX9YNw2jbTf0M0DTMqz6rMBqt2sbdzUa89tcaC3owveduAJGFmIIIbu+5o9VYQfErnImyQl7JTwdoOmproevFQch+rPDGSGpkaOZbQ81tC4e7mcsuPmx22MhaNbkJwKmAyMy+fmMwE9hFDBWzOKNi2bYdt2Kh9k2A4g3HDcJ5lyf4Knlm25noTZ8sUGRI7he2FmCG5iuh2HZX4Q14iPc2hb62699E30wDjPd3XodVFr2-Q3R-NQWqJDRLqIlj+Y0sqogvEmHdCwsrxrEbMrj3B8feOt5IbUz1j9A2B8jZH3rpvCmtAuZpxthnQCaFIS3wfrSVwtg9wsndkWOkIIRJ6hEq5OWa89jol9CfcOqlgzRxBpQkmvdGCJyyinHKiC5x8z6MVUCKYypQRBFmSEJhLqLEduYZqARHDkNIIw6hkUW4xXbnFBhNAMQn1YQPIeeUR6AV4fZfhEFBEoymJg2+wQZhoRapEIssiSDyKAVvHWoDd503+oDYGzNHHMOcVbTh+VM5lx3DMWYYQsFQkcOYYRUJ4Jo3EYhKRmMYQPUJj42BICabgP3p442-90m4TgR9C+3DEBw32ojSwyMsxalzLMYwftghl3un-Qm-JBQimoVkveHjD7M3aUKYUJ8Sl2wQPuRMzJro5hTEWB+L9ph8RiPGKEctDCGj8psfACgIBwC0ItYeyCbIAFpZ7cROfY3kByYY2QBHg3M2DmQ4KEgCAILTA7-zVsw3gVzL59DcFBeC9knm+TTPMquFjLCYwZOXXU9jyIpXwk+F8b4Po-NKQgY6cwYgpiqlXPcBdYJ0iatVFcx4AiSPsUlJxBl0potGVYJiKZbDRBElgos0TUa+XgrxQEhpsG6hTH5VpFYwavTPjrOlmdHBuRCJ-Xi4QSxoTdtxTGEg8xoUWGECQ2oWopOFYiUV5NIaSpQdK+CcrIIREgsYLM2M3JCWdnYH+vtTz6tVsTE+RrOYmpsoKuYaZWJajsE-SRc8gSrP1EeTFSF7GfPNuKoaPr+Z+oxoYRYiFELS1cFuFqJAbCytmPmPceo9XvMJhva8Sa-nasTI7fwtjghplMa-NMqaYhQuloxFccLAG+ITd83Rhyr7BPgoK8JBcnA2C3KxCFWoiwtU-gHaBJ8ObwKrX4EdoSn5uAnVEue1g8z2WGFgoNzh7EFMqOujFdgNRVRYpI-cthsHCLQU4ZJ4wMy0l-mWisF6Ur9qvVnPNE887T2uqcqYyxlyytxdqESOYn7nvUVQpxRSKCAbNbKmY8qrVKqzJEHcjgELMjLr5BWpaQYDM6UAq9phDRBE1auKRtzuIIR3GXODzV9ThBzAkBIQA */
     context: {
-      videos: [],
-      videoDetails: null,
-      errorMessage: null,
+      videos: [], //  filtered and displayed in a table
+      originalVideos: [], // Synced from backend
+      videoDetails: null, // single video with more info to show
+      errorMessage: null, // any error message when something went wrong
     },
     initial: "IDLE",
     states: {
@@ -61,6 +86,8 @@ export const getVideoManagementMachine = (fetch: any) => {
           LOAD_VIDEOS_PAGE: "GETTING_VIDEOS",
           CLICK_NEW_VIDEO_BUTTON: "ADD_VIDEO_FORM_OPENED",
           CLICK_VIDEO_ROW: "LOADING_VIDEO_DETAILS",
+          CLICK_DELETE_VIDEO: "DELETING_VIDEO",
+          SEARCH_VIDEO: "SEARCHING_VIDEO",
         },
       },
       GETTING_VIDEOS: {
@@ -99,7 +126,6 @@ export const getVideoManagementMachine = (fetch: any) => {
           10: "IDLE",
         },
       },
-
       GETTING_VIDEOS_FAILED: {
         entry: assign({ errorMessage: (data: any) => data.event.error }),
         after: {
@@ -109,6 +135,7 @@ export const getVideoManagementMachine = (fetch: any) => {
       GETTING_VIDEOS_SUCCESS: {
         entry: assign({
           videos: (data: any) => data.event.output,
+          originalVideos: (data: any) => data.event.output,
           errorMessage: null,
         }),
         after: {
@@ -126,6 +153,7 @@ export const getVideoManagementMachine = (fetch: any) => {
       ADDING_VIDEO_SUCCESS: {
         entry: assign({
           errorMessage: null,
+          videoDetails: null,
         }),
         after: {
           10: "GETTING_VIDEOS",
@@ -133,6 +161,32 @@ export const getVideoManagementMachine = (fetch: any) => {
       },
       ADDING_VIDEO_FAILED: {
         entry: assign({ errorMessage: (data: any) => data.event.error }),
+        after: {
+          10: "IDLE",
+        },
+      },
+      DELETING_VIDEO: {
+        invoke: {
+          src: "deleteVideo",
+          input: (data: any) => data.event.input,
+          onDone: "DELETING_VIDEO_SUCCESS",
+          onError: "DELETING_VIDEO_FAILED",
+        },
+      },
+      DELETING_VIDEO_SUCCESS: {
+        entry: assign({ errorMessage: null, videoDetails: null }),
+        after: {
+          10: "GETTING_VIDEOS",
+        },
+      },
+      DELETING_VIDEO_FAILED: {
+        entry: assign({ errorMessage: () => "Delete Video Failed !!!" }),
+        after: {
+          10: "IDLE",
+        },
+      },
+      SEARCHING_VIDEO: {
+        entry: "updateVideosMatchingFilter",
         after: {
           10: "IDLE",
         },

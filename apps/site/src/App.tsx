@@ -19,13 +19,13 @@ export default function App() {
     send({ type: "LOAD_VIDEOS_PAGE" });
   }, []);
 
-  console.log(state.value);
-
   return (
     <div className="flex h-screen">
       <section className="h-full w-96 flex flex-col ">
         <header className="flex justify-center items-center gap-2 px-8 py-4">
-          <SearchInput />
+          <SearchInput
+            onChange={(keyword) => send({ type: "SEARCH_VIDEO", keyword })}
+          />
           <NewButton onClick={() => send({ type: "CLICK_NEW_VIDEO_BUTTON" })} />
           <AddVideoModal
             open={
@@ -102,7 +102,17 @@ export default function App() {
                 </h2>
                 <p>{state.context.videoDetails.descrption}</p>
                 <div className="card-actions justify-end">
-                  <button className="btn btn-error" onClick={() => {}}>
+                  <button
+                    className="btn btn-error"
+                    onClick={() =>
+                      send({
+                        type: "CLICK_DELETE_VIDEO",
+                        input: {
+                          videoUUID: state.context.videoDetails!.videoUUID,
+                        },
+                      })
+                    }
+                  >
                     Delete
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
