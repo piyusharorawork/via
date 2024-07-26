@@ -18,6 +18,7 @@ import _ from "lodash";
 import { VideoStore } from "@via/store/video-store";
 import { FileStore } from "@via/store/file-store";
 import { FileUploader } from "../file-uploader/file-uploader.js";
+import { resizeVideo } from "../video-resizer/video-resizer.js";
 export * from "./video-manager.schema.js";
 
 export class VideoManager {
@@ -35,9 +36,12 @@ export class VideoManager {
       await addVideoInput.parseAsync(input);
       const videoPath = `downloads/${input.name}.mp4`;
       await downloadYoutubeVideo(input.youtubeURL, videoPath);
+      const resizedVideoPath = `exports/${generateId()}.mp4`;
+      await resizeVideo(videoPath, 540, 960, resizedVideoPath);
+
       // TODO ensure upload server is stable and running
       // TODO upload file utility function must be part of workflow itself
-      const file = await this.fileUploader.uploadFile(videoPath);
+      const file = await this.fileUploader.uploadFile(resizedVideoPath);
 
       const fileId = await this.fileStore.insert({
         destination: file.destination,

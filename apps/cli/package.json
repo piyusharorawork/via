@@ -5,7 +5,7 @@
     "build": "tsc",
     "clean": "rm -rf .turbo dist node_modules exports downloads temp",
     "start": "tsc; node dist/cli.js",
-    "download-video": "tsc; node dist/download-video.cli.js"
+    "load-videos": "tsc; node dist/load-videos.js"
   },
   "devDependencies": {
     "@types/uuid": "^10.0.0",

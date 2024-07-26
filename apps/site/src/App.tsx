@@ -7,6 +7,7 @@ import { trpc } from "./trpc.ts";
 import { VideosTable } from "@via/ui/videos-table";
 import { useActor } from "@xstate/react";
 import { getVideoManagementMachine } from "@via/machine/video-management-machine";
+import { VideoPreview } from "@via/ui/video-preview";
 
 const ADD_VIDEO_MODAL_ID = "add-video-modal";
 
@@ -87,15 +88,8 @@ export default function App() {
 
         {state.matches("IDLE") && state.context.videoDetails != null && (
           <div className="w-full">
-            <div className="card card-compact bg-base-100 w-full shadow-xl py-4 px-8">
-              <figure>
-                <video className="rounded-xl" controls loop>
-                  <source
-                    src={state.context.videoDetails.videoURL}
-                    type="video/mp4"
-                  />
-                </video>
-              </figure>
+            <div className="card card-compact w-full shadow-xl py-4 px-8">
+              <VideoPreview videoURL={state.context.videoDetails.videoURL} />
               <div className="card-body">
                 <h2 className="card-title">
                   {state.context.videoDetails.name}
