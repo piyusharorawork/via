@@ -11,6 +11,9 @@ import { EditVideo } from "@via/editly";
     throw "not all required inputs passed";
   }
 
+  const width = 540;
+  const height = 960;
+
   console.log({ videoPath, text, generateVideoPath });
 
   await EditVideo({
@@ -24,16 +27,16 @@ import { EditVideo } from "@via/editly";
           },
           {
             type: "subtitle",
-            bottomMargin: 4,
+            bottomMargin: height / 2,
             text: text,
-            fontSize: 12,
+            fontSize: 48,
             textColor: "#fff",
           },
         ],
       },
     ],
-    width: 540,
-    height: 960,
+    width,
+    height,
     keepSourceAudio: true,
   });
 })();
