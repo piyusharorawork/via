@@ -45,3 +45,14 @@ export type ViewVideoOutput = {
   createdAt: string;
   videoURL: string;
 };
+
+export const makeVideoInput = z.object({
+  videoUUID: z.string().uuid(),
+  quote: z.string(),
+});
+
+export type MakeVideoInput = z.infer<typeof makeVideoInput>;
+
+export type MakeVideoOutput = {
+  videoURL: string;
+};

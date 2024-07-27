@@ -1,6 +1,6 @@
 {
   "extends": "@via/typescript-config/base.json",
-  "include": ["src"],
+  "include": ["src/**/*.tsx", "src/**/*.ts"],
   "compilerOptions": {
     "jsx": "react-jsx",
     "allowImportingTsExtensions": true,

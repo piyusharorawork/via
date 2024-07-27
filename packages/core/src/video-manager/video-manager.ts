@@ -7,6 +7,8 @@ import {
   ListVideoItem,
   ListVideosInput,
   ListVideosOutput,
+  MakeVideoInput,
+  MakeVideoOutput,
   removeVideoInput,
   RemoveVideoInput,
   RemoveVideoOutput,
@@ -149,5 +151,11 @@ export class VideoManager {
     } catch (error) {
       throw error;
     }
+  }
+
+  async makeVideo(input: MakeVideoInput): Promise<MakeVideoOutput> {
+    return {
+      videoURL: "",
+    };
   }
 }

@@ -165,3 +165,24 @@ describe("view video", () => {
     });
   }
 });
+
+describe("make video", () => {
+  const scenerios = [
+    {
+      name: "make 5 sec video",
+      quote: "Hello",
+    },
+  ];
+
+  const videoManager = new VideoManager(databaseName, serverBaseURL);
+  const videoStore = new VideoStore(databaseName);
+  const fileStore = new FileStore(databaseName);
+
+  for (const scenerio of scenerios) {
+    test(scenerio.name, async () => {
+      // const fileId = await fileStore.insert({destination : "",fileName : "",mimeType :"",originalName :"",path : "",})
+      // const video = await videoStore.insert({description : "",fileId : ""})
+      // const res = await videoManager.makeVideo({ quote: scenerio.quote,videoUUID :  });
+    });
+  }
+});

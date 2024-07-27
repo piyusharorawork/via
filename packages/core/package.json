@@ -21,6 +21,14 @@
     "./file-uploader": {
       "types": "./src/file-uploader/file-uploader.ts",
       "default": "./dist/file-uploader/file-uploader.js"
+    },
+    "./video-resizer": {
+      "types": "./src/video-resizer/video-resizer.ts",
+      "default": "./dist/video-resizer/video-resizer.js"
+    },
+    "./generate-video": {
+      "types": "./src/generate-video/generate-video.ts",
+      "default": "./dist/generate-video/generate-video.js"
     }
   },
   "devDependencies": {
@@ -32,6 +40,7 @@
   },
   "dependencies": {
     "@via/store": "workspace:*",
+    "@via/editly": "workspace:*",
     "axios": "^1.7.2",
     "form-data": "^4.0.0",
     "lodash": "^4.17.21",

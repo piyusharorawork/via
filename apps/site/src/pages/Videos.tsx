@@ -1,19 +1,18 @@
+import React from "react";
 import { AddVideoInput, ListVideosOutput } from "@via/core/video-manager";
 import { AddVideoModal } from "@via/ui/add-video-modal";
 import { NewButton } from "@via/ui/new-button";
 import { SearchInput } from "@via/ui/search-input";
 import { useEffect, useState } from "react";
-import { trpc } from "./trpc.ts";
 import { VideosTable } from "@via/ui/videos-table";
 import { useActor } from "@xstate/react";
 import { getVideoManagementMachine } from "@via/machine/video-management-machine";
 import { VideoPreview } from "@via/ui/video-preview";
-
 const ADD_VIDEO_MODAL_ID = "add-video-modal";
 
 const videoManagementMachine = getVideoManagementMachine(fetch);
 
-export default function App() {
+export default function Videos() {
   const [state, send] = useActor(videoManagementMachine);
 
   useEffect(() => {

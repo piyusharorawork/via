@@ -3,41 +3,12 @@ import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import nodeFetch from "node-fetch";
 
 import { getVideoManagementActor } from "@via/machine/video-management-machine";
+import { downloadYoutubeVideo } from "@via/core/video-downloader";
+import { resizeVideo } from "@via/core/video-resizer";
+import { generateVideo } from "@via/core/generate-video";
 
 (async () => {
   try {
-    // const videoListActor = getVideoListActor(nodeFetch);
-    const videoManagementActor = getVideoManagementActor(nodeFetch);
-    // videoListActor.start();
-    videoManagementActor.start();
-    // videoListActor.subscribe((state) => {
-    //   console.log(state.value);
-    //   console.log(state.context.videos);
-    // });
-    videoManagementActor.subscribe((state) => {
-      console.log(state.value);
-      console.log(state.context);
-    });
-    // videoListActor.send({ type: "INIT" });
-
-    const name = "Hanuman-Ji";
-    const description = "Video of lord hanuman also known as bajrang bali";
-    const youtubeURL = "https://www.youtube.com/shorts/A4bOUJ9AOEM";
-
-    // videoManagementActor.send({
-    //   type: "GET_VIDEOS",
-    // });
-
-    videoManagementActor.send({
-      type: "CLICK_ADD_VIDEO",
-      input: { description, name, youtubeURL },
-    });
-
-    // videoManagementActor.send({
-    //   type: "GET_VIDEOS",
-    // });
-    // const start = "00:00:00";
-    // const end = "00:00:04";
     // const trpc = createTRPCProxyClient<AppRouter>({
     //   links: [
     //     httpBatchLink({
@@ -46,21 +17,28 @@ import { getVideoManagementActor } from "@via/machine/video-management-machine";
     //     }),
     //   ],
     // });
-    // // ADD ONE VIDEO
-    // // await trpc.addVideo.mutate({ name, youtubeURL, description });
-    // // LIST ALL VIDEOS
-    // let res = await trpc.listVideos.query({ limit: 10 });
+
+    // const res = await trpc.listVideos.query({ limit: 10 });
     // console.log(res);
-    // // VIEW ONE VIDEO
-    // const videoDetails = await trpc.viewVideo.query({
-    //   videoUUID: res[0]!.uuid,
-    // });
-    // console.log(videoDetails);
-    // // DELETE THAT VIDEO
-    // await trpc.removeVideo.mutate({ videoUUID: res[0]!.uuid });
-    // // LIST ALL VIDEOS
-    // res = await trpc.listVideos.query({ limit: 10 });
-    // console.log(res);
+
+    // await downloadYoutubeVideo(
+    //   "https://www.youtube.com/watch?v=cxQMLCtoi_w",
+    //   "downloads/5-sec-black.mp4"
+    // );
+
+    // await resizeVideo(
+    //   "downloads/5-sec-black.mp4",
+    //   540,
+    //   960,
+    //   "downloads/5-sec-video.mp4"
+    // );
+
+    await generateVideo({
+      generatedVideoPath:
+        "/Users/piyusharora/projects/via/apps/cli/exports/generated.mp4",
+      quote: "HELLO",
+      videoPath: "/Users/piyusharora/projects/via/apps/cli/assets/river.mp4",
+    });
   } catch (error) {
     console.error(error);
   }

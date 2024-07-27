@@ -9,7 +9,7 @@ export const resizeVideo = async (
 ) => {
   return new Promise<void>(async (resolve, reject) => {
     try {
-      const command = `ffmpeg -y -i ${videoPath} -s ${width}x${height} -c:a copy ${outputFilePath}`;
+      const command = `ffmpeg -y -i ${videoPath} -vf "scale=${width}:${height}" -c:a copy ${outputFilePath}`;
       const cp = exec(command, (err, stdout) => {
         if (err) {
           console.error(err);

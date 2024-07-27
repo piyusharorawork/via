@@ -19,4 +19,4 @@
 - create a new page that takes video id and some text and will generate a video from it
 - instead of just id , allow to search a video from name or description
 - instead of just name or description allow any random text and use ai to find the right video
-- exports dir must exist in server
+- exports dir must exist in server (dev mode) and core (test mode)
