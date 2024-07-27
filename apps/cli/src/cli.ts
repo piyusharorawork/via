@@ -21,10 +21,10 @@ import { generateVideo } from "@via/core/generate-video";
     // const res = await trpc.listVideos.query({ limit: 10 });
     // console.log(res);
 
-    // await downloadYoutubeVideo(
-    //   "https://www.youtube.com/watch?v=cxQMLCtoi_w",
-    //   "downloads/5-sec-black.mp4"
-    // );
+    await downloadYoutubeVideo(
+      "https://www.youtube.com/shorts/PZ-HWVT7ZDw",
+      "downloads/5-sec.mp4"
+    );
 
     // await resizeVideo(
     //   "downloads/5-sec-black.mp4",
@@ -33,12 +33,12 @@ import { generateVideo } from "@via/core/generate-video";
     //   "downloads/5-sec-video.mp4"
     // );
 
-    await generateVideo({
-      generatedVideoPath:
-        "/Users/piyusharora/projects/via/apps/cli/exports/generated.mp4",
-      quote: "HELLO",
-      videoPath: "/Users/piyusharora/projects/via/apps/cli/assets/river.mp4",
-    });
+    // await generateVideo({
+    //   generatedVideoPath:
+    //     "/Users/piyusharora/projects/via/apps/cli/exports/generated.mp4",
+    //   quote: "HELLO",
+    //   videoPath: "/Users/piyusharora/projects/via/apps/cli/assets/river.mp4",
+    // });
   } catch (error) {
     console.error(error);
   }

@@ -19,8 +19,9 @@ import { v4 as generateId } from "uuid";
 import _ from "lodash";
 import { VideoStore } from "@via/store/video-store";
 import { FileStore } from "@via/store/file-store";
-import { FileUploader } from "../file-uploader/file-uploader.js";
+import { FileUploader, uploadFile } from "../file-uploader/file-uploader.js";
 import { resizeVideo } from "../video-resizer/video-resizer.js";
+import { generateVideo } from "../generate-video/generate-video.js";
 export * from "./video-manager.schema.js";
 
 export class VideoManager {
@@ -78,7 +79,7 @@ export class VideoManager {
         // TODO can be optimized more
         const { found, file } = await this.fileStore.get(video.fileId);
         if (found) {
-          const videoURL = formFileURL(file);
+          const videoURL = formFileURL(file.path);
           videoURLMap[video.id] = videoURL;
         }
       }
@@ -138,7 +139,7 @@ export class VideoManager {
         throw "file not found";
       }
 
-      const videoURL = formFileURL(file);
+      const videoURL = formFileURL(file.path);
 
       return {
         createdAt: video.createdAt,
@@ -154,8 +155,36 @@ export class VideoManager {
   }
 
   async makeVideo(input: MakeVideoInput): Promise<MakeVideoOutput> {
+    const { quote, videoUUID } = input;
+
+    const { found: isVideoFound, video } = await this.videoStore.get(videoUUID);
+
+    if (!isVideoFound) {
+      throw "video not found";
+    }
+
+    const { found: isFileFound, file } = await this.fileStore.get(video.id);
+
+    if (!isFileFound) {
+      throw "file not found";
+    }
+
+    const backgroundVideoURL = formFileURL(file.path);
+
+    const generatedVideoPath = `exports/${generateId()}.mp4`;
+
+    await generateVideo({
+      generatedVideoPath,
+      quote,
+      videoPath: backgroundVideoURL,
+    });
+
+    const uploadedFile = await this.fileUploader.uploadFile(generatedVideoPath);
+
+    const videoURL = formFileURL(uploadedFile.path);
+
     return {
-      videoURL: "",
+      videoURL,
     };
   }
 }

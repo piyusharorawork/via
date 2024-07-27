@@ -1,8 +1,9 @@
 import { expect, test, describe } from "vitest";
 import { VideoManager } from "./video-manager";
-import { v4 as generateId } from "uuid";
+import { v4 as generateId, v4 } from "uuid";
 import { VideoStore } from "@via/store/video-store";
 import { FileStore } from "@via/store/file-store";
+import { uploadFile } from "../file-uploader/file-uploader";
 
 const databaseName = "via-test.db";
 const serverBaseURL = "http://localhost:4000";
@@ -180,9 +181,30 @@ describe("make video", () => {
 
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
-      // const fileId = await fileStore.insert({destination : "",fileName : "",mimeType :"",originalName :"",path : "",})
-      // const video = await videoStore.insert({description : "",fileId : ""})
-      // const res = await videoManager.makeVideo({ quote: scenerio.quote,videoUUID :  });
+      const file = await uploadFile(
+        "http://localhost:4000",
+        "assets/5-sec.mp4"
+      );
+      const fileId = await fileStore.insert({
+        destination: file.destination,
+        fileName: file.filename,
+        mimeType: file.mimetype,
+        originalName: file.originalname,
+        path: file.path,
+      });
+      const videoUUID = v4();
+      await videoStore.insert({
+        description: "",
+        fileId: fileId,
+        name: "5-sec-video",
+        originalURL: "",
+        uuid: videoUUID,
+      });
+      const { videoURL } = await videoManager.makeVideo({
+        quote: scenerio.quote,
+        videoUUID,
+      });
+      expect(videoURL).toContain("http://");
     });
   }
 });

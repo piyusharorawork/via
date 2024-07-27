@@ -1,6 +1,6 @@
 import { File } from "@via/store/file-store";
 
-export const formFileURL = (file: File) => {
-  const videoURL = `http://localhost:4000/${file.path}`;
+export const formFileURL = (filePath: string) => {
+  const videoURL = `http://localhost:4000/${filePath}`;
   return videoURL;
 };
