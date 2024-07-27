@@ -29,6 +29,10 @@
     "./generate-video": {
       "types": "./src/generate-video/generate-video.ts",
       "default": "./dist/generate-video/generate-video.js"
+    },
+    "./find-video": {
+      "types": "./src/find-video/find-video.ts",
+      "default": "./dist/find-video/find-video.js"
     }
   },
   "devDependencies": {

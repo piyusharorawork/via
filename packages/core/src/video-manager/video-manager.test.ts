@@ -170,7 +170,7 @@ describe("view video", () => {
 describe("make video", () => {
   const scenerios = [
     {
-      name: "make 5 sec video",
+      name: "make 1 sec video",
       quote: "Hello",
     },
   ];
@@ -183,8 +183,9 @@ describe("make video", () => {
     test(scenerio.name, async () => {
       const file = await uploadFile(
         "http://localhost:4000",
-        "assets/5-sec.mp4"
+        "assets/1-sec.mp4"
       );
+
       const fileId = await fileStore.insert({
         destination: file.destination,
         fileName: file.filename,
@@ -194,15 +195,15 @@ describe("make video", () => {
       });
       const videoUUID = v4();
       await videoStore.insert({
-        description: "",
+        description: "some description",
         fileId: fileId,
-        name: "5-sec-video",
+        name: "1-sec-video",
         originalURL: "",
         uuid: videoUUID,
       });
       const { videoURL } = await videoManager.makeVideo({
         quote: scenerio.quote,
-        videoUUID,
+        prompt: "some",
       });
       expect(videoURL).toContain("http://");
     });

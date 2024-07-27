@@ -47,7 +47,7 @@ export type ViewVideoOutput = {
 };
 
 export const makeVideoInput = z.object({
-  videoUUID: z.string().uuid(),
+  prompt: z.string(),
   quote: z.string(),
 });
 

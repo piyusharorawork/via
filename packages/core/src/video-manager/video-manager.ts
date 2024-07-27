@@ -22,6 +22,7 @@ import { FileStore } from "@via/store/file-store";
 import { FileUploader, uploadFile } from "../file-uploader/file-uploader.js";
 import { resizeVideo } from "../video-resizer/video-resizer.js";
 import { generateVideo } from "../generate-video/generate-video.js";
+import { findVideo } from "../find-video/find-video.js";
 export * from "./video-manager.schema.js";
 
 export class VideoManager {
@@ -155,22 +156,23 @@ export class VideoManager {
   }
 
   async makeVideo(input: MakeVideoInput): Promise<MakeVideoOutput> {
-    const { quote, videoUUID } = input;
+    const { quote, prompt } = input;
 
-    const { found: isVideoFound, video } = await this.videoStore.get(videoUUID);
+    const videos = await this.videoStore.list(10);
+    const videoId = await findVideo({ prompt, videos });
+    const video = videos.find((video) => video.id === videoId);
 
-    if (!isVideoFound) {
-      throw "video not found";
+    if (!video) {
+      throw "no video found";
     }
 
-    const { found: isFileFound, file } = await this.fileStore.get(video.id);
+    const { file, found } = await this.fileStore.get(video.fileId);
 
-    if (!isFileFound) {
-      throw "file not found";
+    if (!found) {
+      throw "no file found";
     }
 
     const backgroundVideoURL = formFileURL(file.path);
-
     const generatedVideoPath = `exports/${generateId()}.mp4`;
 
     await generateVideo({
