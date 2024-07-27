@@ -6,6 +6,7 @@ import {
   removeVideoInput,
   viewVideoInput,
   VideoManager,
+  makeVideoInput,
 } from "@via/core/video-manager";
 
 export const createRouter = (databaseName: string, serverBaseURL: string) => {
@@ -29,6 +30,10 @@ export const createRouter = (databaseName: string, serverBaseURL: string) => {
     viewVideo: t.procedure.input(viewVideoInput).query(async ({ input }) => {
       const video = await videoManager.viewVideo(input);
       return video;
+    }),
+    makeVideo: t.procedure.input(makeVideoInput).query(async ({ input }) => {
+      const result = await videoManager.makeVideo(input);
+      return result;
     }),
   });
 

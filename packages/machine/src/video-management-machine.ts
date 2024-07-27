@@ -8,6 +8,8 @@ import {
   RemoveVideoOutput,
   ViewVideoInput,
   ViewVideoOutput,
+  MakeVideoInput,
+  MakeVideoOutput,
 } from "@via/core/video-manager";
 
 export const getVideoManagementMachine = (fetch: any) => {
@@ -27,6 +29,7 @@ export const getVideoManagementMachine = (fetch: any) => {
         originalVideos: ListVideosOutput;
         errorMessage: string | null;
         videoDetails: ViewVideoOutput | null;
+        makeVideoOutput: MakeVideoOutput | null;
       },
       events: {} as  // All the events invoked by user
         | { type: "LOAD_VIDEOS_PAGE" }
@@ -35,7 +38,8 @@ export const getVideoManagementMachine = (fetch: any) => {
         | { type: "CLICK_ADD_VIDEO"; input: AddVideoInput }
         | { type: "CLICK_VIDEO_ROW"; input: ViewVideoInput }
         | { type: "CLICK_DELETE_VIDEO"; input: ViewVideoInput }
-        | { type: "SEARCH_VIDEO"; keyword: string },
+        | { type: "SEARCH_VIDEO"; keyword: string }
+        | { type: "GENERATE_VIDEO"; input: MakeVideoInput },
     },
     actors: {
       // All the async services
@@ -59,6 +63,12 @@ export const getVideoManagementMachine = (fetch: any) => {
           return video;
         }
       ),
+      makeVideo: fromPromise<MakeVideoOutput, MakeVideoInput>(
+        async ({ input }) => {
+          const res = await trpc.makeVideo.query(input);
+          return res;
+        }
+      ),
     },
     actions: {
       // client side filtering
@@ -76,12 +86,13 @@ export const getVideoManagementMachine = (fetch: any) => {
       }),
     },
   }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOgEkARAGQFEBiKgeQEEKB9ANUpsYGU2ACswDiNANoAGALqJQABwD2sXABdcC-LJAAPRACYALAGYSAVgDsp00fMA2UxKMSAjAE5TAGhABPRM+f2JBJ6ABzOIQZWBgYBegC+cV5oWHiEpJS0dADCVGRZANJsAHI0AOqc3IxsAEIAqgAq9YxFkjJIIIrKahpaugiGJhZWNvaOLu5evggheuZmriHWesHmEi7xiSDJOATE5NT0OXmFXBQ8bABKjKWtWp2q6prtfQNmltZ2Dk5unj6IBnpnCRnMtViEbHojDYjAkkhgdml9pkjgU2GdaPUaBUzoxbu17t0nqAXsY3sNPmMfpN9AZbGYDO41uY9O5weZYVt4ak9hl6LwaMwLlkABLYnh4+RKB49Z40wbvEZfca-KauQwkQGmWzgvSmVxrZymDnbbmkUSNMhFYRivh0CAaMAkAgANwUAGtHSbdmaaBarTbeAgXQpMOhCa0JR0pYTevpnBJXEFVnplrZdWtotTphJTCRzMYcxICwZk8aud6SOb6pbraceLw6GAAE5NhRNkhyAA2YYAZm3UCQvYiqzWA0H8K7Q+HpJGCY9Y-144mJMnU+miwYs5YQiRXEYIhm9yEIkbNkO9qx2HWqgAxRgXACybEYAhoJQo2VyqMvNtn0fnsrTEYBhJsEgJquYziQXoW6LCQIS2HYRjxrMzgMrYZYpBWP7Xmwd6Ps+r7vp+fBYjhlR4feD5-l0AHEvothApEyEGOCYRpvmm5-Ag5i8XmCFjOYyGmAhGFnuWiJMKwo64Wc9TMGQVANvahBOhO7qehJexSRQMkUXJClKeOk5ho8EbSHc-4yvRQEgSuYFuKh0FZoxehJvqLFGK4IKuOy4lYZJLC6f6sm+oZDbNq27Zdr2-aDlppA6XpOJomFimBsGU5mTOFn4lZRI6Ig4J2aujmQc53EGBIO5VSEawJlBwSuK4BiYQieyhfJ6VsLwtRZFkNC8A22iwCoYaOugPYqM2yDxkQdDnqQnXhT1fUDUNNHSgVfT6nM1g2CCUGmLqMwuSJ8Hgtqzg2BYhqtf57VLfpaVKXhhk0B+I1jdNJCTdNTazRI82LSQy3dTe70UJtMaAbtZhQtBR0nTB3FGIxJC2I4RgOAsG4Am1pqVr61YhZU-AQ4pH10F942-VNM1zQtCVE36tZk29lNQ7lkq0dZhWLsdGqYyyR0RJCWb6sCISrCJRgsnukRiXCAV7COpM4vwvX9YNw2jbTf0M0DTMqz6rMBqt2sbdzUa89tcaC3owveduAJGFmIIIbu+5o9VYQfErnImyQl7JTwdoOmproevFQch+rPDGSGpkaOZbQ81tC4e7mcsuPmx22MhaNbkJwKmAyMy+fmMwE9hFDBWzOKNi2bYdt2Kh9k2A4g3HDcJ5lyf4Knlm25noTZ8sUGRI7he2FmCG5iuh2HZX4Q14iPc2hb62699E30wDjPd3XodVFr2-Q3R-NQWqJDRLqIlj+Y0sqogvEmHdCwsrxrEbMrj3B8feOt5IbUz1j9A2B8jZH3rpvCmtAuZpxthnQCaFIS3wfrSVwtg9wsndkWOkIIRJ6hEq5OWa89jol9CfcOqlgzRxBpQkmvdGCJyyinHKiC5x8z6MVUCKYypQRBFmSEJhLqLEduYZqARHDkNIIw6hkUW4xXbnFBhNAMQn1YQPIeeUR6AV4fZfhEFBEoymJg2+wQZhoRapEIssiSDyKAVvHWoDd503+oDYGzNHHMOcVbTh+VM5lx3DMWYYQsFQkcOYYRUJ4Jo3EYhKRmMYQPUJj42BICabgP3p442-90m4TgR9C+3DEBw32ojSwyMsxalzLMYwftghl3un-Qm-JBQimoVkveHjD7M3aUKYUJ8Sl2wQPuRMzJro5hTEWB+L9ph8RiPGKEctDCGj8psfACgIBwC0ItYeyCbIAFpZ7cROfY3kByYY2QBHg3M2DmQ4KEgCAILTA7-zVsw3gVzL59DcFBeC9knm+TTPMquFjLCYwZOXXU9jyIpXwk+F8b4Po-NKQgY6cwYgpiqlXPcBdYJ0iatVFcx4AiSPsUlJxBl0potGVYJiKZbDRBElgos0TUa+XgrxQEhpsG6hTH5VpFYwavTPjrOlmdHBuRCJ-Xi4QSxoTdtxTGEg8xoUWGECQ2oWopOFYiUV5NIaSpQdK+CcrIIREgsYLM2M3JCWdnYH+vtTz6tVsTE+RrOYmpsoKuYaZWJajsE-SRc8gSrP1EeTFSF7GfPNuKoaPr+Z+oxoYRYiFELS1cFuFqJAbCytmPmPceo9XvMJhva8Sa-nasTI7fwtjghplMa-NMqaYhQuloxFccLAG+ITd83Rhyr7BPgoK8JBcnA2C3KxCFWoiwtU-gHaBJ8ObwKrX4EdoSn5uAnVEue1g8z2WGFgoNzh7EFMqOujFdgNRVRYpI-cthsHCLQU4ZJ4wMy0l-mWisF6Ur9qvVnPNE887T2uqcqYyxlyytxdqESOYn7nvUVQpxRSKCAbNbKmY8qrVKqzJEHcjgELMjLr5BWpaQYDM6UAq9phDRBE1auKRtzuIIR3GXODzV9ThBzAkBIQA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOgEkARAGQFEBiKgeQEEKB9ANUpsYGU2ACswDiNANoAGALqJQABwD2sXABdcC-LJAAPRACYA7AGYSAVgOnTE00YBsAFgkAOcwBoQAT0QBGAwE5bEgd-W1snI3sA4wBfaPc0LDxCUkpaOgBhKjJ0gGk2ADkaAHVObkY2ACEAVQAVGsZ8yRkkEEVlNQ0tXQRDE3NLaztHFwN3LwQ7JxI-Iz8-AwdnAyc9U1j4jBwCYnJqekzsvK4KHjYAJUYipq021XVNFu7eswsrG0WRscQDeyn7Y0sfj0elsehcfnWIASW2SuzSB1ybBOtBqNFKJ0Y1xatw6D1AT2MLwG72Gbk8PlMhhIeiM3jCfm8INsfnstkh0KSO1S9F4NGYZ3SAAl0TwsfIlHdOo99IT+m8hs4yeNbKZApYDHpGd5TN4nBIYnEoZtOSk9nRRIUzsxUSLMdIbhLcV0ZX1XoMPkqfM5vC8FrYJLZfOEjEZ2cbtqQALLMHJkfLCW10CAaMAkAgANwUAGtUxyIyRo7H47aEBmFJh0LimmLWo77s6EE57PYSPqJLSJI5LHS-F8EN5rBISJEjIZWTr7OZQ4a87DC3GE8ceHQwAAnVcKVckOQAG0rADNN6gSLOdvPi0vGKX8JmK1XpDWcfXpY3m62DO2B12dcy+wP5tSfhOIyAZNgYH5rDO4ZzjGC62vwvBVOk6Q0LwvB0NosAqJWqboPuKhrsgA5EHQp5RrBF5lAhSEoWhj51lK+KIAyBhmCGLjNt4zZGKM5KNkCQSGL4DisuB2phok+bnouVFsAAYswZC0BQGFYThJB4QRq5ERIJFkQWFEyRi-AKUpNAUPR7TPkxCAsWxRh6n4pgzN4ATeH+wKmCQxiMhEgbLHYBgSTCOyiHUcGXuhyaEGmN7Zrm0GhTQ4WUcZ163pW9zVva2IMXiOj6N4PFBN4rmahqtgOXof46kOCqrBInZAcswUmiQYU1BFVEruum7bnuKiHqux76R1XVpWWd5ZQ+OXilZjEFT0RWsYGZW+CCVV-l2rYOJSlIOGOrX5qw7CXvJjBnJGbCMAINCFCpCJ5CdtqWZK+XdE2LZth2349n2dgmEYpjhHqA4OWEAZHbCz1nXJF1XTdd3mRkTC8mwMNlOdl2vU6L56Ayw42EVznAS4QO2P9rkkIyFjhJErwOVDOxMKw42nCcNSKVQUUprFmY5ieiWkCzFBs+UHNc7w6XlplGjZc0c1vQ2n3vp+nbWD+vZ8QYvgkA5My0gCEilXoTPCywoupezyWSz1G5bruB5HoLkmwiLYtIjbSlS5Nsv4PLDrze9iAq99X4a392sONTLKNb8TiVU5ThmyQZ0S97bCIchqHoZh2EERp+GEcRpFC6nmPp9zmc0TnOPWYtdk2A5picdxvHjJEQ4uBIeg9-Yej-EYnZBVBrs7GnXtV6ZymqfnuFF9pJf6RPnMZ9P5l1wt3SN+xLf2Fx9g8X2Mx+MOtJNk5QHaoGKdjVbfDyVzyN5+pmnF7ppdj6Qd9GTwJlPxZWatYg4Nk1HqEgepe5LHxofIGfZgJ62BAydsrIewD1vslTq99qLZzQrPV+C8dJ6TLj-eC1dcG8E3sHJa4DIGNScBqFkIZTB-iBnoYc8wwi6ibDSNko8QqkBOmLJMvMywC30kI++0sppyxmgrYBSsXxFSKhAwMTlnCBn+CwviPFT76icMg-0+9wgqhTpI3+jA7Z9UdoNZ2EiKCWwsdIv2AdcogKUbSEwCdXJWG8VovsYJWJ0hBL8OwcxSqdjMQ4j2WdaK5zUgXN+i8P72McbachcSqENl1L3aYPCXCrBcLqew-1-DvgMQOIxuo7CQQ2F-Eg5j0nrxUi-RJhCl5l0abDABWSlGTh9HMOYTYuK9wcgExq1JVgD2ZGAwMNgU7ImSsI6KqYxEJXqYsrBTjfb3ikL0myocPw-Qjr+PiXEAjU3+PvLh+9-C1KNBsmgKJhFrntv1J2w0XYCJIJssWzjdn7MWoctWv1TnjG1P3aYlIir-ATnqf4CynlLPvhknO+C2laSIZ-b5vyUWxNrkAp8W8KTgT1rtYGwTOzhC2hcriPw6TAVuU5RFzyUXNPRfPTFHTHmsosY-MygD5FEuoTvZurdD7tx8LYHWesyaRFVH6EEKdeT8iFMI1pnL37EPqSqgUgoxaAu6PvU+GpiaGB-FxIwfZ-Qmr2rMRqnZgTJ0hPgBQEA4BaDIoHRRNkAC0FM+K+q8oMkNob5im34W1bk3rcY2X7n+cCgQnAMKsLqdWVKU7SVtDG+u3QbXTHxsyVU4Tzl-msFMEM-d8azFgZDSNUlDJkPxWhHNxL+zWHYQY-Jh9mz-Gqmc427C7AggYcmgMSdM2Nsivy5SrbqEDkpBAoC-cmwRGbBqP8uovIDgDH6f0xge4YJShY3gc7skskCBEZNzlDAFITltGVjhGrFOckCBOUTTqYzhpda6t17pnpfOqYcvkAwRACNC-6lUzCuQYQPC+zZ0H1rdhbD2ldT1uJ9YtClw5gQagDPjZNPw+wai8kgoZEQip2D4XU75K9JaopbRh2Ni0F2duXWCHt67+3KjKYUlUBTRwFJTnRteACAM2VY0u7ta6+3wKAhAwdFgJBDPAhGmjbVSHTuaeJxaNI6TU1CMDMcLJD7aPBVR6Y7FgIGx4pSI9Wym010Y4rZjTxaSBDpPx4z3EzM+D7dSEMQNfAzBBLqD9YsdPdH-C2Jy5gGHLUZb5iYjhqbnPVs5RkzZqMPO+V0zGzb0MudzSS1iQxLDAVBFSq1OiW561pL8ICsxaQ0nC2ysTTHiv9nMKV8lFXe6hICZEVstJ5g6gpUUllyKLGRcQP6QIA9HXKasO2MENV2x5OAjrVkwJDAj3U-mXFfKCszf7J41RPiNF0qS3Sn0T6AyNRCNCybDnukCpO5JrtK7OOybOZVIcFhB7FIMcbewyq+R6oix1ttLcvKKiBNKnWoJWTWqpjMKroQe7KenLEIAA */
     context: {
       videos: [], //  filtered and displayed in a table
       originalVideos: [], // Synced from backend
       videoDetails: null, // single video with more info to show
       errorMessage: null, // any error message when something went wrong
+      makeVideoOutput: null,
     },
     initial: "IDLE",
     states: {
@@ -92,6 +103,30 @@ export const getVideoManagementMachine = (fetch: any) => {
           CLICK_VIDEO_ROW: "LOADING_VIDEO_DETAILS",
           CLICK_DELETE_VIDEO: "DELETING_VIDEO",
           SEARCH_VIDEO: "SEARCHING_VIDEO",
+          GENERATE_VIDEO: "MAKING_VIDEO",
+        },
+      },
+      MAKING_VIDEO: {
+        invoke: {
+          src: "makeVideo",
+          input: (data: any) => data.event.input,
+          onDone: "MAKING_VIDEOS_SUCCESS",
+          onError: "MAKING_VIDEOS_FAILED",
+        },
+      },
+      MAKING_VIDEOS_SUCCESS: {
+        entry: assign({
+          makeVideoOutput: (data: any) => data.event.output,
+          errorMessage: null,
+        }),
+        after: {
+          10: "IDLE",
+        },
+      },
+      MAKING_VIDEOS_FAILED: {
+        entry: assign({ errorMessage: (data: any) => data.event.error }),
+        after: {
+          10: "IDLE",
         },
       },
       GETTING_VIDEOS: {

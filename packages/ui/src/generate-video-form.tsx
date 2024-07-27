@@ -1,4 +1,14 @@
-export const GenerateVideoForm = () => {
+import { useState } from "react";
+
+type Props = {
+  isGenerating: boolean;
+  onGenerate: (prompt: string, quote: string) => void;
+};
+
+export const GenerateVideoForm = (props: Props) => {
+  const [prompt, setPrompt] = useState("");
+  const [quote, setQuote] = useState("");
+
   return (
     <div className="card bg-base-100 w-96 shadow-xl px-4 py-2">
       <div className="card-body">
@@ -10,6 +20,7 @@ export const GenerateVideoForm = () => {
           </div>
           <input
             type="text"
+            onChange={(e) => setPrompt(e.target.value)}
             placeholder="Type here"
             className="input input-bordered w-full max-w-xs"
           />
@@ -20,13 +31,22 @@ export const GenerateVideoForm = () => {
             <span className="label-text">Quote</span>
           </div>
           <textarea
+            onChange={(e) => setQuote(e.target.value)}
             className="textarea textarea-bordered h-24"
             placeholder="Enter text to overlay"
           ></textarea>
         </label>
 
         <div className="card-actions justify-end my-2">
-          <button className="btn btn-primary">Generate</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => props.onGenerate(prompt, quote)}
+          >
+            Generate
+            {props.isGenerating && (
+              <span className="loading loading-spinner loading-sm"></span>
+            )}
+          </button>
         </div>
       </div>
     </div>
