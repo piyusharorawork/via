@@ -13,11 +13,11 @@
 - client side form validation
 - Reduce some states via reusable child machines
 - Show progress on what exactlly is happening
+- Create a prompt to help with updating the description of the video
 
 ## Immendiate Next Steps
 
+- render the video after genating success in a modal
+- encore the quote before sending to cli and decode in cli
 - create a package that handles dir path , file path and binary path
-- render the video after genating success
-- create a core module that trims the video to 5 seconds
-- lower the quality of video more
 - ability to update the description of the video
