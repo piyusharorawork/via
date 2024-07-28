@@ -30,7 +30,7 @@ describe("Video Finder", () => {
     },
   ];
   const { finderURL, token } = getEnvVariables();
-  const videoFinder = new VideoFinder(finderURL, token);
+  const videoFinder = new VideoFinder({ url: finderURL, token });
 
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
