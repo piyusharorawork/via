@@ -14,6 +14,7 @@
 - Reduce some states via reusable child machines
 - Show progress on what exactlly is happening
 - Create a prompt to help with updating the description of the video
+- inconsistent tests : valid small video , add one video
 
 ## Immendiate Next Steps
 

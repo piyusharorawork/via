@@ -9,6 +9,9 @@ const videoManagementMachine = getVideoManagementMachine(fetch);
 export default function Home() {
   const [state, send] = useActor(videoManagementMachine);
 
+  console.log(state.value);
+  console.log(state.context.errorMessage);
+
   return (
     <section className="flex justify-center mt-4">
       <GenerateVideoForm

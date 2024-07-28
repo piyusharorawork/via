@@ -11,8 +11,10 @@ export const generateVideo = async (input: GenerateVideoInput) => {
     try {
       const { quote, videoPath, generatedVideoPath } = input;
 
+      const encodedQuote = encodeURI(quote);
+
       const cp = exec(
-        `node /Users/piyusharora/projects/via/packages/core/dist/generate-video/execute-edit-video.js ${videoPath} ${quote} ${generatedVideoPath}`, // TODO PATH MODULE
+        `node /Users/piyusharora/projects/via/packages/core/dist/generate-video/execute-edit-video.js ${videoPath} ${encodedQuote} ${generatedVideoPath}`, // TODO PATH MODULE
         (err, stdout) => {
           if (err) {
             console.error(err);

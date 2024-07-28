@@ -22,18 +22,31 @@ import { FileStore } from "@via/store/file-store";
 import { FileUploader, uploadFile } from "../file-uploader/file-uploader.js";
 import { resizeVideo } from "../video-resizer/video-resizer.js";
 import { generateVideo } from "../generate-video/generate-video.js";
-import { findVideo } from "../find-video/find-video.js";
+import { VideoFinder } from "../find-video/find-video.js";
 import { trimVideo } from "../video-trimmer/video-trimmer.js";
 export * from "./video-manager.schema.js";
+
+type VideoManagerConfig = {
+  databaseName: string;
+  serverBaseURL: string;
+  token: string;
+  finderURL: string;
+};
 
 export class VideoManager {
   private videoStore: VideoStore;
   private fileStore: FileStore;
   private fileUploader: FileUploader;
-  constructor(databaseName: string, serverBaseURL: string) {
-    this.videoStore = new VideoStore(databaseName);
-    this.fileStore = new FileStore(databaseName);
-    this.fileUploader = new FileUploader(serverBaseURL);
+  private videoFinder: VideoFinder;
+
+  constructor(config: VideoManagerConfig) {
+    this.videoStore = new VideoStore(config.databaseName);
+    this.fileStore = new FileStore(config.databaseName);
+    this.fileUploader = new FileUploader(config.serverBaseURL);
+    this.videoFinder = new VideoFinder({
+      token: config.token,
+      url: config.finderURL,
+    });
   }
 
   async addVideo(input: AddVideoInput): Promise<AddVideoOutput> {
@@ -172,7 +185,7 @@ export class VideoManager {
     const { quote, prompt } = input;
 
     const videos = await this.videoStore.list(10);
-    const videoId = await findVideo({ prompt, videos });
+    const videoId = await this.videoFinder.findVideo({ prompt, videos });
     const video = videos.find((video) => video.id === videoId);
 
     if (!video) {

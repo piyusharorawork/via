@@ -11,6 +11,8 @@ import { EditVideo } from "@via/editly";
     throw "not all required inputs passed";
   }
 
+  const quote = decodeURI(text);
+
   const width = 540;
   const height = 960;
 
@@ -28,7 +30,7 @@ import { EditVideo } from "@via/editly";
           {
             type: "subtitle",
             bottomMargin: height / 2,
-            text: text,
+            text: quote,
             fontSize: 48,
             textColor: "#fff",
           },

@@ -1,7 +1,8 @@
 import { expect, test, describe } from "vitest";
-import { findVideo } from "./find-video.js";
+import { VideoFinder } from "./find-video.js";
+import { getEnvVariables } from "../helpers.js";
 
-describe("find video", () => {
+describe("Video Finder", () => {
   const scenerios = [
     {
       name: "find relevant video",
@@ -28,10 +29,12 @@ describe("find video", () => {
       expectedVideoId: 4,
     },
   ];
+  const { finderURL, token } = getEnvVariables();
+  const videoFinder = new VideoFinder(finderURL, token);
 
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
-      const videoId = await findVideo({
+      const videoId = await videoFinder.findVideo({
         videos: scenerio.videos,
         prompt: scenerio.prompt,
       });
