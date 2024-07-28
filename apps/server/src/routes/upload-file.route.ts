@@ -9,17 +9,6 @@ export const getUploadFileRouter = (app: Express) => {
       return res.json("no files");
     }
 
-    // TODO Create file store in context
-    // TODO migrate this part to core itself to ensure all store operations happeded in workflow
-    // const fileStore = createFileStore(process.env.DATABASE_NAME!);
-    // const fileId = await fileStore.insert({
-    //   originalName: req.file.originalname,
-    //   destination: req.file.destination,
-    //   fileName: req.file.filename,
-    //   mimeType: req.file.mimetype,
-    //   path: req.file.path,
-    // });
-
     return res.json(req.file);
   });
   return router;

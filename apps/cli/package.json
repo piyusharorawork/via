@@ -14,13 +14,8 @@
   },
   "dependencies": {
     "@trpc/client": "^10.45.2",
-    "@via/core": "workspace:*",
-    "@via/editly": "workspace:*",
     "@via/server": "workspace:*",
-    "@via/store": "workspace:*",
-    "@via/video-core": "workspace:*",
     "node-fetch": "^3.3.2",
-    "uuid": "^10.0.0",
-    "@via/machine": "workspace:*"
+    "uuid": "^10.0.0"
   }
 }

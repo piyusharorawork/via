@@ -15,9 +15,10 @@
 - Show progress on what exactlly is happening
 - Create a prompt to help with updating the description of the video
 - inconsistent tests : valid small video , add one video
+- when video not found , add randomisation
+- improve leaky tests with cleanup files
 
 ## Immendiate Next Steps
 
-- encore the quote before sending to cli and decode in cli
 - create a package that handles dir path , file path and binary path
 - ability to update the description of the video

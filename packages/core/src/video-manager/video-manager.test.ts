@@ -19,12 +19,12 @@ describe("add video", () => {
     },
   ];
 
-  const videoManager = new VideoManager(
+  const videoManager = new VideoManager({
     databaseName,
     serverBaseURL,
     token,
-    finderURL
-  );
+    finderURL,
+  });
   const videoStore = new VideoStore(databaseName);
 
   for (const scenerio of scenerios) {
@@ -54,12 +54,12 @@ describe("list videos", () => {
     },
   ];
 
-  const videoManager = new VideoManager(
+  const videoManager = new VideoManager({
     databaseName,
     serverBaseURL,
     token,
-    finderURL
-  );
+    finderURL,
+  });
   const videoStore = new VideoStore(databaseName);
   const fileStore = new FileStore(databaseName);
 
@@ -98,12 +98,12 @@ describe("remove video", () => {
     },
   ];
 
-  const videoManager = new VideoManager(
+  const videoManager = new VideoManager({
     databaseName,
     serverBaseURL,
     token,
-    finderURL
-  );
+    finderURL,
+  });
   const videoStore = new VideoStore(databaseName);
   const fileStore = new FileStore(databaseName);
 
@@ -148,12 +148,12 @@ describe("view video", () => {
     },
   ];
 
-  const videoManager = new VideoManager(
+  const videoManager = new VideoManager({
     databaseName,
     serverBaseURL,
     token,
-    finderURL
-  );
+    finderURL,
+  });
   const videoStore = new VideoStore(databaseName);
   const fileStore = new FileStore(databaseName);
 
@@ -195,12 +195,12 @@ describe("make video", () => {
     },
   ];
 
-  const videoManager = new VideoManager(
+  const videoManager = new VideoManager({
     databaseName,
     serverBaseURL,
     token,
-    finderURL
-  );
+    finderURL,
+  });
   const videoStore = new VideoStore(databaseName);
   const fileStore = new FileStore(databaseName);
 

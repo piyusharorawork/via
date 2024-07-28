@@ -16,7 +16,6 @@
     "@trpc/server": "^10.45.2",
     "@types/cors": "^2.8.17",
     "@via/core": "workspace:*",
-    "@via/video-core": "workspace:*",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "multer": "1.4.5-lts.1",
