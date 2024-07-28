@@ -1,0 +1,20 @@
+{
+  "name": "@via/common",
+  "type": "module",
+  "scripts": {
+    "compile": "tsc --watch",
+    "build": "tsc",
+    "clean": "rm -rf .turbo dist node_modules"
+  },
+  "exports": {
+    "./path": {
+      "types": "./src/path.ts",
+      "default": "./dist/path.js"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.12",
+    "@via/typescript-config": "workspace:*",
+    "typescript": "latest"
+  }
+}

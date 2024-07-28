@@ -26,6 +26,12 @@ importers:
       '@trpc/client':
         specifier: ^10.45.2
         version: 10.45.2(@trpc/server@10.45.2)
+      '@via/common':
+        specifier: workspace:*
+        version: link:../../packages/common
+      '@via/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@via/server':
         specifier: workspace:*
         version: link:../server
@@ -168,6 +174,18 @@ importers:
       vite:
         specifier: ^5.3.4
         version: 5.3.4(@types/node@20.14.12)
+
+  packages/common:
+    devDependencies:
+      '@types/node':
+        specifier: ^20.14.12
+        version: 20.14.12
+      '@via/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: latest
+        version: 5.5.4
 
   packages/core:
     dependencies:
@@ -1162,9 +1180,6 @@ packages:
 
   '@types/multer@1.4.11':
     resolution: {integrity: sha512-svK240gr6LVWvv3YGyhLlA+6LRRWA4mnGIU7RcNmgjBYFl6665wcXrRfxGp5tEPVHUNm5FMcmq7too9bxCwX/w==}
-
-  '@types/node@20.14.11':
-    resolution: {integrity: sha512-kprQpL8MMeszbz6ojB5/tU8PLN4kesnN8Gjzw349rDlNgsSzg90lAVj3llK99Dh7JON+t9AuscPPFW6mPbTnSA==}
 
   '@types/node@20.14.12':
     resolution: {integrity: sha512-r7wNXakLeSsGT0H1AU863vS2wa5wBOK4bWMjZz2wj+8nBx+m5PeIn0k8AloSLpRuiwdRQZwarZqHE4FNArPuJQ==}
@@ -3342,6 +3357,11 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  typescript@5.5.4:
+    resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   ufo@1.5.3:
     resolution: {integrity: sha512-Y7HYmWaFwPUmkoQCUIAYpKqkOf+SbVj/2fJJZ4RJMCfZp0rTGwRbzQD+HghfnhKOjL9E01okqz+ncJskGYfBNw==}
 
@@ -4167,7 +4187,7 @@ snapshots:
 
   '@types/better-sqlite3@7.6.11':
     dependencies:
-      '@types/node': 20.14.11
+      '@types/node': 20.14.12
 
   '@types/body-parser@1.19.5':
     dependencies:
@@ -4180,7 +4200,7 @@ snapshots:
 
   '@types/cors@2.8.17':
     dependencies:
-      '@types/node': 20.14.11
+      '@types/node': 20.14.12
 
   '@types/estree@1.0.5': {}
 
@@ -4209,10 +4229,6 @@ snapshots:
   '@types/multer@1.4.11':
     dependencies:
       '@types/express': 4.17.21
-
-  '@types/node@20.14.11':
-    dependencies:
-      undici-types: 5.26.5
 
   '@types/node@20.14.12':
     dependencies:
@@ -6614,6 +6630,8 @@ snapshots:
   typescript@5.5.2: {}
 
   typescript@5.5.3: {}
+
+  typescript@5.5.4: {}
 
   ufo@1.5.3: {}
 
