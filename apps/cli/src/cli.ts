@@ -2,11 +2,6 @@ import { AppRouter } from "@via/server/app-router";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import nodeFetch from "node-fetch";
 
-import { getVideoManagementActor } from "@via/machine/video-management-machine";
-import { downloadYoutubeVideo } from "@via/core/video-downloader";
-import { resizeVideo } from "@via/core/video-resizer";
-import { generateVideo } from "@via/core/generate-video";
-
 (async () => {
   try {
     const trpc = createTRPCProxyClient<AppRouter>({
