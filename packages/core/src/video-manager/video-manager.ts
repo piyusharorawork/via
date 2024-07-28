@@ -23,6 +23,7 @@ import { FileUploader, uploadFile } from "../file-uploader/file-uploader.js";
 import { resizeVideo } from "../video-resizer/video-resizer.js";
 import { generateVideo } from "../generate-video/generate-video.js";
 import { findVideo } from "../find-video/find-video.js";
+import { trimVideo } from "../video-trimmer/video-trimmer.js";
 export * from "./video-manager.schema.js";
 
 export class VideoManager {
@@ -41,11 +42,22 @@ export class VideoManager {
       const videoPath = `downloads/${input.name}.mp4`;
       await downloadYoutubeVideo(input.youtubeURL, videoPath);
       const resizedVideoPath = `exports/${generateId()}.mp4`;
-      await resizeVideo(videoPath, 540, 960, resizedVideoPath);
+      await resizeVideo({
+        outputFilePath: resizedVideoPath,
+        resolution: "LOW",
+        videoPath,
+      });
+      const trimmedVideoPath = `exports/${generateId()}.mp4`;
+      await trimVideo({
+        end: 5,
+        start: 0,
+        outputPath: trimmedVideoPath,
+        videoPath: resizedVideoPath,
+      });
 
       // TODO ensure upload server is stable and running
       // TODO upload file utility function must be part of workflow itself
-      const file = await this.fileUploader.uploadFile(resizedVideoPath);
+      const file = await this.fileUploader.uploadFile(trimmedVideoPath);
 
       const fileId = await this.fileStore.insert({
         destination: file.destination,

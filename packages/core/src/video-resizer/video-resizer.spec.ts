@@ -1,28 +1,30 @@
 import { expect, test, describe } from "vitest";
-import { resizeVideo } from "./video-resizer.js";
-import { v4 } from "uuid";
+import { resizeVideo, VideoResolution } from "./video-resizer.js";
 
 import fs from "fs";
 
 describe("resize video", () => {
-  const scenerios = [
+  const scenerios: {
+    name: string;
+    videoPath: string;
+    outputFilePath: string;
+    resolution: VideoResolution;
+  }[] = [
     {
       name: "resize to valid size",
       videoPath: "assets/1-sec.mp4",
-      width: 50,
-      height: 50,
       outputFilePath: `temp/1-sec-resized.mp4`,
+      resolution: "ULTRA_LOW",
     },
   ];
 
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
-      await resizeVideo(
-        scenerio.videoPath,
-        scenerio.width,
-        scenerio.height,
-        scenerio.outputFilePath
-      );
+      await resizeVideo({
+        outputFilePath: scenerio.outputFilePath,
+        resolution: scenerio.resolution,
+        videoPath: scenerio.videoPath,
+      });
 
       const isResizedVideoCreated = fs.existsSync(scenerio.outputFilePath);
       expect(isResizedVideoCreated).toBe(true);

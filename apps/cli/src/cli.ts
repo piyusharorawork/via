@@ -22,8 +22,8 @@ import { generateVideo } from "@via/core/generate-video";
     // console.log(res);
 
     await downloadYoutubeVideo(
-      "https://www.youtube.com/shorts/PZ-HWVT7ZDw",
-      "downloads/5-sec.mp4"
+      "https://www.youtube.com/shorts/Gm7OIGrOqNk",
+      "downloads/10-sec-count-down.mp4"
     );
 
     // await resizeVideo(

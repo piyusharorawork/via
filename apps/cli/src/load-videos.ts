@@ -9,27 +9,32 @@ import nodeFetch from "node-fetch";
     const videos = [
       {
         name: "durga",
-        description: "Jai maa durga",
+        description:
+          "Video of Durga Mata depicting her fierce and protective nature in traditional Indian rituals and celebrations.",
         youtubeURL: "https://www.youtube.com/shorts/qzok18OdEMs",
       },
       {
         name: "shiva",
-        description: "Har har maha dev",
+        description:
+          "Video of Lord Shiva showcasing his divine dance (Tandava) and powerful presence in traditional Indian worship.",
         youtubeURL: "https://www.youtube.com/shorts/wLIF4xhsUPw",
       },
       {
         name: "hanuman",
-        description: "Jai bajrang bali",
+        description:
+          "Video of Lord Hanuman demonstrating his devotion and strength through traditional Indian worship and rituals.",
         youtubeURL: "https://www.youtube.com/shorts/qJHdKMXPFOM",
       },
       {
         name: "ganesha",
-        description: "gan pati bappa morya",
+        description:
+          "Video of Lord Ganesha highlighting his wisdom and auspicious presence in traditional Indian ceremonies and festivals.",
         youtubeURL: "https://www.youtube.com/shorts/052bRN_ZrxU",
       },
       {
         name: "ram",
-        description: "jai shree ram",
+        description:
+          "Video of Lord Ram portraying his righteous and noble character in traditional Indian worship and epic storytelling.",
         youtubeURL: "https://www.youtube.com/shorts/qSiA4IBmnZc",
       },
     ];
