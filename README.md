@@ -17,7 +17,6 @@
 
 ## Immendiate Next Steps
 
-- render the video after genating success in a modal
 - encore the quote before sending to cli and decode in cli
 - create a package that handles dir path , file path and binary path
 - ability to update the description of the video

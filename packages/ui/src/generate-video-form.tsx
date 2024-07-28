@@ -18,11 +18,10 @@ export const GenerateVideoForm = (props: Props) => {
           <div className="label">
             <span className="label-text">Describe the video</span>
           </div>
-          <input
-            type="text"
+          <textarea
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Type here"
-            className="input input-bordered w-full max-w-xs"
+            className="textarea input-bordered w-full max-w-xs"
           />
         </label>
 

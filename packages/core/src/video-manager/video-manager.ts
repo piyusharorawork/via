@@ -106,6 +106,7 @@ export class VideoManager {
           name: video.name,
           description: video.description,
           uuid: video.uuid,
+          id: video.id,
         };
 
         return item;

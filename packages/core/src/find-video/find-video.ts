@@ -16,7 +16,7 @@ export const findVideo = async (input: FindVideoInput): Promise<number> => {
   let videoList = "";
   for (let i = 0; i < input.videos.length; i++) {
     const video = input.videos[i];
-    videoList += `${i + 1}. Video ID: ${video?.id}, Description: ${video?.description}\n`;
+    videoList += `Video ID: ${video?.id}, Description: ${video?.description}\n`;
   }
 
   const messages = [
@@ -33,14 +33,19 @@ export const findVideo = async (input: FindVideoInput): Promise<number> => {
       You must only return the id the video and nothing else 
       You must return respond with id only not anything else 
       
-      You: What is the video ID for the ${input.videos[3]?.description}?
+      You: What is the video ID for the Maa Durga?
+      AI: 1.
+      
+      You: What is the video ID for the Ganapati bappa morya ?
       AI: 4.
       
-      You: What is the video ID for the ${input.videos[0]?.description}?
-      AI:  1.
+      You: What is the video ID for the Har har mahadev?
+      AI: 2.
       
-      You: What is the video ID for the ${input.videos[2]?.description}?
-      AI:  3.`,
+      You: What is the video ID for the brother of lord lakshman?
+      AI: 5.
+      
+      `,
     },
     {
       role: "assistant",
@@ -49,7 +54,7 @@ export const findVideo = async (input: FindVideoInput): Promise<number> => {
     },
     {
       role: "user",
-      content: `What is the video ID for the ${input.videos[1]?.description}`,
+      content: `What is the video ID for the Lord Shiva`,
     },
     {
       role: "assistant",
@@ -57,7 +62,15 @@ export const findVideo = async (input: FindVideoInput): Promise<number> => {
     },
     {
       role: "user",
-      content: `${input.prompt}`,
+      content: `What is the video ID for the protective nature`,
+    },
+    {
+      role: "assistant",
+      content: "1",
+    },
+    {
+      role: "user",
+      content: `What is the video ID for the ${input.prompt}`,
     },
   ];
 

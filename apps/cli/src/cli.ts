@@ -9,22 +9,22 @@ import { generateVideo } from "@via/core/generate-video";
 
 (async () => {
   try {
-    // const trpc = createTRPCProxyClient<AppRouter>({
-    //   links: [
-    //     httpBatchLink({
-    //       url: "http://localhost:4000/trpc",
-    //       fetch: nodeFetch as any,
-    //     }),
-    //   ],
-    // });
+    const trpc = createTRPCProxyClient<AppRouter>({
+      links: [
+        httpBatchLink({
+          url: "http://localhost:4000/trpc",
+          fetch: nodeFetch as any,
+        }),
+      ],
+    });
 
-    // const res = await trpc.listVideos.query({ limit: 10 });
-    // console.log(res);
+    const res = await trpc.listVideos.query({ limit: 10 });
+    console.log(res);
 
-    await downloadYoutubeVideo(
-      "https://www.youtube.com/shorts/Gm7OIGrOqNk",
-      "downloads/10-sec-count-down.mp4"
-    );
+    // await downloadYoutubeVideo(
+    //   "https://www.youtube.com/shorts/Gm7OIGrOqNk",
+    //   "downloads/10-sec-count-down.mp4"
+    // );
 
     // await resizeVideo(
     //   "downloads/5-sec-black.mp4",

@@ -15,7 +15,8 @@
     "./videos-table": "./src/videos-table.tsx",
     "./add-video-modal": "./src/add-video-modal.tsx",
     "./video-preview": "./src/video-preview.tsx",
-    "./generate-video-form": "./src/generate-video-form.tsx"
+    "./generate-video-form": "./src/generate-video-form.tsx",
+    "./video-render-modal": "./src/video-render-modal.tsx"
   },
   "scripts": {
     "build": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
