@@ -24,6 +24,7 @@ import { resizeVideo } from "../video-resizer/video-resizer.js";
 import { generateVideo } from "../generate-video/generate-video.js";
 import { VideoFinder } from "../find-video/find-video.js";
 import { trimVideo } from "../video-trimmer/video-trimmer.js";
+import { getTempFilePath } from "@via/common/path";
 export * from "./video-manager.schema.js";
 
 type VideoManagerConfig = {
@@ -52,15 +53,15 @@ export class VideoManager {
   async addVideo(input: AddVideoInput): Promise<AddVideoOutput> {
     try {
       await addVideoInput.parseAsync(input);
-      const videoPath = `downloads/${input.name}.mp4`;
+      const videoPath = getTempFilePath(`${input.name}.mp4`);
       await downloadYoutubeVideo(input.youtubeURL, videoPath);
-      const resizedVideoPath = `exports/${generateId()}.mp4`;
+      const resizedVideoPath = getTempFilePath(`${generateId()}.mp4`);
       await resizeVideo({
         outputFilePath: resizedVideoPath,
         resolution: "LOW",
         videoPath,
       });
-      const trimmedVideoPath = `exports/${generateId()}.mp4`;
+      const trimmedVideoPath = getTempFilePath(`${generateId()}.mp4`);
       await trimVideo({
         end: 5,
         start: 0,
@@ -199,7 +200,7 @@ export class VideoManager {
     }
 
     const backgroundVideoURL = formFileURL(file.path);
-    const generatedVideoPath = `exports/${generateId()}.mp4`;
+    const generatedVideoPath = getTempFilePath(`${generateId()}.mp4`);
 
     await generateVideo({
       generatedVideoPath,

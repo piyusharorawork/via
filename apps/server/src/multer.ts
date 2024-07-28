@@ -2,6 +2,7 @@ import multer from "multer";
 import path from "path";
 import express, { Express } from "express";
 import fs from "fs";
+import { getPaths } from "@via/common/path";
 
 export const useMulter = (app: Express) => {
   const storage = multer.diskStorage({
@@ -14,10 +15,10 @@ export const useMulter = (app: Express) => {
   });
 
   const upload = multer({ storage });
-  const uploadDir = "uploads";
+  const { uploadsDirPath } = getPaths();
 
-  if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
+  if (!fs.existsSync(uploadsDirPath)) {
+    fs.mkdirSync(uploadsDirPath);
   }
   app.use("/uploads", express.static("uploads"));
   return upload;

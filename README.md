@@ -16,7 +16,7 @@
 
 ## Immendiate Next Steps
 
-- create a common package that handles : dir path , file path and binary path
+- create a common package that handles : dir path , file path and binary path (IN PROGRESS)
 - ability to update the description of the video
 - get rid of false negatives
 - inconsistent tests : valid small video , add one video

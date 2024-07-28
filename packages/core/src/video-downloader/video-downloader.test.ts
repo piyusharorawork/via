@@ -1,5 +1,6 @@
 import { expect, test, describe } from "vitest";
 import { downloadYoutubeVideo } from "./video-downloader";
+import { getTempFilePath } from "@via/common/path";
 
 import fs from "fs";
 
@@ -8,7 +9,7 @@ describe("download youtube video", () => {
     {
       name: "valid small video",
       videoURL: "https://www.youtube.com/watch?v=MvsAesQ-4zA",
-      videoPath: "downloads/1-sec-video.mp4",
+      videoPath: getTempFilePath("1-sec-video.mp4"),
       expected: true,
     },
   ];

@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "concurrently \"tsc --watch\" \"nodemon dist/server.js\"",
     "build": "tsc",
-    "clean": "rm -rf .turbo dist node_modules downloads uploads",
+    "clean": "rm -rf .turbo dist node_modules uploads",
     "type-check": "tsc --noEmit"
   },
   "exports": {
@@ -16,6 +16,7 @@
     "@trpc/server": "^10.45.2",
     "@types/cors": "^2.8.17",
     "@via/core": "workspace:*",
+    "@via/common": "workspace:*",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "multer": "1.4.5-lts.1",

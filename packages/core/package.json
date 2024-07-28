@@ -4,7 +4,7 @@
   "scripts": {
     "compile": "tsc --watch",
     "build": "tsc",
-    "clean": "rm -rf .turbo dist node_modules downloads",
+    "clean": "rm -rf .turbo dist node_modules",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:specific": "vitest -t "
@@ -45,6 +45,7 @@
   "dependencies": {
     "@via/store": "workspace:*",
     "@via/editly": "workspace:*",
+    "@via/common": "workspace:*",
     "axios": "^1.7.2",
     "form-data": "^4.0.0",
     "lodash": "^4.17.21",
