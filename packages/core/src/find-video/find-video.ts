@@ -13,15 +13,18 @@ type FindVideoInput = {
 type VideoFinderConfig = {
   url: string;
   token: string;
+  model: string;
 };
 
 export class VideoFinder {
   private url: string;
   private token: string;
+  private model: string;
 
   constructor(config: VideoFinderConfig) {
     this.url = config.url;
     this.token = config.token;
+    this.model = config.model;
   }
 
   async findVideo(input: FindVideoInput): Promise<number> {
@@ -88,7 +91,7 @@ export class VideoFinder {
       ];
 
       const body = {
-        model: "llama3:latest",
+        model: this.model,
         stream: false,
         options: {},
         messages,

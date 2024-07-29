@@ -29,8 +29,8 @@ describe("Video Finder", () => {
       expectedVideoId: 4,
     },
   ];
-  const { finderURL, token } = getEnvVariables();
-  const videoFinder = new VideoFinder({ url: finderURL, token });
+  const { finderURL, token, model } = getEnvVariables();
+  const videoFinder = new VideoFinder({ url: finderURL, token, model });
 
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {

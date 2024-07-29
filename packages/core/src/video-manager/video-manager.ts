@@ -32,6 +32,7 @@ type VideoManagerConfig = {
   serverBaseURL: string;
   token: string;
   finderURL: string;
+  model: string;
 };
 
 export class VideoManager {
@@ -47,6 +48,7 @@ export class VideoManager {
     this.videoFinder = new VideoFinder({
       token: config.token,
       url: config.finderURL,
+      model: config.model,
     });
   }
 

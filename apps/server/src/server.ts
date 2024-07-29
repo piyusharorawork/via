@@ -25,11 +25,17 @@ import { Application } from "./app.js";
       throw "no FINDER_URL in env";
     }
 
+    const model = process.env.OLLAMA_MODEL;
+    if (!model) {
+      throw "no OLLAMA_MODEL";
+    }
+
     const app = new Application({
       databaseName,
       finderURL,
       port: parseInt(port),
       token,
+      model,
     });
 
     await app.start();

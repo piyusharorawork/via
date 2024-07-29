@@ -5,6 +5,7 @@
     "compile": "tsc --watch",
     "build": "tsc",
     "clean": "rm -rf .turbo dist node_modules",
+    "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:specific": "vitest -t "

@@ -9,17 +9,20 @@ import {
   makeVideoInput,
 } from "@via/core/video-manager";
 
+// TODO create router input
 export const createRouter = (
   databaseName: string,
   serverBaseURL: string,
   finderURL: string,
-  token: string
+  token: string,
+  model: string
 ) => {
   const videoManager = new VideoManager({
     databaseName,
     serverBaseURL,
     finderURL,
     token,
+    model,
   });
   const t = initTRPC.create();
 

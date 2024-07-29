@@ -10,6 +10,7 @@ type ApplicationConfig = {
   port: number;
   finderURL: string;
   token: string;
+  model: string;
 };
 
 export class Application {
@@ -17,12 +18,14 @@ export class Application {
   private port: number;
   private finderURL: string;
   private token: string;
+  private model: string;
 
   constructor(config: ApplicationConfig) {
     this.databaseName = config.databaseName;
     this.port = config.port;
     this.finderURL = config.finderURL;
     this.token = config.token;
+    this.model = config.model;
   }
 
   private server: Server<typeof IncomingMessage, typeof ServerResponse> | null =
@@ -45,7 +48,8 @@ export class Application {
           this.databaseName,
           serverBaseURL,
           this.finderURL,
-          this.token
+          this.token,
+          this.model
         );
 
         app.use(

@@ -8,6 +8,7 @@ export const getEnvVariables = () => {
   const token = process.env.OLLAMA_TOKEN;
   const databaseName = process.env.DATABASE_NAME;
   const serverBaseURL = process.env.SERVER_BASE_URL;
+  const model = process.env.OLLAMA_MODEL;
 
   if (!finderURL) {
     throw "no FINDER_URL";
@@ -24,5 +25,9 @@ export const getEnvVariables = () => {
   if (!serverBaseURL) {
     throw "no SERVER_BASE_URL";
   }
-  return { finderURL, token, databaseName, serverBaseURL };
+
+  if (!model) {
+    throw "no OLLAMA_MODEL";
+  }
+  return { finderURL, token, databaseName, serverBaseURL, model };
 };
