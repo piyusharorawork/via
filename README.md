@@ -13,10 +13,11 @@
 - Create a prompt to help with updating the description of the video
 - when video not found , add randomisation
 - improve leaky tests with cleanup files
+- Categorize uploads : 1. IMP (videos which has description) and 2. Rendered Videos ()
+- get rid of false negatives
+- inconsistent tests : valid small video , add one video
+- create a common package that handles binary path and scripts path
 
 ## Immendiate Next Steps
 
-- create a common package that handles : dir path , file path and binary path (IN PROGRESS)
 - ability to update the description of the video
-- get rid of false negatives
-- inconsistent tests : valid small video , add one video

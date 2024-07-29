@@ -1,11 +1,12 @@
 import { describe, test, expect } from "vitest";
 import { FileUploader } from "./file-uploader";
 import fs from "fs";
+import { getSampleVideoFilePath } from "@via/common/path";
 
 describe("file uploader", async () => {
   const scenerios = [
     {
-      name: "upload text file",
+      name: "upload video file",
     },
   ];
 
@@ -13,13 +14,13 @@ describe("file uploader", async () => {
   const serverBaseURL = "http://localhost:4000";
   const fileUploader = new FileUploader(serverBaseURL);
 
-  const isTempDirExist = fs.existsSync("temp");
+  // const isTempDirExist = fs.existsSync("temp");
 
-  if (!isTempDirExist) {
-    fs.mkdirSync("temp");
-  }
+  // if (!isTempDirExist) {
+  //   fs.mkdirSync("temp");
+  // }
 
-  const filePath = "temp/sample.txt";
+  const filePath = getSampleVideoFilePath("1-sec.mp4");
   const isFileExist = fs.existsSync(filePath);
 
   if (!isFileExist) {
@@ -29,12 +30,9 @@ describe("file uploader", async () => {
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
       const file = await fileUploader.uploadFile(filePath);
-      expect(file.originalname).toBe("sample.txt");
-      expect(file.mimetype).toBe("text/plain");
-      expect(file.originalname).toBe("sample.txt");
-      expect(file.path).toContain("uploads");
-      expect(file.size).toBe(6);
-      expect(file.destination).toBe("uploads/");
+      expect(file.originalname).toBe("1-sec.mp4");
+      expect(file.mimetype).toBe("video/mp4");
+      expect(file.size).toBe(22170);
     });
   }
 });

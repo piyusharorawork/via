@@ -5,9 +5,11 @@ import fs from "fs";
 import { getPaths } from "@via/common/path";
 
 export const useMulter = (app: Express) => {
+  const { uploadsDirPath } = getPaths();
+
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "uploads/"); // Directory to save uploaded files
+      cb(null, uploadsDirPath); // Directory to save uploaded files
     },
     filename: (req, file, cb) => {
       cb(null, Date.now() + path.extname(file.originalname)); // Generate unique file name
@@ -15,11 +17,10 @@ export const useMulter = (app: Express) => {
   });
 
   const upload = multer({ storage });
-  const { uploadsDirPath } = getPaths();
 
   if (!fs.existsSync(uploadsDirPath)) {
     fs.mkdirSync(uploadsDirPath);
   }
-  app.use("/uploads", express.static("uploads"));
+  app.use("/uploads", express.static(uploadsDirPath));
   return upload;
 };

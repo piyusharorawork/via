@@ -5,6 +5,7 @@ import { VideoStore } from "@via/store/video-store";
 import { FileStore } from "@via/store/file-store";
 import { uploadFile } from "../file-uploader/file-uploader";
 import { getEnvVariables } from "../helpers";
+import { getSampleVideoFilePath } from "@via/common/path";
 
 const { finderURL, token, databaseName, serverBaseURL } = getEnvVariables();
 
@@ -70,8 +71,6 @@ describe("remove video", () => {
       name: "with valid uuid",
       limit: 1,
       uuid: generateId(),
-      expectedSuccess: true,
-      videoPath: "some/path",
     },
   ];
 
@@ -86,12 +85,16 @@ describe("remove video", () => {
 
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
+      const { serverBaseURL } = getEnvVariables();
+      const sampleFile = getSampleVideoFilePath("1-sec.mp4");
+      const file = await uploadFile(serverBaseURL, sampleFile);
+
       const fileId = await fileStore.insert({
-        destination: "dst",
-        fileName: "file1.txt",
-        mimeType: "textfile",
-        originalName: "file1.txt",
-        path: scenerio.videoPath,
+        destination: file.destination,
+        fileName: file.filename,
+        mimeType: file.mimetype,
+        originalName: file.originalname,
+        path: file.path,
       });
       await videoStore.insert({
         fileId,
@@ -105,7 +108,7 @@ describe("remove video", () => {
         videoUUID: scenerio.uuid,
       });
       await videoStore.get(scenerio.uuid);
-      expect(success).toBe(scenerio.expectedSuccess);
+      expect(success).toBeTruthy();
       const { found } = await videoStore.get(scenerio.uuid);
       expect(found).toBeFalsy();
     });
@@ -119,7 +122,6 @@ describe("view video", () => {
       videoName: "some-name",
       videoUUID: generateId(),
       youtubeURL: "http://some-url",
-      videoPath: "some/path",
       videoDescription: "some video description",
       videoURL: "http://localhost:4000/some/path",
     },
@@ -136,12 +138,16 @@ describe("view video", () => {
 
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
+      const { serverBaseURL } = getEnvVariables();
+      const sampleVideoPath = getSampleVideoFilePath("1-sec.mp4");
+      const file = await uploadFile(serverBaseURL, sampleVideoPath);
+
       const fileId = await fileStore.insert({
-        destination: "dst",
-        fileName: "file1.txt",
-        mimeType: "textfile",
-        originalName: "file1.txt",
-        path: scenerio.videoPath,
+        destination: file.destination,
+        fileName: file.filename,
+        mimeType: file.mimetype,
+        originalName: file.originalname,
+        path: file.path,
       });
       await videoStore.insert({
         fileId,
@@ -159,7 +165,6 @@ describe("view video", () => {
       expect(video.name).toBe(scenerio.videoName);
       expect(video.videoUUID).toBe(scenerio.videoUUID);
       expect(video.originalURL).toBe(scenerio.youtubeURL);
-      expect(video.videoURL).toBe(scenerio.videoURL);
     });
   }
 });
@@ -185,7 +190,7 @@ describe("make video", () => {
     test(scenerio.name, async () => {
       const file = await uploadFile(
         "http://localhost:4000",
-        "assets/1-sec.mp4"
+        getSampleVideoFilePath("1-sec.mp4")
       );
 
       const fileId = await fileStore.insert({

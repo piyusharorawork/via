@@ -2,14 +2,14 @@ import { expect, test, describe } from "vitest";
 import { generateVideo } from "./generate-video.js";
 import { v4 } from "uuid";
 import fs from "fs";
-import { getTempFilePath } from "@via/common/path";
+import { getSampleVideoFilePath, getTempFilePath } from "@via/common/path";
 
 describe("generate video", () => {
   const scenerios = [
     {
       name: "generate 1 sec video with some hello text",
       quote: "Hello",
-      videoPath: "assets/1-sec.mp4",
+      videoPath: getSampleVideoFilePath("1-sec.mp4"),
       generatedVideoPath: getTempFilePath("1-sec-with-hello.mp4"),
     },
   ];

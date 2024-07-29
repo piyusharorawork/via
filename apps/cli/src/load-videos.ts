@@ -48,8 +48,10 @@ import nodeFetch from "node-fetch";
       ],
     });
 
-    for (const video of videos) {
-      await trpc.addVideo.mutate({ ...video });
+    for (let i = 0; i < videos.length; i++) {
+      console.log(`video ${i + 1} of ${videos.length}`);
+      const video = videos[i];
+      await trpc.addVideo.mutate({ ...video! });
     }
 
     console.log("loading successful !!!");

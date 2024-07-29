@@ -9,10 +9,16 @@ export const getPaths = () => {
     sampleVideosDirPath: path.join(assetsPath, "sample-videos"),
     tempDirPath: path.join(assetsPath, "temp"),
     uploadsDirPath: path.join(assetsPath, "uploads"),
+    scriptsDirPath: path.join(assetsPath, "scripts"),
   };
 };
 
 export const getTempFilePath = (fileName: string) => {
   const { tempDirPath } = getPaths();
   return path.join(tempDirPath, fileName);
+};
+
+export const getSampleVideoFilePath = (fileName: string) => {
+  const { sampleVideosDirPath } = getPaths();
+  return path.join(sampleVideosDirPath, fileName);
 };

@@ -1,5 +1,5 @@
-export const formFileURL = (filePath: string) => {
-  const videoURL = `http://localhost:4000/${filePath}`;
+export const formFileURL = (fileName: string) => {
+  const videoURL = `http://localhost:4000/uploads/${fileName}`;
   return videoURL;
 };
 

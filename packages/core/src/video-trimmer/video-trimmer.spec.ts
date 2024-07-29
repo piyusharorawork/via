@@ -2,15 +2,16 @@ import { expect, test, describe } from "vitest";
 import { trimVideo } from "./video-trimmer.js";
 
 import fs from "fs";
+import { getSampleVideoFilePath, getTempFilePath } from "@via/common/path";
 
 describe("trim video", () => {
   const scenerios = [
     {
       name: "trim video from 5 sec to 1 sec",
-      videoPath: "assets/5-sec.mp4",
+      videoPath: getSampleVideoFilePath("5-sec.mp4"),
       start: 1,
       end: 2,
-      outputFilePath: `temp/1-sec-trimmed.mp4`,
+      outputFilePath: getTempFilePath("1-sec-trimmed.mp4"),
     },
   ];
 

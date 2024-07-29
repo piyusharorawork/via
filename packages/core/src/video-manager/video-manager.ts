@@ -106,7 +106,7 @@ export class VideoManager {
         // TODO can be optimized more
         const { found, file } = await this.fileStore.get(video.fileId);
         if (found) {
-          const videoURL = formFileURL(file.path);
+          const videoURL = formFileURL(file.fileName);
           videoURLMap[video.id] = videoURL;
         }
       }
@@ -167,7 +167,7 @@ export class VideoManager {
         throw "file not found";
       }
 
-      const videoURL = formFileURL(file.path);
+      const videoURL = formFileURL(file.fileName);
 
       return {
         createdAt: video.createdAt,
@@ -199,7 +199,7 @@ export class VideoManager {
       throw "no file found";
     }
 
-    const backgroundVideoURL = formFileURL(file.path);
+    const backgroundVideoURL = formFileURL(file.fileName);
     const generatedVideoPath = getTempFilePath(`${generateId()}.mp4`);
 
     await generateVideo({
@@ -210,7 +210,7 @@ export class VideoManager {
 
     const uploadedFile = await this.fileUploader.uploadFile(generatedVideoPath);
 
-    const videoURL = formFileURL(uploadedFile.path);
+    const videoURL = formFileURL(uploadedFile.filename);
 
     return {
       videoURL,
