@@ -17,6 +17,8 @@
 - get rid of false negatives
 - inconsistent tests : valid small video , add one video
 - create a common package that handles binary path and scripts path
+- reduce the number of uploads
+-
 
 ## Immendiate Next Steps
 
