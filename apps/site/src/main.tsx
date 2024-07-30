@@ -5,6 +5,7 @@ import "@via/ui/styles.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Videos from "./pages/Videos.tsx";
 import Home from "./pages/Home.tsx";
+import Playground from "./pages/Playground.tsx";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: "/videos",
     Component: Videos,
+  },
+  {
+    path: "/playground",
+    Component: Playground,
   },
 ]);
 
