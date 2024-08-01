@@ -8,7 +8,10 @@ export default function Playground() {
     <section className="flex flex-col h-screen items-center">
       <header>Playground</header>
       <div className="mobile bg-black my-4 rounded-xl">
-        <VideoEditor recording={recording} onFinish={() => alert("done")} />
+        <VideoEditor
+          recording={recording}
+          onFinish={() => console.log("done")}
+        />
       </div>
       <footer className="flex">
         <button className="btn btn-primary" onClick={() => setRecording(true)}>
