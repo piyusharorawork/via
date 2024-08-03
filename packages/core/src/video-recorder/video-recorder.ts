@@ -15,7 +15,7 @@ class VideoWriter {
     this.myProcess = null;
   }
 
-  start(onDone: () => void) {
+  start() {
     const args = [
       "-y",
       "-f",
@@ -40,16 +40,15 @@ class VideoWriter {
       if (code !== 0) {
         throw "exist code non 0 " + code;
       }
-      onDone();
     });
   }
 
-  write(buffer: Buffer) {
+  async write(buffer: Buffer) {
     if (!this.myProcess || !this.myProcess.stdin) {
       throw "no process stdin";
     }
 
-    this.myProcess.stdin.write(buffer);
+    await new Promise((r) => this.myProcess!.stdin!.write(buffer, r));
   }
 
   async finish() {
@@ -62,6 +61,71 @@ class VideoWriter {
   }
 }
 
+type VideoReaderConfig = {
+  videoPath: string;
+  width: number;
+  height: number;
+};
+
+class VideoReader {
+  private config: VideoReaderConfig;
+  private myProcess: ExecaChildProcess<string> | null;
+  constructor(config: VideoReaderConfig) {
+    this.config = config;
+    this.myProcess = null;
+  }
+
+  start(onFrame: (frame: Buffer) => void) {
+    const args = [
+      "-i",
+      this.config.videoPath,
+      "-f",
+      "rawvideo",
+      "-pix_fmt",
+      "rgba",
+      "-",
+    ];
+    this.myProcess = execa("ffmpeg", args);
+
+    const frameSize = this.config.width * this.config.height * 4;
+    const frameBuffer = Buffer.allocUnsafe(frameSize);
+    let totalRemaining = frameSize;
+    let targetStart = 0;
+    let remainingChunk = 0;
+    let frameCount = 0;
+
+    this.myProcess.stdout?.on("data", (chunk: Buffer) => {
+      if (totalRemaining > 0) {
+        if (remainingChunk > 0) {
+          const chunkToCopy = Math.min(remainingChunk, totalRemaining);
+          chunk.copy(frameBuffer, targetStart, 0, chunkToCopy);
+          targetStart += chunkToCopy;
+        }
+
+        const chunkToCopy = Math.min(chunk.length, totalRemaining);
+        chunk.copy(frameBuffer, targetStart, 0, chunkToCopy);
+        remainingChunk = chunk.length - chunkToCopy;
+        // console.log({ remainingChunk });
+        totalRemaining -= chunkToCopy;
+      } else {
+        totalRemaining = frameSize;
+        targetStart = 0;
+        remainingChunk = 0;
+        frameCount++;
+        console.log({ frameCount });
+      }
+    });
+
+    this.myProcess.stderr?.on("data", (data) => {
+      //   console.log(data);
+    });
+
+    this.myProcess.on("close", (code) => {
+      console.log("close with code  = " + code);
+    });
+  }
+}
+
 export const recordVideo = async () => {
   return new Promise<void>(async (resolve, reject) => {
     try {
@@ -69,18 +133,38 @@ export const recordVideo = async () => {
       const height = 360;
       const outputVideoPath = "output_video.mp4";
 
+      // 9,21,600
+
       const videoWriter = new VideoWriter({
         height,
         width,
         videoPath: outputVideoPath,
       });
 
-      videoWriter.start(() => resolve());
+      videoWriter.start();
+
+      const oneSecVideo = getSampleVideoFilePath("1-sec.mp4");
+
+      const videoReader = new VideoReader({
+        videoPath: oneSecVideo,
+        height,
+        width,
+      });
+
+      let count = 0;
+
+      videoReader.start(async (frame) => {
+        //console.log(frame.length);
+        // count++;
+        // console.log(count);
+        //console.log(frame);
+        //await videoWriter.write(frame);
+      });
 
       const createDummyFrame = () => {
         const frameBuffer = Buffer.alloc(width * height * 4);
         for (let i = 0; i < frameBuffer.length; i += 4) {
-          frameBuffer[i] = 255; // Red
+          frameBuffer[i] = 0; // Red
           frameBuffer[i + 1] = 0; // Green
           frameBuffer[i + 2] = 0; // Blue
           frameBuffer[i + 3] = 255; // Alpha
@@ -92,11 +176,14 @@ export const recordVideo = async () => {
 
       for (let i = 0; i < totalFrames; i++) {
         const frameBuffer = createDummyFrame();
-        videoWriter.write(frameBuffer);
+        // console.log(frameBuffer);
+        // count++;
+        // console.log(count);
+        //videoWriter.write(frameBuffer);
       }
 
-      await videoWriter.finish();
-      resolve();
+      //await videoWriter.finish();
+      //resolve();
 
       //   const outAargs = [
       //     "-f",
@@ -200,3 +287,111 @@ export const recordVideo = async () => {
     }
   });
 };
+
+type VideoBufferConfig = {
+  width: number;
+  height: number;
+  onFrame: (buffer: Buffer) => void;
+};
+
+export class VideoBuffer {
+  // buffer to be store in between add chunk calls
+  private storedFrame: Buffer;
+  // buffer to be send to on frame
+  private sendFrame: Buffer;
+
+  private config: VideoBufferConfig;
+  // buffer length till stored frames is filled
+  private filledFrame = 0;
+
+  // left over chunk remaning from
+  private pendingChunk = Buffer.alloc(0);
+  private frameSize: number;
+  constructor(config: VideoBufferConfig) {
+    this.frameSize = config.width * config.height * 4;
+    this.storedFrame = Buffer.allocUnsafe(this.frameSize).fill(0);
+    this.sendFrame = Buffer.allocUnsafe(this.frameSize).fill(0);
+    this.config = config;
+  }
+
+  addChunk(chunk: Buffer) {
+    const availableChunk = Buffer.allocUnsafe(
+      chunk.length + this.pendingChunk.length
+    ).fill(0);
+    this.pendingChunk.copy(availableChunk, 0, 0, this.pendingChunk.length);
+    chunk.copy(availableChunk, this.pendingChunk.length, 0, chunk.length);
+    let usedChunk = 0;
+
+    while (usedChunk < availableChunk.length) {
+      let remaingFrame = this.frameSize - this.filledFrame;
+      const chunkToCopy = Math.min(
+        availableChunk.length - usedChunk,
+        remaingFrame
+      );
+      if (chunkToCopy < this.frameSize) {
+        this.pendingChunk = Buffer.allocUnsafe(chunkToCopy);
+        availableChunk.copy(
+          this.pendingChunk,
+          0,
+          usedChunk,
+          chunkToCopy + usedChunk
+        );
+        break;
+      }
+
+      availableChunk.copy(
+        this.storedFrame,
+        this.filledFrame,
+        usedChunk,
+        chunkToCopy + usedChunk
+      );
+      usedChunk += chunkToCopy;
+      remaingFrame -= chunkToCopy;
+
+      if (remaingFrame === 0) {
+        this.storedFrame.copy(this.sendFrame, 0, 0, this.storedFrame.length);
+        this.config.onFrame(this.sendFrame);
+        this.filledFrame = 0;
+        this.storedFrame.fill(0);
+      }
+    }
+
+    console.log("");
+    // while (availableChunk.length > this.frameSize) {
+    //   const remaingFrame = this.frameSize - this.filledFrame;
+    //   const chunkToCopy = Math.min(availableChunk.length, remaingFrame);
+    //   const targetStart = this.filledFrame;
+    //   const sourceStart = 0;
+    //   const soundEnd = chunkToCopy;
+    //   availableChunk.copy(this.storedFrame, targetStart, sourceStart, soundEnd);
+    //   if (remaingFrame === 0) {
+    //     this.storedFrame.copy(this.sendFrame, 0, 0, this.storedFrame.length);
+    //     this.config.onFrame(this.sendFrame);
+    //     this.filledFrame = 0;
+    //     this.storedFrame.fill(0);
+    //   }
+    // }
+    // this.pendingChunk = chunk.length;
+    // while (this.pendingChunk > this.frameSize) {
+    //   const chunkToCopy = Math.min(
+    //     chunk.length,
+    //     this.frameSize - this.filledFrame
+    //   );
+    // }
+    // const chunkToCopy = Math.min(
+    //   chunk.length,
+    //   this.storedFrame.length - this.filledFrame
+    // );
+    // this.pendingChunk = chunk.length - chunkToCopy;
+    // while(this.pendingChunk > this.)
+    // chunk.copy(this.storedFrame, this.filledFrame, 0, chunkToCopy);
+    // this.filledFrame += chunkToCopy;
+    // const remaining = this.storedFrame.length - this.filledFrame;
+    // if (remaining === 0) {
+    //   this.storedFrame.copy(this.sendFrame, 0, 0, this.storedFrame.length);
+    //   this.config.onFrame(this.sendFrame);
+    //   this.filledFrame = 0;
+    //   this.storedFrame.fill(0);
+    // }
+  }
+}
