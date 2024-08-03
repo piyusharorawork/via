@@ -1,9 +1,10 @@
 import { execa, ExecaChildProcess } from "execa";
-import { getSampleVideoFilePath } from "@via/common/path";
+import { getSampleVideoFilePath, getTempFilePath } from "@via/common/path";
 
 type VideoWriterConfig = {
   width: number;
   height: number;
+  fps: string;
   videoPath: string;
 };
 
@@ -25,7 +26,7 @@ class VideoWriter {
       "-video_size",
       `${this.config.width}x${this.config.height}`,
       "-r",
-      "30",
+      this.config.fps,
       "-i",
       "pipe:0",
       "-c:v",
@@ -99,51 +100,15 @@ class VideoReader {
       this.videoBuffer?.addChunk(chunk);
     });
 
-    this.myProcess.stderr?.on("data", (data) => {
-      //   console.log(data);
+    this.myProcess.stderr?.on("data", (data: Buffer) => {
+      console.log(data.toString());
     });
 
     this.myProcess.on("close", (code) => {
-      console.log("close with code  = " + code);
+      // console.log("close with code  = " + code);
     });
   }
 }
-
-export const recordVideo = async () => {
-  return new Promise<void>(async (resolve, reject) => {
-    try {
-      const width = 640;
-      const height = 360;
-      const outputVideoPath = "output_video.mp4";
-
-      const videoWriter = new VideoWriter({
-        height,
-        width,
-        videoPath: outputVideoPath,
-      });
-
-      videoWriter.start();
-
-      const oneSecVideo = getSampleVideoFilePath("1-sec.mp4");
-
-      const videoReader = new VideoReader({
-        videoPath: oneSecVideo,
-        height,
-        width,
-      });
-
-      videoReader.start(async (frame, frameNumber) => {
-        await videoWriter.write(frame);
-        if (frameNumber === 30) {
-          await videoWriter.finish();
-          resolve();
-        }
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
 
 type VideoBufferConfig = {
   width: number;
@@ -200,3 +165,150 @@ export class VideoBuffer {
     }
   }
 }
+
+const getFrameSize = (videoPath: string) => {
+  return new Promise<{ width: number; height: number }>(
+    async (resolve, reject) => {
+      try {
+        const frameSizeProcess = execa("ffprobe", [
+          "-v",
+          "error",
+          "-select_streams",
+          "v:0",
+          "-show_entries",
+          "stream=width,height",
+          "-of",
+          "default=noprint_wrappers=1",
+          `${videoPath}`,
+        ]);
+        frameSizeProcess.stdout?.on("data", (data: Buffer) => {
+          const dataStr = data.toString();
+          const widthMatch = dataStr.match(/width=(\d+)/);
+          const heightMatch = dataStr.match(/height=(\d+)/);
+
+          if (
+            !widthMatch ||
+            !widthMatch[1] ||
+            !heightMatch ||
+            !heightMatch[1]
+          ) {
+            return reject("no width and height found");
+          }
+
+          const widthStr = widthMatch[1];
+          const heightStr = heightMatch[1];
+
+          const width = parseInt(widthStr, 10);
+          const height = parseInt(heightStr, 10);
+
+          if (isNaN(width) || isNaN(height)) {
+            throw "width and height not number";
+          }
+
+          return resolve({ width, height });
+        });
+
+        // ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of default=noprint_wrappers=1 /Users/piyusharora/projects/via/assets/sample-videos/1-sec.mp4
+      } catch (error) {
+        reject(error);
+      }
+    }
+  );
+};
+
+const getFrameCount = (videoPath: string) => {
+  return new Promise<number>(async (resolve, reject) => {
+    try {
+      // ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=nb_read_frames -of default=nokey=1:noprint_wrappers=1 /Users/piyusharora/projects/via/assets/sample-videos/1-sec.mp4
+      const args = [
+        "-v",
+        "error",
+        "-count_frames",
+        "-select_streams",
+        "v:0",
+        "-show_entries",
+        "stream=nb_read_frames",
+        "-of",
+        "default=nokey=1:noprint_wrappers=1",
+        `${videoPath}`,
+      ];
+
+      const frameCountProcess = execa("ffprobe", args);
+      frameCountProcess.stdout?.on("data", (data: Buffer) => {
+        const dataStr = data.toString();
+        const frameCount = parseInt(dataStr);
+        if (isNaN(frameCount)) {
+          reject("frame count not number");
+        }
+
+        resolve(frameCount);
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const getFPS = (videoPath: string) => {
+  return new Promise<string>(async (resolve, reject) => {
+    try {
+      //ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 /Users/piyusharora/projects/via/assets/sample-videos/1-sec.mp4
+      const args = [
+        "-v",
+        "error",
+        "-select_streams",
+        "v:0",
+        "-show_entries",
+        "stream=r_frame_rate",
+        "-of",
+        "default=noprint_wrappers=1:nokey=1",
+        `${videoPath}`,
+      ];
+
+      const frameCountProcess = execa("ffprobe", args);
+      frameCountProcess.stdout?.on("data", (data: Buffer) => {
+        const fps = data.toString().replace(/\n/g, "");
+        resolve(fps);
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const recordVideo = async () => {
+  return new Promise<void>(async (resolve, reject) => {
+    try {
+      const outputVideoPath = getTempFilePath("out.mp4");
+      const oneSecVideo = getSampleVideoFilePath("10-sec-count-down.mp4");
+      const frameCount = await getFrameCount(oneSecVideo);
+      const { height, width } = await getFrameSize(oneSecVideo);
+      const fps = await getFPS(oneSecVideo);
+
+      const videoWriter = new VideoWriter({
+        height,
+        width,
+        videoPath: outputVideoPath,
+        fps,
+      });
+
+      videoWriter.start();
+
+      const videoReader = new VideoReader({
+        videoPath: oneSecVideo,
+        height,
+        width,
+      });
+
+      videoReader.start(async (frame, frameNumber) => {
+        await videoWriter.write(frame);
+        if (frameNumber === frameCount) {
+          await videoWriter.finish();
+          resolve();
+        }
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
