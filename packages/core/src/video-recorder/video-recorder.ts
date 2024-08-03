@@ -70,12 +70,20 @@ type VideoReaderConfig = {
 class VideoReader {
   private config: VideoReaderConfig;
   private myProcess: ExecaChildProcess<string> | null;
+  private videoBuffer: VideoBuffer | null;
   constructor(config: VideoReaderConfig) {
     this.config = config;
     this.myProcess = null;
+    this.videoBuffer = null;
   }
 
   start(onFrame: (frame: Buffer) => void) {
+    this.videoBuffer = new VideoBuffer({
+      height: this.config.height,
+      onFrame,
+      width: this.config.width,
+    });
+
     const args = [
       "-i",
       this.config.videoPath,
@@ -87,33 +95,8 @@ class VideoReader {
     ];
     this.myProcess = execa("ffmpeg", args);
 
-    const frameSize = this.config.width * this.config.height * 4;
-    const frameBuffer = Buffer.allocUnsafe(frameSize);
-    let totalRemaining = frameSize;
-    let targetStart = 0;
-    let remainingChunk = 0;
-    let frameCount = 0;
-
     this.myProcess.stdout?.on("data", (chunk: Buffer) => {
-      if (totalRemaining > 0) {
-        if (remainingChunk > 0) {
-          const chunkToCopy = Math.min(remainingChunk, totalRemaining);
-          chunk.copy(frameBuffer, targetStart, 0, chunkToCopy);
-          targetStart += chunkToCopy;
-        }
-
-        const chunkToCopy = Math.min(chunk.length, totalRemaining);
-        chunk.copy(frameBuffer, targetStart, 0, chunkToCopy);
-        remainingChunk = chunk.length - chunkToCopy;
-        // console.log({ remainingChunk });
-        totalRemaining -= chunkToCopy;
-      } else {
-        totalRemaining = frameSize;
-        targetStart = 0;
-        remainingChunk = 0;
-        frameCount++;
-        console.log({ frameCount });
-      }
+      this.videoBuffer?.addChunk(chunk);
     });
 
     this.myProcess.stderr?.on("data", (data) => {
@@ -132,8 +115,6 @@ export const recordVideo = async () => {
       const width = 640;
       const height = 360;
       const outputVideoPath = "output_video.mp4";
-
-      // 9,21,600
 
       const videoWriter = new VideoWriter({
         height,
@@ -154,134 +135,12 @@ export const recordVideo = async () => {
       let count = 0;
 
       videoReader.start(async (frame) => {
-        //console.log(frame.length);
-        // count++;
-        // console.log(count);
-        //console.log(frame);
-        //await videoWriter.write(frame);
-      });
-
-      const createDummyFrame = () => {
-        const frameBuffer = Buffer.alloc(width * height * 4);
-        for (let i = 0; i < frameBuffer.length; i += 4) {
-          frameBuffer[i] = 0; // Red
-          frameBuffer[i + 1] = 0; // Green
-          frameBuffer[i + 2] = 0; // Blue
-          frameBuffer[i + 3] = 255; // Alpha
+        await videoWriter.write(frame);
+        if (count === 30) {
+          await videoWriter.finish();
+          resolve();
         }
-        return frameBuffer;
-      };
-
-      const totalFrames = 30;
-
-      for (let i = 0; i < totalFrames; i++) {
-        const frameBuffer = createDummyFrame();
-        // console.log(frameBuffer);
-        // count++;
-        // console.log(count);
-        //videoWriter.write(frameBuffer);
-      }
-
-      //await videoWriter.finish();
-      //resolve();
-
-      //   const outAargs = [
-      //     "-f",
-      //     "rawvideo",
-      //     "-vcodec",
-      //     "rawvideo",
-      //     "-pix_fmt",
-      //     "rgba",
-      //     "-s",
-      //     "640x360",
-      //     "-r",
-      //     "30000/1001",
-      //     "-i",
-      //     "-",
-      //     "-map",
-      //     "0:v:0",
-      //     "-vf",
-      //     "format=yuv420p",
-      //     "-vcodec",
-      //     "libx264",
-      //     "-profile:v",
-      //     "high",
-      //     "-preset:v",
-      //     "medium",
-      //     "-crf",
-      //     "18",
-      //     "-movflags",
-      //     "faststart",
-      //     "-y",
-      //     "out.mp4",
-      //   ];
-      //   const outProcess = execa("ffmpeg", outAargs);
-      //   outProcess.on("close", () => {
-      //     console.log("close");
-      //   });
-      //   outProcess.catch((err) => {
-      //     console.error(err);
-      //   });
-      //   outProcess.on("exit", (code) => {
-      //     console.log("exit code = " + code);
-      //     resolve();
-      //   });
-      //   const oneSecVideo = getSampleVideoFilePath("1-sec.mp4");
-      //   const inArgs = [
-      //     "-i",
-      //     oneSecVideo,
-      //     "-f",
-      //     "rawvideo",
-      //     "-pix_fmt",
-      //     "rgba",
-      //     "-",
-      //   ];
-      //   const inProcess = execa("ffmpeg", inArgs);
-      //   let frameBuffer = Buffer.alloc(0);
-      //   const width = 640;
-      //   const height = 360;
-      //   const channels = 4;
-      //   const frameByteSize = width * height * channels; // 9,21,600
-      //   let buf = Buffer.allocUnsafe(frameByteSize);
-      //   let length = 0;
-      //   function getNextFrame() {
-      //     if (length >= frameByteSize) {
-      //       // copy the frame
-      //       buf.copy(frameBuffer, 0, 0, frameByteSize);
-      //       // move remaining buffer content to the beginning
-      //       buf.copy(buf, 0, frameByteSize, length);
-      //       length -= frameByteSize;
-      //       return frameBuffer;
-      //     }
-      //     return null;
-      //   }
-      //   inProcess.stdout?.on("data", async (chunk) => {
-      //     const nCopied = Math.min(buf.length - length, chunk.length); // 8192
-      //     chunk.copy(buf, length, 0, nCopied);
-      //     length += nCopied;
-      //     const frame = getNextFrame();
-      //     console.log(frame);
-      //     // await new Promise((r) => outProcess.stdin?.write(chunk, r));
-      //     // frameBuffer = Buffer.concat([frameBuffer, chunk]);
-      //     // const frameSize = 640 * 360 * 4; // width * height * RGBA (4 bytes per pixel)
-      //     // while (frameBuffer.length >= frameSize) {
-      //     //   // Extract frame
-      //     //   const frame = frameBuffer.slice(0, frameSize);
-      //     //   // Do something with the frame (e.g., process it)
-      //     //   await new Promise((r) => outProcess.stdin?.write(frame, r));
-      //     //   // Remove processed frame from buffer
-      //     //   frameBuffer = frameBuffer.slice(frameSize);
-      //     // }
-      //   });
-      //   inProcess.stderr?.on("data", (data) => {
-      //     console.log(`error = ${data}`);
-      //   });
-      //   inProcess.on("close", async (code) => {
-      //     console.log("close with code = " + code);
-      //     outProcess.stdin?.end();
-      //     await outProcess;
-      //     resolve();
-      //   });
+      });
     } catch (error) {
       reject(error);
     }
