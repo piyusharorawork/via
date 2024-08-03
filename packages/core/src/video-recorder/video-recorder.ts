@@ -77,7 +77,7 @@ class VideoReader {
     this.videoBuffer = null;
   }
 
-  start(onFrame: (frame: Buffer) => void) {
+  start(onFrame: (frame: Buffer, frameNumber: number) => void) {
     this.videoBuffer = new VideoBuffer({
       height: this.config.height,
       onFrame,
@@ -132,11 +132,9 @@ export const recordVideo = async () => {
         width,
       });
 
-      let count = 0;
-
-      videoReader.start(async (frame) => {
+      videoReader.start(async (frame, frameNumber) => {
         await videoWriter.write(frame);
-        if (count === 30) {
+        if (frameNumber === 30) {
           await videoWriter.finish();
           resolve();
         }
@@ -150,7 +148,7 @@ export const recordVideo = async () => {
 type VideoBufferConfig = {
   width: number;
   height: number;
-  onFrame: (buffer: Buffer) => void;
+  onFrame: (buffer: Buffer, frameNumber: number) => void;
 };
 
 export class VideoBuffer {
@@ -162,6 +160,8 @@ export class VideoBuffer {
   private config: VideoBufferConfig;
   // buffer length till stored frames is filled
   private filledFrame = 0;
+
+  private frameNumber = 0;
 
   //   // left over chunk remaning from
   //   private pendingChunk = Buffer.alloc(0);
@@ -191,8 +191,9 @@ export class VideoBuffer {
       remaingFrame -= chunkToCopy;
 
       if (remaingFrame === 0) {
+        this.frameNumber++;
         this.storedFrame.copy(this.sendFrame, 0, 0, this.storedFrame.length);
-        this.config.onFrame(this.sendFrame);
+        this.config.onFrame(this.sendFrame, this.frameNumber);
         this.filledFrame = 0;
         this.storedFrame.fill(0);
       }

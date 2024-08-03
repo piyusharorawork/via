@@ -59,12 +59,15 @@ describe("video buffer", () => {
 
   for (const scenerio of scenerios) {
     test(scenerio.name, async () => {
-      const frames: Buffer[] = [];
+      const frames: {
+        data: Buffer;
+        frameNumber: number;
+      }[] = [];
 
-      const onFrame = (frame: Buffer) => {
+      const onFrame = (frame: Buffer, frameNumber: number) => {
         const copyFrame = Buffer.allocUnsafe(frame.length);
         frame.copy(copyFrame, 0, 0, frame.length);
-        frames.push(copyFrame);
+        frames.push({ data: copyFrame, frameNumber });
       };
 
       const videoBuffer = new VideoBuffer({
@@ -80,7 +83,8 @@ describe("video buffer", () => {
       expect(frames.length).toBe(scenerio.expectedFrames.length);
       for (let i = 0; i < scenerio.expectedFrames.length; i++) {
         const expectedFrame = scenerio.expectedFrames[i];
-        expect(frames[i]).toStrictEqual(Buffer.from(expectedFrame));
+        expect(frames[i].data).toStrictEqual(Buffer.from(expectedFrame));
+        expect(frames[i].frameNumber).toBe(i + 1);
       }
     });
   }
