@@ -1,5 +1,5 @@
-import assert from 'assert';
-import pMap from 'p-map';
+import assert from "assert";
+import pMap from "p-map";
 
 import {
   rgbaToFabricImage,
@@ -7,7 +7,7 @@ import {
   createFabricFrameSource,
   createFabricCanvas,
   renderFabricCanvas,
-} from './fabric.js';
+} from "./fabric.js";
 import {
   customFabricFrameSource,
   subtitleFrameSource,
@@ -19,48 +19,85 @@ import {
   imageFrameSource,
   imageOverlayFrameSource,
   slideInTextFrameSource,
-} from './fabric/fabricFrameSources.js';
-import createVideoFrameSource from './videoFrameSource.js';
-import createGlFrameSource from './glFrameSource.js';
+} from "./fabric/fabricFrameSources.js";
+import createVideoFrameSource from "./videoFrameSource.js";
+import createGlFrameSource from "./glFrameSource.js";
 
 const fabricFrameSources = {
   fabric: customFabricFrameSource,
   image: imageFrameSource,
-  'image-overlay': imageOverlayFrameSource,
+  "image-overlay": imageOverlayFrameSource,
   title: titleFrameSource,
   subtitle: subtitleFrameSource,
-  'linear-gradient': linearGradientFrameSource,
-  'radial-gradient': radialGradientFrameSource,
-  'fill-color': fillColorFrameSource,
-  'news-title': newsTitleFrameSource,
-  'slide-in-text': slideInTextFrameSource,
+  "linear-gradient": linearGradientFrameSource,
+  "radial-gradient": radialGradientFrameSource,
+  "fill-color": fillColorFrameSource,
+  "news-title": newsTitleFrameSource,
+  "slide-in-text": slideInTextFrameSource,
 };
 
-export async function createFrameSource({ clip, clipIndex, width, height, channels, verbose, logTimes, ffmpegPath, ffprobePath, enableFfmpegLog, framerateStr }) {
+export async function createFrameSource({
+  clip,
+  clipIndex,
+  width,
+  height,
+  channels,
+  verbose,
+  logTimes,
+  ffmpegPath,
+  ffprobePath,
+  enableFfmpegLog,
+  framerateStr,
+}) {
   const { layers, duration } = clip;
 
-  const visualLayers = layers.filter((layer) => layer.type !== 'audio');
+  const visualLayers = layers.filter((layer) => layer.type !== "audio");
 
-  const layerFrameSources = await pMap(visualLayers, async (layer, layerIndex) => {
-    const { type, ...params } = layer;
-    if (verbose) console.log('createFrameSource', type, 'clip', clipIndex, 'layer', layerIndex);
+  const layerFrameSources = await pMap(
+    visualLayers,
+    async (layer, layerIndex) => {
+      const { type, ...params } = layer;
+      if (verbose)
+        console.log(
+          "createFrameSource",
+          type,
+          "clip",
+          clipIndex,
+          "layer",
+          layerIndex
+        );
 
-    let createFrameSourceFunc;
-    if (fabricFrameSources[type]) {
-      createFrameSourceFunc = async (opts) => createFabricFrameSource(fabricFrameSources[type], opts);
-    } else {
-      createFrameSourceFunc = {
-        video: createVideoFrameSource,
-        gl: createGlFrameSource,
-        canvas: createCustomCanvasFrameSource,
-      }[type];
-    }
+      let createFrameSourceFunc;
+      if (fabricFrameSources[type]) {
+        createFrameSourceFunc = async (opts) =>
+          createFabricFrameSource(fabricFrameSources[type], opts);
+      } else {
+        createFrameSourceFunc = {
+          video: createVideoFrameSource,
+          gl: createGlFrameSource,
+          canvas: createCustomCanvasFrameSource,
+        }[type];
+      }
 
-    assert(createFrameSourceFunc, `Invalid type ${type}`);
+      assert(createFrameSourceFunc, `Invalid type ${type}`);
 
-    const frameSource = await createFrameSourceFunc({ ffmpegPath, ffprobePath, width, height, duration, channels, verbose, logTimes, enableFfmpegLog, framerateStr, params });
-    return { layer, frameSource };
-  }, { concurrency: 1 });
+      const frameSource = await createFrameSourceFunc({
+        ffmpegPath,
+        ffprobePath,
+        width,
+        height,
+        duration,
+        channels,
+        verbose,
+        logTimes,
+        enableFfmpegLog,
+        framerateStr,
+        params,
+      });
+      return { layer, frameSource };
+    },
+    { concurrency: 1 }
+  );
 
   async function readNextFrame({ time }) {
     const canvas = createFabricCanvas({ width, height });
@@ -74,9 +111,13 @@ export async function createFrameSource({ clip, clipIndex, width, height, channe
       const shouldDrawLayer = offsetProgress >= 0 && offsetProgress <= 1;
 
       if (shouldDrawLayer) {
-        if (logTimes) console.time('frameSource.readNextFrame');
-        const rgba = await frameSource.readNextFrame(offsetProgress, canvas, offsetTime);
-        if (logTimes) console.timeEnd('frameSource.readNextFrame');
+        if (logTimes) console.time("frameSource.readNextFrame");
+        const rgba = await frameSource.readNextFrame(
+          offsetProgress,
+          canvas,
+          offsetTime
+        );
+        if (logTimes) console.timeEnd("frameSource.readNextFrame");
 
         // Frame sources can either render to the provided canvas and return nothing
         // OR return an raw RGBA blob which will be drawn onto the canvas
@@ -84,9 +125,9 @@ export async function createFrameSource({ clip, clipIndex, width, height, channe
           // Optimization: Don't need to draw to canvas if there's only one layer
           if (layerFrameSources.length === 1) return rgba;
 
-          if (logTimes) console.time('rgbaToFabricImage');
+          if (logTimes) console.time("rgbaToFabricImage");
           const img = await rgbaToFabricImage({ width, height, rgba });
-          if (logTimes) console.timeEnd('rgbaToFabricImage');
+          if (logTimes) console.timeEnd("rgbaToFabricImage");
           canvas.add(img);
         } else {
           // Assume this frame source has drawn its content to the canvas
@@ -95,14 +136,16 @@ export async function createFrameSource({ clip, clipIndex, width, height, channe
     }
     // if (verbose) console.time('Merge frames');
 
-    if (logTimes) console.time('renderFabricCanvas');
+    if (logTimes) console.time("renderFabricCanvas");
     const rgba = await renderFabricCanvas(canvas);
-    if (logTimes) console.timeEnd('renderFabricCanvas');
+    if (logTimes) console.timeEnd("renderFabricCanvas");
     return rgba;
   }
 
   async function close() {
-    await pMap(layerFrameSources, async ({ frameSource }) => frameSource.close());
+    await pMap(layerFrameSources, async ({ frameSource }) =>
+      frameSource.close()
+    );
   }
 
   return {

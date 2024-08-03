@@ -44,14 +44,15 @@
     "vitest": "^1.6.0"
   },
   "dependencies": {
-    "@via/store": "workspace:*",
-    "@via/editly": "workspace:*",
     "@via/common": "workspace:*",
+    "@via/editly": "workspace:*",
+    "@via/store": "workspace:*",
     "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "execa": "^6.1.0",
     "form-data": "^4.0.0",
     "lodash": "^4.17.21",
     "uuid": "^10.0.0",
-    "zod": "^3.23.8",
-    "dotenv": "^16.4.5"
+    "zod": "^3.23.8"
   }
 }

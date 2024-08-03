@@ -23,3 +23,11 @@
 ## Immendiate Next Steps
 
 - ability to update the description of the video
+
+outprocess
+
+- ffmpeg -hide_banner -loglevel error -f rawvideo -vcodec rawvideo -pix_fmt rgba -s 180x320 -r 30000/1001 -i - -map 0:v:0 -vf format=yuv420p -vcodec libx264 -profile:v high -preset:v medium -crf 18 -movflags faststart -y out.mp4
+
+frame size
+
+- ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 /Users/piyusharora/projects/via/assets/sample-videos/1-sec.mp4

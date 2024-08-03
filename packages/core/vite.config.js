@@ -6,6 +6,6 @@ dotenv.config({ path: ".env.test" });
 export default defineConfig({
   test: {
     environment: "node",
-    testTimeout: 40000,
+    testTimeout: 20000,
   },
 });

@@ -188,6 +188,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      execa:
+        specifier: ^6.1.0
+        version: 6.1.0
       form-data:
         specifier: ^4.0.0
         version: 4.0.0
