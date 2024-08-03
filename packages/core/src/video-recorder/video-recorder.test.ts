@@ -7,37 +7,37 @@ test("record video ", async () => {
 
 describe("video buffer", () => {
   const scenerios = [
-    // {
-    //   name: "4 smaller chunks with 1 frame",
-    //   chunks: [[10], [9], [8], [2]],
-    //   width: 1,
-    //   height: 1,
-    //   expectedFrames: [[10, 9, 8, 2]],
-    // },
-    // {
-    //   name: "6 chunks with 1 frame",
-    //   chunks: [[10], [9], [8], [2], [1], [1]],
-    //   width: 1,
-    //   height: 1,
-    //   expectedFrames: [[10, 9, 8, 2]],
-    // },
-    // {
-    //   name: "10 chunks with 2 frame",
-    //   chunks: [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]],
-    //   width: 1,
-    //   height: 1,
-    //   expectedFrames: [
-    //     [1, 2, 3, 4],
-    //     [5, 6, 7, 8],
-    //   ],
-    // },
-    // {
-    //   name: "1 bigger chunk with 1 frame",
-    //   chunks: [[1, 2, 3, 4]],
-    //   width: 1,
-    //   height: 1,
-    //   expectedFrames: [[1, 2, 3, 4]],
-    // },
+    {
+      name: "4 smaller chunks with 1 frame",
+      chunks: [[10], [9], [8], [2]],
+      width: 1,
+      height: 1,
+      expectedFrames: [[10, 9, 8, 2]],
+    },
+    {
+      name: "6 chunks with 1 frame",
+      chunks: [[10], [9], [8], [2], [1], [1]],
+      width: 1,
+      height: 1,
+      expectedFrames: [[10, 9, 8, 2]],
+    },
+    {
+      name: "10 chunks with 2 frame",
+      chunks: [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]],
+      width: 1,
+      height: 1,
+      expectedFrames: [
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+      ],
+    },
+    {
+      name: "1 bigger chunk with 1 frame",
+      chunks: [[1, 2, 3, 4]],
+      width: 1,
+      height: 1,
+      expectedFrames: [[1, 2, 3, 4]],
+    },
     {
       name: "1 bigger chunk with 2 frames",
       chunks: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]],
@@ -47,6 +47,13 @@ describe("video buffer", () => {
         [1, 2, 3, 4],
         [5, 6, 7, 8],
       ],
+    },
+    {
+      name: "1 bigger chunk with 1 frame",
+      chunks: [[1, 2, 3, 4, 5, 6]],
+      width: 1,
+      height: 1,
+      expectedFrames: [[1, 2, 3, 4]],
     },
   ];
 

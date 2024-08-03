@@ -304,8 +304,8 @@ export class VideoBuffer {
   // buffer length till stored frames is filled
   private filledFrame = 0;
 
-  // left over chunk remaning from
-  private pendingChunk = Buffer.alloc(0);
+  //   // left over chunk remaning from
+  //   private pendingChunk = Buffer.alloc(0);
   private frameSize: number;
   constructor(config: VideoBufferConfig) {
     this.frameSize = config.width * config.height * 4;
@@ -315,37 +315,20 @@ export class VideoBuffer {
   }
 
   addChunk(chunk: Buffer) {
-    const availableChunk = Buffer.allocUnsafe(
-      chunk.length + this.pendingChunk.length
-    ).fill(0);
-    this.pendingChunk.copy(availableChunk, 0, 0, this.pendingChunk.length);
-    chunk.copy(availableChunk, this.pendingChunk.length, 0, chunk.length);
     let usedChunk = 0;
 
-    while (usedChunk < availableChunk.length) {
+    while (usedChunk < chunk.length) {
       let remaingFrame = this.frameSize - this.filledFrame;
-      const chunkToCopy = Math.min(
-        availableChunk.length - usedChunk,
-        remaingFrame
-      );
-      if (chunkToCopy < this.frameSize) {
-        this.pendingChunk = Buffer.allocUnsafe(chunkToCopy);
-        availableChunk.copy(
-          this.pendingChunk,
-          0,
-          usedChunk,
-          chunkToCopy + usedChunk
-        );
-        break;
-      }
+      const chunkToCopy = Math.min(chunk.length - usedChunk, remaingFrame);
 
-      availableChunk.copy(
+      chunk.copy(
         this.storedFrame,
         this.filledFrame,
         usedChunk,
         chunkToCopy + usedChunk
       );
       usedChunk += chunkToCopy;
+      this.filledFrame += chunkToCopy;
       remaingFrame -= chunkToCopy;
 
       if (remaingFrame === 0) {
@@ -355,43 +338,5 @@ export class VideoBuffer {
         this.storedFrame.fill(0);
       }
     }
-
-    console.log("");
-    // while (availableChunk.length > this.frameSize) {
-    //   const remaingFrame = this.frameSize - this.filledFrame;
-    //   const chunkToCopy = Math.min(availableChunk.length, remaingFrame);
-    //   const targetStart = this.filledFrame;
-    //   const sourceStart = 0;
-    //   const soundEnd = chunkToCopy;
-    //   availableChunk.copy(this.storedFrame, targetStart, sourceStart, soundEnd);
-    //   if (remaingFrame === 0) {
-    //     this.storedFrame.copy(this.sendFrame, 0, 0, this.storedFrame.length);
-    //     this.config.onFrame(this.sendFrame);
-    //     this.filledFrame = 0;
-    //     this.storedFrame.fill(0);
-    //   }
-    // }
-    // this.pendingChunk = chunk.length;
-    // while (this.pendingChunk > this.frameSize) {
-    //   const chunkToCopy = Math.min(
-    //     chunk.length,
-    //     this.frameSize - this.filledFrame
-    //   );
-    // }
-    // const chunkToCopy = Math.min(
-    //   chunk.length,
-    //   this.storedFrame.length - this.filledFrame
-    // );
-    // this.pendingChunk = chunk.length - chunkToCopy;
-    // while(this.pendingChunk > this.)
-    // chunk.copy(this.storedFrame, this.filledFrame, 0, chunkToCopy);
-    // this.filledFrame += chunkToCopy;
-    // const remaining = this.storedFrame.length - this.filledFrame;
-    // if (remaining === 0) {
-    //   this.storedFrame.copy(this.sendFrame, 0, 0, this.storedFrame.length);
-    //   this.config.onFrame(this.sendFrame);
-    //   this.filledFrame = 0;
-    //   this.storedFrame.fill(0);
-    // }
   }
 }
