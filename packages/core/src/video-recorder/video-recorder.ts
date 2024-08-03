@@ -1,33 +1,81 @@
-import { execa } from "execa";
+import { execa, ExecaChildProcess } from "execa";
 import { getSampleVideoFilePath } from "@via/common/path";
+
+type VideoWriterConfig = {
+  width: number;
+  height: number;
+  videoPath: string;
+};
+
+class VideoWriter {
+  private config: VideoWriterConfig;
+  private myProcess: ExecaChildProcess<string> | null;
+  constructor(config: VideoWriterConfig) {
+    this.config = config;
+    this.myProcess = null;
+  }
+
+  start(onDone: () => void) {
+    const args = [
+      "-y",
+      "-f",
+      "rawvideo",
+      "-pixel_format",
+      "rgba",
+      "-video_size",
+      `${this.config.width}x${this.config.height}`,
+      "-r",
+      "30",
+      "-i",
+      "pipe:0",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      this.config.videoPath,
+    ];
+
+    this.myProcess = execa("ffmpeg", args);
+    this.myProcess.on("exit", (code) => {
+      if (code !== 0) {
+        throw "exist code non 0 " + code;
+      }
+      onDone();
+    });
+  }
+
+  write(buffer: Buffer) {
+    if (!this.myProcess || !this.myProcess.stdin) {
+      throw "no process stdin";
+    }
+
+    this.myProcess.stdin.write(buffer);
+  }
+
+  async finish() {
+    if (!this.myProcess || !this.myProcess.stdin) {
+      throw "no process stdin";
+    }
+
+    this.myProcess.stdin.end();
+    await this.myProcess;
+  }
+}
 
 export const recordVideo = async () => {
   return new Promise<void>(async (resolve, reject) => {
     try {
-      const width = 1920;
-      const height = 1080;
+      const width = 640;
+      const height = 360;
       const outputVideoPath = "output_video.mp4";
 
-      const args = [
-        "-y",
-        "-f",
-        "rawvideo",
-        "-pixel_format",
-        "rgba",
-        "-video_size",
-        `${width}x${height}`,
-        "-r",
-        "30",
-        "-i",
-        "pipe:0",
-        "-c:v",
-        "libx264",
-        "-pix_fmt",
-        "yuv420p",
-        outputVideoPath,
-      ];
+      const videoWriter = new VideoWriter({
+        height,
+        width,
+        videoPath: outputVideoPath,
+      });
 
-      const outProcess = execa("ffmpeg", args);
+      videoWriter.start(() => resolve());
 
       const createDummyFrame = () => {
         const frameBuffer = Buffer.alloc(width * height * 4);
@@ -44,31 +92,11 @@ export const recordVideo = async () => {
 
       for (let i = 0; i < totalFrames; i++) {
         const frameBuffer = createDummyFrame();
-        outProcess.stdin?.write(frameBuffer);
+        videoWriter.write(frameBuffer);
       }
 
-      outProcess.stdin?.end();
-
-      await outProcess;
-
+      await videoWriter.finish();
       resolve();
-
-      //   process.on("close", (code) => {
-      //     resolve();
-      //     // console.log(code);
-      //   });
-
-      //   process.stderr?.on("data", console.log);
-
-      //   process.on("error", (err) => console.log(err));
-
-      //   process.on("exit", (code) => {
-      //     console.log("exit = " + code);
-      //   });
-
-      //   process.on("close", (code) => {
-      //     console.log("close = " + code);
-      //   });
 
       //   const outAargs = [
       //     "-f",
