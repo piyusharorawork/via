@@ -20,7 +20,10 @@
 - get rid of editly
 - cleanup temp folders
 - support filters in videos page like limit , pagination
--
+- ability to change color of text
+- ability to move the text around
+- ability to scale the text
+- ability to change the font of the text
 
 ## Immendiate Next Steps
 
