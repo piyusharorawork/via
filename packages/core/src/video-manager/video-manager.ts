@@ -185,37 +185,42 @@ export class VideoManager {
   }
 
   async makeVideo(input: MakeVideoInput): Promise<MakeVideoOutput> {
-    const { quote, prompt } = input;
+    try {
+      const { quote, prompt } = input;
 
-    const videos = await this.videoStore.list(10);
-    const videoId = await this.videoFinder.findVideo({ prompt, videos });
-    const video = videos.find((video) => video.id === videoId);
+      const videos = await this.videoStore.list(10);
+      const videoId = await this.videoFinder.findVideo({ prompt, videos });
+      const video = videos.find((video) => video.id === videoId);
 
-    if (!video) {
-      throw "no video found";
+      if (!video) {
+        throw "no video found";
+      }
+
+      const { file, found } = await this.fileStore.get(video.fileId);
+
+      if (!found) {
+        throw "no file found";
+      }
+
+      const backgroundVideoURL = formFileURL(file.fileName);
+      const generatedVideoPath = getTempFilePath(`${generateId()}.mp4`);
+
+      await generateVideo({
+        generatedVideoPath,
+        quote,
+        videoPath: backgroundVideoURL,
+      });
+
+      const uploadedFile =
+        await this.fileUploader.uploadFile(generatedVideoPath);
+
+      const videoURL = formFileURL(uploadedFile.filename);
+
+      return {
+        videoURL,
+      };
+    } catch (error) {
+      throw error;
     }
-
-    const { file, found } = await this.fileStore.get(video.fileId);
-
-    if (!found) {
-      throw "no file found";
-    }
-
-    const backgroundVideoURL = formFileURL(file.fileName);
-    const generatedVideoPath = getTempFilePath(`${generateId()}.mp4`);
-
-    await generateVideo({
-      generatedVideoPath,
-      quote,
-      videoPath: backgroundVideoURL,
-    });
-
-    const uploadedFile = await this.fileUploader.uploadFile(generatedVideoPath);
-
-    const videoURL = formFileURL(uploadedFile.filename);
-
-    return {
-      videoURL,
-    };
   }
 }

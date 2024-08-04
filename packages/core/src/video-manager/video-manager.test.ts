@@ -7,7 +7,8 @@ import { uploadFile } from "../file-uploader/file-uploader";
 import { getEnvVariables } from "../helpers";
 import { getSampleVideoFilePath } from "@via/common/path";
 
-const { finderURL, token, databaseName, serverBaseURL } = getEnvVariables();
+const { finderURL, token, databaseName, serverBaseURL, model } =
+  getEnvVariables();
 
 describe("add video", () => {
   const scenerios = [
@@ -25,6 +26,7 @@ describe("add video", () => {
     serverBaseURL,
     token,
     finderURL,
+    model,
   });
   const videoStore = new VideoStore(databaseName);
 
@@ -56,6 +58,7 @@ describe("list videos", () => {
     serverBaseURL,
     token,
     finderURL,
+    model,
   });
 
   for (const scenerio of scenerios) {
@@ -79,6 +82,7 @@ describe("remove video", () => {
     serverBaseURL,
     token,
     finderURL,
+    model,
   });
   const videoStore = new VideoStore(databaseName);
   const fileStore = new FileStore(databaseName);
@@ -132,6 +136,7 @@ describe("view video", () => {
     serverBaseURL,
     token,
     finderURL,
+    model,
   });
   const videoStore = new VideoStore(databaseName);
   const fileStore = new FileStore(databaseName);
@@ -182,6 +187,7 @@ describe("make video", () => {
     serverBaseURL,
     token,
     finderURL,
+    model,
   });
   const videoStore = new VideoStore(databaseName);
   const fileStore = new FileStore(databaseName);
