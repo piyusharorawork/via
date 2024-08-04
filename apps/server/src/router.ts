@@ -7,6 +7,7 @@ import {
   viewVideoInput,
   VideoManager,
   makeVideoInput,
+  generateReelInput,
 } from "@via/core/video-manager";
 
 // TODO create router input
@@ -45,9 +46,16 @@ export const createRouter = (
       return video;
     }),
     makeVideo: t.procedure.input(makeVideoInput).query(async ({ input }) => {
+      console.log("deprate make video query");
       const result = await videoManager.makeVideo(input);
       return result;
     }),
+    generateVideo: t.procedure
+      .input(generateReelInput)
+      .query(async ({ input }) => {
+        const result = await videoManager.generateReel(input);
+        return result;
+      }),
   });
 
   return appRouter;

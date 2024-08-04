@@ -65,3 +65,18 @@ export type MakeVideoInput = z.infer<typeof makeVideoInput>;
 export type MakeVideoOutput = {
   videoURL: string;
 };
+
+export const generateReelInput = z.object({
+  prompt: z.string(),
+  quote: z.string(),
+});
+
+export type GenerateReelInput = z.infer<typeof generateReelInput>;
+
+export type GenerateReelOutput = {
+  videoId: number;
+  videoUUID: string;
+  videoURL: string;
+  width: number;
+  height: number;
+};

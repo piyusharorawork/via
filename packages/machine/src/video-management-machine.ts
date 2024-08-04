@@ -8,8 +8,8 @@ import {
   RemoveVideoOutput,
   ViewVideoInput,
   ViewVideoOutput,
-  MakeVideoInput,
-  MakeVideoOutput,
+  GenerateReelInput,
+  GenerateReelOutput,
 } from "@via/core/video-manager";
 
 export const getVideoManagementMachine = (fetch: any) => {
@@ -29,7 +29,7 @@ export const getVideoManagementMachine = (fetch: any) => {
         originalVideos: ListVideosOutput;
         errorMessage: string | null;
         videoDetails: ViewVideoOutput | null;
-        makeVideoOutput: MakeVideoOutput | null;
+        generateReelOutput: GenerateReelOutput | null;
       },
       events: {} as  // All the events invoked by user
         | { type: "LOAD_VIDEOS_PAGE" }
@@ -39,7 +39,7 @@ export const getVideoManagementMachine = (fetch: any) => {
         | { type: "CLICK_VIDEO_ROW"; input: ViewVideoInput }
         | { type: "CLICK_DELETE_VIDEO"; input: ViewVideoInput }
         | { type: "SEARCH_VIDEO"; keyword: string }
-        | { type: "GENERATE_VIDEO"; input: MakeVideoInput }
+        | { type: "GENERATE_REEL"; input: GenerateReelInput }
         | { type: "CLOSE_RENDER_MODAL" },
     },
     actors: {
@@ -64,9 +64,9 @@ export const getVideoManagementMachine = (fetch: any) => {
           return video;
         }
       ),
-      makeVideo: fromPromise<MakeVideoOutput, MakeVideoInput>(
+      generateReel: fromPromise<GenerateReelOutput, GenerateReelInput>(
         async ({ input }) => {
-          const res = await trpc.makeVideo.query(input);
+          const res = await trpc.generateVideo.query(input);
           return res;
         }
       ),
@@ -93,7 +93,7 @@ export const getVideoManagementMachine = (fetch: any) => {
       originalVideos: [], // Synced from backend
       videoDetails: null, // single video with more info to show
       errorMessage: null, // any error message when something went wrong
-      makeVideoOutput: null,
+      generateReelOutput: null,
     },
     initial: "IDLE",
     states: {
@@ -104,12 +104,12 @@ export const getVideoManagementMachine = (fetch: any) => {
           CLICK_VIDEO_ROW: "LOADING_VIDEO_DETAILS",
           CLICK_DELETE_VIDEO: "DELETING_VIDEO",
           SEARCH_VIDEO: "SEARCHING_VIDEO",
-          GENERATE_VIDEO: "MAKING_VIDEO",
+          GENERATE_REEL: "GENERATING_REEL",
         },
       },
-      MAKING_VIDEO: {
+      GENERATING_REEL: {
         invoke: {
-          src: "makeVideo",
+          src: "generateReel",
           input: (data: any) => data.event.input,
           onDone: "RENDER_VIDEO_MODAL",
           onError: "MAKING_VIDEOS_FAILED",
@@ -118,12 +118,12 @@ export const getVideoManagementMachine = (fetch: any) => {
 
       RENDER_VIDEO_MODAL: {
         entry: assign({
-          makeVideoOutput: (data: any) => data.event.output,
+          generateReelOutput: (data: any) => data.event.output,
           errorMessage: null,
         }),
         on: {
           CLOSE_RENDER_MODAL: {
-            actions: assign({ makeVideoOutput: null }),
+            actions: assign({ generateReelOutput: null }),
             target: "IDLE",
           },
         },

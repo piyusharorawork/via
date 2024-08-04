@@ -17,7 +17,7 @@
     "./video-preview": "./src/video-preview.tsx",
     "./generate-video-form": "./src/generate-video-form.tsx",
     "./video-render-modal": "./src/video-render-modal.tsx",
-    "./video-editor": "./src/video-editor.tsx",
+    "./video-renderer": "./src/video-renderer.tsx",
     "./video-details": "./src/video-details.tsx"
   },
   "scripts": {

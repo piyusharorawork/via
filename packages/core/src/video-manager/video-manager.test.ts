@@ -234,3 +234,56 @@ describe("make video", () => {
     });
   }
 });
+
+describe("generate reel", () => {
+  const scenerios = [
+    {
+      name: "make 1 sec video",
+      quote: "Hello",
+    },
+  ];
+
+  const videoManager = new VideoManager({
+    databaseName,
+    serverBaseURL,
+    token,
+    finderURL,
+    model,
+  });
+  const videoStore = new VideoStore(databaseName);
+  const fileStore = new FileStore(databaseName);
+
+  for (const scenerio of scenerios) {
+    test(scenerio.name, async () => {
+      const file = await uploadFile(
+        "http://localhost:4000",
+        getSampleVideoFilePath("1-sec.mp4")
+      );
+
+      const fileId = await fileStore.insert({
+        destination: file.destination,
+        fileName: file.filename,
+        mimeType: file.mimetype,
+        originalName: file.originalname,
+        path: file.path,
+      });
+      const videoUUID = v4();
+      await videoStore.insert({
+        description: "some description",
+        fileId: fileId,
+        name: "1-sec-video",
+        originalURL: "",
+        uuid: videoUUID,
+        fps: "30/1",
+        frameCount: 300,
+        frameHeight: 100,
+        frameWidth: 100,
+      });
+      const { videoURL } = await videoManager.generateReel({
+        quote: scenerio.quote,
+        prompt: "some",
+      });
+      expect(videoURL).toContain("http://");
+    });
+  }
+});

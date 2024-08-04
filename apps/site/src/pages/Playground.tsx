@@ -1,5 +1,5 @@
-import { VideoEditor } from "@via/ui/video-editor";
-import { useRef, useState } from "react";
+import { VideoRenderer } from "@via/ui/video-renderer";
+import { useState } from "react";
 
 // Need to fetch it from backend
 const WIDTH = 270;
@@ -15,7 +15,7 @@ export default function Playground() {
     <section className="flex flex-col h-screen items-center">
       <header>Playground</header>
       <div className="bg-black my-4 rounded-xl">
-        <VideoEditor
+        <VideoRenderer
           width={WIDTH}
           height={HEIGHT}
           fps={FPS}

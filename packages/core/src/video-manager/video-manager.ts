@@ -4,6 +4,8 @@ import {
   addVideoInput,
   AddVideoInput,
   AddVideoOutput,
+  GenerateReelInput,
+  GenerateReelOutput,
   ListVideoItem,
   ListVideosInput,
   ListVideosOutput,
@@ -233,6 +235,36 @@ export class VideoManager {
 
       return {
         videoURL,
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async generateReel(input: GenerateReelInput): Promise<GenerateReelOutput> {
+    try {
+      const { quote, prompt } = input;
+
+      const videos = await this.videoStore.list(10);
+      const videoId = await this.videoFinder.findVideo({ prompt, videos });
+      const video = videos.find((video) => video.id === videoId);
+
+      if (!video) {
+        throw "no video found";
+      }
+
+      const { file, found } = await this.fileStore.get(video.fileId);
+
+      if (!found) {
+        throw "no file found";
+      }
+
+      return {
+        videoId,
+        videoURL: formFileURL(file.fileName),
+        videoUUID: video.uuid,
+        width: video.frameWidth,
+        height: video.frameHeight,
       };
     } catch (error) {
       throw error;
