@@ -6,7 +6,7 @@ import { RGBAFormat, UnsignedByteType } from "three";
 let pause: any;
 const FPS = 60; // TODO need to get it from backend
 const MAX_FRAMES = 300;
-const WAIT_MS = 50;
+const WAIT_MS = 1000;
 
 type VideoBackgroundProps = {
   frame: number;
@@ -21,14 +21,30 @@ const VideoBackground = (props: VideoBackgroundProps) => {
     "http://localhost:4000/uploads/1722237708740.mp4"
   );
 
+  useFrame(() => {
+    console.log("rendering video background");
+  });
+
+  useEffect(() => {
+    const videoElement: HTMLVideoElement = videoTexture.source.data;
+    if (!videoElement) {
+      return;
+    }
+    videoElement.pause();
+  }, [videoTexture]);
+
   useEffect(() => {
     const videoElement: HTMLVideoElement = videoTexture.source.data;
     if (!videoElement) {
       return;
     }
 
-    videoElement.pause();
-    videoElement.currentTime = props.frame / FPS;
+    const timeToMove = props.frame / FPS;
+    console.log(timeToMove);
+
+    // videoElement.pause();
+
+    videoElement.currentTime = timeToMove;
   }, [props.frame]);
 
   return (
@@ -47,44 +63,29 @@ type VideoEditorProps = {
 const RenderScene = (props: VideoEditorProps) => {
   const [frame, setFrame] = useState(0);
 
-  const { gl, size, camera, scene, invalidate } = useThree();
+  const { gl, camera, scene, size, invalidate } = useThree();
 
-  const render = async () => {
-    for (let i = 1; i < 100; i++) {
-      gl.render(scene, camera);
-      await sleep(1000);
-      invalidate();
-    }
-  };
-
-  useEffect(() => {
-    render();
-  }, []);
-
-  useFrame(({ gl, scene, camera }) => {
-    console.log("running");
-    // gl.render(scene, camera);
-    // const width = size.width;
-    // const height = size.height;
-    // const buffer = new Uint8Array(width * height * 4); // 4 components per pixel (RGBA)
-
-    // gl.getContext().readPixels(
-    //   0,
-    //   0,
-    //   100,
-    //   100,
-    //   RGBAFormat,
-    //   UnsignedByteType,
-    //   buffer
-    // );
-
-    // console.log(buffer);
-  });
+  const width = size.width;
+  const height = size.height;
 
   const startRecording = async () => {
     for (let i = 0; i < MAX_FRAMES; i++) {
       setFrame((frame) => frame + 1);
+      gl.render(scene, camera);
       await sleep(WAIT_MS);
+      const renderingContext = gl.getContext();
+      const buffer = new Uint8Array(width * height * 4); // RGBA
+
+      renderingContext.readPixels(
+        0,
+        0,
+        width,
+        height,
+        RGBAFormat,
+        UnsignedByteType,
+        buffer
+      );
+      invalidate(); // only when you want to update the web gl frame counter
     }
     props.onFinish();
   };

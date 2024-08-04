@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.10",
+    "@ffmpeg/util": "^0.12.1",
     "@trpc/client": "^10.45.2",
     "@via/core": "workspace:*",
     "@via/machine": "workspace:*",

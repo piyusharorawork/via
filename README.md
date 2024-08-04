@@ -31,3 +31,9 @@ outprocess
 frame size
 
 - ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 /Users/piyusharora/projects/via/assets/sample-videos/1-sec.mp4
+
+fps
+
+```shell
+ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 http://localhost:4000/uploads/1722237708740.mp4
+```
