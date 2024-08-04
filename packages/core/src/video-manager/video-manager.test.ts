@@ -106,6 +106,10 @@ describe("remove video", () => {
         description: "some-description",
         name: "some-name",
         originalURL: "some-url",
+        fps: "30/1",
+        frameCount: 300,
+        frameHeight: 100,
+        frameWidth: 100,
       });
 
       const { success } = await videoManager.removeVideo({
@@ -160,6 +164,10 @@ describe("view video", () => {
         description: scenerio.videoDescription,
         name: scenerio.videoName,
         originalURL: scenerio.youtubeURL,
+        fps: "30/1",
+        frameCount: 300,
+        frameHeight: 100,
+        frameWidth: 100,
       });
 
       const video = await videoManager.viewVideo({
@@ -213,6 +221,10 @@ describe("make video", () => {
         name: "1-sec-video",
         originalURL: "",
         uuid: videoUUID,
+        fps: "30/1",
+        frameCount: 300,
+        frameHeight: 100,
+        frameWidth: 100,
       });
       const { videoURL } = await videoManager.makeVideo({
         quote: scenerio.quote,

@@ -25,6 +25,7 @@ import { generateVideo } from "../generate-video/generate-video.js";
 import { VideoFinder } from "../find-video/find-video.js";
 import { trimVideo } from "../video-trimmer/video-trimmer.js";
 import { getTempFilePath } from "@via/common/path";
+import { VideoInfo } from "../video-info/video-info.js";
 export * from "./video-manager.schema.js";
 
 type VideoManagerConfig = {
@@ -85,12 +86,22 @@ export class VideoManager {
 
       const videoUUID = generateId();
 
+      const videoInfo = new VideoInfo(trimmedVideoPath);
+
+      const fps = await videoInfo.getFPS();
+      const frameCount = await videoInfo.getFrameCount();
+      const { height, width } = await videoInfo.getFrameSize();
+
       await this.videoStore.insert({
         fileId,
         description: input.description,
         name: input.name,
         uuid: videoUUID,
         originalURL: input.youtubeURL,
+        fps,
+        frameCount,
+        frameHeight: height,
+        frameWidth: width,
       });
 
       return { videoUUID };
