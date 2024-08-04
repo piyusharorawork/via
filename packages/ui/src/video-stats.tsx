@@ -30,6 +30,7 @@ export const VideoStats = (props: Props) => {
         </div>
         <div className="stat-title">Dimensions</div>
         <div className="stat-value text-primary">{`${props.width} X ${props.height}`}</div>
+        <div className="stat-desc text-secondary">Width X Height</div>
       </div>
 
       <div className="stat">
@@ -71,8 +72,8 @@ export const VideoStats = (props: Props) => {
             />
           </svg>
         </div>
-        <div className="stat-value">FPS</div>
-        <div className="stat-title">{fpsInt}</div>
+        <div className="stat-value">{fpsInt}</div>
+        <div className="stat-title">FPS</div>
         <div className="stat-desc text-secondary">Frames per second</div>
       </div>
     </div>
