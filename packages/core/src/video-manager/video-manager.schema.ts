@@ -49,6 +49,10 @@ export type ViewVideoOutput = {
   descrption: string;
   createdAt: string;
   videoURL: string;
+  fps: string;
+  frameCount: number;
+  width: number;
+  height: number;
 };
 
 export const makeVideoInput = z.object({
