@@ -81,7 +81,7 @@ export const getVideoManagementMachine = (fetch: any) => {
           const videos = context.originalVideos.filter((video) => {
             return (
               video.name.includes(e.keyword) ||
-              video.description.includes(e.keyword)
+              video.description.toLowerCase().includes(e.keyword.toLowerCase())
             );
           });
           return videos;
