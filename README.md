@@ -13,16 +13,22 @@
 - Create a prompt to help with updating the description of the video
 - when video not found , add randomisation
 - improve leaky tests with cleanup files
-- Categorize uploads : 1. IMP (videos which has description) and 2. Rendered Videos ()
-- get rid of false negatives
-- inconsistent tests : valid small video , add one video
 - create a common package that handles binary path and scripts path
-- reduce the number of uploads
+- ability to update the description of the video
+- improve progress on export specially at the end when 99% photos are taken
+- Make Application work on mobile web
+- get rid of editly
+- cleanup temp folders
+- support filters in videos page like limit , pagination
 -
 
 ## Immendiate Next Steps
 
-- ability to update the description of the video
+- Create Generate Video State Machine and remove it from video management machine
+- Fix Cancel Export
+- Write all pngs in a folder in ffmpeg and clean it once done
+
+## Helper Commands
 
 outprocess
 
