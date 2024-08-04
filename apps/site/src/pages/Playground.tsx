@@ -1,31 +1,25 @@
 import { VideoEditor } from "@via/ui/video-editor";
 import { useRef, useState } from "react";
 
+// Need to fetch it from backend
+const WIDTH = 270;
+const HEIGHT = 480;
+const FPS = 60;
+const FRAMES = 300;
+
 export default function Playground() {
   const [recording, setRecording] = useState(false);
   const [videoURL, setVideoURL] = useState<string | null>(null);
-  // const [photoURL, setPhotoURL] = useState<string | null>(null);
-
-  // const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  // const onPhoto = () => {
-  //   const canvas = canvasRef.current as unknown as HTMLCanvasElement;
-  //   const img = canvas.toDataURL("image/png");
-
-  //   canvas.toBlob((data) => {
-  //     debugger;
-  //     console.log(data);
-  //   });
-
-  //   setPhotoURL(img);
-  // };
 
   return (
     <section className="flex flex-col h-screen items-center">
       <header>Playground</header>
       <div className="bg-black my-4 rounded-xl">
         <VideoEditor
-          // canvasRef={canvasRef}
+          width={WIDTH}
+          height={HEIGHT}
+          fps={FPS}
+          frames={FRAMES}
           recording={recording}
           onFinish={(url) => {
             setVideoURL(url);
@@ -36,18 +30,13 @@ export default function Playground() {
         <button className="btn btn-primary" onClick={() => setRecording(true)}>
           Record
         </button>
-        {/* <button className="btn" onClick={() => onPhoto()}>
-          Take Photo
-        </button> */}
       </footer>
 
       {videoURL && (
-        <video controls>
+        <video width={WIDTH} height={HEIGHT} controls>
           <source src={videoURL}></source>
         </video>
       )}
-
-      {/* {photoURL && <img width={180} height={320} src={photoURL} />} */}
     </section>
   );
 }

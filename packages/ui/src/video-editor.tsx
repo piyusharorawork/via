@@ -4,13 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { toBlobURL, fetchFile } from "@ffmpeg/util";
 
-let pause: any;
-const FPS = 60; // TODO need to get it from backend
-const MAX_FRAMES = 300;
 const WAIT_MS = 50;
 
 type VideoBackgroundProps = {
   frame: number;
+  fps: number;
 };
 
 const sleep = (ms: number) => {
@@ -21,11 +19,6 @@ const VideoBackground = (props: VideoBackgroundProps) => {
   const videoTexture = useVideoTexture(
     "http://localhost:4000/uploads/1722237708740.mp4"
   );
-
-  // Only when invalidate frame
-  useFrame(() => {
-    // console.log("rendering video background");
-  });
 
   useEffect(() => {
     const videoElement: HTMLVideoElement = videoTexture.source.data;
@@ -41,7 +34,7 @@ const VideoBackground = (props: VideoBackgroundProps) => {
       return;
     }
 
-    const timeToMove = props.frame / FPS;
+    const timeToMove = props.frame / props.fps;
 
     videoElement.currentTime = timeToMove;
   }, [props.frame]);
@@ -57,6 +50,8 @@ const VideoBackground = (props: VideoBackgroundProps) => {
 type RenderSceneProps = {
   canvasRef: React.RefObject<HTMLCanvasElement>;
   recording: boolean;
+  frames: number;
+  fps: number;
   onFinish: (videoURL: string) => void;
 };
 
@@ -85,10 +80,7 @@ const RenderScene = (props: RenderSceneProps) => {
     });
   };
 
-  const { gl, camera, scene, size, invalidate } = useThree();
-
-  const width = size.width;
-  const height = size.height;
+  const { gl, camera, scene, invalidate } = useThree();
 
   const getCanvasBlob = () => {
     return new Promise<Blob>((resolve, reject) => {
@@ -118,45 +110,24 @@ const RenderScene = (props: RenderSceneProps) => {
     const ffmpeg = ffmpegRef.current;
     //const frames: Blob[] = [];
 
-    for (let i = 0; i < MAX_FRAMES; i++) {
+    for (let i = 0; i < props.frames; i++) {
       setFrame((frame) => frame + 1);
       gl.render(scene, camera);
       await sleep(WAIT_MS);
       const pngBlob = await getCanvasBlob();
       const fileName = `input${i.toString().padStart(4, "0")}.png`;
 
+      // TODO write it inside a folder
       await ffmpeg.writeFile(fileName, await fetchFile(pngBlob));
-
-      // const frame =  await getCanvasBlob()
-      // frames.push(frame)
-
-      // const renderingContext = gl.getContext();
-      // const frame = new Uint8Array(width * height * 4); // RGBA
-
-      // renderingContext.readPixels(
-      //   0,
-      //   0,
-      //   width,
-      //   height,
-      //   renderingContext.RGBA,
-      //   renderingContext.UNSIGNED_BYTE,
-      //   frame
-      // );
-
-      // for (let i = 0; i < width * height * 4; i++) {
-      //   if (frame[i] !== 0) {
-      //     debugger;
-      //   }
-      // }
-
-      // frames.push(new Blob([frame]));
+      // TODO add callback
+      console.log(`${i + 1} out of ${props.frames}`);
 
       invalidate(); // only when you want to update the web gl frame counter
     }
     const outputFileName = "out.mp4";
     await ffmpeg.exec([
       "-framerate",
-      `${FPS}`,
+      `${props.fps}`,
       "-i",
       "input%04d.png",
       "-c:v",
@@ -166,33 +137,13 @@ const RenderScene = (props: RenderSceneProps) => {
       outputFileName,
     ]);
 
-    // const inputVideoBlob = new Blob(frames);
-    // const ffmpeg = ffmpegRef.current;
-    // ffmpeg.writeFile("input.raw", await fetchFile(inputVideoBlob));
-
-    // await ffmpeg.exec([
-    //   "-f",
-    //   "rawvideo",
-    //   "-pix_fmt",
-    //   "rgba",
-    //   "-s",
-    //   `${width}x${height}`,
-    //   "-r",
-    //   `${FPS}`,
-    //   "-i",
-    //   "input.raw",
-    //   "-c:v",
-    //   "libx264",
-    //   "-pix_fmt",
-    //   "yuv420p",
-    //   "output.mp4",
-    // ]);
-
     // // TODO Error handling
     const fileData = await ffmpeg.readFile(outputFileName);
     const data = new Uint8Array(fileData as ArrayBuffer);
     const videoBlob = new Blob([data.buffer], { type: "video/mp4" });
     const videoUrl = URL.createObjectURL(videoBlob);
+
+    // TODO Delete that folder
 
     props.onFinish(videoUrl);
   };
@@ -215,13 +166,17 @@ const RenderScene = (props: RenderSceneProps) => {
       >
         Hello
       </Text>
-      <VideoBackground frame={frame} />
+      <VideoBackground frame={frame} fps={props.fps} />
     </>
   );
 };
 
 type VideoEditorProps = {
   recording: boolean;
+  width: number;
+  height: number;
+  fps: number;
+  frames: number;
   onFinish: (videoURL: string) => void;
 };
 
@@ -231,7 +186,7 @@ export const VideoEditor = (props: VideoEditorProps) => {
     <Canvas
       ref={canvasRef}
       frameloop="demand"
-      style={{ width: 180, height: 320 }}
+      style={{ width: props.width, height: props.height }}
       gl={{ preserveDrawingBuffer: true, alpha: true }}
     >
       <RenderScene {...props} canvasRef={canvasRef} />
