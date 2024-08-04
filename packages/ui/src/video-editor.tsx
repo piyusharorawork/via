@@ -54,12 +54,13 @@ const VideoBackground = (props: VideoBackgroundProps) => {
   );
 };
 
-type VideoEditorProps = {
+type RenderSceneProps = {
+  canvasRef: React.RefObject<HTMLCanvasElement>;
   recording: boolean;
   onFinish: (videoURL: string) => void;
 };
 
-const RenderScene = (props: VideoEditorProps) => {
+const RenderScene = (props: RenderSceneProps) => {
   const [frame, setFrame] = useState(0);
   const ffmpegRef = useRef(new FFmpeg());
 
@@ -89,56 +90,106 @@ const RenderScene = (props: VideoEditorProps) => {
   const width = size.width;
   const height = size.height;
 
+  const getCanvasBlob = () => {
+    return new Promise<Blob>((resolve, reject) => {
+      const canvas = props.canvasRef.current;
+
+      if (!canvas) {
+        throw "no canvas found";
+      }
+
+      canvas.toBlob(
+        (data) => {
+          if (!data) {
+            debugger;
+            throw "no blob";
+          }
+
+          resolve(data);
+        },
+        "image/png",
+        1
+      );
+    });
+  };
+
   const startRecording = async () => {
     await load();
-    const frames: Blob[] = [];
+    const ffmpeg = ffmpegRef.current;
+    //const frames: Blob[] = [];
 
     for (let i = 0; i < MAX_FRAMES; i++) {
       setFrame((frame) => frame + 1);
       gl.render(scene, camera);
       await sleep(WAIT_MS);
-      const renderingContext = gl.getContext();
-      const frame = new Uint8Array(width * height * 4); // RGBA
+      const pngBlob = await getCanvasBlob();
+      const fileName = `input${i.toString().padStart(4, "0")}.png`;
 
-      renderingContext.readPixels(
-        0,
-        0,
-        width,
-        height,
-        renderingContext.RGBA,
-        renderingContext.UNSIGNED_BYTE,
-        frame
-      );
+      await ffmpeg.writeFile(fileName, await fetchFile(pngBlob));
 
-      frames.push(new Blob([frame]));
+      // const frame =  await getCanvasBlob()
+      // frames.push(frame)
+
+      // const renderingContext = gl.getContext();
+      // const frame = new Uint8Array(width * height * 4); // RGBA
+
+      // renderingContext.readPixels(
+      //   0,
+      //   0,
+      //   width,
+      //   height,
+      //   renderingContext.RGBA,
+      //   renderingContext.UNSIGNED_BYTE,
+      //   frame
+      // );
+
+      // for (let i = 0; i < width * height * 4; i++) {
+      //   if (frame[i] !== 0) {
+      //     debugger;
+      //   }
+      // }
+
+      // frames.push(new Blob([frame]));
 
       invalidate(); // only when you want to update the web gl frame counter
     }
-
-    const inputVideoBlob = new Blob(frames);
-    const ffmpeg = ffmpegRef.current;
-    ffmpeg.writeFile("input.raw", await fetchFile(inputVideoBlob));
-
+    const outputFileName = "out.mp4";
     await ffmpeg.exec([
-      "-f",
-      "rawvideo",
-      "-pix_fmt",
-      "rgba",
-      "-s",
-      `${width}x${height}`,
-      "-r",
+      "-framerate",
       `${FPS}`,
       "-i",
-      "input.raw",
+      "input%04d.png",
       "-c:v",
       "libx264",
       "-pix_fmt",
       "yuv420p",
-      "output.mp4",
+      outputFileName,
     ]);
 
-    // TODO Error handling
-    const fileData = await ffmpeg.readFile("output.mp4");
+    // const inputVideoBlob = new Blob(frames);
+    // const ffmpeg = ffmpegRef.current;
+    // ffmpeg.writeFile("input.raw", await fetchFile(inputVideoBlob));
+
+    // await ffmpeg.exec([
+    //   "-f",
+    //   "rawvideo",
+    //   "-pix_fmt",
+    //   "rgba",
+    //   "-s",
+    //   `${width}x${height}`,
+    //   "-r",
+    //   `${FPS}`,
+    //   "-i",
+    //   "input.raw",
+    //   "-c:v",
+    //   "libx264",
+    //   "-pix_fmt",
+    //   "yuv420p",
+    //   "output.mp4",
+    // ]);
+
+    // // TODO Error handling
+    const fileData = await ffmpeg.readFile(outputFileName);
     const data = new Uint8Array(fileData as ArrayBuffer);
     const videoBlob = new Blob([data.buffer], { type: "video/mp4" });
     const videoUrl = URL.createObjectURL(videoBlob);
@@ -157,7 +208,7 @@ const RenderScene = (props: VideoEditorProps) => {
     <>
       <Text
         position={[0, 3, 0]}
-        fontSize={0.5}
+        fontSize={1}
         color="white"
         anchorX="center"
         anchorY="middle"
@@ -169,14 +220,21 @@ const RenderScene = (props: VideoEditorProps) => {
   );
 };
 
+type VideoEditorProps = {
+  recording: boolean;
+  onFinish: (videoURL: string) => void;
+};
+
 export const VideoEditor = (props: VideoEditorProps) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   return (
     <Canvas
+      ref={canvasRef}
       frameloop="demand"
       style={{ width: 180, height: 320 }}
-      gl={{ preserveDrawingBuffer: true }}
+      gl={{ preserveDrawingBuffer: true, alpha: true }}
     >
-      <RenderScene {...props} />
+      <RenderScene {...props} canvasRef={canvasRef} />
     </Canvas>
   );
 };
