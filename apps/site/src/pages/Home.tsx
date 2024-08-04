@@ -11,7 +11,7 @@ export default function Home() {
   const [quote, setQuote] = useState("");
 
   console.log(state.value);
-  console.log(state.context.errorMessage);
+  // console.log(state.context.generateReelOutput);
 
   return (
     <section className="flex justify-center mt-4">
@@ -23,17 +23,24 @@ export default function Home() {
         }}
       />
 
-      {state.matches("RENDER_VIDEO_MODAL") &&
-        state.context.generateReelOutput && (
-          <VideoRenderModal
-            text={quote}
-            open={state.matches("RENDER_VIDEO_MODAL")}
-            height={state.context.generateReelOutput.height}
-            width={state.context.generateReelOutput.width}
-            videoURL={state.context.generateReelOutput.videoURL}
-            onClose={() => send({ type: "CLOSE_RENDER_MODAL" })}
-          />
-        )}
+      {state.context.generateReelOutput && (
+        <VideoRenderModal
+          text={quote}
+          open={
+            state.matches("RENDER_VIDEO_MODAL") ||
+            state.matches("EXPORT_MODAL_OPENED")
+          }
+          openExportModal={state.matches("EXPORT_MODAL_OPENED")}
+          height={state.context.generateReelOutput.height}
+          width={state.context.generateReelOutput.width}
+          videoURL={state.context.generateReelOutput.videoURL}
+          fps={state.context.generateReelOutput.fps}
+          frames={state.context.generateReelOutput.frames}
+          onExport={() => send({ type: "EXPORT_VIDEO" })}
+          onClose={() => send({ type: "CLOSE_RENDER_MODAL" })}
+          onExportCancel={() => send({ type: "CANCEL_EXPORT" })}
+        />
+      )}
     </section>
   );
 }

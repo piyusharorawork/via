@@ -79,4 +79,6 @@ export type GenerateReelOutput = {
   videoURL: string;
   width: number;
   height: number;
+  fps: string;
+  frames: number;
 };

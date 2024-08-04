@@ -40,7 +40,9 @@ export const getVideoManagementMachine = (fetch: any) => {
         | { type: "CLICK_DELETE_VIDEO"; input: ViewVideoInput }
         | { type: "SEARCH_VIDEO"; keyword: string }
         | { type: "GENERATE_REEL"; input: GenerateReelInput }
-        | { type: "CLOSE_RENDER_MODAL" },
+        | { type: "CLOSE_RENDER_MODAL" }
+        | { type: "EXPORT_VIDEO" }
+        | { type: "CANCEL_EXPORT" },
     },
     actors: {
       // All the async services
@@ -111,20 +113,32 @@ export const getVideoManagementMachine = (fetch: any) => {
         invoke: {
           src: "generateReel",
           input: (data: any) => data.event.input,
-          onDone: "RENDER_VIDEO_MODAL",
+          onDone: {
+            target: "RENDER_VIDEO_MODAL",
+            actions: assign({
+              generateReelOutput: (data: any) => data.event.output,
+              errorMessage: null,
+            }),
+          },
           onError: "MAKING_VIDEOS_FAILED",
         },
       },
 
       RENDER_VIDEO_MODAL: {
-        entry: assign({
-          generateReelOutput: (data: any) => data.event.output,
-          errorMessage: null,
-        }),
         on: {
+          EXPORT_VIDEO: {
+            target: "EXPORT_MODAL_OPENED",
+          },
           CLOSE_RENDER_MODAL: {
             actions: assign({ generateReelOutput: null }),
             target: "IDLE",
+          },
+        },
+      },
+      EXPORT_MODAL_OPENED: {
+        on: {
+          CANCEL_EXPORT: {
+            target: "RENDER_VIDEO_MODAL",
           },
         },
       },

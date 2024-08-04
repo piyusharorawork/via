@@ -265,6 +265,8 @@ export class VideoManager {
         videoUUID: video.uuid,
         width: video.frameWidth,
         height: video.frameHeight,
+        fps: video.fps,
+        frames: video.frameCount,
       };
     } catch (error) {
       throw error;

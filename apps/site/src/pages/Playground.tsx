@@ -15,7 +15,7 @@ export default function Playground() {
     <section className="flex flex-col h-screen items-center">
       <header>Playground</header>
       <div className="bg-black my-4 rounded-xl">
-        <VideoRenderer
+        {/* <VideoRenderer
           width={WIDTH}
           height={HEIGHT}
           fps={FPS}
@@ -24,7 +24,7 @@ export default function Playground() {
           onFinish={(url) => {
             setVideoURL(url);
           }}
-        />
+        /> */}
       </div>
       <footer className="flex">
         <button className="btn btn-primary" onClick={() => setRecording(true)}>

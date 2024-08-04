@@ -9,6 +9,7 @@ const WAIT_MS = 50;
 type VideoBackgroundProps = {
   frame: number;
   fps: number;
+  videoURL: string;
 };
 
 const sleep = (ms: number) => {
@@ -16,9 +17,7 @@ const sleep = (ms: number) => {
 };
 
 const VideoBackground = (props: VideoBackgroundProps) => {
-  const videoTexture = useVideoTexture(
-    "http://localhost:4000/uploads/1722773278564.mp4"
-  );
+  const videoTexture = useVideoTexture(props.videoURL);
 
   useEffect(() => {
     const videoElement: HTMLVideoElement = videoTexture.source.data;
@@ -52,7 +51,9 @@ type RenderSceneProps = {
   recording: boolean;
   frames: number;
   fps: number;
+  videoURL: string;
   onFinish: (videoURL: string) => void;
+  onProgress: (amount: number) => void;
 };
 
 const RenderScene = (props: RenderSceneProps) => {
@@ -119,8 +120,9 @@ const RenderScene = (props: RenderSceneProps) => {
 
       // TODO write it inside a folder
       await ffmpeg.writeFile(fileName, await fetchFile(pngBlob));
-      // TODO add callback
-      console.log(`${i + 1} out of ${props.frames}`);
+      const amount = Math.floor((i / props.frames) * 100);
+
+      props.onProgress(amount);
 
       invalidate(); // only when you want to update the web gl frame counter
     }
@@ -166,7 +168,11 @@ const RenderScene = (props: RenderSceneProps) => {
       >
         Hello
       </Text>
-      <VideoBackground frame={frame} fps={props.fps} />
+      <VideoBackground
+        frame={frame}
+        fps={props.fps}
+        videoURL={props.videoURL}
+      />
     </>
   );
 };
@@ -177,7 +183,9 @@ type VideoRendererProps = {
   height: number;
   fps: number;
   frames: number;
+  videoURL: string;
   onFinish: (videoURL: string) => void;
+  onProgress: (amount: number) => void;
 };
 
 export const VideoRenderer = (props: VideoRendererProps) => {
@@ -186,10 +194,19 @@ export const VideoRenderer = (props: VideoRendererProps) => {
     <Canvas
       ref={canvasRef}
       frameloop="demand"
-      style={{ width: props.width, height: props.height }}
+      style={{
+        width: props.width,
+        height: props.height,
+        visibility: "hidden",
+        position: "fixed",
+      }}
       gl={{ preserveDrawingBuffer: true, alpha: true }}
     >
-      <RenderScene {...props} canvasRef={canvasRef} />
+      <RenderScene
+        {...props}
+        canvasRef={canvasRef}
+        onProgress={props.onProgress}
+      />
     </Canvas>
   );
 };
