@@ -43,6 +43,8 @@
     "@types/three": "^0.167.1",
     "@via/core": "workspace:*",
     "classnames": "^2.5.1",
-    "three": "^0.167.0"
+    "three": "^0.167.0",
+    "@ffmpeg/ffmpeg": "^0.12.10",
+    "@ffmpeg/util": "^0.12.1"
   }
 }

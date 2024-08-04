@@ -1,12 +1,13 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Text, useVideoTexture } from "@react-three/drei";
-import { useEffect, useState } from "react";
-import { RGBAFormat, UnsignedByteType } from "three";
+import { useEffect, useRef, useState } from "react";
+import { FFmpeg } from "@ffmpeg/ffmpeg";
+import { toBlobURL, fetchFile } from "@ffmpeg/util";
 
 let pause: any;
 const FPS = 60; // TODO need to get it from backend
 const MAX_FRAMES = 300;
-const WAIT_MS = 1000;
+const WAIT_MS = 50;
 
 type VideoBackgroundProps = {
   frame: number;
@@ -21,8 +22,9 @@ const VideoBackground = (props: VideoBackgroundProps) => {
     "http://localhost:4000/uploads/1722237708740.mp4"
   );
 
+  // Only when invalidate frame
   useFrame(() => {
-    console.log("rendering video background");
+    // console.log("rendering video background");
   });
 
   useEffect(() => {
@@ -40,9 +42,6 @@ const VideoBackground = (props: VideoBackgroundProps) => {
     }
 
     const timeToMove = props.frame / FPS;
-    console.log(timeToMove);
-
-    // videoElement.pause();
 
     videoElement.currentTime = timeToMove;
   }, [props.frame]);
@@ -57,11 +56,33 @@ const VideoBackground = (props: VideoBackgroundProps) => {
 
 type VideoEditorProps = {
   recording: boolean;
-  onFinish: () => void;
+  onFinish: (videoURL: string) => void;
 };
 
 const RenderScene = (props: VideoEditorProps) => {
   const [frame, setFrame] = useState(0);
+  const ffmpegRef = useRef(new FFmpeg());
+
+  const load = async () => {
+    const baseURL = "https://unpkg.com/@ffmpeg/core-mt@0.12.6/dist/esm";
+    const ffmpeg = ffmpegRef.current;
+    ffmpeg.on("log", ({ message }) => {
+      console.log(message);
+    });
+    // toBlobURL is used to bypass CORS issue, urls with the same
+    // domain can be used directly.
+    await ffmpeg.load({
+      coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, "text/javascript"),
+      wasmURL: await toBlobURL(
+        `${baseURL}/ffmpeg-core.wasm`,
+        "application/wasm"
+      ),
+      workerURL: await toBlobURL(
+        `${baseURL}/ffmpeg-core.worker.js`,
+        "text/javascript"
+      ),
+    });
+  };
 
   const { gl, camera, scene, size, invalidate } = useThree();
 
@@ -69,25 +90,60 @@ const RenderScene = (props: VideoEditorProps) => {
   const height = size.height;
 
   const startRecording = async () => {
+    await load();
+    const frames: Blob[] = [];
+
     for (let i = 0; i < MAX_FRAMES; i++) {
       setFrame((frame) => frame + 1);
       gl.render(scene, camera);
       await sleep(WAIT_MS);
       const renderingContext = gl.getContext();
-      const buffer = new Uint8Array(width * height * 4); // RGBA
+      const frame = new Uint8Array(width * height * 4); // RGBA
 
       renderingContext.readPixels(
         0,
         0,
         width,
         height,
-        RGBAFormat,
-        UnsignedByteType,
-        buffer
+        renderingContext.RGBA,
+        renderingContext.UNSIGNED_BYTE,
+        frame
       );
+
+      frames.push(new Blob([frame]));
+
       invalidate(); // only when you want to update the web gl frame counter
     }
-    props.onFinish();
+
+    const inputVideoBlob = new Blob(frames);
+    const ffmpeg = ffmpegRef.current;
+    ffmpeg.writeFile("input.raw", await fetchFile(inputVideoBlob));
+
+    await ffmpeg.exec([
+      "-f",
+      "rawvideo",
+      "-pix_fmt",
+      "rgba",
+      "-s",
+      `${width}x${height}`,
+      "-r",
+      `${FPS}`,
+      "-i",
+      "input.raw",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "output.mp4",
+    ]);
+
+    // TODO Error handling
+    const fileData = await ffmpeg.readFile("output.mp4");
+    const data = new Uint8Array(fileData as ArrayBuffer);
+    const videoBlob = new Blob([data.buffer], { type: "video/mp4" });
+    const videoUrl = URL.createObjectURL(videoBlob);
+
+    props.onFinish(videoUrl);
   };
 
   useEffect(() => {
@@ -115,7 +171,11 @@ const RenderScene = (props: VideoEditorProps) => {
 
 export const VideoEditor = (props: VideoEditorProps) => {
   return (
-    <Canvas frameloop="demand">
+    <Canvas
+      frameloop="demand"
+      style={{ width: 180, height: 320 }}
+      gl={{ preserveDrawingBuffer: true }}
+    >
       <RenderScene {...props} />
     </Canvas>
   );
