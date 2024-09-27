@@ -11,7 +11,7 @@ type Props = {
   fps: string;
   frames: number;
   openExportModal: boolean;
-
+  quote: string;
   onExport: () => void;
   onClose: () => void;
   onExportCancel: () => void;
@@ -31,6 +31,7 @@ export const VideoRenderModal = (props: Props) => {
           height={props.height}
           width={props.width}
           videoURL={props.videoURL}
+          quote={props.quote}
           onCancel={() => props.onExportCancel()}
         />
 

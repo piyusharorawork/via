@@ -36,6 +36,7 @@ export default function Home() {
           videoURL={state.context.generateReelOutput.videoURL}
           fps={state.context.generateReelOutput.fps}
           frames={state.context.generateReelOutput.frames}
+          quote={quote}
           onExport={() => send({ type: "EXPORT_VIDEO" })}
           onClose={() => send({ type: "CLOSE_RENDER_MODAL" })}
           onExportCancel={() => send({ type: "CANCEL_EXPORT" })}

@@ -9,6 +9,7 @@ type Props = {
   frames: number;
   videoURL: string;
   open: boolean;
+  quote: string;
 
   onCancel: () => void;
 };
@@ -47,6 +48,7 @@ export const ExportVideoModal = (props: Props) => {
             frames={props.frames}
             recording={recording}
             videoURL={props.videoURL}
+            quote={props.quote}
             onProgress={(amount) => {
               setProgress(amount);
             }}
