@@ -9,14 +9,11 @@ type Props = {
 
 export const VideoBackground = (props: Props) => {
   const videoTexture = useVideoTexture(props.videoURL);
-
-  useEffect(() => {
-    const videoElement: HTMLVideoElement = videoTexture.source.data;
-    if (!videoElement) {
-      return;
-    }
-    videoElement.pause();
-  }, [videoTexture]);
+  const videoElement: HTMLVideoElement = videoTexture.source.data;
+  if (!videoElement) {
+    return;
+  }
+  videoElement.pause();
 
   useEffect(() => {
     const videoElement: HTMLVideoElement = videoTexture.source.data;
