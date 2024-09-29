@@ -56,3 +56,11 @@ ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=nb_read_
 ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of default=noprint_wrappers=1 /Users/piyusharora/projects/via/assets/sample-videos/1-sec.mp4
 
 ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 /Users/piyusharora/projects/via/assets/sample-videos/1-sec.mp4
+
+# Sample videos
+
+https://www.youtube.com/watch?v=h7alvfUTeqc
+https://www.youtube.com/watch?v=-Ag_SJc661w
+https://www.youtube.com/watch?v=JiENRbBH2D4
+https://www.youtube.com/watch?v=i2wM0KCWMRw
+https://www.youtube.com/watch?v=u6l5KUXn3JQ

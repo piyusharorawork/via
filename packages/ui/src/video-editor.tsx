@@ -1,6 +1,5 @@
 import { Canvas, invalidate, useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
-import { Text, useVideoTexture } from "@react-three/drei";
 import { Title } from "./elements/title";
 import { VideoBackground } from "./elements/video-background";
 
@@ -46,21 +45,6 @@ type VideoEditorProps = {
 
 export const VideoEditor = (props: VideoEditorProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    let lastTime = 0;
-    const frameTime = 1000 / props.fps;
-
-    const interval = setInterval(() => {
-      const currentTime = performance.now();
-      if (currentTime - lastTime >= frameTime / 2) {
-        invalidate();
-        lastTime = currentTime;
-      }
-    }, frameTime);
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <Canvas
