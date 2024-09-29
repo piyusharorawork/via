@@ -9,19 +9,19 @@ type Props = {
   frames: number;
   videoURL: string;
   quote: string;
+  progress: number;
   onCancel: () => void;
 };
 
 export const ExportVideoModal = (props: Props) => {
   const [recording, setRecording] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [url, setURL] = useState("");
 
   // TODO Get rid of this
   useEffect(() => {
     // TODO here we can select the resolutions later before recording
     setRecording(true);
-  }, [progress]);
+  }, []);
 
   return (
     <dialog className={classNames("modal modal-open")}>
@@ -30,29 +30,11 @@ export const ExportVideoModal = (props: Props) => {
         {recording && (
           <progress
             className="progress w-full"
-            value={progress}
+            value={props.progress}
             max="100"
           ></progress>
         )}
 
-        <div>
-          <VideoRenderer
-            width={props.width}
-            height={props.height}
-            fps={props.fps}
-            frames={props.frames}
-            recording={recording}
-            videoURL={props.videoURL}
-            quote={props.quote}
-            onProgress={(amount) => {
-              setProgress(amount);
-            }}
-            onFinish={(url) => {
-              setRecording(false);
-              setURL(url);
-            }}
-          />
-        </div>
         <div className="flex justify-end gap-2">
           <div className="modal-action">
             <a

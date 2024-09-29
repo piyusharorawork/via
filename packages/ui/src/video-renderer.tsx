@@ -34,13 +34,14 @@ const RenderScene = (props: RenderSceneProps) => {
       ffmpeg,
       fps: props.fps,
       frames: props.frames,
-      setFrame: async (frameNumber) => {
-        invalidate();
-        setFrame(() => frameNumber);
-        gl.render(scene, camera);
-        await utils.sleep(WAIT_MS);
-        const amount = Math.floor((frameNumber / props.frames) * 100);
-        props.onProgress(amount);
+      camera,
+      gl,
+      invalidate,
+      scene,
+      onFrame: (frameNumber) => {
+        const progressAmount = Math.floor((frameNumber / props.frames) * 100);
+        props.onProgress(progressAmount);
+        setFrame(frameNumber);
       },
     });
     props.onFinish(videoUrl);
