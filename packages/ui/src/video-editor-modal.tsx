@@ -14,7 +14,7 @@ type Props = {
 
 export const VideoEditorModal = (props: Props) => {
   return (
-    <dialog className={classNames("modal modal-open")}>
+    <dialog className={"modal modal-open"}>
       <div className="modal-box">
         <h3 className="font-bold text-lg my-2">Edit Video</h3>
 

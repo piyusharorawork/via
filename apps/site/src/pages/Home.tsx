@@ -70,7 +70,6 @@ export default function Home() {
           height={state.context.generateReelOutput.height}
           width={state.context.generateReelOutput.width}
           quote={quote}
-          recording={true} // TODO get rid of this
           videoURL={state.context.generateReelOutput.videoURL}
           onFinish={(videoURL) => send({ type: "EXPORT_FINISH", videoURL })}
           onProgress={(amount) => {

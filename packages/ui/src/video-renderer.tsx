@@ -10,7 +10,6 @@ const WAIT_MS = 50;
 
 type RenderSceneProps = {
   canvasRef: React.RefObject<HTMLCanvasElement>;
-  recording: boolean;
   frames: number;
   fps: number;
   videoURL: string;
@@ -48,12 +47,11 @@ const RenderScene = (props: RenderSceneProps) => {
   };
 
   useEffect(() => {
-    if (!props.recording) {
-      return;
-    }
-
     startRecording();
-  }, [props.recording]);
+    return () => {
+      ffmpegRef.current.terminate();
+    };
+  }, []);
   return (
     <>
       <Title text={props.quote} />
@@ -69,7 +67,6 @@ const RenderScene = (props: RenderSceneProps) => {
 };
 
 type VideoRendererProps = {
-  recording: boolean;
   width: number;
   height: number;
   fps: number;
