@@ -61,6 +61,21 @@ export const getVideoManagementMachine = (fetch: any) => {
       ),
     },
     actions: {
+      saveVideoDetails: assign({
+        videoDetails: (data: any) => data.event.output,
+        errorMessage: null,
+      }),
+      saveError: assign({ errorMessage: (data: any) => data.event.error }),
+      saveVideos: assign({
+        videos: (data: any) => data.event.output,
+        originalVideos: (data: any) => data.event.output,
+        errorMessage: null,
+      }),
+      resetVideoDetails: assign({
+        errorMessage: null,
+        videoDetails: null,
+      }),
+
       // client side filtering
       updateVideosMatchingFilter: assign({
         videos: ({ context, event }) => {
@@ -117,32 +132,25 @@ export const getVideoManagementMachine = (fetch: any) => {
         },
       },
       VIDEO_DETAILS_SUCCESS: {
-        entry: assign({
-          videoDetails: (data: any) => data.event.output,
-          errorMessage: null,
-        }),
+        entry: "saveVideoDetails",
         after: {
           10: "IDLE",
         },
       },
       VIDEO_DETAILS_FAILED: {
-        entry: assign({ errorMessage: (data: any) => data.event.error }),
+        entry: "saveError",
         after: {
           10: "IDLE",
         },
       },
       GETTING_VIDEOS_FAILED: {
-        entry: assign({ errorMessage: (data: any) => data.event.error }),
+        entry: "saveError",
         after: {
           10: "IDLE",
         },
       },
       GETTING_VIDEOS_SUCCESS: {
-        entry: assign({
-          videos: (data: any) => data.event.output,
-          originalVideos: (data: any) => data.event.output,
-          errorMessage: null,
-        }),
+        entry: "saveVideos",
         after: {
           10: "IDLE",
         },
@@ -156,16 +164,13 @@ export const getVideoManagementMachine = (fetch: any) => {
         },
       },
       ADDING_VIDEO_SUCCESS: {
-        entry: assign({
-          errorMessage: null,
-          videoDetails: null,
-        }),
+        entry: "resetVideoDetails",
         after: {
           10: "GETTING_VIDEOS",
         },
       },
       ADDING_VIDEO_FAILED: {
-        entry: assign({ errorMessage: (data: any) => data.event.error }),
+        entry: "saveError",
         after: {
           10: "IDLE",
         },
@@ -179,13 +184,13 @@ export const getVideoManagementMachine = (fetch: any) => {
         },
       },
       DELETING_VIDEO_SUCCESS: {
-        entry: assign({ errorMessage: null, videoDetails: null }),
+        entry: "resetVideoDetails",
         after: {
           10: "GETTING_VIDEOS",
         },
       },
       DELETING_VIDEO_FAILED: {
-        entry: assign({ errorMessage: () => "Delete Video Failed !!!" }),
+        entry: "saveError",
         after: {
           10: "IDLE",
         },
