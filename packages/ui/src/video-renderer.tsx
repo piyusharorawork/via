@@ -1,8 +1,6 @@
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Text, useVideoTexture } from "@react-three/drei";
+import { Canvas, useThree } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
-import { toBlobURL, fetchFile } from "@ffmpeg/util";
 import { utils } from "./utils";
 import { VideoBackground } from "./elements/video-background";
 import { Title } from "./elements/title";

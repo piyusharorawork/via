@@ -11,6 +11,10 @@
     "./video-management-machine": {
       "types": "./src/video-management-machine.ts",
       "default": "./dist/video-management-machine.js"
+    },
+    "./generate-reel-machine": {
+      "types": "./src/generate-reel-machine.ts",
+      "default": "./dist/generate-reel-machine.js"
     }
   },
   "devDependencies": {

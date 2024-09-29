@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { GenerateVideoForm } from "@via/ui/generate-video-form";
-import { getVideoManagementMachine } from "@via/machine/video-management-machine";
 import { useActor } from "@xstate/react";
 import { VideoRenderModal } from "@via/ui/video-render-modal";
+import { getGenerateReelMachine } from "@via/machine/generate-reel-machine";
 
-const videoManagementMachine = getVideoManagementMachine(fetch);
+const generateReelMachine = getGenerateReelMachine(fetch);
 
 export default function Home() {
-  const [state, send] = useActor(videoManagementMachine);
+  const [state, send] = useActor(generateReelMachine);
   const [quote, setQuote] = useState("");
 
-  console.log(state.value);
+  //console.log(state.value);
   // console.log(state.context.generateReelOutput);
 
   return (

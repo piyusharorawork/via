@@ -8,8 +8,6 @@ import {
   RemoveVideoOutput,
   ViewVideoInput,
   ViewVideoOutput,
-  GenerateReelInput,
-  GenerateReelOutput,
 } from "@via/core/video-manager";
 
 export const getVideoManagementMachine = (fetch: any) => {
@@ -29,7 +27,6 @@ export const getVideoManagementMachine = (fetch: any) => {
         originalVideos: ListVideosOutput;
         errorMessage: string | null;
         videoDetails: ViewVideoOutput | null;
-        generateReelOutput: GenerateReelOutput | null;
       },
       events: {} as  // All the events invoked by user
         | { type: "LOAD_VIDEOS_PAGE" }
@@ -38,11 +35,7 @@ export const getVideoManagementMachine = (fetch: any) => {
         | { type: "CLICK_ADD_VIDEO"; input: AddVideoInput }
         | { type: "CLICK_VIDEO_ROW"; input: ViewVideoInput }
         | { type: "CLICK_DELETE_VIDEO"; input: ViewVideoInput }
-        | { type: "SEARCH_VIDEO"; keyword: string }
-        | { type: "GENERATE_REEL"; input: GenerateReelInput }
-        | { type: "CLOSE_RENDER_MODAL" }
-        | { type: "EXPORT_VIDEO" }
-        | { type: "CANCEL_EXPORT" },
+        | { type: "SEARCH_VIDEO"; keyword: string },
     },
     actors: {
       // All the async services
@@ -64,12 +57,6 @@ export const getVideoManagementMachine = (fetch: any) => {
         async ({ input }) => {
           const video = await trpc.removeVideo.mutate(input);
           return video;
-        }
-      ),
-      generateReel: fromPromise<GenerateReelOutput, GenerateReelInput>(
-        async ({ input }) => {
-          const res = await trpc.generateVideo.query(input);
-          return res;
         }
       ),
     },
@@ -95,7 +82,6 @@ export const getVideoManagementMachine = (fetch: any) => {
       originalVideos: [], // Synced from backend
       videoDetails: null, // single video with more info to show
       errorMessage: null, // any error message when something went wrong
-      generateReelOutput: null,
     },
     initial: "IDLE",
     states: {
@@ -106,48 +92,9 @@ export const getVideoManagementMachine = (fetch: any) => {
           CLICK_VIDEO_ROW: "LOADING_VIDEO_DETAILS",
           CLICK_DELETE_VIDEO: "DELETING_VIDEO",
           SEARCH_VIDEO: "SEARCHING_VIDEO",
-          GENERATE_REEL: "GENERATING_REEL",
-        },
-      },
-      GENERATING_REEL: {
-        invoke: {
-          src: "generateReel",
-          input: (data: any) => data.event.input,
-          onDone: {
-            target: "RENDER_VIDEO_MODAL",
-            actions: assign({
-              generateReelOutput: (data: any) => data.event.output,
-              errorMessage: null,
-            }),
-          },
-          onError: "MAKING_VIDEOS_FAILED",
         },
       },
 
-      RENDER_VIDEO_MODAL: {
-        on: {
-          EXPORT_VIDEO: {
-            target: "EXPORT_MODAL_OPENED",
-          },
-          CLOSE_RENDER_MODAL: {
-            actions: assign({ generateReelOutput: null }),
-            target: "IDLE",
-          },
-        },
-      },
-      EXPORT_MODAL_OPENED: {
-        on: {
-          CANCEL_EXPORT: {
-            target: "RENDER_VIDEO_MODAL",
-          },
-        },
-      },
-      MAKING_VIDEOS_FAILED: {
-        entry: assign({ errorMessage: (data: any) => data.event.error }),
-        after: {
-          10: "IDLE",
-        },
-      },
       GETTING_VIDEOS: {
         invoke: {
           src: "listVideos",

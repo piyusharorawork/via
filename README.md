@@ -24,6 +24,9 @@
 - ability to move the text around
 - ability to scale the text
 - ability to change the font of the text
+- fix fps round off
+- progress on adding video
+- multiple videos add batching
 
 ## Immendiate Next Steps
 
