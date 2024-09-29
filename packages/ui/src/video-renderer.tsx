@@ -15,6 +15,8 @@ type RenderSceneProps = {
   fps: number;
   videoURL: string;
   quote: string;
+  width: number;
+  height: number;
   onFinish: (videoURL: string) => void;
   onProgress: (amount: number) => void;
 };
@@ -58,6 +60,8 @@ const RenderScene = (props: RenderSceneProps) => {
         frame={frame}
         fps={props.fps}
         videoURL={props.videoURL}
+        height={props.height}
+        width={props.width}
       />
     </>
   );

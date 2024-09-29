@@ -1,5 +1,6 @@
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile, toBlobURL } from "@ffmpeg/util";
+import { useEffect } from "react";
 
 export const utils = {
   sleep: (ms: number) => {
@@ -82,5 +83,11 @@ export const utils = {
     const videoBlob = new Blob([data.buffer], { type: "video/mp4" });
     const videoUrl = URL.createObjectURL(videoBlob);
     return videoUrl;
+  },
+
+  executeOnce: (callback: () => void) => {
+    useEffect(() => {
+      callback();
+    }, []);
   },
 };

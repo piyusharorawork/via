@@ -27,10 +27,11 @@
 - fix fps round off
 - progress on adding video
 - multiple videos add batching
+- video preview stopped when we scroll the video
+- Directly allow to download video
 
 ## Immendiate Next Steps
 
-- Create Generate Video State Machine and remove it from video management machine
 - Fix Cancel Export
 - Write all pngs in a folder in ffmpeg and clean it once done
 

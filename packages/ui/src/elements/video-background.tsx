@@ -1,30 +1,38 @@
-import { useVideoTexture } from "@react-three/drei";
-import { useEffect } from "react";
+import { useState } from "react";
+import { VideoTexture } from "three";
+import { utils } from "../utils";
 
 type Props = {
   frame: number;
   fps: number;
   videoURL: string;
+  width: number;
+  height: number;
 };
 
 export const VideoBackground = (props: Props) => {
-  const videoTexture = useVideoTexture(props.videoURL);
-  const videoElement: HTMLVideoElement = videoTexture.source.data;
-  if (!videoElement) {
-    return;
-  }
-  videoElement.pause();
+  const [videoTexture, setVideoTexture] = useState<VideoTexture>();
 
-  useEffect(() => {
-    const videoElement: HTMLVideoElement = videoTexture.source.data;
-    if (!videoElement) {
-      return;
-    }
+  utils.executeOnce(() => {
+    const videoElement = document.createElement("video");
+    videoElement.setAttribute("width", props.width.toString());
+    videoElement.setAttribute("height", props.height.toString());
 
+    const sourceElement = document.createElement("source");
+    sourceElement.setAttribute("src", props.videoURL);
+    videoElement.setAttribute("crossorigin", "anonymous");
+
+    videoElement.appendChild(sourceElement);
+
+    const vt = new VideoTexture(videoElement);
+    vt.source.data.pause();
+    setVideoTexture(vt);
+  });
+
+  if (videoTexture) {
     const timeToMove = props.frame / props.fps;
-
-    videoElement.currentTime = timeToMove;
-  }, [props.frame]);
+    videoTexture.source.data.currentTime = timeToMove;
+  }
 
   return (
     <mesh>

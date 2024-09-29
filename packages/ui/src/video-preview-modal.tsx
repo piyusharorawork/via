@@ -1,53 +1,36 @@
-import { ExportVideoModal } from "./export-video-modal";
 import { VideoEditor } from "./video-editor";
 import classNames from "classnames";
 
 type Props = {
-  open: boolean;
   width: number;
   height: number;
   videoURL: string;
-  text: string;
-  fps: string;
+  fps: number;
   frames: number;
-  openExportModal: boolean;
   quote: string;
   onExport: () => void;
   onClose: () => void;
-  onExportCancel: () => void;
 };
 
-export const VideoRenderModal = (props: Props) => {
-  const fpsInt = eval(props.fps);
-
+export const VideoPreviewModal = (props: Props) => {
   return (
-    <dialog className={classNames("modal", { "modal modal-open": props.open })}>
+    <dialog className={classNames("modal modal-open")}>
       <div className="modal-box">
         <h3 className="font-bold text-lg my-2">Preview</h3>
-        <ExportVideoModal
-          open={props.openExportModal}
-          fps={fpsInt}
-          frames={props.frames}
-          height={props.height}
-          width={props.width}
-          videoURL={props.videoURL}
-          quote={props.quote}
-          onCancel={() => props.onExportCancel()}
-        />
 
         <div className="flex justify-center">
           <div className="mockup-phone">
             <div className="camera"></div>
             <div className="display">
               <div className="artboard artboard-demo phone-1">
-                {!props.openExportModal && (
-                  <VideoEditor
-                    height={props.height}
-                    width={props.width}
-                    videoURL={props.videoURL}
-                    text={props.text}
-                  />
-                )}
+                <VideoEditor
+                  height={props.height}
+                  width={props.width}
+                  videoURL={props.videoURL}
+                  text={props.quote}
+                  fps={props.fps}
+                  frames={props.frames}
+                />
               </div>
             </div>
           </div>

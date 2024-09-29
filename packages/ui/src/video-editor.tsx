@@ -1,41 +1,36 @@
-import { Canvas } from "@react-three/fiber";
-import { useRef } from "react";
+import { Canvas, invalidate, useFrame } from "@react-three/fiber";
+import { useEffect, useRef, useState } from "react";
 import { Text, useVideoTexture } from "@react-three/drei";
-
-type VideoBackgroundProps = {
-  videoURL: string;
-};
-
-const VideoBackground = (props: VideoBackgroundProps) => {
-  const videoTexture = useVideoTexture(props.videoURL);
-
-  return (
-    <mesh>
-      <planeGeometry attach="geometry" args={[4.3, 7.7]} />
-      <meshBasicMaterial attach="material" map={videoTexture} />
-    </mesh>
-  );
-};
+import { Title } from "./elements/title";
+import { VideoBackground } from "./elements/video-background";
 
 type EditorSceneProps = {
   canvasRef: React.RefObject<HTMLCanvasElement>;
   videoURL: string;
   text: string;
+  fps: number;
+  frames: number;
+  width: number;
+  height: number;
 };
 
 const EditorScene = (props: EditorSceneProps) => {
+  const [frame, setFrame] = useState(0);
+
+  useFrame(({}) => {
+    setFrame(() => (frame + 1) % props.frames);
+  });
+
   return (
     <>
-      <Text
-        position={[0, 3, 0]}
-        fontSize={1}
-        color="white"
-        anchorX="center"
-        anchorY="middle"
-      >
-        {props.text}
-      </Text>
-      <VideoBackground videoURL={props.videoURL} />
+      <Title text={props.text} />
+      <VideoBackground
+        fps={props.fps}
+        frame={frame}
+        videoURL={props.videoURL}
+        width={props.width}
+        height={props.height}
+      />
     </>
   );
 };
@@ -45,13 +40,31 @@ type VideoEditorProps = {
   width: number;
   height: number;
   text: string;
+  fps: number;
+  frames: number;
 };
 
 export const VideoEditor = (props: VideoEditorProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  useEffect(() => {
+    let lastTime = 0;
+    const frameTime = 1000 / props.fps;
+
+    const interval = setInterval(() => {
+      const currentTime = performance.now();
+      if (currentTime - lastTime >= frameTime / 2) {
+        invalidate();
+        lastTime = currentTime;
+      }
+    }, frameTime);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Canvas
+      frameloop="demand"
       ref={canvasRef}
       style={{ width: props.width, height: props.height }}
       gl={{ preserveDrawingBuffer: true, alpha: true }}
@@ -60,6 +73,10 @@ export const VideoEditor = (props: VideoEditorProps) => {
         canvasRef={canvasRef}
         text={props.text}
         videoURL={props.videoURL}
+        fps={props.fps}
+        frames={props.frames}
+        width={props.width}
+        height={props.height}
       />
     </Canvas>
   );

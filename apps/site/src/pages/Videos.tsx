@@ -1,11 +1,11 @@
 import { AddVideoModal } from "@via/ui/add-video-modal";
 import { NewButton } from "@via/ui/new-button";
 import { SearchInput } from "@via/ui/search-input";
-import { useEffect } from "react";
 import { VideosTable } from "@via/ui/videos-table";
 import { useActor } from "@xstate/react";
 import { getVideoManagementMachine } from "@via/machine/video-management-machine";
 import { VideoDetails } from "@via/ui/video-details";
+import { executeOnce } from "../utils.ts";
 
 const ADD_VIDEO_MODAL_ID = "add-video-modal";
 
@@ -14,9 +14,7 @@ const videoManagementMachine = getVideoManagementMachine(fetch);
 export default function Videos() {
   const [state, send] = useActor(videoManagementMachine);
 
-  useEffect(() => {
-    send({ type: "LOAD_VIDEOS_PAGE" });
-  }, []);
+  executeOnce(() => send({ type: "LOAD_VIDEOS_PAGE" }));
 
   return (
     <div className="flex h-screen">

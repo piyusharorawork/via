@@ -16,9 +16,10 @@
     "./add-video-modal": "./src/add-video-modal.tsx",
     "./video-preview": "./src/video-preview.tsx",
     "./generate-video-form": "./src/generate-video-form.tsx",
-    "./video-render-modal": "./src/video-render-modal.tsx",
+    "./video-preview-modal": "./src/video-preview-modal.tsx",
     "./video-renderer": "./src/video-renderer.tsx",
-    "./video-details": "./src/video-details.tsx"
+    "./video-details": "./src/video-details.tsx",
+    "./export-video-modal": "./src/export-video-modal.tsx"
   },
   "scripts": {
     "build": "tailwindcss -i ./src/styles.css -o ./dist/index.css",

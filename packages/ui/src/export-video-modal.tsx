@@ -8,9 +8,7 @@ type Props = {
   fps: number;
   frames: number;
   videoURL: string;
-  open: boolean;
   quote: string;
-
   onCancel: () => void;
 };
 
@@ -19,17 +17,14 @@ export const ExportVideoModal = (props: Props) => {
   const [progress, setProgress] = useState(0);
   const [url, setURL] = useState("");
 
+  // TODO Get rid of this
   useEffect(() => {
-    if (!props.open) {
-      return;
-    }
-
     // TODO here we can select the resolutions later before recording
     setRecording(true);
-  }, [props.open, progress]);
+  }, [progress]);
 
   return (
-    <dialog className={classNames("modal ", { "modal-open": props.open })}>
+    <dialog className={classNames("modal modal-open")}>
       <div className="modal-box overflow-hidden">
         <h3 className="font-bold text-lg">Exporting Video</h3>
         {recording && (
@@ -110,7 +105,7 @@ export const ExportVideoModal = (props: Props) => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M5.25 7.5A2.25 2.25 0 0 1 7.5 5.25h9a2.25 2.25 0 0 1 2.25 2.25v9a2.25 2.25 0 0 1-2.25 2.25h-9a2.25 2.25 0 0 1-2.25-2.25v-9Z"
+                  d="M6 18 18 6M6 6l12 12"
                 />
               </svg>
             </button>
