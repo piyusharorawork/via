@@ -64,3 +64,11 @@ https://www.youtube.com/watch?v=-Ag_SJc661w
 https://www.youtube.com/watch?v=JiENRbBH2D4
 https://www.youtube.com/watch?v=i2wM0KCWMRw
 https://www.youtube.com/watch?v=u6l5KUXn3JQ
+
+## Rival Platforms
+
+https://makereels.ai/en/reels/66f97902d8b56cd4d6154f91
+
+## Media Store
+
+https://www.pexels.com/search/family/
