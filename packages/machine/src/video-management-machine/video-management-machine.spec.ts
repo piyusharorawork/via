@@ -1,4 +1,4 @@
-import { describe, test, expect, vi, Assertion } from "vitest";
+import { describe, test, expect, vi, Assertion, it } from "vitest";
 import { getVideoManagementMachine } from "./video-management-machine.js";
 import {
   ActorRefFrom,
@@ -21,6 +21,24 @@ describe("video-management-machine", () => {
     expectedState: StateFrom<typeof videoManagementMachine>["value"];
     expectedContext: StateFrom<typeof videoManagementMachine>["context"];
     listVideos: () => Promise<ListVideosOutput>;
+  };
+
+  const matchState = (
+    actor: ActorRefFrom<typeof videoManagementMachine>,
+    state: StateFrom<typeof videoManagementMachine>["value"],
+    callback: (
+      context: StateFrom<typeof videoManagementMachine>["context"]
+    ) => void
+  ) => {
+    return new Promise<void>((resolve, reject) => {
+      actor.subscribe((s) => {
+        console.log(s.value); // TO log the state value
+        if (s.matches(state)) {
+          callback(s.context);
+          return resolve();
+        }
+      });
+    });
   };
 
   const scenerios: Scenerio[] = [
@@ -64,7 +82,7 @@ describe("video-management-machine", () => {
       name: "should reach ADD_VIDEO_FORM_OPENED state",
       videos: [],
       originalVideos: [],
-      eventToSend: { type: "LOAD_VIDEOS_PAGE" },
+      eventToSend: { type: "CLICK_NEW_VIDEO_BUTTON" },
       listVideos: async () => [],
       expectedState: "ADD_VIDEO_FORM_OPENED",
       expectedContext: {
@@ -77,27 +95,30 @@ describe("video-management-machine", () => {
   ];
 
   for (const scenerio of scenerios) {
-    test(scenerio.name, async () => {
-      videoManagementMachine.implementations.actors = {
-        listVideos: fromPromise<ListVideosOutput>(async () =>
-          scenerio.listVideos()
-        ),
-      };
-      const actor = createActor(videoManagementMachine, {
-        input: {
-          originalVideos: scenerio.originalVideos,
-          videos: scenerio.videos,
-        },
-      });
+    it(scenerio.name, () => {
+      return new Promise<void>((done) => {
+        videoManagementMachine.implementations.actors = {
+          listVideos: fromPromise<ListVideosOutput>(async () =>
+            scenerio.listVideos()
+          ),
+        };
+        const actor = createActor(videoManagementMachine, {
+          input: {
+            originalVideos: scenerio.originalVideos,
+            videos: scenerio.videos,
+          },
+        });
 
-      actor.subscribe((state) => {
-        if (state.matches(scenerio.expectedState)) {
-          expect(state.context).toStrictEqual(scenerio.expectedContext);
-        }
-      });
+        actor.subscribe((state) => {
+          if (state.matches(scenerio.expectedState)) {
+            expect(state.context).toStrictEqual(scenerio.expectedContext);
+            done();
+          }
+        });
 
-      actor.start();
-      actor.send(scenerio.eventToSend);
+        actor.start();
+        actor.send(scenerio.eventToSend);
+      });
     });
   }
 
