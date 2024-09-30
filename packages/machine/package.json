@@ -9,8 +9,8 @@
   },
   "exports": {
     "./video-management-machine": {
-      "types": "./src/video-management-machine.ts",
-      "default": "./dist/video-management-machine.js"
+      "types": "./src/video-management-machine/video-management-machine.ts",
+      "default": "./dist/video-management-machine/video-management-machine.js"
     },
     "./generate-reel-machine": {
       "types": "./src/generate-reel-machine.ts",
@@ -27,6 +27,7 @@
     "@trpc/client": "^10.45.2",
     "@via/core": "workspace:*",
     "@via/server": "workspace:*",
+    "@xstate/graph": "^2.0.1",
     "node-fetch": "^3.3.2",
     "xstate": "^5.15.0"
   }

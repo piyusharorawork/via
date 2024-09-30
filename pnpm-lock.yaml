@@ -300,6 +300,9 @@ importers:
       '@via/server':
         specifier: workspace:*
         version: link:../../apps/server
+      '@xstate/graph':
+        specifier: ^2.0.1
+        version: 2.0.1(xstate@5.15.0)
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
@@ -1367,6 +1370,11 @@ packages:
 
   '@vitest/utils@1.6.0':
     resolution: {integrity: sha512-21cPiuGMoMZwiOHa2i4LXkMkMkCGzA+MVFV70jRwHo95dL4x/ts5GZhML1QWuy7yfp3WzK3lRvZi3JnXTYqrBw==}
+
+  '@xstate/graph@2.0.1':
+    resolution: {integrity: sha512-WWfL97yvyVISbmetqrspd6mUn13UKoHZ+/FBSU17n+YPdMrYnKaP8UDe/HjNoZAVYsR3wuQLoitTW9cxud0DIA==}
+    peerDependencies:
+      xstate: ^5.18.2
 
   '@xstate/react@4.1.1':
     resolution: {integrity: sha512-pFp/Y+bnczfaZ0V8B4LOhx3d6Gd71YKAPbzerGqydC2nsYN/mp7RZu3q/w6/kvI2hwR/jeDeetM7xc3JFZH2NA==}
@@ -4744,6 +4752,10 @@ snapshots:
       estree-walker: 3.0.3
       loupe: 2.3.7
       pretty-format: 29.7.0
+
+  '@xstate/graph@2.0.1(xstate@5.15.0)':
+    dependencies:
+      xstate: 5.15.0
 
   '@xstate/react@4.1.1(@types/react@18.3.3)(react@18.3.1)(xstate@5.15.0)':
     dependencies:
