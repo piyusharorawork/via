@@ -9,6 +9,7 @@ import {
   ViewVideoInput,
   ViewVideoOutput,
 } from "@via/core/video-manager";
+import { i } from "vitest/dist/reporters-yx5ZTtEV.js";
 
 export const getVideoManagementMachine = (fetch: any) => {
   const trpc = createTRPCProxyClient<AppRouter>({
@@ -109,14 +110,6 @@ export const getVideoManagementMachine = (fetch: any) => {
     },
     initial: "VideosPage",
     states: {
-      IDLE: {
-        on: {
-          CLICK_NEW_VIDEO_BUTTON: "ADD_VIDEO_FORM_OPENED",
-          CLICK_VIDEO_ROW: "LOADING_VIDEO_DETAILS",
-          CLICK_DELETE_VIDEO: "DELETING_VIDEO",
-          SEARCH_VIDEO: "SEARCHING_VIDEO",
-        },
-      },
       VideosPage: {
         id: "VideosPage",
         initial: "idle",
@@ -126,6 +119,7 @@ export const getVideoManagementMachine = (fetch: any) => {
               LOAD_VIDEOS_PAGE: "loadingVideosPage",
               CLICK_NEW_VIDEO_BUTTON: "#newVideFormOpened",
               SEARCH_VIDEO: "searchingVideos",
+              CLICK_VIDEO_ROW: "loadingVideoDetails",
             },
           },
           loadingVideosPage: {
@@ -153,6 +147,26 @@ export const getVideoManagementMachine = (fetch: any) => {
               10: "idle",
             },
           },
+          loadingVideoDetails: {
+            invoke: {
+              src: "viewVideo",
+              input: (data: any) => data.event.input,
+              onDone: "loadingVideoDetailsSuccess",
+              onError: "loadingVideoDetailsFailed",
+            },
+          },
+          loadingVideoDetailsSuccess: {
+            entry: "saveVideoDetails",
+            after: {
+              10: "#VideoSelected",
+            },
+          },
+          loadingVideoDetailsFailed: {
+            entry: "saveError",
+            after: {
+              10: "idle",
+            },
+          },
         },
       },
       NewVideFormOpened: {
@@ -166,96 +180,35 @@ export const getVideoManagementMachine = (fetch: any) => {
           },
         },
       },
-
-      GETTING_VIDEOS: {
-        invoke: {
-          src: "listVideos",
-          onDone: "GETTING_VIDEOS_SUCCESS",
-          onError: "GETTING_VIDEOS_FAILED",
-        },
-      },
-      ADD_VIDEO_FORM_OPENED: {
-        on: {
-          CLICK_ADD_VIDEO: "ADDING_VIDEO",
-          CLOSE_ADD_VIDEO_FORM: "IDLE",
-        },
-      },
-      LOADING_VIDEO_DETAILS: {
-        invoke: {
-          src: "viewVideo",
-          input: (data: any) => data.event.input,
-          onDone: "VIDEO_DETAILS_SUCCESS",
-          onError: "VIDEO_DETAILS_FAILED",
-        },
-      },
-      VIDEO_DETAILS_SUCCESS: {
-        entry: "saveVideoDetails",
-        after: {
-          10: "IDLE",
-        },
-      },
-      VIDEO_DETAILS_FAILED: {
-        entry: "saveError",
-        after: {
-          10: "IDLE",
-        },
-      },
-      GETTING_VIDEOS_FAILED: {
-        entry: "saveError",
-        after: {
-          10: "IDLE",
-        },
-      },
-      GETTING_VIDEOS_SUCCESS: {
-        entry: "saveVideos",
-        after: {
-          10: "IDLE",
-        },
-      },
-      ADDING_VIDEO: {
-        invoke: {
-          src: "addVideo",
-          input: (data: any) => data.event.input,
-          onDone: "ADDING_VIDEO_SUCCESS",
-          onError: "ADDING_VIDEO_FAILED",
-        },
-      },
-      ADDING_VIDEO_SUCCESS: {
-        entry: "resetVideoDetails",
-        after: {
-          10: "GETTING_VIDEOS",
-        },
-      },
-      ADDING_VIDEO_FAILED: {
-        entry: "saveError",
-        after: {
-          10: "IDLE",
-        },
-      },
-      DELETING_VIDEO: {
-        invoke: {
-          src: "deleteVideo",
-          input: (data: any) => data.event.input,
-          onDone: "DELETING_VIDEO_SUCCESS",
-          onError: "DELETING_VIDEO_FAILED",
-        },
-      },
-      DELETING_VIDEO_SUCCESS: {
-        entry: "resetVideoDetails",
-        after: {
-          10: "GETTING_VIDEOS",
-        },
-      },
-      DELETING_VIDEO_FAILED: {
-        entry: "saveError",
-        after: {
-          10: "IDLE",
-        },
-      },
-      SEARCHING_VIDEO: {
-        entry: "updateVideosMatchingFilter",
-        after: {
-          10: "IDLE",
+      VideoSelected: {
+        id: "VideoSelected",
+        initial: "idle",
+        states: {
+          idle: {
+            on: {
+              CLICK_DELETE_VIDEO: "deletingVideo",
+            },
+          },
+          deletingVideo: {
+            invoke: {
+              src: "deleteVideo",
+              input: (data: any) => data.event.input,
+              onDone: "deletingVideoSuccess",
+              onError: "deletingVideoFailed",
+            },
+          },
+          deletingVideoSuccess: {
+            entry: "resetVideoDetails",
+            after: {
+              10: "idle",
+            },
+          },
+          deletingVideoFailed: {
+            entry: "saveError",
+            after: {
+              10: "idle",
+            },
+          },
         },
       },
     },

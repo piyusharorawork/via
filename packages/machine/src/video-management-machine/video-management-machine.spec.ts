@@ -7,7 +7,11 @@ import {
   StateFrom,
   StateValueFrom,
 } from "xstate";
-import { ListVideosOutput } from "@via/core/video-manager";
+import {
+  ListVideosOutput,
+  RemoveVideoOutput,
+  ViewVideoOutput,
+} from "@via/core/video-manager";
 
 describe("video-management-machine", () => {
   const fetchMock = vi.fn();
@@ -30,6 +34,18 @@ describe("video-management-machine", () => {
         success: boolean;
         data: void;
       };
+      viewVideoResponse:
+        | {
+            success: true;
+            data: ViewVideoOutput;
+          }
+        | { success: false; data: null };
+      deleteVideoResponse:
+        | {
+            success: true;
+            data: RemoveVideoOutput;
+          }
+        | { success: false; data: null };
     };
   };
 
@@ -37,6 +53,7 @@ describe("video-management-machine", () => {
     {
       name: "should reach VideosPage success state",
       initialState: { VideosPage: "idle" },
+      expectedState: { VideosPage: "loadingVideosPageSuccess" },
       videos: [],
       originalVideos: [],
       eventToSend: { type: "LOAD_VIDEOS_PAGE" },
@@ -51,8 +68,27 @@ describe("video-management-machine", () => {
           success: true,
           data: undefined,
         },
+        viewVideoResponse: {
+          success: true,
+          data: {
+            videoUUID: "123",
+            name: "Video 1",
+            originalURL: "https://www.youtube.com/watch?v=123",
+            descrption: "Video 1",
+            createdAt: "2023-06-01T12:00:00.000Z",
+            videoURL: "https://www.youtube.com/watch?v=123",
+            fps: "30",
+            frameCount: 100,
+            width: 100,
+            height: 100,
+          },
+        },
+        deleteVideoResponse: {
+          success: true,
+          data: { success: true },
+        },
       },
-      expectedState: { VideosPage: "loadingVideosPageSuccess" },
+
       expectedContext: {
         videos: [
           { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
@@ -67,6 +103,7 @@ describe("video-management-machine", () => {
     {
       name: "should reach loadingVideosPageFailed state",
       initialState: { VideosPage: "idle" },
+      expectedState: { VideosPage: "loadingVideosPageFailed" },
       videos: [],
       originalVideos: [],
       eventToSend: { type: "LOAD_VIDEOS_PAGE" },
@@ -79,8 +116,27 @@ describe("video-management-machine", () => {
           success: true,
           data: undefined,
         },
+        viewVideoResponse: {
+          success: true,
+          data: {
+            videoUUID: "123",
+            name: "Video 1",
+            originalURL: "https://www.youtube.com/watch?v=123",
+            descrption: "Video 1",
+            createdAt: "2023-06-01T12:00:00.000Z",
+            videoURL: "https://www.youtube.com/watch?v=123",
+            fps: "30",
+            frameCount: 100,
+            width: 100,
+            height: 100,
+          },
+        },
+        deleteVideoResponse: {
+          success: true,
+          data: { success: true },
+        },
       },
-      expectedState: { VideosPage: "loadingVideosPageFailed" },
+
       expectedContext: {
         errorMessage: "Error loading videos",
         videos: [],
@@ -91,6 +147,7 @@ describe("video-management-machine", () => {
     {
       name: "should reach searchingVideos state",
       initialState: { VideosPage: "idle" },
+      expectedState: { VideosPage: "searchingVideos" },
       videos: [
         { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
         { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
@@ -111,9 +168,27 @@ describe("video-management-machine", () => {
           success: true,
           data: undefined,
         },
+        viewVideoResponse: {
+          success: true,
+          data: {
+            videoUUID: "123",
+            name: "Video 1",
+            originalURL: "https://www.youtube.com/watch?v=123",
+            descrption: "Video 1",
+            createdAt: "2023-06-01T12:00:00.000Z",
+            videoURL: "https://www.youtube.com/watch?v=123",
+            fps: "30",
+            frameCount: 100,
+            width: 100,
+            height: 100,
+          },
+        },
+        deleteVideoResponse: {
+          success: true,
+          data: { success: true },
+        },
       },
 
-      expectedState: { VideosPage: "searchingVideos" },
       expectedContext: {
         videos: [
           { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
@@ -142,6 +217,25 @@ describe("video-management-machine", () => {
         addVideoResponse: {
           success: true,
           data: undefined,
+        },
+        viewVideoResponse: {
+          success: true,
+          data: {
+            videoUUID: "123",
+            name: "Video 1",
+            originalURL: "https://www.youtube.com/watch?v=123",
+            descrption: "Video 1",
+            createdAt: "2023-06-01T12:00:00.000Z",
+            videoURL: "https://www.youtube.com/watch?v=123",
+            fps: "30",
+            frameCount: 100,
+            width: 100,
+            height: 100,
+          },
+        },
+        deleteVideoResponse: {
+          success: true,
+          data: { success: true },
         },
       },
       expectedState: { NewVideFormOpened: "idle" },
@@ -175,6 +269,25 @@ describe("video-management-machine", () => {
           success: true,
           data: undefined,
         },
+        viewVideoResponse: {
+          success: true,
+          data: {
+            videoUUID: "123",
+            name: "Video 1",
+            originalURL: "https://www.youtube.com/watch?v=123",
+            descrption: "Video 1",
+            createdAt: "2023-06-01T12:00:00.000Z",
+            videoURL: "https://www.youtube.com/watch?v=123",
+            fps: "30",
+            frameCount: 100,
+            width: 100,
+            height: 100,
+          },
+        },
+        deleteVideoResponse: {
+          success: true,
+          data: { success: true },
+        },
       },
 
       expectedState: { VideosPage: "searchingVideos" },
@@ -204,6 +317,25 @@ describe("video-management-machine", () => {
           success: true,
           data: undefined,
         },
+        viewVideoResponse: {
+          success: true,
+          data: {
+            videoUUID: "123",
+            name: "Video 1",
+            originalURL: "https://www.youtube.com/watch?v=123",
+            descrption: "Video 1",
+            createdAt: "2023-06-01T12:00:00.000Z",
+            videoURL: "https://www.youtube.com/watch?v=123",
+            fps: "30",
+            frameCount: 100,
+            width: 100,
+            height: 100,
+          },
+        },
+        deleteVideoResponse: {
+          success: true,
+          data: { success: true },
+        },
       },
       expectedState: { VideosPage: "idle" },
       expectedContext: {
@@ -211,6 +343,246 @@ describe("video-management-machine", () => {
         videos: [],
         originalVideos: [],
         videoDetails: null,
+      },
+    },
+    {
+      name: "should reach video details success state when clicked on video row",
+      initialState: { VideosPage: "idle" },
+      expectedState: { VideoSelected: "idle" },
+      videos: [
+        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+        { id: 3, description: "Video", name: "Video", uuid: "789" },
+      ],
+      originalVideos: [
+        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+        { id: 3, description: "Videos", name: "Video", uuid: "789" },
+      ],
+      eventToSend: { type: "CLICK_VIDEO_ROW", input: { videoUUID: "123" } },
+      actors: {
+        listVideosResponse: {
+          success: true,
+          data: [],
+        },
+        addVideoResponse: {
+          success: true,
+          data: undefined,
+        },
+        viewVideoResponse: {
+          success: true,
+          data: {
+            videoUUID: "123",
+            name: "Video 1",
+            originalURL: "https://www.youtube.com/watch?v=123",
+            descrption: "Video 1",
+            createdAt: "2023-06-01T12:00:00.000Z",
+            videoURL: "https://www.youtube.com/watch?v=123",
+            fps: "30",
+            frameCount: 100,
+            width: 100,
+            height: 100,
+          },
+        },
+        deleteVideoResponse: {
+          success: true,
+          data: { success: true },
+        },
+      },
+
+      expectedContext: {
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: {
+          videoUUID: "123",
+          name: "Video 1",
+          originalURL: "https://www.youtube.com/watch?v=123",
+          descrption: "Video 1",
+          createdAt: "2023-06-01T12:00:00.000Z",
+          videoURL: "https://www.youtube.com/watch?v=123",
+          fps: "30",
+          frameCount: 100,
+          width: 100,
+          height: 100,
+        },
+        errorMessage: null,
+      },
+    },
+    {
+      name: "should reach video details failed state when clicked on video row",
+      initialState: { VideosPage: "idle" },
+      expectedState: { VideosPage: "loadingVideoDetailsFailed" },
+      videos: [
+        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+        { id: 3, description: "Video", name: "Video", uuid: "789" },
+      ],
+      originalVideos: [
+        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+        { id: 3, description: "Videos", name: "Video", uuid: "789" },
+      ],
+      eventToSend: { type: "CLICK_VIDEO_ROW", input: { videoUUID: "123" } },
+      actors: {
+        listVideosResponse: {
+          success: true,
+          data: [],
+        },
+        addVideoResponse: {
+          success: true,
+          data: undefined,
+        },
+        viewVideoResponse: {
+          success: false,
+          data: null,
+        },
+        deleteVideoResponse: {
+          success: true,
+          data: { success: true },
+        },
+      },
+
+      expectedContext: {
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+        errorMessage: "Error loading video details",
+      },
+    },
+    {
+      name: "should reach deleting video success state when clicked on delete video row",
+      initialState: { VideoSelected: "idle" },
+      expectedState: { VideoSelected: "deletingVideoSuccess" },
+      videos: [
+        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+        { id: 3, description: "Video", name: "Video", uuid: "789" },
+      ],
+      originalVideos: [
+        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+        { id: 3, description: "Videos", name: "Video", uuid: "789" },
+      ],
+      eventToSend: { type: "CLICK_DELETE_VIDEO", input: { videoUUID: "123" } },
+      actors: {
+        listVideosResponse: {
+          success: true,
+          data: [],
+        },
+        addVideoResponse: {
+          success: true,
+          data: undefined,
+        },
+        viewVideoResponse: {
+          success: true,
+          data: {
+            videoUUID: "123",
+            name: "Video 1",
+            originalURL: "https://www.youtube.com/watch?v=123",
+            descrption: "Video 1",
+            createdAt: "2023-06-01T12:00:00.000Z",
+            videoURL: "https://www.youtube.com/watch?v=123",
+            fps: "30",
+            frameCount: 100,
+            width: 100,
+            height: 100,
+          },
+        },
+        deleteVideoResponse: {
+          success: true,
+          data: { success: true },
+        },
+      },
+
+      expectedContext: {
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+        errorMessage: null,
+      },
+    },
+    {
+      name: "should reach deleting video failed state when clicked on delete video row",
+      initialState: { VideoSelected: "idle" },
+      expectedState: { VideoSelected: "deletingVideoFailed" },
+      videos: [
+        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+        { id: 3, description: "Video", name: "Video", uuid: "789" },
+      ],
+      originalVideos: [
+        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+        { id: 3, description: "Videos", name: "Video", uuid: "789" },
+      ],
+      eventToSend: { type: "CLICK_DELETE_VIDEO", input: { videoUUID: "123" } },
+      actors: {
+        listVideosResponse: {
+          success: true,
+          data: [],
+        },
+        addVideoResponse: {
+          success: true,
+          data: undefined,
+        },
+        viewVideoResponse: {
+          success: true,
+          data: {
+            videoUUID: "123",
+            name: "Video 1",
+            originalURL: "https://www.youtube.com/watch?v=123",
+            descrption: "Video 1",
+            createdAt: "2023-06-01T12:00:00.000Z",
+            videoURL: "https://www.youtube.com/watch?v=123",
+            fps: "30",
+            frameCount: 100,
+            width: 100,
+            height: 100,
+          },
+        },
+        deleteVideoResponse: {
+          success: false,
+          data: null,
+        },
+      },
+
+      expectedContext: {
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+        errorMessage: "Error deleting video",
       },
     },
   ];
@@ -230,6 +602,18 @@ describe("video-management-machine", () => {
               throw new Error("Error adding video");
             }
             return scenerio.actors.addVideoResponse.data;
+          }),
+          viewVideo: fromPromise<ViewVideoOutput>(async () => {
+            if (!scenerio.actors.viewVideoResponse.success) {
+              throw new Error("Error loading video details");
+            }
+            return scenerio.actors.viewVideoResponse.data;
+          }),
+          deleteVideo: fromPromise<RemoveVideoOutput>(async () => {
+            if (!scenerio.actors.deleteVideoResponse.success) {
+              throw new Error("Error deleting video");
+            }
+            return scenerio.actors.deleteVideoResponse.data;
           }),
         };
 
@@ -252,7 +636,6 @@ describe("video-management-machine", () => {
         });
 
         actor.subscribe((state) => {
-          //   console.log(state.value);
           if (state.matches(scenerio.expectedState)) {
             expect(state.context).toStrictEqual(scenerio.expectedContext);
             done();
