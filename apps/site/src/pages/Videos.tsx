@@ -12,7 +12,9 @@ const ADD_VIDEO_MODAL_ID = "add-video-modal";
 const videoManagementMachine = getVideoManagementMachine(fetch);
 
 export default function Videos() {
-  const [state, send] = useActor(videoManagementMachine);
+  const [state, send] = useActor(videoManagementMachine, {
+    input: { originalVideos: [], videos: [] },
+  });
 
   executeOnce(() => send({ type: "LOAD_VIDEOS_PAGE" }));
 

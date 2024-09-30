@@ -21,6 +21,7 @@ describe("video-management-machine", () => {
     expectedState: StateFrom<typeof videoManagementMachine>["value"];
     expectedContext: StateFrom<typeof videoManagementMachine>["context"];
     listVideos: () => Promise<ListVideosOutput>;
+    addVideo: () => Promise<void>;
   };
 
   const matchState = (
@@ -41,6 +42,9 @@ describe("video-management-machine", () => {
     });
   };
 
+  // TODO ADDING_VIDEO_SUCCESS , ADDING_VIDEO_FAILED , DELETING_VIDEO_SUCCESS , DELETING_VIDEO_FAILED, VIDEO_DETAILS_SUCCESS, VIDEO_DETAILS_FAILED
+  // Need to create child machines
+
   const scenerios: Scenerio[] = [
     {
       name: "should reach GETTING_VIDEOS_SUCCESS state",
@@ -50,6 +54,7 @@ describe("video-management-machine", () => {
       listVideos: async () => [
         { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
       ],
+      addVideo: async () => {},
       expectedState: "GETTING_VIDEOS_SUCCESS",
       expectedContext: {
         videos: [
@@ -70,6 +75,7 @@ describe("video-management-machine", () => {
       listVideos: async () => {
         throw new Error("Error loading videos");
       },
+      addVideo: async () => {},
       expectedState: "GETTING_VIDEOS_FAILED",
       expectedContext: {
         errorMessage: "Error loading videos",
@@ -84,12 +90,70 @@ describe("video-management-machine", () => {
       originalVideos: [],
       eventToSend: { type: "CLICK_NEW_VIDEO_BUTTON" },
       listVideos: async () => [],
+      addVideo: async () => {},
       expectedState: "ADD_VIDEO_FORM_OPENED",
       expectedContext: {
         errorMessage: null,
         videos: [],
         originalVideos: [],
         videoDetails: null,
+      },
+    },
+    {
+      name: "should reach SEARCHING_VIDEO state",
+      videos: [
+        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+        { id: 3, description: "Video", name: "Video", uuid: "789" },
+      ],
+      originalVideos: [
+        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+        { id: 3, description: "Videos", name: "Video", uuid: "789" },
+      ],
+      eventToSend: { type: "SEARCH_VIDEO", keyword: "Video " },
+      listVideos: async () => [],
+      addVideo: async () => {},
+      expectedState: "SEARCHING_VIDEO",
+      expectedContext: {
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+        errorMessage: null,
+      },
+    },
+    {
+      name: "should reach SEARCHING_VIDEO state with no results",
+      videos: [
+        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+        { id: 3, description: "Video", name: "Video", uuid: "789" },
+      ],
+      originalVideos: [
+        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+        { id: 3, description: "Videos", name: "Video", uuid: "789" },
+      ],
+      eventToSend: { type: "SEARCH_VIDEO", keyword: "Video 4" },
+      listVideos: async () => [],
+      addVideo: async () => {},
+      expectedState: "SEARCHING_VIDEO",
+      expectedContext: {
+        videos: [],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+        errorMessage: null,
       },
     },
   ];
@@ -101,6 +165,7 @@ describe("video-management-machine", () => {
           listVideos: fromPromise<ListVideosOutput>(async () =>
             scenerio.listVideos()
           ),
+          addVideo: fromPromise<void>(async () => scenerio.addVideo()),
         };
         const actor = createActor(videoManagementMachine, {
           input: {
