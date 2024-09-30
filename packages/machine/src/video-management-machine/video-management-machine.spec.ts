@@ -22,8 +22,14 @@ describe("video-management-machine", () => {
     expectedState: StateValueFrom<typeof videoManagementMachine>;
     expectedContext: StateFrom<typeof videoManagementMachine>["context"];
     actors: {
-      listVideos: () => Promise<ListVideosOutput>;
-      addVideo: () => Promise<void>;
+      listVideosResponse: {
+        success: boolean;
+        data: ListVideosOutput;
+      };
+      addVideoResponse: {
+        success: boolean;
+        data: void;
+      };
     };
   };
 
@@ -34,10 +40,16 @@ describe("video-management-machine", () => {
       originalVideos: [],
       eventToSend: { type: "LOAD_VIDEOS_PAGE" },
       actors: {
-        listVideos: async () => [
-          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        ],
-        addVideo: async () => {},
+        listVideosResponse: {
+          success: true,
+          data: [
+            { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          ],
+        },
+        addVideoResponse: {
+          success: true,
+          data: undefined,
+        },
       },
       expectedState: { VideosPage: "loadingVideosPageSuccess" },
       expectedContext: {
@@ -57,12 +69,15 @@ describe("video-management-machine", () => {
       originalVideos: [],
       eventToSend: { type: "LOAD_VIDEOS_PAGE" },
       actors: {
-        listVideos: async () => {
-          throw new Error("Error loading videos");
+        listVideosResponse: {
+          success: false,
+          data: [],
         },
-        addVideo: async () => {},
+        addVideoResponse: {
+          success: true,
+          data: undefined,
+        },
       },
-
       expectedState: { VideosPage: "loadingVideosPageFailed" },
       expectedContext: {
         errorMessage: "Error loading videos",
@@ -84,7 +99,16 @@ describe("video-management-machine", () => {
         { id: 3, description: "Videos", name: "Video", uuid: "789" },
       ],
       eventToSend: { type: "SEARCH_VIDEO", keyword: "Video " },
-      actors: { listVideos: async () => [], addVideo: async () => {} },
+      actors: {
+        listVideosResponse: {
+          success: true,
+          data: [],
+        },
+        addVideoResponse: {
+          success: true,
+          data: undefined,
+        },
+      },
 
       expectedState: { VideosPage: "searchingVideos" },
       expectedContext: {
@@ -107,10 +131,15 @@ describe("video-management-machine", () => {
       originalVideos: [],
       eventToSend: { type: "CLICK_NEW_VIDEO_BUTTON" },
       actors: {
-        listVideos: async () => [],
-        addVideo: async () => {},
+        listVideosResponse: {
+          success: true,
+          data: [],
+        },
+        addVideoResponse: {
+          success: true,
+          data: undefined,
+        },
       },
-
       expectedState: { NewVideFormOpened: "idle" },
       expectedContext: {
         errorMessage: null,
@@ -133,8 +162,14 @@ describe("video-management-machine", () => {
       ],
       eventToSend: { type: "SEARCH_VIDEO", keyword: "Video 4" },
       actors: {
-        listVideos: async () => [],
-        addVideo: async () => {},
+        listVideosResponse: {
+          success: true,
+          data: [],
+        },
+        addVideoResponse: {
+          success: true,
+          data: undefined,
+        },
       },
 
       expectedState: { VideosPage: "searchingVideos" },
@@ -155,10 +190,18 @@ describe("video-management-machine", () => {
     it(scenerio.name, () => {
       return new Promise<void>((done) => {
         videoManagementMachine.implementations.actors = {
-          listVideos: fromPromise<ListVideosOutput>(async () =>
-            scenerio.actors.listVideos()
-          ),
-          addVideo: fromPromise<void>(async () => scenerio.actors.addVideo()),
+          listVideos: fromPromise<ListVideosOutput>(async () => {
+            if (!scenerio.actors.listVideosResponse.success) {
+              throw new Error("Error loading videos");
+            }
+            return scenerio.actors.listVideosResponse.data;
+          }),
+          addVideo: fromPromise<void>(async () => {
+            if (!scenerio.actors.addVideoResponse.success) {
+              throw new Error("Error adding video");
+            }
+            return scenerio.actors.addVideoResponse.data;
+          }),
         };
         const actor = createActor(videoManagementMachine, {
           input: {
