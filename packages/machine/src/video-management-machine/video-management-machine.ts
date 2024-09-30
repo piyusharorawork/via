@@ -107,15 +107,59 @@ export const getVideoManagementMachine = (fetch: any) => {
         errorMessage: null, // any error message when something went wrong
       };
     },
-    initial: "IDLE",
+    initial: "VideosPage",
     states: {
       IDLE: {
         on: {
-          LOAD_VIDEOS_PAGE: "GETTING_VIDEOS",
           CLICK_NEW_VIDEO_BUTTON: "ADD_VIDEO_FORM_OPENED",
           CLICK_VIDEO_ROW: "LOADING_VIDEO_DETAILS",
           CLICK_DELETE_VIDEO: "DELETING_VIDEO",
           SEARCH_VIDEO: "SEARCHING_VIDEO",
+        },
+      },
+      VideosPage: {
+        id: "VideosPage",
+        initial: "idle",
+        states: {
+          idle: {
+            on: {
+              LOAD_VIDEOS_PAGE: "loadingVideosPage",
+              CLICK_NEW_VIDEO_BUTTON: "#newVideFormOpened",
+              SEARCH_VIDEO: "searchingVideos",
+            },
+          },
+          loadingVideosPage: {
+            invoke: {
+              src: "listVideos",
+              onDone: "loadingVideosPageSuccess",
+              onError: "loadingVideosPageFailed",
+            },
+          },
+          loadingVideosPageSuccess: {
+            entry: "saveVideos",
+            after: {
+              10: "idle",
+            },
+          },
+          loadingVideosPageFailed: {
+            entry: "saveError",
+            after: {
+              10: "idle",
+            },
+          },
+          searchingVideos: {
+            entry: "updateVideosMatchingFilter",
+            after: {
+              10: "idle",
+            },
+          },
+        },
+      },
+      NewVideFormOpened: {
+        id: "newVideFormOpened",
+        initial: "idle",
+        states: {
+          idle: {},
         },
       },
 
