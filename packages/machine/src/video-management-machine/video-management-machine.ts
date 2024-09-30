@@ -159,7 +159,11 @@ export const getVideoManagementMachine = (fetch: any) => {
         id: "newVideFormOpened",
         initial: "idle",
         states: {
-          idle: {},
+          idle: {
+            on: {
+              CLOSE_ADD_VIDEO_FORM: "#VideosPage",
+            },
+          },
         },
       },
 

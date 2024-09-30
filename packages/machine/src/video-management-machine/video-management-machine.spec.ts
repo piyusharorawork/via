@@ -1,14 +1,13 @@
-import { describe, test, expect, vi, Assertion, it } from "vitest";
+import { describe, expect, vi, it } from "vitest";
 import { getVideoManagementMachine } from "./video-management-machine.js";
 import {
-  ActorRefFrom,
   createActor,
   EventFrom,
   fromPromise,
   StateFrom,
   StateValueFrom,
 } from "xstate";
-import { AddVideoInput, ListVideosOutput } from "@via/core/video-manager";
+import { ListVideosOutput } from "@via/core/video-manager";
 
 describe("video-management-machine", () => {
   const fetchMock = vi.fn();
@@ -16,10 +15,11 @@ describe("video-management-machine", () => {
 
   type Scenerio = {
     name: string;
+    initialState: StateValueFrom<typeof videoManagementMachine>;
+    expectedState: StateValueFrom<typeof videoManagementMachine>;
     videos: ListVideosOutput;
     originalVideos: ListVideosOutput;
     eventToSend: EventFrom<typeof videoManagementMachine>;
-    expectedState: StateValueFrom<typeof videoManagementMachine>;
     expectedContext: StateFrom<typeof videoManagementMachine>["context"];
     actors: {
       listVideosResponse: {
@@ -36,6 +36,7 @@ describe("video-management-machine", () => {
   const scenerios: Scenerio[] = [
     {
       name: "should reach VideosPage success state",
+      initialState: { VideosPage: "idle" },
       videos: [],
       originalVideos: [],
       eventToSend: { type: "LOAD_VIDEOS_PAGE" },
@@ -65,6 +66,7 @@ describe("video-management-machine", () => {
     },
     {
       name: "should reach loadingVideosPageFailed state",
+      initialState: { VideosPage: "idle" },
       videos: [],
       originalVideos: [],
       eventToSend: { type: "LOAD_VIDEOS_PAGE" },
@@ -88,6 +90,7 @@ describe("video-management-machine", () => {
     },
     {
       name: "should reach searchingVideos state",
+      initialState: { VideosPage: "idle" },
       videos: [
         { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
         { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
@@ -127,6 +130,7 @@ describe("video-management-machine", () => {
     },
     {
       name: "should reach NewVideFormOpened state",
+      initialState: { VideosPage: "idle" },
       videos: [],
       originalVideos: [],
       eventToSend: { type: "CLICK_NEW_VIDEO_BUTTON" },
@@ -150,6 +154,7 @@ describe("video-management-machine", () => {
     },
     {
       name: "should reach searchingVideos state with no results",
+      initialState: { VideosPage: "idle" },
       videos: [
         { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
         { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
@@ -184,6 +189,30 @@ describe("video-management-machine", () => {
         errorMessage: null,
       },
     },
+    {
+      name: "should reach videos page idle when new form closed",
+      initialState: { NewVideFormOpened: "idle" },
+      videos: [],
+      originalVideos: [],
+      eventToSend: { type: "CLOSE_ADD_VIDEO_FORM" },
+      actors: {
+        listVideosResponse: {
+          success: true,
+          data: [],
+        },
+        addVideoResponse: {
+          success: true,
+          data: undefined,
+        },
+      },
+      expectedState: { VideosPage: "idle" },
+      expectedContext: {
+        errorMessage: null,
+        videos: [],
+        originalVideos: [],
+        videoDetails: null,
+      },
+    },
   ];
 
   for (const scenerio of scenerios) {
@@ -203,11 +232,23 @@ describe("video-management-machine", () => {
             return scenerio.actors.addVideoResponse.data;
           }),
         };
+
+        const initialState = videoManagementMachine.resolveState({
+          value: scenerio.initialState,
+          context: {
+            originalVideos: scenerio.originalVideos,
+            videos: scenerio.videos,
+            errorMessage: null,
+            videoDetails: null,
+          },
+        });
+
         const actor = createActor(videoManagementMachine, {
           input: {
             originalVideos: scenerio.originalVideos,
             videos: scenerio.videos,
           },
+          snapshot: initialState,
         });
 
         actor.subscribe((state) => {
