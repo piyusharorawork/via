@@ -16,6 +16,8 @@ export default function Videos() {
     input: { originalVideos: [], videos: [] },
   });
 
+  console.log(state.value);
+
   executeOnce(() => send({ type: "LOAD_VIDEOS_PAGE" }));
 
   return (
@@ -27,19 +29,16 @@ export default function Videos() {
           />
           <NewButton onClick={() => send({ type: "CLICK_NEW_VIDEO_BUTTON" })} />
           <AddVideoModal
-            open={
-              state.matches("ADD_VIDEO_FORM_OPENED") ||
-              state.matches("ADDING_VIDEO")
-            }
+            open={state.matches("NewVideoFormOpened")}
             onClose={() => send({ type: "CLOSE_ADD_VIDEO_FORM" })}
             id={ADD_VIDEO_MODAL_ID}
-            showLoader={state.matches("ADDING_VIDEO")}
+            showLoader={state.matches({ NewVideoFormOpened: "addingVideo" })}
             onAddClick={(input) => send({ type: "CLICK_ADD_VIDEO", input })}
           />
         </header>
 
         <main className="flex-grow ">
-          {state.matches("GETTING_VIDEOS") && (
+          {state.matches({ VideosPage: "loadingVideosPage" }) && (
             <div className="w-full flex justify-center">
               <span className="loading loading-dots loading-lg"></span>
             </div>
@@ -63,7 +62,8 @@ export default function Videos() {
               <span>Something went wrong</span>
             </div>
           )}
-          {state.matches("IDLE") && (
+          {/* TODO fix this hack */}
+          {(state.matches("VideosPage") || state.matches("VideoSelected")) && (
             <VideosTable
               videos={state.context.videos}
               onVideoRowClick={(videoId) => {
@@ -78,31 +78,32 @@ export default function Videos() {
       </section>
 
       <section className="flex-grow">
-        {state.matches("LOADING_VIDEO_DETAILS") && (
+        {state.matches({ VideosPage: "loadingVideoDetails" }) && (
           <div className="w-full flex justify-center items-center">
             <span className="loading loading-dots loading-lg"></span>
           </div>
         )}
 
-        {state.matches("IDLE") && state.context.videoDetails != null && (
-          <VideoDetails
-            videoDescription={state.context.videoDetails.descrption}
-            videoName={state.context.videoDetails.name}
-            videoURL={state.context.videoDetails.videoURL}
-            fps={state.context.videoDetails.fps}
-            frameCount={state.context.videoDetails.frameCount}
-            height={state.context.videoDetails.height}
-            width={state.context.videoDetails.width}
-            onDelete={() => {
-              send({
-                type: "CLICK_DELETE_VIDEO",
-                input: {
-                  videoUUID: state.context.videoDetails!.videoUUID,
-                },
-              });
-            }}
-          />
-        )}
+        {state.matches("VideoSelected") &&
+          state.context.videoDetails != null && (
+            <VideoDetails
+              videoDescription={state.context.videoDetails.descrption}
+              videoName={state.context.videoDetails.name}
+              videoURL={state.context.videoDetails.videoURL}
+              fps={state.context.videoDetails.fps}
+              frameCount={state.context.videoDetails.frameCount}
+              height={state.context.videoDetails.height}
+              width={state.context.videoDetails.width}
+              onDelete={() => {
+                send({
+                  type: "CLICK_DELETE_VIDEO",
+                  input: {
+                    videoUUID: state.context.videoDetails!.videoUUID,
+                  },
+                });
+              }}
+            />
+          )}
       </section>
     </div>
   );

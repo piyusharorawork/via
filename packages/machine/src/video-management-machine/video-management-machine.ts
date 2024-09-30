@@ -9,7 +9,6 @@ import {
   ViewVideoInput,
   ViewVideoOutput,
 } from "@via/core/video-manager";
-import { i } from "vitest/dist/reporters-yx5ZTtEV.js";
 
 export const getVideoManagementMachine = (fetch: any) => {
   const trpc = createTRPCProxyClient<AppRouter>({
@@ -46,7 +45,7 @@ export const getVideoManagementMachine = (fetch: any) => {
       // All the async services
       listVideos: fromPromise<ListVideosOutput>(async () => {
         // TODO limit can also be taken from UI
-        console.error("should not be here");
+
         const videos = await trpc.listVideos.query({ limit: 10 });
         return videos;
       }),
@@ -117,7 +116,7 @@ export const getVideoManagementMachine = (fetch: any) => {
           idle: {
             on: {
               LOAD_VIDEOS_PAGE: "loadingVideosPage",
-              CLICK_NEW_VIDEO_BUTTON: "#newVideFormOpened",
+              CLICK_NEW_VIDEO_BUTTON: "#NewVideoFormOpened",
               SEARCH_VIDEO: "searchingVideos",
               CLICK_VIDEO_ROW: "loadingVideoDetails",
             },
@@ -169,13 +168,34 @@ export const getVideoManagementMachine = (fetch: any) => {
           },
         },
       },
-      NewVideFormOpened: {
-        id: "newVideFormOpened",
+      NewVideoFormOpened: {
+        id: "NewVideoFormOpened",
         initial: "idle",
         states: {
           idle: {
             on: {
               CLOSE_ADD_VIDEO_FORM: "#VideosPage",
+              CLICK_ADD_VIDEO: "addingVideo",
+            },
+          },
+          addingVideo: {
+            invoke: {
+              src: "addVideo",
+              input: (data: any) => data.event.input,
+              onDone: "addingVideoSuccess",
+              onError: "addingVideoFailed",
+            },
+          },
+          addingVideoSuccess: {
+            entry: "resetVideoDetails",
+            after: {
+              10: "idle",
+            },
+          },
+          addingVideoFailed: {
+            entry: "saveError",
+            after: {
+              10: "idle",
             },
           },
         },
@@ -187,6 +207,9 @@ export const getVideoManagementMachine = (fetch: any) => {
           idle: {
             on: {
               CLICK_DELETE_VIDEO: "deletingVideo",
+              CLICK_VIDEO_ROW: "#VideosPage.loadingVideoDetails",
+              CLICK_NEW_VIDEO_BUTTON: "#NewVideoFormOpened",
+              SEARCH_VIDEO: "#VideosPage.searchingVideos",
             },
           },
           deletingVideo: {
