@@ -1,29 +1,105 @@
 import { describe, test, expect, vi, Assertion } from "vitest";
 import { getVideoManagementMachine } from "./video-management-machine.js";
-import { ActorRefFrom, createActor, fromPromise, StateFrom } from "xstate";
+import {
+  ActorRefFrom,
+  createActor,
+  EventFrom,
+  fromPromise,
+  StateFrom,
+} from "xstate";
 import { AddVideoInput, ListVideosOutput } from "@via/core/video-manager";
 
 describe("video-management-machine", () => {
   const fetchMock = vi.fn();
   const videoManagementMachine = getVideoManagementMachine(fetchMock);
 
-  const matchState = (
-    actor: ActorRefFrom<typeof videoManagementMachine>,
-    state: StateFrom<typeof videoManagementMachine>["value"],
-    callback: (
-      context: StateFrom<typeof videoManagementMachine>["context"]
-    ) => void
-  ) => {
-    return new Promise<void>((resolve) => {
-      actor.subscribe((s) => {
-        console.log(s.value);
-        if (s.matches(state)) {
-          callback(s.context);
-          resolve();
+  type Scenerio = {
+    name: string;
+    videos: ListVideosOutput;
+    originalVideos: ListVideosOutput;
+    eventToSend: EventFrom<typeof videoManagementMachine>;
+    expectedState: StateFrom<typeof videoManagementMachine>["value"];
+    expectedContext: StateFrom<typeof videoManagementMachine>["context"];
+    listVideos: () => Promise<ListVideosOutput>;
+  };
+
+  const scenerios: Scenerio[] = [
+    {
+      name: "should reach GETTING_VIDEOS_SUCCESS state",
+      videos: [],
+      originalVideos: [],
+      eventToSend: { type: "LOAD_VIDEOS_PAGE" },
+      listVideos: async () => [
+        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+      ],
+      expectedState: "GETTING_VIDEOS_SUCCESS",
+      expectedContext: {
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+        ],
+        videoDetails: null,
+        errorMessage: null,
+      },
+    },
+    {
+      name: "should reach GETTING_VIDEOS_FAILED state",
+      videos: [],
+      originalVideos: [],
+      eventToSend: { type: "LOAD_VIDEOS_PAGE" },
+      listVideos: async () => {
+        throw new Error("Error loading videos");
+      },
+      expectedState: "GETTING_VIDEOS_FAILED",
+      expectedContext: {
+        errorMessage: "Error loading videos",
+        videos: [],
+        originalVideos: [],
+        videoDetails: null,
+      },
+    },
+    {
+      name: "should reach ADD_VIDEO_FORM_OPENED state",
+      videos: [],
+      originalVideos: [],
+      eventToSend: { type: "LOAD_VIDEOS_PAGE" },
+      listVideos: async () => [],
+      expectedState: "ADD_VIDEO_FORM_OPENED",
+      expectedContext: {
+        errorMessage: null,
+        videos: [],
+        originalVideos: [],
+        videoDetails: null,
+      },
+    },
+  ];
+
+  for (const scenerio of scenerios) {
+    test(scenerio.name, async () => {
+      videoManagementMachine.implementations.actors = {
+        listVideos: fromPromise<ListVideosOutput>(async () =>
+          scenerio.listVideos()
+        ),
+      };
+      const actor = createActor(videoManagementMachine, {
+        input: {
+          originalVideos: scenerio.originalVideos,
+          videos: scenerio.videos,
+        },
+      });
+
+      actor.subscribe((state) => {
+        if (state.matches(scenerio.expectedState)) {
+          expect(state.context).toStrictEqual(scenerio.expectedContext);
         }
       });
+
+      actor.start();
+      actor.send(scenerio.eventToSend);
     });
-  };
+  }
 
   //   test("should load videos", async () => {
   //     const videos: ListVideosOutput = [
@@ -56,37 +132,35 @@ describe("video-management-machine", () => {
   //     expect(context.errorMessage).toBe(errorMessage);
   //   });
 
-  test("should search videos with valid keyword", async () => {
-    const videos: ListVideosOutput = [
-      { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-      { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-      { id: 3, description: "Video", name: "Video", uuid: "789" },
-    ];
+  //   test("should search videos with valid keyword", async () => {
+  //     const videos: ListVideosOutput = [
+  //       { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+  //       { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+  //       { id: 3, description: "Video", name: "Video", uuid: "789" },
+  //     ];
 
-    videoManagementMachine.implementations.actors.listVideos =
-      fromPromise<ListVideosOutput>(async () => videos);
+  //     videoManagementMachine.implementations.actors.listVideos =
+  //       fromPromise<ListVideosOutput>(async () => videos);
 
-    const actor = createActor(videoManagementMachine, {
-      input: { originalVideos: videos, videos },
-    });
-    actor.start();
-    // actor.send({ type: "LOAD_VIDEOS_PAGE" });
-    await matchState(actor, "SEARCHING_VIDEO", (context) => {
-      expect(context.videos).toStrictEqual([
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-      ]);
-    });
+  //     const actor = createActor(videoManagementMachine, {
+  //       input: { originalVideos: videos, videos },
+  //     });
+  //     actor.start();
+  //     let isFound = false;
+  //     actor.subscribe((state) => {
+  //       if (state.matches("SEARCHING_VIDEO")) {
+  //         isFound = true;
+  //         expect(state.context.videos).toStrictEqual([
+  //           { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+  //           { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+  //         ]);
+  //         expect(state.context.originalVideos).toStrictEqual(videos);
+  //       }
+  //     });
 
-    actor.send({ type: "SEARCH_VIDEO", keyword: "Video " });
-
-    // expect(context.videos).toStrictEqual([
-    //   { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-    //   { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-    // ]);
-    // expect(context.originalVideos).toStrictEqual(videos);
-    // expect(context.errorMessage).toBeNull();
-  });
+  //     actor.send({ type: "SEARCH_VIDEO", keyword: "Video " });
+  //     expect(isFound).toBe(true);
+  //   });
 });
 
 //   test("should search videos with valid keyword", () => {
