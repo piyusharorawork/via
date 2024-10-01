@@ -21,8 +21,13 @@ export const getGenerateReelMachine = (fetch: any) => {
         fpsInt: number; // TODO fix it at the source
         progress: number;
         exportedVideoURL: string;
+        videoDescription: string;
+        quote: string;
       },
       events: {} as  // All the events invoked by user
+        | { type: "UPDATE_VIDEO_DESCRIPTION"; videoDescription: string }
+        | { type: "UPDATE_QUOTE"; quote: string }
+        | { type: "CLICK_GENERATE_REEL" }
         | { type: "GENERATE_REEL"; input: GenerateReelInput }
         | { type: "CLOSE_VIDEO_EDITOR_MODAL" }
         | { type: "EXPORT_REEL" }
@@ -40,13 +45,20 @@ export const getGenerateReelMachine = (fetch: any) => {
         }
       ),
     },
+    guards: {
+      canGenerateReel: ({ context }) => {
+        return context.videoDescription.length > 0 && context.quote.length > 0;
+      },
+    },
     actions: {
       saveGenerateReelOutput: assign({
         generateReelOutput: (data: any) => data.event.output,
         errorMessage: null,
       }),
       resetGenerateReelOutput: assign({ generateReelOutput: null }),
-      saveError: assign({ errorMessage: (data: any) => data.event.error }),
+      saveError: assign({
+        errorMessage: (data: any) => data.event.error.message,
+      }),
       saveFpsInt: assign({
         fpsInt: (data: any) => {
           return eval(data.context.generateReelOutput.fps);
@@ -65,18 +77,87 @@ export const getGenerateReelMachine = (fetch: any) => {
       resetProgress: assign({
         progress: 0,
       }),
+      updateVideoDescription: assign({
+        videoDescription: ({ event }) =>
+          event.type === "UPDATE_VIDEO_DESCRIPTION"
+            ? event.videoDescription
+            : "",
+      }),
+      updateQuote: assign({
+        quote: ({ event }) =>
+          event.type === "UPDATE_QUOTE" ? event.quote : "",
+      }),
     },
   }).createMachine({
     /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOgEkARAGQFEBiAcRoDkaAlAQQBUaB9NmjSoBtAAwBdRKAAOAe1i4ALrln4pIAB6IATAFZdJAJwA2bcYDsARkuHDV3ZYA0IAJ47tAZhJm9d0R90AFgAOEO0AX3DnNCw8QlImVk4uMmYGfkEqOghVMBICADdZAGs8mJwCYhJE9m5U9IEhBELZTHRlVTFxLvU5BQ61JE1EcwcSD3NA20Ng4MsHQPNnNwRtf29g40XzD2NRW0tAyOiMCvjqllqUtIyhOjAAJwfZB5JpABt2gDMX1BJyuJVGrJeq3KjNfBFNoDLo9IZ9JQqQagLQIUaWcaTaazeaHJauRDzcwkfyiYITSwecm6DyiI5REAAyqkABqlBoAHleDQKGQuBy2LwALIcigcKi8DkABUuFDoNAAGlKBVwwXCZPJEap1KjZsYSItjCYyVNAjZ8StJsESOTDGtdHTAmtAvSTrFmSQ2RROdzefzBSKxRLpbK6ABhKgcgDKfClAjZNAA6sLReL1SAEQMdYhgutzbNDB4qbSPMtEB5Al4i8YJtpK+YzLtjMdGadAaRFcq2NcGplwxxmGGhNylSr05mkdnVvojKYLNZbPYnASEA7rYtRNpzHM6eY9qEW0zzp2VaDGlkAKpSsU8XhxjkMARRqPjzVZoaop1lhBbDFkuweJYnh7Hoh5th6J7dmefaQaqABiqRkFGAASr79JOH46DOJhmFYNh2Li36mNaVgeLYog2MEQSGGB7rnMCdQ3OevBwRwZC0HKGiwIo7R5OgXyKI8yCWKIRB0EeQKXCCTGZCxbEcWhWrIsMCB2vqgTGJY24OOSwRrBaOYYpYczBOY+y6FY2iUrRZxVF6PpxjQCbJoG4qSjKrByhG0Z8PZXKOc5KZBop74oiMYwTFMtg4gsBk-toJGUuRlHUZEDL4LIEBwOoElEL0b4YWFCAALTGN+pUkqIVXVTVVVbDZ7bkNQND5eh2qYQghyGCQNazFaxYmXFAT6iJ-gFvsw26A1HoMT2YKtUpU4OiNZKiJMZKHFp2jfvhNr7EaInGKEgSiFNDK5Z67JcjyfICkFbkhp5C2hSph0YmYxgOlMe65hW35ruMDjbmSujGMRdbTceo5QTJQjPYVKljHuoMJZ9e50rM37reMIRUVpUxaeY5iQ5JSSMb2w6sexPLw+1RVvd4YNfXYR3+IEO3GSQDbWLoaxrXuzok6yV13vGZBJvdwYeTT8IFXTKkuvqsyiDWujBCzmxxcRJC6IY1HaHrdKWDWaXhEAA */
     context: {
+      videoDescription: "",
+      quote: "",
       errorMessage: null, // any error message when something went wrong
       generateReelOutput: null,
       fpsInt: 0,
       progress: 0,
       exportedVideoURL: "",
     },
-    initial: "IDLE",
+    initial: "GenerateFormView",
     states: {
+      GenerateFormView: {
+        initial: "idle",
+        states: {
+          idle: {
+            on: {
+              UPDATE_VIDEO_DESCRIPTION: "updatingVideoDescription",
+              UPDATE_QUOTE: "updatingQuote",
+              CLICK_GENERATE_REEL: {
+                target: "generatingReel",
+                guard: "canGenerateReel",
+              },
+            },
+          },
+          updatingVideoDescription: {
+            entry: "updateVideoDescription",
+            after: { 10: "idle" },
+          },
+          updatingQuote: {
+            entry: "updateQuote",
+            after: { 10: "idle" },
+          },
+
+          generatingReel: {
+            invoke: {
+              src: "generateReel",
+              input: ({ context }) => ({
+                prompt: context.videoDescription,
+                quote: context.quote,
+              }),
+              onDone: {
+                target: "generatingReelSuccess",
+                actions: "saveGenerateReelOutput",
+              },
+              onError: {
+                target: "generateReelFailed",
+                actions: "saveError",
+              },
+            },
+          },
+          generatingReelSuccess: {
+            after: {
+              10: "#VideoEditingView",
+            },
+          },
+          generateReelFailed: {
+            after: {
+              10: "idle",
+            },
+          },
+        },
+      },
+      VideoEditingView: {
+        id: "VideoEditingView",
+      },
+      ExportReelView: {},
+      VideoDownloadView: {},
+
       IDLE: {
         on: {
           GENERATE_REEL: "GENERATING_REEL",

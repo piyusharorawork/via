@@ -1,14 +1,15 @@
+import classNames from "classnames";
 import { useState } from "react";
 
 type Props = {
   isGenerating: boolean;
-  onGenerate: (prompt: string, quote: string) => void;
+  enableGenerate: boolean;
+  onPromptChange: (prompt: string) => void;
+  onQuoteChange: (quote: string) => void;
+  onGenerate: () => void;
 };
 
 export const GenerateVideoForm = (props: Props) => {
-  const [prompt, setPrompt] = useState("");
-  const [quote, setQuote] = useState("");
-
   return (
     <div className="card bg-base-100 w-96 shadow-xl px-4 py-2">
       <div className="card-body">
@@ -19,7 +20,7 @@ export const GenerateVideoForm = (props: Props) => {
             <span className="label-text">Describe the video</span>
           </div>
           <textarea
-            onChange={(e) => setPrompt(e.target.value)}
+            onChange={(e) => props.onPromptChange(e.target.value)}
             placeholder="Type here"
             className="textarea input-bordered w-full max-w-xs"
           />
@@ -30,7 +31,7 @@ export const GenerateVideoForm = (props: Props) => {
             <span className="label-text">Quote</span>
           </div>
           <textarea
-            onChange={(e) => setQuote(e.target.value)}
+            onChange={(e) => props.onQuoteChange(e.target.value)}
             className="textarea textarea-bordered h-24"
             placeholder="Enter text to overlay"
           ></textarea>
@@ -38,8 +39,10 @@ export const GenerateVideoForm = (props: Props) => {
 
         <div className="card-actions justify-end my-2">
           <button
-            className="btn btn-primary"
-            onClick={() => props.onGenerate(prompt, quote)}
+            className={classNames("btn btn-primary", {
+              "btn-disabled": !props.enableGenerate,
+            })}
+            onClick={() => props.onGenerate()}
           >
             Generate
             {props.isGenerating && (

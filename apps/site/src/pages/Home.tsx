@@ -21,22 +21,25 @@ export default function Home() {
     return false;
   };
 
-  // console.log(state.value);
+  console.log(state.value);
+  console.log(state.context);
   // console.log(state.context.generateReelOutput);
 
   return (
     <section className="flex justify-center mt-4">
-      {matchAny(["IDLE", "GENERATING_REEL"]) && (
+      {state.matches("GenerateFormView") && (
         <GenerateVideoForm
-          isGenerating={state.matches("GENERATING_REEL")}
-          onGenerate={(prompt, quote) => {
-            setQuote(quote);
-            send({ type: "GENERATE_REEL", input: { prompt, quote } });
-          }}
+          isGenerating={state.matches({ GenerateFormView: "generatingReel" })}
+          onGenerate={() => send({ type: "CLICK_GENERATE_REEL" })}
+          enableGenerate={state.can({ type: "CLICK_GENERATE_REEL" })}
+          onPromptChange={(prompt) =>
+            send({ type: "UPDATE_VIDEO_DESCRIPTION", videoDescription: prompt })
+          }
+          onQuoteChange={(quote) => send({ type: "UPDATE_QUOTE", quote })}
         />
       )}
 
-      {state.matches("VIDEO_EDITOR_MODAL_OPENED") &&
+      {/* {state.matches("VIDEO_EDITOR_MODAL_OPENED") &&
         state.context.generateReelOutput && (
           <VideoEditorModal
             height={state.context.generateReelOutput.height}
@@ -84,7 +87,7 @@ export default function Home() {
             exportedVideoURL={state.context.exportedVideoURL}
             onClose={() => send({ type: "CLOSE_VIDEO_PREVIEW_MODAL" })}
           />
-        )}
+        )} */}
     </section>
   );
 }
