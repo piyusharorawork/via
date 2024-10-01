@@ -54,28 +54,26 @@ export default function Home() {
           />
         )}
 
-      {/* 
-
-      {state.matches("EXPORTING_REEL") && state.context.generateReelOutput && (
+      {state.matches("ExportReelView") && state.context.generateReelOutput && (
         <ExportVideoModal
-          fps={state.context.fpsInt}
+          fps={state.context.generateReelOutput.fps}
           frames={state.context.generateReelOutput.frames}
           height={state.context.generateReelOutput.height}
           width={state.context.generateReelOutput.width}
-          quote={quote}
+          quote={state.context.quote}
           videoURL={state.context.generateReelOutput.videoURL}
           progress={state.context.progress}
           onCancel={() => send({ type: "CANCEL_EXPORT" })}
         />
       )}
 
-      {state.matches("EXPORTING_REEL") && state.context.generateReelOutput && (
+      {state.matches("ExportReelView") && state.context.generateReelOutput && (
         <VideoRenderer
-          fps={state.context.fpsInt}
+          fps={state.context.generateReelOutput.fps}
           frames={state.context.generateReelOutput.frames}
           height={state.context.generateReelOutput.height}
           width={state.context.generateReelOutput.width}
-          quote={quote}
+          quote={state.context.quote}
           videoURL={state.context.generateReelOutput.videoURL}
           onFinish={(videoURL) => send({ type: "EXPORT_FINISH", videoURL })}
           onProgress={(amount) => {
@@ -84,13 +82,13 @@ export default function Home() {
         />
       )}
 
-      {state.matches("VIDEO_PREVIEW_MODAL_OPENED") &&
+      {state.matches("VideoDownloadView") &&
         state.context.exportedVideoURL.length > 0 && (
           <VideoPreviewModal
             exportedVideoURL={state.context.exportedVideoURL}
             onClose={() => send({ type: "CLOSE_VIDEO_PREVIEW_MODAL" })}
           />
-        )} */}
+        )}
     </section>
   );
 }

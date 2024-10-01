@@ -81,6 +81,9 @@ export const getGenerateReelMachine = (fetch: any) => {
         quote: ({ event }) =>
           event.type === "UPDATE_QUOTE" ? event.quote : "",
       }),
+      resetExportedURL: assign({
+        exportedVideoURL: "",
+      }),
     },
   }).createMachine({
     /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOgEkARAGQFEBiAcRoDkaAlAQQBUaB9NmjSoBtAAwBdRKAAOAe1i4ALrln4pIAB6IATAFZdJAJwA2bcYDsARkuHDV3ZYA0IAJ47tAZhJm9d0R90AFgAOEO0AX3DnNCw8QlImVk4uMmYGfkEqOghVMBICADdZAGs8mJwCYhJE9m5U9IEhBELZTHRlVTFxLvU5BQ61JE1EcwcSD3NA20Ng4MsHQPNnNwRtf29g40XzD2NRW0tAyOiMCvjqllqUtIyhOjAAJwfZB5JpABt2gDMX1BJyuJVGrJeq3KjNfBFNoDLo9IZ9JQqQagLQIUaWcaTaazeaHJauRDzcwkfyiYITSwecm6DyiI5REAAyqkABqlBoAHleDQKGQuBy2LwALIcigcKi8DkABUuFDoNAAGlKBVwwXCZPJEap1KjZsYSItjCYyVNAjZ8StJsESOTDGtdHTAmtAvSTrFmSQ2RROdzefzBSKxRLpbK6ABhKgcgDKfClAjZNAA6sLReL1SAEQMdYhgutzbNDB4qbSPMtEB5Al4i8YJtpK+YzLtjMdGadAaRFcq2NcGplwxxmGGhNylSr05mkdnVvojKYLNZbPYnASEA7rYtRNpzHM6eY9qEW0zzp2VaDGlkAKpSsU8XhxjkMARRqPjzVZoaop1lhBbDFkuweJYnh7Hoh5th6J7dmefaQaqABiqRkFGAASr79JOH46DOJhmFYNh2Li36mNaVgeLYog2MEQSGGB7rnMCdQ3OevBwRwZC0HKGiwIo7R5OgXyKI8yCWKIRB0EeQKXCCTGZCxbEcWhWrIsMCB2vqgTGJY24OOSwRrBaOYYpYczBOY+y6FY2iUrRZxVF6PpxjQCbJoG4qSjKrByhG0Z8PZXKOc5KZBop74oiMYwTFMtg4gsBk-toJGUuRlHUZEDL4LIEBwOoElEL0b4YWFCAALTGN+pUkqIVXVTVVVbDZ7bkNQND5eh2qYQghyGCQNazFaxYmXFAT6iJ-gFvsw26A1HoMT2YKtUpU4OiNZKiJMZKHFp2jfvhNr7EaInGKEgSiFNDK5Z67JcjyfICkFbkhp5C2hSph0YmYxgOlMe65hW35ruMDjbmSujGMRdbTceo5QTJQjPYVKljHuoMJZ9e50rM37reMIRUVpUxaeY5iQ5JSSMb2w6sexPLw+1RVvd4YNfXYR3+IEO3GSQDbWLoaxrXuzok6yV13vGZBJvdwYeTT8IFXTKkuvqsyiDWujBCzmxxcRJC6IY1HaHrdKWDWaXhEAA */
@@ -156,12 +159,52 @@ export const getGenerateReelMachine = (fetch: any) => {
                 target: "#generateFormView",
                 actions: "resetGenerateReelOutput",
               },
+              EXPORT_REEL: "#ExportReelView",
             },
           },
         },
       },
-      ExportReelView: {},
-      VideoDownloadView: {},
+      ExportReelView: {
+        id: "ExportReelView",
+        initial: "idle",
+        states: {
+          idle: {
+            entry: ["resetExportedURL"],
+            on: {
+              UPDATE_PROGRESS: "updatingProgress",
+              EXPORT_FINISH: {
+                target: "exportFinished",
+                actions: "saveExportedURL",
+              },
+              CANCEL_EXPORT: {
+                target: "#VideoEditingView",
+                actions: "resetProgress",
+              },
+            },
+          },
+          updatingProgress: {
+            entry: "updateProgress",
+            after: { 10: "idle" },
+          },
+          exportFinished: {
+            after: { 10: "#VideoDownloadView" },
+          },
+        },
+      },
+      VideoDownloadView: {
+        id: "VideoDownloadView",
+        initial: "idle",
+        states: {
+          idle: {
+            on: {
+              CLOSE_VIDEO_PREVIEW_MODAL: {
+                target: "#VideoEditingView",
+                actions: ["resetExportedURL"],
+              },
+            },
+          },
+        },
+      },
 
       IDLE: {
         on: {
