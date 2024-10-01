@@ -310,6 +310,50 @@ describe("generate-reel-machine", () => {
         progress: 0,
       },
     },
+    {
+      name: "should reach generate form view when clicked on close button on edit view",
+      initialState: { VideoEditingView: "idle" },
+      expectedState: { GenerateFormView: "idle" },
+      eventToSend: { type: "CLOSE_VIDEO_EDITOR_MODAL" },
+      initialContext: {
+        errorMessage: "",
+        exportedVideoURL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        generateReelOutput: {
+          fps: 30,
+          frames: 100,
+          height: 1080,
+          videoId: 1,
+          videoUUID: "123",
+          videoURL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+          width: 1920,
+        },
+        progress: 0,
+        videoDescription: "people walking",
+        quote: "Lets walk",
+      },
+      expectedContext: {
+        errorMessage: "",
+        exportedVideoURL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        generateReelOutput: null,
+        progress: 0,
+        videoDescription: "people walking",
+        quote: "Lets walk",
+      },
+      actors: {
+        generateReelResponse: {
+          success: true,
+          data: {
+            videoId: 1,
+            videoUUID: "123",
+            videoURL: "https://www.youtube.com/watch?v=123",
+            width: 100,
+            height: 100,
+            fps: 30,
+            frames: 100,
+          },
+        },
+      },
+    },
   ];
 
   const fetchMock = vi.fn();
@@ -323,7 +367,7 @@ describe("generate-reel-machine", () => {
       return new Promise<void>((done) => {
         generateReelMachine.implementations.actors = {
           generateReel: fromPromise<GenerateReelOutput, GenerateReelInput>(
-            async ({ input }) => {
+            async ({}) => {
               if (!scenerio.actors.generateReelResponse.success) {
                 throw new Error("Error Generating Reel");
               }

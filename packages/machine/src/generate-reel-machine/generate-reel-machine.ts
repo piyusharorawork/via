@@ -96,6 +96,7 @@ export const getGenerateReelMachine = (fetch: any) => {
     states: {
       GenerateFormView: {
         initial: "idle",
+        id: "generateFormView",
         states: {
           idle: {
             on: {
@@ -149,7 +150,14 @@ export const getGenerateReelMachine = (fetch: any) => {
         id: "VideoEditingView",
         initial: "idle",
         states: {
-          idle: {},
+          idle: {
+            on: {
+              CLOSE_VIDEO_EDITOR_MODAL: {
+                target: "#generateFormView",
+                actions: "resetGenerateReelOutput",
+              },
+            },
+          },
         },
       },
       ExportReelView: {},

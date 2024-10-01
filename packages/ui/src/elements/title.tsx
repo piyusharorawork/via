@@ -5,6 +5,9 @@ type Props = {
 };
 
 export const Title = (props: Props) => {
+  // TODO Title is rerendering even though text is not changing
+  // this is bacuse parent is rerendering
+
   return (
     <DragControls>
       <Text

@@ -4,6 +4,8 @@ import { useState } from "react";
 type Props = {
   isGenerating: boolean;
   enableGenerate: boolean;
+  videoDescription: string;
+  quote: string;
   onPromptChange: (prompt: string) => void;
   onQuoteChange: (quote: string) => void;
   onGenerate: () => void;
@@ -20,6 +22,7 @@ export const GenerateVideoForm = (props: Props) => {
             <span className="label-text">Describe the video</span>
           </div>
           <textarea
+            value={props.videoDescription}
             onChange={(e) => props.onPromptChange(e.target.value)}
             placeholder="Type here"
             className="textarea input-bordered w-full max-w-xs"
@@ -31,6 +34,7 @@ export const GenerateVideoForm = (props: Props) => {
             <span className="label-text">Quote</span>
           </div>
           <textarea
+            value={props.quote}
             onChange={(e) => props.onQuoteChange(e.target.value)}
             className="textarea textarea-bordered h-24"
             placeholder="Enter text to overlay"

@@ -12,7 +12,6 @@ const generateReelMachine = getGenerateReelMachine(fetch);
 
 export default function Home() {
   const [state, send] = useActor(generateReelMachine);
-  const [quote, setQuote] = useState("");
 
   const matchAny = (values: (typeof state.value)[]) => {
     for (const value of values) {
@@ -29,6 +28,8 @@ export default function Home() {
     <section className="flex justify-center mt-4">
       {state.matches("GenerateFormView") && (
         <GenerateVideoForm
+          videoDescription={state.context.videoDescription}
+          quote={state.context.quote}
           isGenerating={state.matches({ GenerateFormView: "generatingReel" })}
           onGenerate={() => send({ type: "CLICK_GENERATE_REEL" })}
           enableGenerate={state.can({ type: "CLICK_GENERATE_REEL" })}
@@ -47,7 +48,7 @@ export default function Home() {
             videoURL={state.context.generateReelOutput.videoURL}
             fps={state.context.generateReelOutput.fps}
             frames={state.context.generateReelOutput.frames}
-            quote={quote}
+            quote={state.context.quote}
             onExport={() => send({ type: "EXPORT_REEL" })}
             onClose={() => send({ type: "CLOSE_VIDEO_EDITOR_MODAL" })}
           />
