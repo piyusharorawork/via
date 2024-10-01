@@ -31,6 +31,8 @@
 - Directly allow to download video
 - Add debug config for node
 - add video button only enable when can add video
+- Make reliable export
+- need to consider the position of text before exporting
 
 ## Immendiate Next Steps
 

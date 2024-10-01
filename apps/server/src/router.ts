@@ -29,7 +29,8 @@ export const createRouter = (
 
   const appRouter = t.router({
     addVideo: t.procedure.input(addVideoInput).mutation(async ({ input }) => {
-      await videoManager.addVideo(input);
+      const video = await videoManager.addVideo(input);
+      return video;
     }),
     listVideos: t.procedure.input(listVideosInput).query(async ({ input }) => {
       const videos = await videoManager.listVideos(input);
