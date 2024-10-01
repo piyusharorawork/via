@@ -27,7 +27,6 @@ export const getGenerateReelMachine = (fetch: any) => {
         | { type: "UPDATE_VIDEO_DESCRIPTION"; videoDescription: string }
         | { type: "UPDATE_QUOTE"; quote: string }
         | { type: "CLICK_GENERATE_REEL" }
-        | { type: "GENERATE_REEL"; input: GenerateReelInput }
         | { type: "CLOSE_VIDEO_EDITOR_MODAL" }
         | { type: "EXPORT_REEL" }
         | { type: "UPDATE_PROGRESS"; amount: number } // TODO this can be moved inside the machine as an internal event
@@ -202,63 +201,6 @@ export const getGenerateReelMachine = (fetch: any) => {
                 actions: ["resetExportedURL"],
               },
             },
-          },
-        },
-      },
-
-      IDLE: {
-        on: {
-          GENERATE_REEL: "GENERATING_REEL",
-        },
-      },
-      GENERATING_REEL: {
-        invoke: {
-          src: "generateReel",
-          input: (data: any) => data.event.input,
-          onDone: {
-            target: "VIDEO_EDITOR_MODAL_OPENED",
-            actions: ["saveGenerateReelOutput"],
-          },
-          onError: "GENERATING_REEL_FAILED",
-        },
-      },
-
-      VIDEO_EDITOR_MODAL_OPENED: {
-        on: {
-          EXPORT_REEL: {
-            target: "EXPORTING_REEL",
-          },
-          CLOSE_VIDEO_EDITOR_MODAL: {
-            actions: "resetGenerateReelOutput",
-            target: "IDLE",
-          },
-        },
-      },
-      EXPORTING_REEL: {
-        entry: "resetProgress",
-        on: {
-          CANCEL_EXPORT: {
-            target: "VIDEO_EDITOR_MODAL_OPENED",
-          },
-          UPDATE_PROGRESS: {
-            actions: "updateProgress",
-          },
-          EXPORT_FINISH: {
-            target: "VIDEO_PREVIEW_MODAL_OPENED",
-            actions: "saveExportedURL",
-          },
-        },
-      },
-      GENERATING_REEL_FAILED: {
-        entry: "saveError",
-        after: {
-          10: "IDLE",
-        },
-      },
-      VIDEO_PREVIEW_MODAL_OPENED: {
-        on: {
-          CLOSE_VIDEO_PREVIEW_MODAL: {
-            target: "VIDEO_EDITOR_MODAL_OPENED",
           },
         },
       },

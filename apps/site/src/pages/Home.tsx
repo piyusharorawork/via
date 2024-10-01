@@ -13,13 +13,6 @@ const generateReelMachine = getGenerateReelMachine(fetch);
 export default function Home() {
   const [state, send] = useActor(generateReelMachine);
 
-  const matchAny = (values: (typeof state.value)[]) => {
-    for (const value of values) {
-      if (state.matches(value)) return true;
-    }
-    return false;
-  };
-
   // console.log(state.value);
   // console.log(state.context);
   // console.log(state.context.generateReelOutput);
