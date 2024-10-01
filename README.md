@@ -15,31 +15,27 @@
 - improve leaky tests with cleanup files
 - create a common package that handles binary path and scripts path
 - ability to update the description of the video
-- improve progress on export specially at the end when 99% photos are taken
+- improve progress on export specially at the end when 99% progress is done
 - Make Application work on mobile web
-- get rid of editly
 - cleanup temp folders
 - support filters in videos page like limit , pagination
-- ability to change color of text
-- ability to move the text around
-- ability to scale the text
-- ability to change the font of the text
-- fix fps round off
 - progress on adding video
 - multiple videos add batching
 - video preview stopped when we scroll the video
 - Directly allow to download video
 - Add debug config for node
-- add video button only enable when can add video
+- add video button only enable when can add video using guard
 - Make reliable export
-- need to consider the position of text before exporting
+- Write all pngs in a folder in ffmpeg and clean it once done
+- proper error notification system
 
 ## Immendiate Next Steps
 
-- Fix Cancel Export
-- Write all pngs in a folder in ffmpeg and clean it once done
-- Adding videos afetr success does not close
-- adding videos is not refreshing the videos
+- ability to change color of text
+- ability to move the text around
+- ability to scale the text
+- ability to change the font of the text
+- need to consider the position of text before exporting
 
 ## Helper Commands
 

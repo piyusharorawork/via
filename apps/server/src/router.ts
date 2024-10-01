@@ -51,7 +51,7 @@ export const createRouter = (
       const result = await videoManager.makeVideo(input);
       return result;
     }),
-    // TODO creage a new router for generate reel
+    // TODO create a new router for generate reel
     generateVideo: t.procedure
       .input(generateReelInput)
       .query(async ({ input }) => {
