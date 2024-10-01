@@ -21,8 +21,8 @@ export default function Home() {
     return false;
   };
 
-  console.log(state.value);
-  console.log(state.context);
+  // console.log(state.value);
+  // console.log(state.context);
   // console.log(state.context.generateReelOutput);
 
   return (
@@ -39,19 +39,21 @@ export default function Home() {
         />
       )}
 
-      {/* {state.matches("VIDEO_EDITOR_MODAL_OPENED") &&
+      {state.matches("VideoEditingView") &&
         state.context.generateReelOutput && (
           <VideoEditorModal
             height={state.context.generateReelOutput.height}
             width={state.context.generateReelOutput.width}
             videoURL={state.context.generateReelOutput.videoURL}
-            fps={state.context.fpsInt}
+            fps={state.context.generateReelOutput.fps}
             frames={state.context.generateReelOutput.frames}
             quote={quote}
             onExport={() => send({ type: "EXPORT_REEL" })}
             onClose={() => send({ type: "CLOSE_VIDEO_EDITOR_MODAL" })}
           />
         )}
+
+      {/* 
 
       {state.matches("EXPORTING_REEL") && state.context.generateReelOutput && (
         <ExportVideoModal

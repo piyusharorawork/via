@@ -19,6 +19,6 @@ describe("video info", () => {
 
   test("fps", async () => {
     const fps = await videoInfo.getFPS();
-    expect(fps).toBe("30/1");
+    expect(fps).toBe(30);
   });
 });

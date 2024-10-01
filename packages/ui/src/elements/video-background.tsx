@@ -30,7 +30,7 @@ export const VideoBackground = (props: Props) => {
   });
 
   if (videoTexture) {
-    const timeToMove = props.frame / props.fps;
+    const timeToMove = props.frame / props.fps; // FPS of the video which we cannot change
     videoTexture.source.data.currentTime = timeToMove;
   }
 

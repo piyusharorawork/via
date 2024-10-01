@@ -49,7 +49,7 @@ export type ViewVideoOutput = {
   descrption: string;
   createdAt: string;
   videoURL: string;
-  fps: string;
+  fps: number;
   frameCount: number;
   width: number;
   height: number;
@@ -68,7 +68,6 @@ export type MakeVideoOutput = {
 
 export const generateReelInput = z.object({
   prompt: z.string(),
-  quote: z.string(),
 });
 
 export type GenerateReelInput = z.infer<typeof generateReelInput>;
@@ -79,6 +78,6 @@ export type GenerateReelOutput = {
   videoURL: string;
   width: number;
   height: number;
-  fps: string;
+  fps: number;
   frames: number;
 };

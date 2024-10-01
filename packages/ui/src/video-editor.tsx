@@ -1,4 +1,4 @@
-import { Canvas, invalidate, useFrame } from "@react-three/fiber";
+import { Canvas, invalidate, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import { Title } from "./elements/title";
 import { VideoBackground } from "./elements/video-background";
@@ -16,12 +16,14 @@ type EditorSceneProps = {
 const EditorScene = (props: EditorSceneProps) => {
   const [frame, setFrame] = useState(0);
 
-  useFrame(({}) => {
-    setFrame(() => (frame + 1) % props.frames);
-  });
-
   return (
     <>
+      <ControlFPS
+        fps={props.fps}
+        onFrame={() => {
+          setFrame((frame) => (frame + 1) % (props.frames + 1));
+        }}
+      />
       <Title text={props.text} />
       <VideoBackground
         fps={props.fps}
@@ -32,6 +34,25 @@ const EditorScene = (props: EditorSceneProps) => {
       />
     </>
   );
+};
+
+type ControlFPSProps = {
+  fps: number;
+  onFrame: () => void;
+};
+
+// This controls how fast we want to render a single frame
+const ControlFPS = (props: ControlFPSProps) => {
+  const { invalidate } = useThree();
+  useEffect(() => {
+    const interval = setInterval(() => {
+      invalidate();
+      props.onFrame();
+    }, 1000 / props.fps);
+    return () => clearInterval(interval);
+  }, [props.fps, invalidate]);
+
+  return null;
 };
 
 type VideoEditorProps = {

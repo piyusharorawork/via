@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 
 export const filesTable = sqliteTable("files", {
@@ -20,7 +20,7 @@ export const videosTable = sqliteTable("videos", {
   name: text("name").notNull(),
   description: text("description").notNull(),
   originalURL: text("descrption").notNull(),
-  fps: text("fps").notNull(),
+  fps: real("fps").notNull(),
   frameCount: integer("frame_count").notNull(),
   frameWidth: integer("frame_width").notNull(),
   frameHeight: integer("frame_height").notNull(),

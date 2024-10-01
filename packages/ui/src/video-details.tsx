@@ -7,7 +7,7 @@ type Props = {
   videoDescription: string;
   width: number;
   height: number;
-  fps: string;
+  fps: number;
   frameCount: number;
   onDelete: () => void;
 };

@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1721462255255,
-      "tag": "0000_serious_kylun",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1721465594234,
-      "tag": "0001_clammy_madame_hydra",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1722771850781,
-      "tag": "0002_chubby_maggott",
+      "when": 1727786767071,
+      "tag": "0000_white_stature",
       "breakpoints": true
     }
   ]

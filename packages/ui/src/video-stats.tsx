@@ -2,12 +2,11 @@ type Props = {
   width: number;
   height: number;
   frames: number;
-  fps: string;
+  fps: number;
 };
 
 export const VideoStats = (props: Props) => {
-  const fpsInt: number = eval(props.fps);
-  const duration = props.frames / fpsInt;
+  const duration = props.frames / props.fps;
 
   return (
     <div className="stats shadow">
@@ -72,7 +71,7 @@ export const VideoStats = (props: Props) => {
             />
           </svg>
         </div>
-        <div className="stat-value">{fpsInt}</div>
+        <div className="stat-value">{props.fps}</div>
         <div className="stat-title">FPS</div>
         <div className="stat-desc text-secondary">Frames per second</div>
       </div>

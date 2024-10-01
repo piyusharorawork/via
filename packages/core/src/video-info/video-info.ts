@@ -90,7 +90,7 @@ export class VideoInfo {
   }
 
   getFPS() {
-    return new Promise<string>(async (resolve, reject) => {
+    return new Promise<number>(async (resolve, reject) => {
       try {
         //ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 /Users/piyusharora/projects/via/assets/sample-videos/1-sec.mp4
         const args = [
@@ -107,7 +107,13 @@ export class VideoInfo {
 
         const frameCountProcess = execa("ffprobe", args);
         frameCountProcess.stdout?.on("data", (data: Buffer) => {
-          const fps = data.toString().replace(/\n/g, "");
+          const fpsStr = data.toString().replace(/\n/g, "");
+          const fpsEval = eval(fpsStr);
+          const fps = parseFloat(fpsEval);
+
+          if (isNaN(fps)) {
+            reject(new Error("Invalid FPS"));
+          }
           resolve(fps);
         });
       } catch (error) {

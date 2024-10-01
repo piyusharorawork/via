@@ -18,7 +18,6 @@ export const getGenerateReelMachine = (fetch: any) => {
       context: {} as {
         errorMessage: string | null;
         generateReelOutput: GenerateReelOutput | null;
-        fpsInt: number; // TODO fix it at the source
         progress: number;
         exportedVideoURL: string;
         videoDescription: string;
@@ -59,11 +58,6 @@ export const getGenerateReelMachine = (fetch: any) => {
       saveError: assign({
         errorMessage: (data: any) => data.event.error.message,
       }),
-      saveFpsInt: assign({
-        fpsInt: (data: any) => {
-          return eval(data.context.generateReelOutput.fps);
-        },
-      }),
       updateProgress: assign({
         progress: ({ event }) => {
           return event.type === "UPDATE_PROGRESS" ? event.amount : 0;
@@ -95,7 +89,6 @@ export const getGenerateReelMachine = (fetch: any) => {
       quote: "",
       errorMessage: null, // any error message when something went wrong
       generateReelOutput: null,
-      fpsInt: 0,
       progress: 0,
       exportedVideoURL: "",
     },
@@ -154,6 +147,10 @@ export const getGenerateReelMachine = (fetch: any) => {
       },
       VideoEditingView: {
         id: "VideoEditingView",
+        initial: "idle",
+        states: {
+          idle: {},
+        },
       },
       ExportReelView: {},
       VideoDownloadView: {},
@@ -169,7 +166,7 @@ export const getGenerateReelMachine = (fetch: any) => {
           input: (data: any) => data.event.input,
           onDone: {
             target: "VIDEO_EDITOR_MODAL_OPENED",
-            actions: ["saveGenerateReelOutput", "saveFpsInt"],
+            actions: ["saveGenerateReelOutput"],
           },
           onError: "GENERATING_REEL_FAILED",
         },

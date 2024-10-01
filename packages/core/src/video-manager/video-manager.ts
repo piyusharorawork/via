@@ -243,7 +243,7 @@ export class VideoManager {
 
   async generateReel(input: GenerateReelInput): Promise<GenerateReelOutput> {
     try {
-      const { quote, prompt } = input;
+      const { prompt } = input;
 
       const videos = await this.videoStore.list(10);
       const videoId = await this.videoFinder.findVideo({ prompt, videos });
