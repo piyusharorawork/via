@@ -106,17 +106,17 @@ describe("remove video", () => {
         description: "some-description",
         name: "some-name",
         originalURL: "some-url",
-        fps: "30/1",
+        fps: 30,
         frameCount: 300,
         frameHeight: 100,
         frameWidth: 100,
       });
 
-      const { success } = await videoManager.removeVideo({
+      const { videoUUID } = await videoManager.removeVideo({
         videoUUID: scenerio.uuid,
       });
       await videoStore.get(scenerio.uuid);
-      expect(success).toBeTruthy();
+      expect(videoUUID).toBe(scenerio.uuid);
       const { found } = await videoStore.get(scenerio.uuid);
       expect(found).toBeFalsy();
     });
@@ -164,7 +164,7 @@ describe("view video", () => {
         description: scenerio.videoDescription,
         name: scenerio.videoName,
         originalURL: scenerio.youtubeURL,
-        fps: "30/1",
+        fps: 30,
         frameCount: 300,
         frameHeight: 100,
         frameWidth: 100,
@@ -221,7 +221,7 @@ describe("make video", () => {
         name: "1-sec-video",
         originalURL: "",
         uuid: videoUUID,
-        fps: "30/1",
+        fps: 30,
         frameCount: 300,
         frameHeight: 100,
         frameWidth: 100,
@@ -274,13 +274,12 @@ describe("generate reel", () => {
         name: "1-sec-video",
         originalURL: "",
         uuid: videoUUID,
-        fps: "30/1",
+        fps: 30,
         frameCount: 300,
         frameHeight: 100,
         frameWidth: 100,
       });
       const { videoURL } = await videoManager.generateReel({
-        quote: scenerio.quote,
         prompt: "some",
       });
       expect(videoURL).toContain("http://");

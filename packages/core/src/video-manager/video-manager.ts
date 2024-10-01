@@ -159,7 +159,11 @@ export class VideoManager {
       await this.fileStore.remove(video.fileId);
       await this.videoStore.remove(input.videoUUID);
 
-      return { success: true };
+      const result: RemoveVideoOutput = { videoUUID: input.videoUUID };
+
+      console.log({ result });
+
+      return result;
     } catch (error) {
       throw error;
     }

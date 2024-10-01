@@ -1,6 +1,7 @@
 import { describe, expect, vi, it } from "vitest";
 import { getVideoManagementMachine } from "./video-management-machine.js";
 import {
+  ContextFrom,
   createActor,
   EventFrom,
   fromPromise,
@@ -21,10 +22,9 @@ describe("video-management-machine", () => {
     name: string;
     initialState: StateValueFrom<typeof videoManagementMachine>;
     expectedState: StateValueFrom<typeof videoManagementMachine>;
-    videos: ListVideosOutput;
-    originalVideos: ListVideosOutput;
     eventToSend: EventFrom<typeof videoManagementMachine>;
-    expectedContext: StateFrom<typeof videoManagementMachine>["context"];
+    initialContext: ContextFrom<typeof videoManagementMachine>;
+    expectedContext: ContextFrom<typeof videoManagementMachine>;
     actors: {
       listVideosResponse: {
         success: boolean;
@@ -54,9 +54,13 @@ describe("video-management-machine", () => {
       name: "should reach VideosPage success state",
       initialState: { VideosPage: "idle" },
       expectedState: { VideosPage: "loadingVideosPageSuccess" },
-      videos: [],
-      originalVideos: [],
       eventToSend: { type: "LOAD_VIDEOS_PAGE" },
+      initialContext: {
+        errorMessage: null,
+        videos: [],
+        originalVideos: [],
+        videoDetails: null,
+      },
       actors: {
         listVideosResponse: {
           success: true,
@@ -85,7 +89,7 @@ describe("video-management-machine", () => {
         },
         deleteVideoResponse: {
           success: true,
-          data: { success: true },
+          data: { videoUUID: "123" },
         },
       },
 
@@ -104,8 +108,12 @@ describe("video-management-machine", () => {
       name: "should reach loadingVideosPageFailed state",
       initialState: { VideosPage: "idle" },
       expectedState: { VideosPage: "loadingVideosPageFailed" },
-      videos: [],
-      originalVideos: [],
+      initialContext: {
+        errorMessage: null,
+        videos: [],
+        originalVideos: [],
+        videoDetails: null,
+      },
       eventToSend: { type: "LOAD_VIDEOS_PAGE" },
       actors: {
         listVideosResponse: {
@@ -133,7 +141,7 @@ describe("video-management-machine", () => {
         },
         deleteVideoResponse: {
           success: true,
-          data: { success: true },
+          data: { videoUUID: "123" },
         },
       },
 
@@ -148,16 +156,21 @@ describe("video-management-machine", () => {
       name: "should reach searchingVideos state",
       initialState: { VideosPage: "idle" },
       expectedState: { VideosPage: "searchingVideos" },
-      videos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Video", name: "Video", uuid: "789" },
-      ],
-      originalVideos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Videos", name: "Video", uuid: "789" },
-      ],
+      initialContext: {
+        errorMessage: null,
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+      },
+
       eventToSend: { type: "SEARCH_VIDEO", keyword: "Video " },
       actors: {
         listVideosResponse: {
@@ -185,7 +198,7 @@ describe("video-management-machine", () => {
         },
         deleteVideoResponse: {
           success: true,
-          data: { success: true },
+          data: { videoUUID: "123" },
         },
       },
 
@@ -197,7 +210,7 @@ describe("video-management-machine", () => {
         originalVideos: [
           { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
           { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
         ],
         videoDetails: null,
         errorMessage: null,
@@ -206,8 +219,12 @@ describe("video-management-machine", () => {
     {
       name: "should reach NewVideoFormOpened state",
       initialState: { VideosPage: "idle" },
-      videos: [],
-      originalVideos: [],
+      initialContext: {
+        errorMessage: null,
+        videos: [],
+        originalVideos: [],
+        videoDetails: null,
+      },
       eventToSend: { type: "CLICK_NEW_VIDEO_BUTTON" },
       actors: {
         listVideosResponse: {
@@ -235,7 +252,7 @@ describe("video-management-machine", () => {
         },
         deleteVideoResponse: {
           success: true,
-          data: { success: true },
+          data: { videoUUID: "123" },
         },
       },
       expectedState: { NewVideoFormOpened: "idle" },
@@ -249,16 +266,20 @@ describe("video-management-machine", () => {
     {
       name: "should reach searchingVideos state with no results",
       initialState: { VideosPage: "idle" },
-      videos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Video", name: "Video", uuid: "789" },
-      ],
-      originalVideos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Videos", name: "Video", uuid: "789" },
-      ],
+      initialContext: {
+        errorMessage: null,
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+      },
       eventToSend: { type: "SEARCH_VIDEO", keyword: "Video 4" },
       actors: {
         listVideosResponse: {
@@ -286,7 +307,7 @@ describe("video-management-machine", () => {
         },
         deleteVideoResponse: {
           success: true,
-          data: { success: true },
+          data: { videoUUID: "123" },
         },
       },
 
@@ -305,8 +326,12 @@ describe("video-management-machine", () => {
     {
       name: "should reach videos page idle when new form closed",
       initialState: { NewVideoFormOpened: "idle" },
-      videos: [],
-      originalVideos: [],
+      initialContext: {
+        errorMessage: null,
+        videos: [],
+        originalVideos: [],
+        videoDetails: null,
+      },
       eventToSend: { type: "CLOSE_ADD_VIDEO_FORM" },
       actors: {
         listVideosResponse: {
@@ -334,7 +359,7 @@ describe("video-management-machine", () => {
         },
         deleteVideoResponse: {
           success: true,
-          data: { success: true },
+          data: { videoUUID: "123" },
         },
       },
       expectedState: { VideosPage: "idle" },
@@ -349,16 +374,20 @@ describe("video-management-machine", () => {
       name: "should reach video details success state when clicked on video row",
       initialState: { VideosPage: "idle" },
       expectedState: { VideoSelected: "idle" },
-      videos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Video", name: "Video", uuid: "789" },
-      ],
-      originalVideos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Videos", name: "Video", uuid: "789" },
-      ],
+      initialContext: {
+        errorMessage: null,
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+      },
       eventToSend: { type: "CLICK_VIDEO_ROW", input: { videoUUID: "123" } },
       actors: {
         listVideosResponse: {
@@ -386,7 +415,7 @@ describe("video-management-machine", () => {
         },
         deleteVideoResponse: {
           success: true,
-          data: { success: true },
+          data: { videoUUID: "123" },
         },
       },
 
@@ -420,16 +449,20 @@ describe("video-management-machine", () => {
       name: "should reach video details failed state when clicked on video row",
       initialState: { VideosPage: "idle" },
       expectedState: { VideosPage: "loadingVideoDetailsFailed" },
-      videos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Video", name: "Video", uuid: "789" },
-      ],
-      originalVideos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Videos", name: "Video", uuid: "789" },
-      ],
+      initialContext: {
+        errorMessage: null,
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+      },
       eventToSend: { type: "CLICK_VIDEO_ROW", input: { videoUUID: "123" } },
       actors: {
         listVideosResponse: {
@@ -446,7 +479,7 @@ describe("video-management-machine", () => {
         },
         deleteVideoResponse: {
           success: true,
-          data: { success: true },
+          data: { videoUUID: "123" },
         },
       },
 
@@ -469,16 +502,31 @@ describe("video-management-machine", () => {
       name: "should reach deleting video success state when clicked on delete video row",
       initialState: { VideoSelected: "idle" },
       expectedState: { VideoSelected: "deletingVideoSuccess" },
-      videos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Video", name: "Video", uuid: "789" },
-      ],
-      originalVideos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Videos", name: "Video", uuid: "789" },
-      ],
+      initialContext: {
+        errorMessage: null,
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: {
+          videoUUID: "123",
+          name: "Video 1",
+          originalURL: "https://www.youtube.com/watch?v=123",
+          descrption: "Video 1",
+          createdAt: "2023-06-01T12:00:00.000Z",
+          videoURL: "https://www.youtube.com/watch?v=123",
+          fps: 30,
+          frameCount: 100,
+          width: 100,
+          height: 100,
+        },
+      },
       eventToSend: { type: "CLICK_DELETE_VIDEO", input: { videoUUID: "123" } },
       actors: {
         listVideosResponse: {
@@ -506,18 +554,16 @@ describe("video-management-machine", () => {
         },
         deleteVideoResponse: {
           success: true,
-          data: { success: true },
+          data: { videoUUID: "123" },
         },
       },
 
       expectedContext: {
         videos: [
-          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
           { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
           { id: 3, description: "Video", name: "Video", uuid: "789" },
         ],
         originalVideos: [
-          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
           { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
           { id: 3, description: "Videos", name: "Video", uuid: "789" },
         ],
@@ -529,16 +575,20 @@ describe("video-management-machine", () => {
       name: "should reach deleting video failed state when clicked on delete video row",
       initialState: { VideoSelected: "idle" },
       expectedState: { VideoSelected: "deletingVideoFailed" },
-      videos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Video", name: "Video", uuid: "789" },
-      ],
-      originalVideos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Videos", name: "Video", uuid: "789" },
-      ],
+      initialContext: {
+        errorMessage: null,
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+      },
       eventToSend: { type: "CLICK_DELETE_VIDEO", input: { videoUUID: "123" } },
       actors: {
         listVideosResponse: {
@@ -589,16 +639,20 @@ describe("video-management-machine", () => {
       name: "should reach add video success state when clicked on add video button",
       initialState: { NewVideoFormOpened: "idle" },
       expectedState: { NewVideoFormOpened: "addingVideoSuccess" },
-      videos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Video", name: "Video", uuid: "789" },
-      ],
-      originalVideos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Videos", name: "Video", uuid: "789" },
-      ],
+      initialContext: {
+        errorMessage: null,
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+      },
       eventToSend: {
         type: "CLICK_ADD_VIDEO",
         input: {
@@ -633,7 +687,7 @@ describe("video-management-machine", () => {
         },
         deleteVideoResponse: {
           success: true,
-          data: { success: true },
+          data: { videoUUID: "123" },
         },
       },
 
@@ -656,16 +710,20 @@ describe("video-management-machine", () => {
       name: "should reach video selected state when clicked on video row when already selected",
       initialState: { VideoSelected: "idle" },
       expectedState: { VideosPage: "loadingVideoDetailsSuccess" },
-      videos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Video", name: "Video", uuid: "789" },
-      ],
-      originalVideos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Videos", name: "Video", uuid: "789" },
-      ],
+      initialContext: {
+        errorMessage: null,
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+      },
       eventToSend: { type: "CLICK_VIDEO_ROW", input: { videoUUID: "123" } },
       actors: {
         listVideosResponse: {
@@ -693,7 +751,7 @@ describe("video-management-machine", () => {
         },
         deleteVideoResponse: {
           success: true,
-          data: { success: true },
+          data: { videoUUID: "123" },
         },
       },
 
@@ -727,16 +785,20 @@ describe("video-management-machine", () => {
       name: "should reach new video form open state when clicked on new video button from video selected state",
       initialState: { VideoSelected: "idle" },
       expectedState: { NewVideoFormOpened: "idle" },
-      videos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Video", name: "Video", uuid: "789" },
-      ],
-      originalVideos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Videos", name: "Video", uuid: "789" },
-      ],
+      initialContext: {
+        errorMessage: null,
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+      },
       eventToSend: { type: "CLICK_NEW_VIDEO_BUTTON" },
       actors: {
         listVideosResponse: {
@@ -764,7 +826,7 @@ describe("video-management-machine", () => {
         },
         deleteVideoResponse: {
           success: true,
-          data: { success: true },
+          data: { videoUUID: "123" },
         },
       },
       expectedContext: {
@@ -786,16 +848,20 @@ describe("video-management-machine", () => {
       name: "should reach searching videos state when clicked on search video button from video selected state",
       initialState: { VideoSelected: "idle" },
       expectedState: { VideosPage: "searchingVideos" },
-      videos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Video", name: "Video", uuid: "789" },
-      ],
-      originalVideos: [
-        { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
-        { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
-        { id: 3, description: "Videos", name: "Video", uuid: "789" },
-      ],
+      initialContext: {
+        errorMessage: null,
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Videos", name: "Video", uuid: "789" },
+        ],
+        videoDetails: null,
+      },
       eventToSend: { type: "SEARCH_VIDEO", keyword: "Video 1" },
       actors: {
         listVideosResponse: {
@@ -823,7 +889,7 @@ describe("video-management-machine", () => {
         },
         deleteVideoResponse: {
           success: true,
-          data: { success: true },
+          data: { videoUUID: "123" },
         },
       },
 
@@ -840,9 +906,88 @@ describe("video-management-machine", () => {
         errorMessage: null,
       },
     },
+    {
+      name: "on deleting the video, it should delete the video from the list",
+      initialState: { VideoSelected: "idle" },
+      expectedState: { VideosPage: "idle" },
+      eventToSend: { type: "CLICK_DELETE_VIDEO", input: { videoUUID: "123" } },
+      initialContext: {
+        errorMessage: null,
+        videos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        videoDetails: {
+          videoUUID: "123",
+          name: "Video 1",
+          originalURL: "https://www.youtube.com/watch?v=123",
+          descrption: "Video 1",
+          createdAt: "2023-06-01T12:00:00.000Z",
+          videoURL: "https://www.youtube.com/watch?v=123",
+          fps: 30,
+          frameCount: 100,
+          width: 100,
+          height: 100,
+        },
+      },
+      actors: {
+        listVideosResponse: {
+          success: true,
+          data: [
+            { id: 1, description: "Video 1", name: "Video 1", uuid: "123" },
+            { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+            { id: 3, description: "Videos", name: "Video", uuid: "789" },
+          ],
+        },
+        addVideoResponse: {
+          success: true,
+          data: undefined,
+        },
+        viewVideoResponse: {
+          success: true,
+          data: {
+            videoUUID: "123",
+            name: "Video 1",
+            originalURL: "https://www.youtube.com/watch?v=123",
+            descrption: "Video 1",
+            createdAt: "2023-06-01T12:00:00.000Z",
+            videoURL: "https://www.youtube.com/watch?v=123",
+            fps: 30,
+            frameCount: 100,
+            width: 100,
+            height: 100,
+          },
+        },
+        deleteVideoResponse: {
+          success: true,
+          data: { videoUUID: "123" },
+        },
+      },
+      expectedContext: {
+        videos: [
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        originalVideos: [
+          { id: 2, description: "Video 2", name: "Video 2", uuid: "456" },
+          { id: 3, description: "Video", name: "Video", uuid: "789" },
+        ],
+        errorMessage: null,
+        videoDetails: null,
+      },
+    },
   ];
 
+  const scenerioToTest: string = "ALL";
+
   for (const scenerio of scenerios) {
+    if (scenerioToTest !== "ALL" && scenerio.name !== scenerioToTest) continue;
     it(scenerio.name, () => {
       return new Promise<void>((done) => {
         videoManagementMachine.implementations.actors = {
@@ -874,23 +1019,15 @@ describe("video-management-machine", () => {
 
         const initialState = videoManagementMachine.resolveState({
           value: scenerio.initialState,
-          context: {
-            originalVideos: scenerio.originalVideos,
-            videos: scenerio.videos,
-            errorMessage: null,
-            videoDetails: null,
-          },
+          context: scenerio.initialContext,
         });
 
         const actor = createActor(videoManagementMachine, {
-          input: {
-            originalVideos: scenerio.originalVideos,
-            videos: scenerio.videos,
-          },
           snapshot: initialState,
         });
 
         actor.subscribe((state) => {
+          console.log(state.value);
           if (state.matches(scenerio.expectedState)) {
             expect(state.context).toStrictEqual(scenerio.expectedContext);
             done();

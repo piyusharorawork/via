@@ -34,7 +34,7 @@ export const removeVideoInput = z.object({
 
 export type RemoveVideoInput = z.infer<typeof removeVideoInput>;
 export type RemoveVideoOutput = {
-  success: boolean;
+  videoUUID: string;
 };
 
 export const viewVideoInput = z.object({

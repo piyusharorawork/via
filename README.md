@@ -29,11 +29,15 @@
 - multiple videos add batching
 - video preview stopped when we scroll the video
 - Directly allow to download video
+- Add debug config for node
+- add video button only enable when can add video
 
 ## Immendiate Next Steps
 
 - Fix Cancel Export
 - Write all pngs in a folder in ffmpeg and clean it once done
+- Adding videos afetr success does not close
+- adding videos is not refreshing the videos
 
 ## Helper Commands
 

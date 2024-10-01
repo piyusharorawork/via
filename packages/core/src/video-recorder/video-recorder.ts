@@ -5,7 +5,7 @@ import { VideoInfo } from "../video-info/video-info.js";
 type VideoWriterConfig = {
   width: number;
   height: number;
-  fps: string;
+  fps: number;
   videoPath: string;
 };
 
@@ -27,7 +27,7 @@ class VideoWriter {
       "-video_size",
       `${this.config.width}x${this.config.height}`,
       "-r",
-      this.config.fps,
+      this.config.fps.toString(),
       "-i",
       "pipe:0",
       "-c:v",
