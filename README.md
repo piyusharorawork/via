@@ -28,6 +28,10 @@
 - Make reliable export
 - Write all pngs in a folder in ffmpeg and clean it once done
 - proper error notification system
+- use enter key for forms to submit
+- when select the text , surround it with the bounding box
+- ability to create projects
+- ability to convert project into template
 
 ## Immendiate Next Steps
 
