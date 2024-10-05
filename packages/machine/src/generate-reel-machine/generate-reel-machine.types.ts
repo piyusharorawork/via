@@ -15,6 +15,7 @@ export type VideoElement = { type: "text"; id: string; textInfo: TextInfo };
 
 export type TextInfo = {
   text: string;
+  position: [number, number];
 };
 
 export type GenerateReelFormEvent =
@@ -26,6 +27,7 @@ export type VideoEditorEvent =
   | { type: "VideoEditor:Close" }
   | { type: "VideoEditor:Export" }
   | { type: "VideoEditor:SelectElement"; element: VideoElement }
+  | { type: "VideoEditor:UpdateElement"; element: VideoElement }
   | { type: "VideoEditor:UnselectAll" };
 
 export type ExportReelEvent =

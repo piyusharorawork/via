@@ -203,6 +203,7 @@ describe("generate-reel-machine", () => {
             id: "1",
             textInfo: {
               text: "Lets walk",
+              position: [0, 0],
             },
           },
         ],
@@ -410,6 +411,7 @@ describe("generate-reel-machine", () => {
           id: "1",
           textInfo: {
             text: "some text",
+            position: [0, 0],
           },
         },
       },
@@ -443,6 +445,7 @@ describe("generate-reel-machine", () => {
           type: "text",
           textInfo: {
             text: "some text",
+            position: [0, 0],
           },
         },
       },
@@ -471,6 +474,7 @@ describe("generate-reel-machine", () => {
           type: "text",
           textInfo: {
             text: "some text",
+            position: [0, 0],
           },
         },
       },
@@ -487,6 +491,58 @@ describe("generate-reel-machine", () => {
         videoDescription: "people walking",
         quote: "Lets walk",
         selectedElement: null,
+      },
+    },
+    {
+      name: "should update element when updating element",
+      initialState: "VideoEditingView",
+      expectedState: "VideoEditingView",
+      eventToSend: {
+        type: "VideoEditor:UpdateElement",
+        element: {
+          type: "text",
+          id: "1",
+          textInfo: {
+            text: "new text",
+            position: [10, 10],
+          },
+        },
+      },
+      initialContext: {
+        generateReelOutput: {
+          fps: 30,
+          frames: 100,
+          height: 100,
+          videoId: 1,
+          videoUUID: "123",
+          videoURL: "https://www.youtube.com/watch?v=123",
+          width: 100,
+        },
+        videoDescription: "people walking",
+        quote: "Lets walk",
+      },
+      expectedContext: {
+        generateReelOutput: {
+          fps: 30,
+          frames: 100,
+          height: 100,
+          videoId: 1,
+          videoUUID: "123",
+          videoURL: "https://www.youtube.com/watch?v=123",
+          width: 100,
+        },
+        videoDescription: "people walking",
+        quote: "Lets walk",
+        videoElements: [
+          {
+            type: "text",
+            id: "1",
+            textInfo: {
+              text: "new text",
+              position: [10, 10],
+            },
+          },
+        ],
       },
     },
   ];

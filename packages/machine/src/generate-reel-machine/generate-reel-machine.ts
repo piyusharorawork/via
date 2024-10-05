@@ -88,7 +88,7 @@ export const getGenerateReelMachine = (fetch: any) => {
       updateVideoElement: assign({
         videoElements: ({ context, event }) => {
           // When event is not the select element
-          if (event.type !== "VideoEditor:SelectElement")
+          if (event.type !== "VideoEditor:UpdateElement")
             return context.videoElements;
 
           return context.videoElements.map((element) => {
@@ -168,6 +168,7 @@ export const getGenerateReelMachine = (fetch: any) => {
           "VideoEditor:Export": { target: "#ExportReelView" },
           "VideoEditor:SelectElement": { actions: "selectVideoElement" },
           "VideoEditor:UnselectAll": { actions: "resetSelectedElement" },
+          "VideoEditor:UpdateElement": { actions: "updateVideoElement" },
         },
       },
       ExportReelView: {

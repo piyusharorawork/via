@@ -2,6 +2,7 @@ import { Text, DragControls } from "@react-three/drei";
 
 type Props = {
   text: string;
+
   onClick: () => void;
 };
 
@@ -10,7 +11,7 @@ export const Title = (props: Props) => {
   // this is bacuse parent is rerendering
 
   return (
-    <DragControls>
+    <DragControls onDrag={(e) => {}}>
       <Text
         position={[0, 3, 0.2]}
         fontSize={1}
