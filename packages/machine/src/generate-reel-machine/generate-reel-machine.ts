@@ -2,6 +2,7 @@ import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import { GenerateReelInput, GenerateReelOutput } from "@via/core/video-manager";
 import { AppRouter } from "@via/server/app-router";
 import { assign, createActor, fromPromise, setup } from "xstate";
+import { GenerateReelContext } from "./generate-reel-machine.types.js";
 
 export const getGenerateReelMachine = (fetch: any) => {
   const trpc = createTRPCProxyClient<AppRouter>({
@@ -15,14 +16,7 @@ export const getGenerateReelMachine = (fetch: any) => {
 
   const generateReelMachine = setup({
     types: {
-      context: {} as {
-        errorMessage: string | null;
-        generateReelOutput: GenerateReelOutput | null;
-        progress: number;
-        exportedVideoURL: string;
-        videoDescription: string;
-        quote: string;
-      },
+      context: {} as GenerateReelContext,
       events: {} as  // All the events invoked by user
         | { type: "UPDATE_VIDEO_DESCRIPTION"; videoDescription: string }
         | { type: "UPDATE_QUOTE"; quote: string }
