@@ -24,3 +24,12 @@ export type ExportReelEvent =
   | { type: "ExportReel:Cancel" };
 
 export type VideoPreviewEvent = { type: "VideoPreview:Close" };
+
+export type GenerateReelActorResponses = {
+  generateReelResponse:
+    | {
+        success: true;
+        data: GenerateReelOutput;
+      }
+    | { success: false; data: null };
+};

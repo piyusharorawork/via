@@ -1,4 +1,7 @@
-import { GenerateReelContext } from "./generate-reel-machine.types.js";
+import {
+  GenerateReelActorResponses,
+  GenerateReelContext,
+} from "./generate-reel-machine.types.js";
 
 export const defaultGenerateReelContext: GenerateReelContext = {
   videoDescription: "",
@@ -7,4 +10,19 @@ export const defaultGenerateReelContext: GenerateReelContext = {
   generateReelOutput: null,
   progress: 0,
   exportedVideoURL: "",
+};
+
+export const defaultGenerateReelActorResponses: GenerateReelActorResponses = {
+  generateReelResponse: {
+    success: true,
+    data: {
+      videoId: 1,
+      videoUUID: "123",
+      videoURL: "https://www.youtube.com/watch?v=123",
+      width: 100,
+      height: 100,
+      fps: 30,
+      frames: 100,
+    },
+  },
 };
