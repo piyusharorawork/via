@@ -128,18 +128,19 @@ export const getGenerateReelMachine = (fetch: any) => {
       },
       VideoEditingView: {
         id: "VideoEditingView",
-        initial: "idle",
-        states: {
-          idle: {
-            on: {
-              "VideoEditor:Close": {
-                target: "#generateFormView",
-                actions: "resetGenerateReelOutput",
-              },
-              "VideoEditor:Export": { target: "#ExportReelView" },
-            },
+        on: {
+          "VideoEditor:Close": {
+            target: "#generateFormView",
+            actions: "resetGenerateReelOutput",
           },
+          "VideoEditor:Export": { target: "#ExportReelView" },
         },
+        // initial: "idle",
+        // states: {
+        //   idle: {
+        //     on: {},
+        //   },
+        // },
       },
       ExportReelView: {
         id: "ExportReelView",

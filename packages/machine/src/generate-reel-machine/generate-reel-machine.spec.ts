@@ -220,9 +220,7 @@ describe("generate-reel-machine", () => {
       initialState: {
         GenerateFormView: "form",
       },
-      expectedState: {
-        VideoEditingView: "idle",
-      },
+      expectedState: "VideoEditingView",
       initialContext: {
         errorMessage: null,
         generateReelOutput: null,
@@ -267,7 +265,7 @@ describe("generate-reel-machine", () => {
     },
     {
       name: "should reach generate form view when clicked on close button on edit view",
-      initialState: { VideoEditingView: "idle" },
+      initialState: "VideoEditingView",
       expectedState: { GenerateFormView: "form" },
       eventToSend: { type: "VideoEditor:Close" },
       initialContext: {
@@ -311,7 +309,7 @@ describe("generate-reel-machine", () => {
     },
     {
       name: "should reach export view when clicking export button",
-      initialState: { VideoEditingView: "idle" },
+      initialState: "VideoEditingView",
       expectedState: { ExportReelView: "idle" },
       eventToSend: { type: "VideoEditor:Export" },
       initialContext: {
@@ -416,7 +414,7 @@ describe("generate-reel-machine", () => {
     {
       name: "should reach video editor view when clicking cancel export button",
       initialState: { ExportReelView: "idle" },
-      expectedState: { VideoEditingView: "idle" },
+      expectedState: "VideoEditingView",
       eventToSend: { type: "ExportReel:Cancel" },
       initialContext: {
         errorMessage: "",
@@ -523,7 +521,7 @@ describe("generate-reel-machine", () => {
     {
       name: "should reach video editor view when clicking close button on video download view",
       initialState: { VideoDownloadView: "idle" },
-      expectedState: { VideoEditingView: "idle" },
+      expectedState: "VideoEditingView",
       eventToSend: { type: "VideoPreview:Close" },
       initialContext: {
         errorMessage: "",
