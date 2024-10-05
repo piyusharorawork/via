@@ -59,7 +59,7 @@ export default function Home() {
           quote={state.context.quote}
           videoURL={state.context.generateReelOutput.videoURL}
           progress={state.context.progress}
-          onCancel={() => send({ type: "CANCEL_EXPORT" })}
+          onCancel={() => send({ type: "ExportReel:Cancel" })}
         />
       )}
 
@@ -71,9 +71,11 @@ export default function Home() {
           width={state.context.generateReelOutput.width}
           quote={state.context.quote}
           videoURL={state.context.generateReelOutput.videoURL}
-          onFinish={(videoURL) => send({ type: "EXPORT_FINISHED", videoURL })}
+          onFinish={(videoURL) =>
+            send({ type: "ExportReel:Finished", videoURL })
+          }
           onProgress={(amount) => {
-            send({ type: "UPDATE_PROGRESS", amount });
+            send({ type: "ExportReel:UpdateProgress", amount });
           }}
         />
       )}

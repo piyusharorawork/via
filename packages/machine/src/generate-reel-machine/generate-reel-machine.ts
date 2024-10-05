@@ -3,6 +3,7 @@ import { GenerateReelInput, GenerateReelOutput } from "@via/core/video-manager";
 import { AppRouter } from "@via/server/app-router";
 import { assign, createActor, fromPromise, setup } from "xstate";
 import {
+  ExportReelEvent,
   GenerateReelContext,
   GenerateReelFormEvent,
   VideoEditorEvent,
@@ -24,9 +25,7 @@ export const getGenerateReelMachine = (fetch: any) => {
       events: {} as  // All the events invoked by user
         | GenerateReelFormEvent
         | VideoEditorEvent
-        | { type: "UPDATE_PROGRESS"; amount: number } // TODO this can be moved inside the machine as an internal event
-        | { type: "EXPORT_FINISHED"; videoURL: string }
-        | { type: "CANCEL_EXPORT" }
+        | ExportReelEvent
         | { type: "CLOSE_PREVIEW" },
     },
     actors: {
@@ -53,12 +52,12 @@ export const getGenerateReelMachine = (fetch: any) => {
       }),
       updateProgress: assign({
         progress: ({ event }) => {
-          return event.type === "UPDATE_PROGRESS" ? event.amount : 0;
+          return event.type === "ExportReel:UpdateProgress" ? event.amount : 0;
         },
       }),
       saveExportedURL: assign({
         exportedVideoURL: ({ event }) => {
-          return event.type === "EXPORT_FINISHED" ? event.videoURL : "";
+          return event.type === "ExportReel:Finished" ? event.videoURL : "";
         },
       }),
       resetProgress: assign({
@@ -148,12 +147,12 @@ export const getGenerateReelMachine = (fetch: any) => {
           idle: {
             entry: ["resetExportedURL"],
             on: {
-              UPDATE_PROGRESS: { actions: "updateProgress" },
-              EXPORT_FINISHED: {
+              "ExportReel:UpdateProgress": { actions: "updateProgress" },
+              "ExportReel:Finished": {
                 target: "#VideoDownloadView",
                 actions: "saveExportedURL",
               },
-              CANCEL_EXPORT: {
+              "ExportReel:Cancel": {
                 target: "#VideoEditingView",
                 actions: "resetProgress",
               },

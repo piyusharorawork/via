@@ -365,7 +365,7 @@ describe("generate-reel-machine", () => {
       name: "should update the progress of exporting reel",
       initialState: { ExportReelView: "idle" },
       expectedState: { ExportReelView: "idle" },
-      eventToSend: { type: "UPDATE_PROGRESS", amount: 10 },
+      eventToSend: { type: "ExportReel:UpdateProgress", amount: 10 },
       initialContext: {
         errorMessage: "",
         exportedVideoURL: "",
@@ -417,7 +417,7 @@ describe("generate-reel-machine", () => {
       name: "should reach video editor view when clicking cancel export button",
       initialState: { ExportReelView: "idle" },
       expectedState: { VideoEditingView: "idle" },
-      eventToSend: { type: "CANCEL_EXPORT" },
+      eventToSend: { type: "ExportReel:Cancel" },
       initialContext: {
         errorMessage: "",
         exportedVideoURL: "",
@@ -470,7 +470,7 @@ describe("generate-reel-machine", () => {
       initialState: { ExportReelView: "idle" },
       expectedState: { VideoDownloadView: "idle" },
       eventToSend: {
-        type: "EXPORT_FINISHED",
+        type: "ExportReel:Finished",
         videoURL: "https://www.youtube.com/watch?v=123",
       },
       initialContext: {

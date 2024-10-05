@@ -17,3 +17,8 @@ export type GenerateReelFormEvent =
 export type VideoEditorEvent =
   | { type: "VideoEditor:Close" }
   | { type: "VideoEditor:Export" };
+
+export type ExportReelEvent =
+  | { type: "ExportReel:UpdateProgress"; amount: number } // TODO this can be moved inside the machine as an internal event
+  | { type: "ExportReel:Finished"; videoURL: string }
+  | { type: "ExportReel:Cancel" };
