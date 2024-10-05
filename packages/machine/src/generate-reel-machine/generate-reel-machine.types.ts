@@ -7,6 +7,14 @@ export type GenerateReelContext = {
   exportedVideoURL: string;
   videoDescription: string;
   quote: string;
+  videoElements: VideoElement[];
+  selectedElement: VideoElement | null;
+};
+
+export type VideoElement = { type: "text"; id: string; textInfo: TextInfo };
+
+export type TextInfo = {
+  text: string;
 };
 
 export type GenerateReelFormEvent =
@@ -16,7 +24,9 @@ export type GenerateReelFormEvent =
 
 export type VideoEditorEvent =
   | { type: "VideoEditor:Close" }
-  | { type: "VideoEditor:Export" };
+  | { type: "VideoEditor:Export" }
+  | { type: "VideoEditor:SelectElement"; element: VideoElement }
+  | { type: "VideoEditor:UnselectAll" };
 
 export type ExportReelEvent =
   | { type: "ExportReel:UpdateProgress"; amount: number } // TODO this can be moved inside the machine as an internal event

@@ -10,6 +10,16 @@ export const defaultGenerateReelContext: GenerateReelContext = {
   generateReelOutput: null,
   progress: 0,
   exportedVideoURL: "",
+  videoElements: [
+    {
+      id: "1",
+      type: "text",
+      textInfo: {
+        text: "some text",
+      },
+    },
+  ],
+  selectedElement: null,
 };
 
 export const defaultGenerateReelActorResponses: GenerateReelActorResponses = {

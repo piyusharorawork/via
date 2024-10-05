@@ -390,6 +390,96 @@ describe("generate-reel-machine", () => {
         quote: "Lets walk",
       },
     },
+    {
+      name: "should update video element when selecting element",
+      initialState: "VideoEditingView",
+      expectedState: "VideoEditingView",
+      eventToSend: {
+        type: "VideoEditor:SelectElement",
+        element: {
+          type: "text",
+          id: "1",
+          textInfo: {
+            text: "some text",
+          },
+        },
+      },
+      initialContext: {
+        generateReelOutput: {
+          fps: 30,
+          frames: 100,
+          height: 100,
+          videoId: 1,
+          videoUUID: "123",
+          videoURL: "https://www.youtube.com/watch?v=123",
+          width: 100,
+        },
+        videoDescription: "people walking",
+        quote: "Lets walk",
+      },
+      expectedContext: {
+        generateReelOutput: {
+          fps: 30,
+          frames: 100,
+          height: 100,
+          videoId: 1,
+          videoUUID: "123",
+          videoURL: "https://www.youtube.com/watch?v=123",
+          width: 100,
+        },
+        videoDescription: "people walking",
+        quote: "Lets walk",
+        selectedElement: {
+          id: "1",
+          type: "text",
+          textInfo: {
+            text: "some text",
+          },
+        },
+      },
+    },
+    {
+      name: "should set selected element to null when unselecting all",
+      initialState: "VideoEditingView",
+      expectedState: "VideoEditingView",
+      eventToSend: {
+        type: "VideoEditor:UnselectAll",
+      },
+      initialContext: {
+        generateReelOutput: {
+          fps: 30,
+          frames: 100,
+          height: 100,
+          videoId: 1,
+          videoUUID: "123",
+          videoURL: "https://www.youtube.com/watch?v=123",
+          width: 100,
+        },
+        videoDescription: "people walking",
+        quote: "Lets walk",
+        selectedElement: {
+          id: "1",
+          type: "text",
+          textInfo: {
+            text: "some text",
+          },
+        },
+      },
+      expectedContext: {
+        generateReelOutput: {
+          fps: 30,
+          frames: 100,
+          height: 100,
+          videoId: 1,
+          videoUUID: "123",
+          videoURL: "https://www.youtube.com/watch?v=123",
+          width: 100,
+        },
+        videoDescription: "people walking",
+        quote: "Lets walk",
+        selectedElement: null,
+      },
+    },
   ];
 
   testScenerios(scenerios, "ALL", false);
