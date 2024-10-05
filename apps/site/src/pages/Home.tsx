@@ -24,8 +24,8 @@ export default function Home() {
           videoDescription={state.context.videoDescription}
           quote={state.context.quote}
           isGenerating={state.matches({ GenerateFormView: "generatingReel" })}
-          onGenerate={() => send({ type: "CLICK_GENERATE_REEL" })}
-          enableGenerate={state.can({ type: "CLICK_GENERATE_REEL" })}
+          onGenerate={() => send({ type: "GENERATE_REEL" })}
+          enableGenerate={state.can({ type: "GENERATE_REEL" })}
           onPromptChange={(prompt) =>
             send({ type: "UPDATE_VIDEO_DESCRIPTION", videoDescription: prompt })
           }
@@ -43,7 +43,7 @@ export default function Home() {
             frames={state.context.generateReelOutput.frames}
             quote={state.context.quote}
             onExport={() => send({ type: "EXPORT_REEL" })}
-            onClose={() => send({ type: "CLOSE_VIDEO_EDITOR_MODAL" })}
+            onClose={() => send({ type: "CLOSE_EDITOR" })}
           />
         )}
 
@@ -68,7 +68,7 @@ export default function Home() {
           width={state.context.generateReelOutput.width}
           quote={state.context.quote}
           videoURL={state.context.generateReelOutput.videoURL}
-          onFinish={(videoURL) => send({ type: "EXPORT_FINISH", videoURL })}
+          onFinish={(videoURL) => send({ type: "EXPORT_FINISHED", videoURL })}
           onProgress={(amount) => {
             send({ type: "UPDATE_PROGRESS", amount });
           }}
@@ -79,7 +79,7 @@ export default function Home() {
         state.context.exportedVideoURL.length > 0 && (
           <VideoPreviewModal
             exportedVideoURL={state.context.exportedVideoURL}
-            onClose={() => send({ type: "CLOSE_VIDEO_PREVIEW_MODAL" })}
+            onClose={() => send({ type: "CLOSE_PREVIEW" })}
           />
         )}
     </section>

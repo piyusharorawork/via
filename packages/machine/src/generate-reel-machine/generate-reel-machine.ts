@@ -26,16 +26,15 @@ export const getGenerateReelMachine = (fetch: any) => {
       events: {} as  // All the events invoked by user
         | { type: "UPDATE_VIDEO_DESCRIPTION"; videoDescription: string }
         | { type: "UPDATE_QUOTE"; quote: string }
-        | { type: "CLICK_GENERATE_REEL" }
-        | { type: "CLOSE_VIDEO_EDITOR_MODAL" }
+        | { type: "GENERATE_REEL" }
+        | { type: "CLOSE_EDITOR" }
         | { type: "EXPORT_REEL" }
         | { type: "UPDATE_PROGRESS"; amount: number } // TODO this can be moved inside the machine as an internal event
-        | { type: "EXPORT_FINISH"; videoURL: string }
+        | { type: "EXPORT_FINISHED"; videoURL: string }
         | { type: "CANCEL_EXPORT" }
-        | { type: "CLOSE_VIDEO_PREVIEW_MODAL" },
+        | { type: "CLOSE_PREVIEW" },
     },
     actors: {
-      // All the async services
       generateReel: fromPromise<GenerateReelOutput, GenerateReelInput>(
         async ({ input }) => {
           const res = await trpc.generateVideo.query(input);
@@ -64,7 +63,7 @@ export const getGenerateReelMachine = (fetch: any) => {
       }),
       saveExportedURL: assign({
         exportedVideoURL: ({ event }) => {
-          return event.type === "EXPORT_FINISH" ? event.videoURL : "";
+          return event.type === "EXPORT_FINISHED" ? event.videoURL : "";
         },
       }),
       resetProgress: assign({
@@ -97,26 +96,18 @@ export const getGenerateReelMachine = (fetch: any) => {
     initial: "GenerateFormView",
     states: {
       GenerateFormView: {
-        initial: "idle",
+        initial: "form",
         id: "generateFormView",
         states: {
-          idle: {
+          form: {
             on: {
-              UPDATE_VIDEO_DESCRIPTION: "updatingVideoDescription",
-              UPDATE_QUOTE: "updatingQuote",
-              CLICK_GENERATE_REEL: {
+              UPDATE_VIDEO_DESCRIPTION: { actions: "updateVideoDescription" },
+              UPDATE_QUOTE: { actions: "updateQuote" },
+              GENERATE_REEL: {
                 target: "generatingReel",
                 guard: "canGenerateReel",
               },
             },
-          },
-          updatingVideoDescription: {
-            entry: "updateVideoDescription",
-            after: { 10: "idle" },
-          },
-          updatingQuote: {
-            entry: "updateQuote",
-            after: { 10: "idle" },
           },
 
           generatingReel: {
@@ -127,23 +118,13 @@ export const getGenerateReelMachine = (fetch: any) => {
                 quote: context.quote,
               }),
               onDone: {
-                target: "generatingReelSuccess",
+                target: "#VideoEditingView",
                 actions: "saveGenerateReelOutput",
               },
               onError: {
-                target: "generateReelFailed",
+                target: "form",
                 actions: "saveError",
               },
-            },
-          },
-          generatingReelSuccess: {
-            after: {
-              10: "#VideoEditingView",
-            },
-          },
-          generateReelFailed: {
-            after: {
-              10: "idle",
             },
           },
         },
@@ -154,7 +135,7 @@ export const getGenerateReelMachine = (fetch: any) => {
         states: {
           idle: {
             on: {
-              CLOSE_VIDEO_EDITOR_MODAL: {
+              CLOSE_EDITOR: {
                 target: "#generateFormView",
                 actions: "resetGenerateReelOutput",
               },
@@ -170,9 +151,9 @@ export const getGenerateReelMachine = (fetch: any) => {
           idle: {
             entry: ["resetExportedURL"],
             on: {
-              UPDATE_PROGRESS: "updatingProgress",
-              EXPORT_FINISH: {
-                target: "exportFinished",
+              UPDATE_PROGRESS: { actions: "updateProgress" },
+              EXPORT_FINISHED: {
+                target: "#VideoDownloadView",
                 actions: "saveExportedURL",
               },
               CANCEL_EXPORT: {
@@ -180,13 +161,6 @@ export const getGenerateReelMachine = (fetch: any) => {
                 actions: "resetProgress",
               },
             },
-          },
-          updatingProgress: {
-            entry: "updateProgress",
-            after: { 10: "idle" },
-          },
-          exportFinished: {
-            after: { 10: "#VideoDownloadView" },
           },
         },
       },
@@ -196,7 +170,7 @@ export const getGenerateReelMachine = (fetch: any) => {
         states: {
           idle: {
             on: {
-              CLOSE_VIDEO_PREVIEW_MODAL: {
+              CLOSE_PREVIEW: {
                 target: "#VideoEditingView",
                 actions: ["resetExportedURL"],
               },

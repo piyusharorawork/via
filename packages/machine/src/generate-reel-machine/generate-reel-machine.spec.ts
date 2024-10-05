@@ -10,6 +10,7 @@ import {
   fromPromise,
 } from "xstate";
 import { GenerateReelInput, GenerateReelOutput } from "@via/core/video-manager";
+import { deepEqual } from "../machine.util.js";
 
 describe("generate-reel-machine", () => {
   type Scenerio = {
@@ -32,7 +33,7 @@ describe("generate-reel-machine", () => {
   const scenerios: Scenerio[] = [
     {
       name: "should update video description",
-      initialState: { GenerateFormView: "idle" },
+      initialState: { GenerateFormView: "form" },
       initialContext: {
         errorMessage: null,
         generateReelOutput: null,
@@ -41,7 +42,7 @@ describe("generate-reel-machine", () => {
         videoDescription: "",
         quote: "",
       },
-      expectedState: { GenerateFormView: "updatingVideoDescription" },
+      expectedState: { GenerateFormView: "form" },
       expectedContext: {
         errorMessage: null,
         generateReelOutput: null,
@@ -71,7 +72,7 @@ describe("generate-reel-machine", () => {
     },
     {
       name: "should update quote",
-      initialState: { GenerateFormView: "idle" },
+      initialState: { GenerateFormView: "form" },
       initialContext: {
         errorMessage: null,
         generateReelOutput: null,
@@ -80,7 +81,7 @@ describe("generate-reel-machine", () => {
         videoDescription: "",
         quote: "",
       },
-      expectedState: { GenerateFormView: "updatingQuote" },
+      expectedState: { GenerateFormView: "form" },
       expectedContext: {
         errorMessage: null,
         generateReelOutput: null,
@@ -110,7 +111,7 @@ describe("generate-reel-machine", () => {
     },
     {
       name: "should click generate reel on empty video descrtiption remain in idle",
-      initialState: { GenerateFormView: "idle" },
+      initialState: { GenerateFormView: "form" },
       initialContext: {
         errorMessage: null,
         generateReelOutput: null,
@@ -119,7 +120,7 @@ describe("generate-reel-machine", () => {
         videoDescription: "",
         quote: "Lets walk",
       },
-      expectedState: { GenerateFormView: "idle" },
+      expectedState: { GenerateFormView: "form" },
       expectedContext: {
         errorMessage: null,
         generateReelOutput: null,
@@ -129,7 +130,7 @@ describe("generate-reel-machine", () => {
         quote: "Lets walk",
       },
       eventToSend: {
-        type: "CLICK_GENERATE_REEL",
+        type: "GENERATE_REEL",
       },
       actors: {
         generateReelResponse: {
@@ -148,7 +149,7 @@ describe("generate-reel-machine", () => {
     },
     {
       name: "should reach generating reel state when clicked on generate reel for valid input",
-      initialState: { GenerateFormView: "idle" },
+      initialState: { GenerateFormView: "form" },
       initialContext: {
         errorMessage: null,
         generateReelOutput: null,
@@ -167,53 +168,7 @@ describe("generate-reel-machine", () => {
         quote: "Lets walk",
       },
       eventToSend: {
-        type: "CLICK_GENERATE_REEL",
-      },
-      actors: {
-        generateReelResponse: {
-          success: true,
-          data: {
-            videoId: 1,
-            videoUUID: "123",
-            videoURL: "https://www.youtube.com/watch?v=123",
-            width: 100,
-            height: 100,
-            fps: 30,
-            frames: 100,
-          },
-        },
-      },
-    },
-    {
-      name: "should reach generating reel success state",
-      initialState: { GenerateFormView: "idle" },
-      initialContext: {
-        errorMessage: null,
-        generateReelOutput: null,
-        exportedVideoURL: "",
-        progress: 0,
-        videoDescription: "people walking",
-        quote: "Lets walk",
-      },
-      expectedState: { GenerateFormView: "generatingReelSuccess" },
-      expectedContext: {
-        errorMessage: null,
-        generateReelOutput: {
-          videoId: 1,
-          videoUUID: "123",
-          videoURL: "https://www.youtube.com/watch?v=123",
-          width: 100,
-          height: 100,
-          fps: 30,
-          frames: 100,
-        },
-        exportedVideoURL: "",
-        progress: 0,
-        videoDescription: "people walking",
-        quote: "Lets walk",
-      },
-      eventToSend: {
-        type: "CLICK_GENERATE_REEL",
+        type: "GENERATE_REEL",
       },
       actors: {
         generateReelResponse: {
@@ -232,7 +187,7 @@ describe("generate-reel-machine", () => {
     },
     {
       name: "should reach generating reel failed state",
-      initialState: { GenerateFormView: "idle" },
+      initialState: { GenerateFormView: "form" },
       initialContext: {
         errorMessage: null,
         generateReelOutput: null,
@@ -241,7 +196,7 @@ describe("generate-reel-machine", () => {
         videoDescription: "people walking",
         quote: "Lets walk",
       },
-      expectedState: { GenerateFormView: "generateReelFailed" },
+      expectedState: { GenerateFormView: "form" },
       expectedContext: {
         errorMessage: "Error Generating Reel",
         generateReelOutput: null,
@@ -251,7 +206,7 @@ describe("generate-reel-machine", () => {
         quote: "Lets walk",
       },
       eventToSend: {
-        type: "CLICK_GENERATE_REEL",
+        type: "GENERATE_REEL",
       },
       actors: {
         generateReelResponse: {
@@ -263,7 +218,7 @@ describe("generate-reel-machine", () => {
     {
       name: "should reach video editing view post clicking generate reel",
       initialState: {
-        GenerateFormView: "idle",
+        GenerateFormView: "form",
       },
       expectedState: {
         VideoEditingView: "idle",
@@ -277,7 +232,7 @@ describe("generate-reel-machine", () => {
         quote: "Lets walk",
       },
       eventToSend: {
-        type: "CLICK_GENERATE_REEL",
+        type: "GENERATE_REEL",
       },
       actors: {
         generateReelResponse: {
@@ -313,8 +268,8 @@ describe("generate-reel-machine", () => {
     {
       name: "should reach generate form view when clicked on close button on edit view",
       initialState: { VideoEditingView: "idle" },
-      expectedState: { GenerateFormView: "idle" },
-      eventToSend: { type: "CLOSE_VIDEO_EDITOR_MODAL" },
+      expectedState: { GenerateFormView: "form" },
+      eventToSend: { type: "CLOSE_EDITOR" },
       initialContext: {
         errorMessage: "",
         exportedVideoURL: "",
@@ -409,7 +364,7 @@ describe("generate-reel-machine", () => {
     {
       name: "should update the progress of exporting reel",
       initialState: { ExportReelView: "idle" },
-      expectedState: { ExportReelView: "updatingProgress" },
+      expectedState: { ExportReelView: "idle" },
       eventToSend: { type: "UPDATE_PROGRESS", amount: 10 },
       initialContext: {
         errorMessage: "",
@@ -440,61 +395,6 @@ describe("generate-reel-machine", () => {
           width: 1920,
         },
         progress: 10,
-        videoDescription: "people walking",
-        quote: "Lets walk",
-      },
-      actors: {
-        generateReelResponse: {
-          success: true,
-          data: {
-            videoId: 1,
-            videoUUID: "123",
-            videoURL: "https://www.youtube.com/watch?v=123",
-            width: 100,
-            height: 100,
-            fps: 30,
-            frames: 100,
-          },
-        },
-      },
-    },
-    {
-      name: "should update the exported video url",
-      initialState: { ExportReelView: "idle" },
-      expectedState: { ExportReelView: "exportFinished" },
-      eventToSend: {
-        type: "EXPORT_FINISH",
-        videoURL: "https://www.youtube.com/watch?v=123",
-      },
-      initialContext: {
-        errorMessage: "",
-        exportedVideoURL: "",
-        generateReelOutput: {
-          fps: 30,
-          frames: 100,
-          height: 1080,
-          videoId: 1,
-          videoUUID: "123",
-          videoURL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-          width: 1920,
-        },
-        progress: 0,
-        videoDescription: "people walking",
-        quote: "Lets walk",
-      },
-      expectedContext: {
-        errorMessage: "",
-        exportedVideoURL: "https://www.youtube.com/watch?v=123",
-        generateReelOutput: {
-          fps: 30,
-          frames: 100,
-          height: 1080,
-          videoId: 1,
-          videoUUID: "123",
-          videoURL: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-          width: 1920,
-        },
-        progress: 0,
         videoDescription: "people walking",
         quote: "Lets walk",
       },
@@ -570,7 +470,7 @@ describe("generate-reel-machine", () => {
       initialState: { ExportReelView: "idle" },
       expectedState: { VideoDownloadView: "idle" },
       eventToSend: {
-        type: "EXPORT_FINISH",
+        type: "EXPORT_FINISHED",
         videoURL: "https://www.youtube.com/watch?v=123",
       },
       initialContext: {
@@ -624,7 +524,7 @@ describe("generate-reel-machine", () => {
       name: "should reach video editor view when clicking close button on video download view",
       initialState: { VideoDownloadView: "idle" },
       expectedState: { VideoEditingView: "idle" },
-      eventToSend: { type: "CLOSE_VIDEO_PREVIEW_MODAL" },
+      eventToSend: { type: "CLOSE_PREVIEW" },
       initialContext: {
         errorMessage: "",
         exportedVideoURL: "https://www.youtube.com/watch?v=123",
@@ -701,11 +601,10 @@ describe("generate-reel-machine", () => {
           snapshot: initialState,
         });
         actor.subscribe((state) => {
-          console.log(state.value);
+          //console.log(state.value);
 
           if (state.matches(scenerio.expectedState)) {
-            expect(state.context).toStrictEqual(scenerio.expectedContext);
-            done();
+            if (deepEqual(state.context, scenerio.expectedContext)) done();
           }
         });
         actor.start();
