@@ -394,6 +394,14 @@ describe("generate-reel-machine", () => {
           },
           videoDescription: "people walking",
           quote: "Lets walk",
+          selectedElement: {
+            id: "1",
+            type: "text",
+            textInfo: {
+              text: "some text",
+              position: [0, 0, 0],
+            },
+          },
         },
         expectedContext: {
           generateReelOutput: {
@@ -417,6 +425,14 @@ describe("generate-reel-machine", () => {
               },
             },
           ],
+          selectedElement: {
+            id: "1",
+            type: "text",
+            textInfo: {
+              text: "new text",
+              position: [10, 10, 10],
+            },
+          },
         },
       },
     ];

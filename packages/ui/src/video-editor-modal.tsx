@@ -1,6 +1,7 @@
 import { VideoElement } from "@via/machine/generate-reel-machine";
 import { VideoEditor } from "./video-editor";
 import classNames from "classnames";
+import { SelectedElement } from "./selected-element";
 
 type Props = {
   width: number;
@@ -22,7 +23,10 @@ export const VideoEditorModal = (props: Props) => {
   return (
     <dialog className={"modal modal-open"}>
       <div className="modal-box">
-        {props.selectedElement && <section>Selected Element</section>}
+        <SelectedElement
+          onUpdateElement={props.onUpdateElement}
+          selectedElement={props.selectedElement}
+        />
 
         <div className="flex justify-center">
           <div className="mockup-phone">

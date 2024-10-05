@@ -14,7 +14,6 @@ type RenderSceneProps = {
   frames: number;
   fps: number;
   videoURL: string;
-  quote: string;
   width: number;
   height: number;
   elements: VideoElement[];
@@ -61,7 +60,7 @@ const RenderScene = (props: RenderSceneProps) => {
           return (
             <Title
               key={element.id}
-              text={props.quote}
+              text={element.textInfo.text}
               initialPosition={element.textInfo.position}
               onClick={() => {}} // At the time of rendering , we dont allow selecting text
               onPositionChanged={() => {}} // At the time of rendering , we dont allow moving text
@@ -88,7 +87,6 @@ type VideoRendererProps = {
   fps: number;
   frames: number;
   videoURL: string;
-  quote: string;
   elements: VideoElement[];
   onFinish: (videoURL: string) => void;
   onProgress: (amount: number) => void;

@@ -5,7 +5,6 @@ import { VideoEditorModal } from "@via/ui/video-editor-modal";
 import { getGenerateReelMachine } from "@via/machine/generate-reel-machine";
 import { ExportVideoModal } from "@via/ui/export-video-modal";
 import { VideoRenderer } from "@via/ui/video-renderer";
-import { VideoPreview } from "@via/ui/video-preview";
 import { VideoPreviewModal } from "@via/ui/video-preview-modal";
 
 const generateReelMachine = getGenerateReelMachine(fetch);
@@ -76,9 +75,9 @@ export default function Home() {
         <VideoRenderer
           fps={state.context.generateReelOutput.fps}
           frames={state.context.generateReelOutput.frames}
+          // frames={30}
           height={state.context.generateReelOutput.height}
           width={state.context.generateReelOutput.width}
-          quote={state.context.quote}
           videoURL={state.context.generateReelOutput.videoURL}
           elements={state.context.videoElements}
           onFinish={(videoURL) =>
