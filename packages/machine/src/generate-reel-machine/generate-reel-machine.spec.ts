@@ -310,7 +310,7 @@ describe("generate-reel-machine", () => {
     {
       name: "should reach export view when clicking export button",
       initialState: "VideoEditingView",
-      expectedState: { ExportReelView: "idle" },
+      expectedState: "ExportReelView",
       eventToSend: { type: "VideoEditor:Export" },
       initialContext: {
         errorMessage: "",
@@ -361,8 +361,8 @@ describe("generate-reel-machine", () => {
     },
     {
       name: "should update the progress of exporting reel",
-      initialState: { ExportReelView: "idle" },
-      expectedState: { ExportReelView: "idle" },
+      initialState: "ExportReelView",
+      expectedState: "ExportReelView",
       eventToSend: { type: "ExportReel:UpdateProgress", amount: 10 },
       initialContext: {
         errorMessage: "",
@@ -413,7 +413,7 @@ describe("generate-reel-machine", () => {
     },
     {
       name: "should reach video editor view when clicking cancel export button",
-      initialState: { ExportReelView: "idle" },
+      initialState: "ExportReelView",
       expectedState: "VideoEditingView",
       eventToSend: { type: "ExportReel:Cancel" },
       initialContext: {
@@ -465,7 +465,7 @@ describe("generate-reel-machine", () => {
     },
     {
       name: "should reach video download view when export finished",
-      initialState: { ExportReelView: "idle" },
+      initialState: "ExportReelView",
       expectedState: { VideoDownloadView: "idle" },
       eventToSend: {
         type: "ExportReel:Finished",

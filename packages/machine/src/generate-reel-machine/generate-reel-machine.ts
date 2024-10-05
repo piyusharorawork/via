@@ -135,30 +135,19 @@ export const getGenerateReelMachine = (fetch: any) => {
           },
           "VideoEditor:Export": { target: "#ExportReelView" },
         },
-        // initial: "idle",
-        // states: {
-        //   idle: {
-        //     on: {},
-        //   },
-        // },
       },
       ExportReelView: {
         id: "ExportReelView",
-        initial: "idle",
-        states: {
-          idle: {
-            entry: ["resetExportedURL"],
-            on: {
-              "ExportReel:UpdateProgress": { actions: "updateProgress" },
-              "ExportReel:Finished": {
-                target: "#VideoDownloadView",
-                actions: "saveExportedURL",
-              },
-              "ExportReel:Cancel": {
-                target: "#VideoEditingView",
-                actions: "resetProgress",
-              },
-            },
+        entry: ["resetExportedURL"],
+        on: {
+          "ExportReel:UpdateProgress": { actions: "updateProgress" },
+          "ExportReel:Finished": {
+            target: "#VideoDownloadView",
+            actions: "saveExportedURL",
+          },
+          "ExportReel:Cancel": {
+            target: "#VideoEditingView",
+            actions: "resetProgress",
           },
         },
       },
