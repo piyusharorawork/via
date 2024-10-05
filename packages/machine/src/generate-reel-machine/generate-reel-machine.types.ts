@@ -8,3 +8,8 @@ export type GenerateReelContext = {
   videoDescription: string;
   quote: string;
 };
+
+export type GenerateReelFormEvent =
+  | { type: "UPDATE_VIDEO_DESCRIPTION"; videoDescription: string }
+  | { type: "UPDATE_QUOTE"; quote: string }
+  | { type: "GENERATE_REEL" };
