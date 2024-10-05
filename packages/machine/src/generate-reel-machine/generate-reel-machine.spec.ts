@@ -466,7 +466,7 @@ describe("generate-reel-machine", () => {
     {
       name: "should reach video download view when export finished",
       initialState: "ExportReelView",
-      expectedState: { VideoDownloadView: "idle" },
+      expectedState: "VideoDownloadView",
       eventToSend: {
         type: "ExportReel:Finished",
         videoURL: "https://www.youtube.com/watch?v=123",
@@ -520,7 +520,7 @@ describe("generate-reel-machine", () => {
     },
     {
       name: "should reach video editor view when clicking close button on video download view",
-      initialState: { VideoDownloadView: "idle" },
+      initialState: "VideoDownloadView",
       expectedState: "VideoEditingView",
       eventToSend: { type: "VideoPreview:Close" },
       initialContext: {

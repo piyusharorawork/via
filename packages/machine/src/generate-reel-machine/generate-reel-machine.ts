@@ -153,15 +153,10 @@ export const getGenerateReelMachine = (fetch: any) => {
       },
       VideoDownloadView: {
         id: "VideoDownloadView",
-        initial: "idle",
-        states: {
-          idle: {
-            on: {
-              "VideoPreview:Close": {
-                target: "#VideoEditingView",
-                actions: ["resetExportedURL"],
-              },
-            },
+        on: {
+          "VideoPreview:Close": {
+            target: "#VideoEditingView",
+            actions: ["resetExportedURL"],
           },
         },
       },
