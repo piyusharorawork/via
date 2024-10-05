@@ -15,6 +15,7 @@ type EditorSceneProps = {
   videoElements: VideoElement[];
 
   onSelectElement: (element: VideoElement) => void;
+  onUpdateElement: (element: VideoElement) => void;
 };
 
 const EditorScene = (props: EditorSceneProps) => {
@@ -34,7 +35,17 @@ const EditorScene = (props: EditorSceneProps) => {
             <Title
               key={videoElement.id}
               text={videoElement.textInfo.text}
+              initialPosition={videoElement.textInfo.position}
               onClick={() => props.onSelectElement(videoElement)}
+              onPositionChanged={(position) => {
+                props.onUpdateElement({
+                  ...videoElement,
+                  textInfo: {
+                    ...videoElement.textInfo,
+                    position,
+                  },
+                });
+              }}
             />
           );
         }
@@ -82,6 +93,7 @@ type VideoEditorProps = {
 
   onSelectElement: (element: VideoElement) => void;
   onUnselectAll: () => void;
+  onUpdateElement: (element: VideoElement) => void;
 };
 
 export const VideoEditor = (props: VideoEditorProps) => {
@@ -105,6 +117,7 @@ export const VideoEditor = (props: VideoEditorProps) => {
         height={props.height}
         videoElements={props.videoElements}
         onSelectElement={props.onSelectElement}
+        onUpdateElement={props.onUpdateElement}
       />
     </Canvas>
   );

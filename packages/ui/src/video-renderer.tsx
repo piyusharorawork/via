@@ -5,6 +5,7 @@ import { utils } from "./utils";
 import { VideoBackground } from "./elements/video-background";
 import { Title } from "./elements/title";
 import { services } from "./services";
+import { VideoElement } from "@via/machine/generate-reel-machine";
 
 const WAIT_MS = 50;
 
@@ -16,6 +17,7 @@ type RenderSceneProps = {
   quote: string;
   width: number;
   height: number;
+  elements: VideoElement[];
   onFinish: (videoURL: string) => void;
   onProgress: (amount: number) => void;
 };
@@ -54,7 +56,21 @@ const RenderScene = (props: RenderSceneProps) => {
   }, []);
   return (
     <>
-      <Title text={props.quote} />
+      {props.elements.map((element) => {
+        if (element.type === "text") {
+          return (
+            <Title
+              key={element.id}
+              text={props.quote}
+              initialPosition={element.textInfo.position}
+              onClick={() => {}} // At the time of rendering , we dont allow selecting text
+              onPositionChanged={() => {}} // At the time of rendering , we dont allow moving text
+            />
+          );
+        }
+        return null;
+      })}
+
       <VideoBackground
         frame={frame}
         fps={props.fps}
@@ -73,6 +89,7 @@ type VideoRendererProps = {
   frames: number;
   videoURL: string;
   quote: string;
+  elements: VideoElement[];
   onFinish: (videoURL: string) => void;
   onProgress: (amount: number) => void;
 };
@@ -95,6 +112,7 @@ export const VideoRenderer = (props: VideoRendererProps) => {
         {...props}
         canvasRef={canvasRef}
         onProgress={props.onProgress}
+        elements={props.elements}
       />
     </Canvas>
   );

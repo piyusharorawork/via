@@ -15,6 +15,7 @@ type Props = {
   onClose: () => void;
   onSelectElement: (element: VideoElement) => void;
   onUnselectAll: () => void;
+  onUpdateElement: (element: VideoElement) => void;
 };
 
 export const VideoEditorModal = (props: Props) => {
@@ -38,6 +39,7 @@ export const VideoEditorModal = (props: Props) => {
                   videoElements={props.videoElements}
                   onSelectElement={props.onSelectElement}
                   onUnselectAll={props.onUnselectAll}
+                  onUpdateElement={props.onUpdateElement}
                 />
               </div>
             </div>

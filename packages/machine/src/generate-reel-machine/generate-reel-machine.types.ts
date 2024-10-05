@@ -15,7 +15,7 @@ export type VideoElement = { type: "text"; id: string; textInfo: TextInfo };
 
 export type TextInfo = {
   text: string;
-  position: [number, number];
+  position: [number, number, number];
 };
 
 export type GenerateReelFormEvent =

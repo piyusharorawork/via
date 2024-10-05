@@ -53,6 +53,9 @@ export default function Home() {
               send({ type: "VideoEditor:SelectElement", element })
             }
             onUnselectAll={() => send({ type: "VideoEditor:UnselectAll" })}
+            onUpdateElement={(element) =>
+              send({ type: "VideoEditor:UpdateElement", element })
+            }
           />
         )}
 
@@ -77,6 +80,7 @@ export default function Home() {
           width={state.context.generateReelOutput.width}
           quote={state.context.quote}
           videoURL={state.context.generateReelOutput.videoURL}
+          elements={state.context.videoElements}
           onFinish={(videoURL) =>
             send({ type: "ExportReel:Finished", videoURL })
           }

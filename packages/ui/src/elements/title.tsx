@@ -1,19 +1,39 @@
 import { Text, DragControls } from "@react-three/drei";
+import { useEffect, useState } from "react";
+import { Vector3 } from "three";
 
 type Props = {
   text: string;
+  initialPosition: [number, number, number];
 
   onClick: () => void;
+  onPositionChanged: (position: [number, number, number]) => void;
 };
+
+const position = new Vector3();
 
 export const Title = (props: Props) => {
   // TODO Title is rerendering even though text is not changing
   // this is bacuse parent is rerendering
+  const [initial, setInitialPosition] = useState<[number, number, number]>([
+    0, 0, 0,
+  ]);
+
+  useEffect(() => {
+    setInitialPosition(props.initialPosition);
+  }, []);
 
   return (
-    <DragControls onDrag={(e) => {}}>
+    <DragControls
+      onDrag={(wordMat) => {
+        position.setFromMatrixPosition(wordMat);
+      }}
+      onDragEnd={() =>
+        props.onPositionChanged([position.x, position.y, position.z])
+      }
+    >
       <Text
-        position={[0, 3, 0.2]}
+        position={initial}
         fontSize={1}
         color="#fff"
         anchorX="center"
