@@ -22,3 +22,5 @@ export type ExportReelEvent =
   | { type: "ExportReel:UpdateProgress"; amount: number } // TODO this can be moved inside the machine as an internal event
   | { type: "ExportReel:Finished"; videoURL: string }
   | { type: "ExportReel:Cancel" };
+
+export type VideoPreviewEvent = { type: "VideoPreview:Close" };

@@ -524,7 +524,7 @@ describe("generate-reel-machine", () => {
       name: "should reach video editor view when clicking close button on video download view",
       initialState: { VideoDownloadView: "idle" },
       expectedState: { VideoEditingView: "idle" },
-      eventToSend: { type: "CLOSE_PREVIEW" },
+      eventToSend: { type: "VideoPreview:Close" },
       initialContext: {
         errorMessage: "",
         exportedVideoURL: "https://www.youtube.com/watch?v=123",

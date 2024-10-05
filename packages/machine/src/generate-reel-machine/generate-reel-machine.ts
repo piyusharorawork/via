@@ -7,6 +7,7 @@ import {
   GenerateReelContext,
   GenerateReelFormEvent,
   VideoEditorEvent,
+  VideoPreviewEvent,
 } from "./generate-reel-machine.types.js";
 
 export const getGenerateReelMachine = (fetch: any) => {
@@ -26,7 +27,7 @@ export const getGenerateReelMachine = (fetch: any) => {
         | GenerateReelFormEvent
         | VideoEditorEvent
         | ExportReelEvent
-        | { type: "CLOSE_PREVIEW" },
+        | VideoPreviewEvent,
     },
     actors: {
       generateReel: fromPromise<GenerateReelOutput, GenerateReelInput>(
@@ -166,7 +167,7 @@ export const getGenerateReelMachine = (fetch: any) => {
         states: {
           idle: {
             on: {
-              CLOSE_PREVIEW: {
+              "VideoPreview:Close": {
                 target: "#VideoEditingView",
                 actions: ["resetExportedURL"],
               },

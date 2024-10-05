@@ -84,7 +84,7 @@ export default function Home() {
         state.context.exportedVideoURL.length > 0 && (
           <VideoPreviewModal
             exportedVideoURL={state.context.exportedVideoURL}
-            onClose={() => send({ type: "CLOSE_PREVIEW" })}
+            onClose={() => send({ type: "VideoPreview:Close" })}
           />
         )}
     </section>
