@@ -2,6 +2,7 @@ import { Canvas, invalidate, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import { Title } from "./elements/title";
 import { VideoBackground } from "./elements/video-background";
+import { VideoElement } from "@via/machine/generate-reel-machine";
 
 type EditorSceneProps = {
   canvasRef: React.RefObject<HTMLCanvasElement>;
@@ -11,6 +12,9 @@ type EditorSceneProps = {
   frames: number;
   width: number;
   height: number;
+  videoElements: VideoElement[];
+
+  onSelectElement: (element: VideoElement) => void;
 };
 
 const EditorScene = (props: EditorSceneProps) => {
@@ -24,7 +28,19 @@ const EditorScene = (props: EditorSceneProps) => {
           setFrame((frame) => (frame + 1) % (props.frames + 1));
         }}
       />
-      <Title text={props.text} />
+      {props.videoElements.map((videoElement) => {
+        if (videoElement.type === "text") {
+          return (
+            <Title
+              key={videoElement.id}
+              text={videoElement.textInfo.text}
+              onClick={() => props.onSelectElement(videoElement)}
+            />
+          );
+        }
+        return null;
+      })}
+
       <VideoBackground
         fps={props.fps}
         frame={frame}
@@ -62,6 +78,10 @@ type VideoEditorProps = {
   text: string;
   fps: number;
   frames: number;
+  videoElements: VideoElement[];
+
+  onSelectElement: (element: VideoElement) => void;
+  onUnselectAll: () => void;
 };
 
 export const VideoEditor = (props: VideoEditorProps) => {
@@ -73,6 +93,7 @@ export const VideoEditor = (props: VideoEditorProps) => {
       ref={canvasRef}
       style={{ width: props.width, height: props.height }}
       gl={{ preserveDrawingBuffer: true, alpha: true }}
+      onPointerMissed={() => props.onUnselectAll()}
     >
       <EditorScene
         canvasRef={canvasRef}
@@ -82,6 +103,8 @@ export const VideoEditor = (props: VideoEditorProps) => {
         frames={props.frames}
         width={props.width}
         height={props.height}
+        videoElements={props.videoElements}
+        onSelectElement={props.onSelectElement}
       />
     </Canvas>
   );

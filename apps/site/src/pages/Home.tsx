@@ -45,8 +45,14 @@ export default function Home() {
             fps={state.context.generateReelOutput.fps}
             frames={state.context.generateReelOutput.frames}
             quote={state.context.quote}
+            selectedElement={state.context.selectedElement}
+            videoElements={state.context.videoElements}
             onExport={() => send({ type: "VideoEditor:Export" })}
             onClose={() => send({ type: "VideoEditor:Close" })}
+            onSelectElement={(element) =>
+              send({ type: "VideoEditor:SelectElement", element })
+            }
+            onUnselectAll={() => send({ type: "VideoEditor:UnselectAll" })}
           />
         )}
 

@@ -1,3 +1,4 @@
+import { VideoElement } from "@via/machine/generate-reel-machine";
 import { VideoEditor } from "./video-editor";
 import classNames from "classnames";
 
@@ -8,15 +9,19 @@ type Props = {
   fps: number;
   frames: number;
   quote: string;
+  selectedElement: VideoElement | null;
+  videoElements: VideoElement[];
   onExport: () => void;
   onClose: () => void;
+  onSelectElement: (element: VideoElement) => void;
+  onUnselectAll: () => void;
 };
 
 export const VideoEditorModal = (props: Props) => {
   return (
     <dialog className={"modal modal-open"}>
       <div className="modal-box">
-        <h3 className="font-bold text-lg my-2">Edit Video</h3>
+        {props.selectedElement && <section>Selected Element</section>}
 
         <div className="flex justify-center">
           <div className="mockup-phone">
@@ -30,6 +35,9 @@ export const VideoEditorModal = (props: Props) => {
                   text={props.quote}
                   fps={props.fps}
                   frames={props.frames}
+                  videoElements={props.videoElements}
+                  onSelectElement={props.onSelectElement}
+                  onUnselectAll={props.onUnselectAll}
                 />
               </div>
             </div>

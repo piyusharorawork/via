@@ -395,6 +395,9 @@ importers:
       '@via/core':
         specifier: workspace:*
         version: link:../core
+      '@via/machine':
+        specifier: workspace:*
+        version: link:../machine
       classnames:
         specifier: ^2.5.1
         version: 2.5.1

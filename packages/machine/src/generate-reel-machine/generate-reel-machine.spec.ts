@@ -197,6 +197,15 @@ describe("generate-reel-machine", () => {
           videoId: 1,
           videoUUID: "123",
         },
+        videoElements: [
+          {
+            type: "text",
+            id: "1",
+            textInfo: {
+              text: "Lets walk",
+            },
+          },
+        ],
       },
     },
     {
