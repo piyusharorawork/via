@@ -9,6 +9,7 @@ import {
   VideoEditorEvent,
   VideoPreviewEvent,
 } from "./generate-reel-machine.types.js";
+import { defaultGenerateReelContext } from "./generate-reel.machine.constant.js";
 
 export const getGenerateReelMachine = (fetch: any) => {
   const trpc = createTRPCProxyClient<AppRouter>({
@@ -79,15 +80,8 @@ export const getGenerateReelMachine = (fetch: any) => {
       }),
     },
   }).createMachine({
-    /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOgEkARAGQFEBiAcRoDkaAlAQQBUaB9NmjSoBtAAwBdRKAAOAe1i4ALrln4pIAB6IATAFZdJAJwA2bcYDsARkuHDV3ZYA0IAJ47tAZhJm9d0R90AFgAOEO0AX3DnNCw8QlImVk4uMmYGfkEqOghVMBICADdZAGs8mJwCYhJE9m5U9IEhBELZTHRlVTFxLvU5BQ61JE1EcwcSD3NA20Ng4MsHQPNnNwRtf29g40XzD2NRW0tAyOiMCvjqllqUtIyhOjAAJwfZB5JpABt2gDMX1BJyuJVGrJeq3KjNfBFNoDLo9IZ9JQqQagLQIUaWcaTaazeaHJauRDzcwkfyiYITSwecm6DyiI5REAAyqkABqlBoAHleDQKGQuBy2LwALIcigcKi8DkABUuFDoNAAGlKBVwwXCZPJEap1KjZsYSItjCYyVNAjZ8StJsESOTDGtdHTAmtAvSTrFmSQ2RROdzefzBSKxRLpbK6ABhKgcgDKfClAjZNAA6sLReL1SAEQMdYhgutzbNDB4qbSPMtEB5Al4i8YJtpK+YzLtjMdGadAaRFcq2NcGplwxxmGGhNylSr05mkdnVvojKYLNZbPYnASEA7rYtRNpzHM6eY9qEW0zzp2VaDGlkAKpSsU8XhxjkMARRqPjzVZoaop1lhBbDFkuweJYnh7Hoh5th6J7dmefaQaqABiqRkFGAASr79JOH46DOJhmFYNh2Li36mNaVgeLYog2MEQSGGB7rnMCdQ3OevBwRwZC0HKGiwIo7R5OgXyKI8yCWKIRB0EeQKXCCTGZCxbEcWhWrIsMCB2vqgTGJY24OOSwRrBaOYYpYczBOY+y6FY2iUrRZxVF6PpxjQCbJoG4qSjKrByhG0Z8PZXKOc5KZBop74oiMYwTFMtg4gsBk-toJGUuRlHUZEDL4LIEBwOoElEL0b4YWFCAALTGN+pUkqIVXVTVVVbDZ7bkNQND5eh2qYQghyGCQNazFaxYmXFAT6iJ-gFvsw26A1HoMT2YKtUpU4OiNZKiJMZKHFp2jfvhNr7EaInGKEgSiFNDK5Z67JcjyfICkFbkhp5C2hSph0YmYxgOlMe65hW35ruMDjbmSujGMRdbTceo5QTJQjPYVKljHuoMJZ9e50rM37reMIRUVpUxaeY5iQ5JSSMb2w6sexPLw+1RVvd4YNfXYR3+IEO3GSQDbWLoaxrXuzok6yV13vGZBJvdwYeTT8IFXTKkuvqsyiDWujBCzmxxcRJC6IY1HaHrdKWDWaXhEAA */
-    context: {
-      videoDescription: "",
-      quote: "",
-      errorMessage: null, // any error message when something went wrong
-      generateReelOutput: null,
-      progress: 0,
-      exportedVideoURL: "",
-    },
+    /** @xstate-layout N4IgpgJg5mDOIC5QAoC2BDAxgCwJYDswBKAOgHExCAndAFzADEB7K1ANVzAHcSAzF1AGJmrBAFUADhDpgOEMEwAicTFVwTauJvgDaABgC6iUBKaxcm7cZAAPRAE4A7ABoQATweOALCUcA2AEYnPQAmLxDQkPsAX2jXNCw8QlIKahkRdk4eflZhAXEpGQBFAFcmen0jJBBTc0t8azsEAIBmRxIvVvCAvwBWAA5HXoDw1w8Efv69El7Q-r8-cL6-EMdY+IwcAmJySjAaegyObj4BPNFU-ZkAJTAwABtK61qLLQbqpraQknt++z89L1fkF5i0xogAnp+t8QhFoV54SFeo5+usQAktsldmlDgJjjwYDiCFBbg9BBBtGASAQAG5MADWVIxSR2lwOjDxWRIhKumnwJLu9wQtKYmDob0qT2qL3qjQcvT8vi8LWhjihv0G4Oaei87X6vS8ut1v0cI1RcXRmxZKT27KOXJ5B2JpPugn2VBYJAk9zoOVQJGZ2xtOI5rHx3Nt4v5LuF+DpYvqksMzzMrysH0QvQiJD0Kp1ARRXmGCq19ns03sCuVky8APstbRgaxcgUAFEIK9+fjBC2mO2LCwEABhe5mMBSkyp2UZhArLUBEIBfo-FpZkItIu60ItRtWoMkXv9vlQbuHju0QetmymKi0Cc1KdvOUIReK+ytd+GvzBWF+LX9AISCXJcDUrYZ611XdEn3K8b1oF1u1glh4MFAppHoAAFD0oCoOBYHvGUnxnU1lxaFp10cd9BgVU151+Eg-H1IEEWRAICy8KDMR2JDbwQrJBB4lCHgQBgCFwWBsEgAjH3TUBPj0aZOhGY1tyCewtXIwDlXXYZOj+QJHB3C0m2469kL47gBLM3jUKHdB8EwB5pLqIi5MQOd3EQNV2j0QJ-mhRZ7BaAtOOtA9cHkJQmC4fBR3QCBTwihQsLAGksmHUdYHHZNpRk943JfQIV3sMJfJCBY9CCecyOXAs-lKhTKpWWILXwJh5HgaoTKIFMXNk2wIS1ABaRVGrG8aoV6UL9zZdJOW4Xq03ygaEC8dTPIQSiWhITTKpGU0WkYgJpqxWbcTDLk-UW6cCqCQC9DVSEDX1KZ1vGSFvBzRdIXmd9vpO1lI3OzITkdKMBQea7XJWtVlyBMrFjW3oWlzecdV6DpJvCfSogGAHSDPTsTyyKH+qaNjy18SZK0XQ1IQRNHGKVKI-EcMIwmhIyNmgrFBIsrhSeWpphhmACAizFowPIpwtSidoIMMsjfJRhV8fCyLFGi2KmHi-FBefZFqoBGZFko8qzf+IzYiAA */
+    context: defaultGenerateReelContext,
     initial: "GenerateFormView",
     states: {
       GenerateFormView: {

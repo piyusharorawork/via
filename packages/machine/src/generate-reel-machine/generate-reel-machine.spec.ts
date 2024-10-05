@@ -30,6 +30,50 @@ describe("generate-reel-machine", () => {
     };
   };
 
+  const fetchMock = vi.fn();
+  const generateReelMachine = getGenerateReelMachine(fetchMock);
+
+  const testScenerios = (
+    scenerios: Scenerio[],
+    scenerioToTest: string,
+    showLogs = false
+  ) => {
+    for (const scenerio of scenerios) {
+      if (scenerioToTest !== "ALL" && scenerio.name !== scenerioToTest)
+        continue;
+      it(scenerio.name, () => {
+        return new Promise<void>((done) => {
+          generateReelMachine.implementations.actors = {
+            generateReel: fromPromise<GenerateReelOutput, GenerateReelInput>(
+              async ({}) => {
+                if (!scenerio.actors.generateReelResponse.success) {
+                  throw new Error("Error Generating Reel");
+                }
+                return scenerio.actors.generateReelResponse.data;
+              }
+            ),
+          };
+          const initialState = generateReelMachine.resolveState({
+            value: scenerio.initialState,
+            context: scenerio.initialContext,
+          });
+          const actor = createActor(generateReelMachine, {
+            snapshot: initialState,
+          });
+          actor.subscribe((state) => {
+            if (showLogs) console.log(state.value);
+
+            if (state.matches(scenerio.expectedState)) {
+              if (deepEqual(state.context, scenerio.expectedContext)) done();
+            }
+          });
+          actor.start();
+          actor.send(scenerio.eventToSend);
+        });
+      });
+    }
+  };
+
   const scenerios: Scenerio[] = [
     {
       name: "should update video description",
@@ -572,44 +616,5 @@ describe("generate-reel-machine", () => {
     },
   ];
 
-  const fetchMock = vi.fn();
-  const generateReelMachine = getGenerateReelMachine(fetchMock);
-
-  const scenerioToTest: string = "ALL";
-
-  for (const scenerio of scenerios) {
-    if (scenerioToTest !== "ALL" && scenerio.name !== scenerioToTest) continue;
-    it(scenerio.name, () => {
-      return new Promise<void>((done) => {
-        generateReelMachine.implementations.actors = {
-          generateReel: fromPromise<GenerateReelOutput, GenerateReelInput>(
-            async ({}) => {
-              if (!scenerio.actors.generateReelResponse.success) {
-                throw new Error("Error Generating Reel");
-              }
-              return scenerio.actors.generateReelResponse.data;
-            }
-          ),
-        };
-        const initialState = generateReelMachine.resolveState({
-          value: scenerio.initialState,
-          context: scenerio.initialContext,
-        });
-        const actor = createActor(generateReelMachine, {
-          snapshot: initialState,
-        });
-        actor.subscribe((state) => {
-          //console.log(state.value);
-
-          if (state.matches(scenerio.expectedState)) {
-            // console.log(state.context);
-            // console.log(scenerio.expectedContext);
-            if (deepEqual(state.context, scenerio.expectedContext)) done();
-          }
-        });
-        actor.start();
-        actor.send(scenerio.eventToSend);
-      });
-    });
-  }
+  testScenerios(scenerios, "ALL", false);
 });
