@@ -24,12 +24,15 @@ export default function Home() {
           videoDescription={state.context.videoDescription}
           quote={state.context.quote}
           isGenerating={state.matches({ GenerateFormView: "generatingReel" })}
-          onGenerate={() => send({ type: "GENERATE_REEL" })}
-          enableGenerate={state.can({ type: "GENERATE_REEL" })}
+          onGenerate={() => send({ type: "Form:GenerateReel" })}
+          enableGenerate={state.can({ type: "Form:GenerateReel" })}
           onPromptChange={(prompt) =>
-            send({ type: "UPDATE_VIDEO_DESCRIPTION", videoDescription: prompt })
+            send({
+              type: "Form:UpdateVideoDescription",
+              videoDescription: prompt,
+            })
           }
-          onQuoteChange={(quote) => send({ type: "UPDATE_QUOTE", quote })}
+          onQuoteChange={(quote) => send({ type: "Form:UpdateQuote", quote })}
         />
       )}
 

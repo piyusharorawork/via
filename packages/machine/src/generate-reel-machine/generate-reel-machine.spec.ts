@@ -52,7 +52,7 @@ describe("generate-reel-machine", () => {
         quote: "",
       },
       eventToSend: {
-        type: "UPDATE_VIDEO_DESCRIPTION",
+        type: "Form:UpdateVideoDescription",
         videoDescription: "people walking",
       },
       actors: {
@@ -91,7 +91,7 @@ describe("generate-reel-machine", () => {
         quote: "Lets walk",
       },
       eventToSend: {
-        type: "UPDATE_QUOTE",
+        type: "Form:UpdateQuote",
         quote: "Lets walk",
       },
       actors: {
@@ -130,7 +130,7 @@ describe("generate-reel-machine", () => {
         quote: "Lets walk",
       },
       eventToSend: {
-        type: "GENERATE_REEL",
+        type: "Form:GenerateReel",
       },
       actors: {
         generateReelResponse: {
@@ -168,7 +168,7 @@ describe("generate-reel-machine", () => {
         quote: "Lets walk",
       },
       eventToSend: {
-        type: "GENERATE_REEL",
+        type: "Form:GenerateReel",
       },
       actors: {
         generateReelResponse: {
@@ -206,7 +206,7 @@ describe("generate-reel-machine", () => {
         quote: "Lets walk",
       },
       eventToSend: {
-        type: "GENERATE_REEL",
+        type: "Form:GenerateReel",
       },
       actors: {
         generateReelResponse: {
@@ -232,7 +232,7 @@ describe("generate-reel-machine", () => {
         quote: "Lets walk",
       },
       eventToSend: {
-        type: "GENERATE_REEL",
+        type: "Form:GenerateReel",
       },
       actors: {
         generateReelResponse: {
@@ -604,6 +604,8 @@ describe("generate-reel-machine", () => {
           //console.log(state.value);
 
           if (state.matches(scenerio.expectedState)) {
+            // console.log(state.context);
+            // console.log(scenerio.expectedContext);
             if (deepEqual(state.context, scenerio.expectedContext)) done();
           }
         });

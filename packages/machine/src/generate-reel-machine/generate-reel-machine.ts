@@ -66,13 +66,13 @@ export const getGenerateReelMachine = (fetch: any) => {
       }),
       updateVideoDescription: assign({
         videoDescription: ({ event }) =>
-          event.type === "UPDATE_VIDEO_DESCRIPTION"
+          event.type === "Form:UpdateVideoDescription"
             ? event.videoDescription
             : "",
       }),
       updateQuote: assign({
         quote: ({ event }) =>
-          event.type === "UPDATE_QUOTE" ? event.quote : "",
+          event.type === "Form:UpdateQuote" ? event.quote : "",
       }),
       resetExportedURL: assign({
         exportedVideoURL: "",
@@ -96,9 +96,11 @@ export const getGenerateReelMachine = (fetch: any) => {
         states: {
           form: {
             on: {
-              UPDATE_VIDEO_DESCRIPTION: { actions: "updateVideoDescription" },
-              UPDATE_QUOTE: { actions: "updateQuote" },
-              GENERATE_REEL: {
+              "Form:UpdateVideoDescription": {
+                actions: "updateVideoDescription",
+              },
+              "Form:UpdateQuote": { actions: "updateQuote" },
+              "Form:GenerateReel": {
                 target: "generatingReel",
                 guard: "canGenerateReel",
               },

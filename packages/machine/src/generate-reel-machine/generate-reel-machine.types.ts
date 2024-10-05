@@ -10,6 +10,6 @@ export type GenerateReelContext = {
 };
 
 export type GenerateReelFormEvent =
-  | { type: "UPDATE_VIDEO_DESCRIPTION"; videoDescription: string }
-  | { type: "UPDATE_QUOTE"; quote: string }
-  | { type: "GENERATE_REEL" };
+  | { type: "Form:UpdateVideoDescription"; videoDescription: string }
+  | { type: "Form:UpdateQuote"; quote: string }
+  | { type: "Form:GenerateReel" };
