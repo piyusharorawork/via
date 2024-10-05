@@ -5,6 +5,7 @@ import { assign, createActor, fromPromise, setup } from "xstate";
 import {
   GenerateReelContext,
   GenerateReelFormEvent,
+  VideoEditorEvent,
 } from "./generate-reel-machine.types.js";
 
 export const getGenerateReelMachine = (fetch: any) => {
@@ -22,8 +23,7 @@ export const getGenerateReelMachine = (fetch: any) => {
       context: {} as GenerateReelContext,
       events: {} as  // All the events invoked by user
         | GenerateReelFormEvent
-        | { type: "CLOSE_EDITOR" }
-        | { type: "EXPORT_REEL" }
+        | VideoEditorEvent
         | { type: "UPDATE_PROGRESS"; amount: number } // TODO this can be moved inside the machine as an internal event
         | { type: "EXPORT_FINISHED"; videoURL: string }
         | { type: "CANCEL_EXPORT" }
@@ -132,11 +132,11 @@ export const getGenerateReelMachine = (fetch: any) => {
         states: {
           idle: {
             on: {
-              CLOSE_EDITOR: {
+              "VideoEditor:Close": {
                 target: "#generateFormView",
                 actions: "resetGenerateReelOutput",
               },
-              EXPORT_REEL: "#ExportReelView",
+              "VideoEditor:Export": { target: "#ExportReelView" },
             },
           },
         },

@@ -45,8 +45,8 @@ export default function Home() {
             fps={state.context.generateReelOutput.fps}
             frames={state.context.generateReelOutput.frames}
             quote={state.context.quote}
-            onExport={() => send({ type: "EXPORT_REEL" })}
-            onClose={() => send({ type: "CLOSE_EDITOR" })}
+            onExport={() => send({ type: "VideoEditor:Export" })}
+            onClose={() => send({ type: "VideoEditor:Close" })}
           />
         )}
 

@@ -269,7 +269,7 @@ describe("generate-reel-machine", () => {
       name: "should reach generate form view when clicked on close button on edit view",
       initialState: { VideoEditingView: "idle" },
       expectedState: { GenerateFormView: "form" },
-      eventToSend: { type: "CLOSE_EDITOR" },
+      eventToSend: { type: "VideoEditor:Close" },
       initialContext: {
         errorMessage: "",
         exportedVideoURL: "",
@@ -313,7 +313,7 @@ describe("generate-reel-machine", () => {
       name: "should reach export view when clicking export button",
       initialState: { VideoEditingView: "idle" },
       expectedState: { ExportReelView: "idle" },
-      eventToSend: { type: "EXPORT_REEL" },
+      eventToSend: { type: "VideoEditor:Export" },
       initialContext: {
         errorMessage: "",
         exportedVideoURL: "",

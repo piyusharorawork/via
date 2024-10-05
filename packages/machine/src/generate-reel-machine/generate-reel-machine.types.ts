@@ -13,3 +13,7 @@ export type GenerateReelFormEvent =
   | { type: "Form:UpdateVideoDescription"; videoDescription: string }
   | { type: "Form:UpdateQuote"; quote: string }
   | { type: "Form:GenerateReel" };
+
+export type VideoEditorEvent =
+  | { type: "VideoEditor:Close" }
+  | { type: "VideoEditor:Export" };
