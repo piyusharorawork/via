@@ -20,6 +20,12 @@ type EditorSceneProps = {
 
 const EditorScene = (props: EditorSceneProps) => {
   const [frame, setFrame] = useState(0);
+  const { gl } = useThree();
+
+  gl.domElement.addEventListener("webglcontextlost", function (event) {
+    event.preventDefault();
+    console.log("WebGL context lost, attempting to recover...");
+  });
 
   return (
     <>
