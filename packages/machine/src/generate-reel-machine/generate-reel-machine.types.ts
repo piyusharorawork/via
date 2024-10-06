@@ -17,7 +17,7 @@ export type TextInfo = {
   text: string;
   position: [number, number, number];
   color: string;
-  // Add font size
+  fontSize: number;
   // Add font family
 };
 

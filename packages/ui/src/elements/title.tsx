@@ -6,6 +6,7 @@ type Props = {
   text: string;
   initialPosition: [number, number, number];
   color: string;
+  fontSize: number;
 
   onClick: () => void;
   onPositionChanged: (position: [number, number, number]) => void;
@@ -35,7 +36,7 @@ export const Title = (props: Props) => {
     >
       <Text
         position={initial}
-        fontSize={1}
+        fontSize={props.fontSize / 16}
         color={props.color}
         anchorX="center"
         anchorY="middle"

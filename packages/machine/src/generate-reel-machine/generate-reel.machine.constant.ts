@@ -18,6 +18,7 @@ export const defaultGenerateReelContext: GenerateReelContext = {
         text: "some text",
         position: [0, 0, 0],
         color: "#ffffff",
+        fontSize: 16,
       },
     },
   ],

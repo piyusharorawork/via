@@ -1,4 +1,4 @@
-import { VideoElement } from "@via/machine/generate-reel-machine";
+import { TextInfo, VideoElement } from "@via/machine/generate-reel-machine";
 
 type Props = {
   selectedElement: VideoElement | null;
@@ -7,47 +7,57 @@ type Props = {
 
 export const SelectedElement = (props: Props) => {
   if (props.selectedElement === null || props.selectedElement.type !== "text") {
-    return <div className="h-16 flex"></div>;
+    return <div className="h-16 mb-4 flex  "></div>;
   }
 
+  const handleUpdateElement = (textInfo: Partial<TextInfo>) => {
+    if (props.selectedElement === null) return;
+
+    const updatedElement: VideoElement = {
+      ...props.selectedElement,
+      textInfo: {
+        ...props.selectedElement.textInfo,
+        ...textInfo,
+      },
+    };
+
+    props.onUpdateElement(updatedElement);
+  };
+
   return (
-    <div className="h-16 flex">
-      <div className="w-full flex  gap-2 items-center py-3 ">
+    <div className=" h-16 mb-4 w-full flex items-center justify-center rounded-md gap-2">
+      <label className="form-control relative">
+        <label className="absolute -top-6 left-2">Text</label>
         <input
           type="text"
-          className="input input-bordered max-w-xs input-md"
+          className="input input-bordered w-32"
           value={props.selectedElement.textInfo.text}
-          onChange={(e) => {
-            if (!props.selectedElement) return;
-            const updatedText = e.target.value;
-            props.onUpdateElement({
-              ...props.selectedElement,
-              textInfo: {
-                ...props.selectedElement.textInfo,
-                text: updatedText,
-              },
-            });
-          }}
+          onChange={(e) => handleUpdateElement({ text: e.target.value })}
         />
+      </label>
 
-        {/* hide input boundry  */}
+      <label className="form-control relative">
+        <label className="absolute -top-6 left-2">Color</label>
         <input
           type="color"
-          className="w-12 h-12 rounded-full border-none p-0 bg-base-100"
+          className="input input-bordered w-16  rounded-full border-none p-0 bg-base-100"
           value={props.selectedElement.textInfo.color}
+          onChange={(e) => handleUpdateElement({ color: e.target.value })}
+        />
+      </label>
+
+      <label className="form-control relative">
+        <label className="absolute -top-6 left-2">Font</label>
+        <input
+          type="number"
+          className="input input-bordered w-16"
+          value={props.selectedElement.textInfo.fontSize}
           onChange={(e) => {
-            if (!props.selectedElement) return;
-            const updatedColor = e.target.value;
-            props.onUpdateElement({
-              ...props.selectedElement,
-              textInfo: {
-                ...props.selectedElement.textInfo,
-                color: updatedColor,
-              },
-            });
+            if (!e.target.valueAsNumber) return;
+            handleUpdateElement({ fontSize: e.target.valueAsNumber });
           }}
         />
-      </div>
+      </label>
     </div>
   );
 };

@@ -37,6 +37,7 @@ const EditorScene = (props: EditorSceneProps) => {
               text={videoElement.textInfo.text}
               initialPosition={videoElement.textInfo.position}
               color={videoElement.textInfo.color}
+              fontSize={videoElement.textInfo.fontSize}
               onClick={() => props.onSelectElement(videoElement)}
               onPositionChanged={(position) => {
                 props.onUpdateElement({
