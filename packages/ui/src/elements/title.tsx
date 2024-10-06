@@ -5,6 +5,7 @@ import { Vector3 } from "three";
 type Props = {
   text: string;
   initialPosition: [number, number, number];
+  color: string;
 
   onClick: () => void;
   onPositionChanged: (position: [number, number, number]) => void;
@@ -35,7 +36,7 @@ export const Title = (props: Props) => {
       <Text
         position={initial}
         fontSize={1}
-        color="#fff"
+        color={props.color}
         anchorX="center"
         anchorY="middle"
         onClick={() => props.onClick()}

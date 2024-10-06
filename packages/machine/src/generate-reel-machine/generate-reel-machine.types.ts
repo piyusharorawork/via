@@ -16,7 +16,7 @@ export type VideoElement = { type: "text"; id: string; textInfo: TextInfo };
 export type TextInfo = {
   text: string;
   position: [number, number, number];
-  // Add color
+  color: string;
   // Add font size
   // Add font family
 };

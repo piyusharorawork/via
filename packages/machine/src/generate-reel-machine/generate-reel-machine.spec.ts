@@ -207,6 +207,7 @@ describe("generate-reel-machine", () => {
               textInfo: {
                 text: "Lets walk",
                 position: [0, 0, 0],
+                color: "#ffffff",
               },
             },
           ],
@@ -286,6 +287,7 @@ describe("generate-reel-machine", () => {
             textInfo: {
               text: "some text",
               position: [0, 0, 0],
+              color: "#000000",
             },
           },
         },
@@ -320,6 +322,7 @@ describe("generate-reel-machine", () => {
             textInfo: {
               text: "some text",
               position: [0, 0, 0],
+              color: "#000000",
             },
           },
         },
@@ -349,6 +352,7 @@ describe("generate-reel-machine", () => {
             textInfo: {
               text: "some text",
               position: [0, 0, 0],
+              color: "#ffffff",
             },
           },
         },
@@ -379,6 +383,7 @@ describe("generate-reel-machine", () => {
             textInfo: {
               text: "new text",
               position: [10, 10, 10],
+              color: "#000000",
             },
           },
         },
@@ -400,6 +405,7 @@ describe("generate-reel-machine", () => {
             textInfo: {
               text: "some text",
               position: [0, 0, 0],
+              color: "#ffffff",
             },
           },
         },
@@ -422,6 +428,7 @@ describe("generate-reel-machine", () => {
               textInfo: {
                 text: "new text",
                 position: [10, 10, 10],
+                color: "#000000",
               },
             },
           ],
@@ -431,6 +438,7 @@ describe("generate-reel-machine", () => {
             textInfo: {
               text: "new text",
               position: [10, 10, 10],
+              color: "#000000",
             },
           },
         },

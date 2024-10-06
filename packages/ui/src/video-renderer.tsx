@@ -61,6 +61,7 @@ const RenderScene = (props: RenderSceneProps) => {
             <Title
               key={element.id}
               text={element.textInfo.text}
+              color={element.textInfo.color}
               initialPosition={element.textInfo.position}
               onClick={() => {}} // At the time of rendering , we dont allow selecting text
               onPositionChanged={() => {}} // At the time of rendering , we dont allow moving text

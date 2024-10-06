@@ -17,6 +17,7 @@ export const defaultGenerateReelContext: GenerateReelContext = {
       textInfo: {
         text: "some text",
         position: [0, 0, 0],
+        color: "#ffffff",
       },
     },
   ],

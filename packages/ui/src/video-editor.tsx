@@ -36,6 +36,7 @@ const EditorScene = (props: EditorSceneProps) => {
               key={videoElement.id}
               text={videoElement.textInfo.text}
               initialPosition={videoElement.textInfo.position}
+              color={videoElement.textInfo.color}
               onClick={() => props.onSelectElement(videoElement)}
               onPositionChanged={(position) => {
                 props.onUpdateElement({
