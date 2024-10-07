@@ -78,3 +78,12 @@ https://makereels.ai/en/reels/66f97902d8b56cd4d6154f91
 ## Media Store
 
 https://www.pexels.com/search/family/
+
+## TODO by preeti
+
+- text font style
+- font weight
+- font underline
+- transition
+- background music
+- own voice
