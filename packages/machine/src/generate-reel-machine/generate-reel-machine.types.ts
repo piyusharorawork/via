@@ -18,7 +18,7 @@ export type TextInfo = {
   position: [number, number, number];
   color: string;
   fontSize: number;
-  // Add font family
+  font: string;
 };
 
 export type GenerateReelFormEvent =

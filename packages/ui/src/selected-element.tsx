@@ -1,4 +1,8 @@
-import { TextInfo, VideoElement } from "@via/machine/generate-reel-machine";
+import {
+  availableFonts,
+  TextInfo,
+  VideoElement,
+} from "@via/machine/generate-reel-machine";
 
 type Props = {
   selectedElement: VideoElement | null;
@@ -47,7 +51,7 @@ export const SelectedElement = (props: Props) => {
       </label>
 
       <label className="form-control relative">
-        <label className="absolute -top-6 left-2">Font</label>
+        <label className="absolute -top-6 left-2">Size</label>
         <input
           type="number"
           className="input input-bordered w-16"
@@ -57,6 +61,26 @@ export const SelectedElement = (props: Props) => {
             handleUpdateElement({ fontSize: e.target.valueAsNumber });
           }}
         />
+      </label>
+      <label className="form-control relative">
+        <label className="absolute -top-6 left-2">Font</label>
+        <details className="dropdown">
+          <summary className="btn m-1">
+            {props.selectedElement.textInfo.font}
+          </summary>
+          <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+            {availableFonts.map((fontName) => {
+              return (
+                <li
+                  key={fontName}
+                  onClick={() => handleUpdateElement({ font: fontName })}
+                >
+                  <a>{fontName}</a>
+                </li>
+              );
+            })}
+          </ul>
+        </details>
       </label>
     </div>
   );

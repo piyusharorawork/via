@@ -1,18 +1,22 @@
-import { Text, DragControls } from "@react-three/drei";
-import { useEffect, useState } from "react";
-import { Vector3 } from "three";
+import { Text, DragControls, Text3D } from "@react-three/drei";
+import { useEffect, useRef, useState } from "react";
+import { Mesh, Vector3 } from "three";
 
 type Props = {
   text: string;
   initialPosition: [number, number, number];
   color: string;
   fontSize: number;
+  font: string;
 
   onClick: () => void;
   onPositionChanged: (position: [number, number, number]) => void;
 };
 
+// TODO remove global
 const position = new Vector3();
+
+const DIV_FACTOR = 24;
 
 export const Title = (props: Props) => {
   // TODO Title is rerendering even though text is not changing
@@ -34,16 +38,19 @@ export const Title = (props: Props) => {
         props.onPositionChanged([position.x, position.y, position.z])
       }
     >
-      <Text
+      <Text3D
+        font={`/${props.font}.json`}
         position={initial}
-        fontSize={props.fontSize / 16}
-        color={props.color}
-        anchorX="center"
-        anchorY="middle"
+        scale={[
+          props.fontSize / DIV_FACTOR,
+          props.fontSize / DIV_FACTOR,
+          props.fontSize / DIV_FACTOR,
+        ]}
         onClick={() => props.onClick()}
       >
         {props.text}
-      </Text>
+        <meshBasicMaterial color={props.color} />
+      </Text3D>
     </DragControls>
   );
 };

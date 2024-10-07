@@ -3,6 +3,17 @@ import {
   GenerateReelContext,
 } from "./generate-reel-machine.types.js";
 
+export const availableFonts = [
+  "Bodoni",
+  "Garamond",
+  "FiraSans",
+  "Playfair",
+  "Poppins",
+  "Raleway",
+  "Roboto",
+  "SourceCode",
+];
+
 export const defaultGenerateReelContext: GenerateReelContext = {
   videoDescription: "",
   quote: "",
@@ -19,6 +30,7 @@ export const defaultGenerateReelContext: GenerateReelContext = {
         position: [0, 0, 0],
         color: "#ffffff",
         fontSize: 16,
+        font: "Roboto",
       },
     },
   ],

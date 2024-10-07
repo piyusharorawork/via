@@ -217,3 +217,5 @@ export const getGenerateReelActor = (fetch: any) => {
 };
 
 export * from "./generate-reel-machine.types.js";
+
+export { availableFonts } from "./generate-reel.machine.constant.js";
