@@ -5,7 +5,8 @@
     "compile": "tsc --watch",
     "build": "tsc",
     "clean": "rm -rf .turbo dist node_modules",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test": "vitest run"
   },
   "exports": {
     "./video-management-machine": {
