@@ -25,7 +25,8 @@
   "scripts": {
     "build": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
     "compile": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "clean":"rm -rf node_modules dist .turbo"
   },
   "peerDependencies": {
     "react": "^18.3.1"
