@@ -2,7 +2,7 @@ import { Button } from "../components/button.component.tsx";
 import { Separator } from "../components/separator.component.tsx";
 import { AddUserIcon } from "./icons.tsx";
 
-export default function Navbar() {
+export const Navbar = () => {
   return (
     <section id="navbar flex flex-col">
       <main className="h-12 flex items-center justify-between mx-4">
@@ -15,4 +15,4 @@ export default function Navbar() {
       <Separator className="bg-gray-600" />
     </section>
   );
-}
+};
