@@ -1,6 +1,6 @@
 import { Button } from "../components/button.component.tsx";
 import { Separator } from "../components/separator.component.tsx";
-import { AddUserIcon } from "./icons.tsx";
+import { AddUserIcon } from "../icons.tsx";
 
 export const Navbar = () => {
   return (

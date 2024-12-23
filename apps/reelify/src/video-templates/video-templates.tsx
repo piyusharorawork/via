@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/card.component.tsx";
+import { VideoIcon } from "../icons.tsx";
 
 type VideoTemplate = {
   id: number;
@@ -32,8 +33,9 @@ export const VideoTemplates = (props: Props) => {
             <CardHeader>
               <CardTitle>{template.name}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="relative">
               <video
+                className="rounded-lg"
                 crossOrigin="anonymous"
                 playsInline
                 muted
@@ -54,9 +56,10 @@ export const VideoTemplates = (props: Props) => {
                 <source src={template.videoUrl} type="video/mp4" />
               </video>
             </CardContent>
-            <CardFooter>
-              <Button className="w-full bg-purple-900">
-                <span className="text-white">Use</span>
+            <CardFooter className="flex justify-center">
+              <Button className="">
+                <VideoIcon />
+                <span>Create Video</span>
               </Button>
             </CardFooter>
           </Card>
