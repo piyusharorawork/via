@@ -4,6 +4,10 @@ const config: Omit<Config, "content"> = {
   theme: {
     extend: {
       backgroundImage: {},
+      screens: {
+        "3xl": "1920px",
+        "4xl": "2560px",
+      },
     },
   },
   plugins: [],

@@ -21,13 +21,13 @@ export const VideoTemplates = (props: Props) => {
   return (
     <section
       id="video-templates"
-      className="w-full h-full  grid grid-cols-1 items-center md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
+      className="w-full h-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-6 gap-4"
     >
       {props.templates.map((template) => {
         return (
           <Card
             key={template.id}
-            className="w-80 my-4 mx-8 justify-self-center"
+            className="w-80 my-4 justify-self-center h-auto"
           >
             <CardHeader>
               <CardTitle>{template.name}</CardTitle>
