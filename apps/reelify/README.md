@@ -8,7 +8,7 @@
 - [ ] remove full screen and menu from controls audio (Requires customer video player)
 - [ ] make it same across all broswers (Requires customer video player)
 - [x] add back button on editor page (Use Logo)
-- [ ] make video load on editor page (same video as a template)
+- [x] make video load on editor page (same video as a template)
 - [ ] hide timeline insread show upload button
 - [ ] allow only 1 video to be uploaded
 - [ ] when upload done , replace template with the uploaded video
