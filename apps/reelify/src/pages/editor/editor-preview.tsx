@@ -3,6 +3,17 @@ import { useStore } from "../../store.ts";
 
 export const EditorPreview = () => {
   const selectedTemplate = useStore((state) => state.selectedTemplate);
+  const uploadedFileUrl = useStore((state) => state.uploadedFileUrl);
+
+  const getVideoUrl = () => {
+    if (uploadedFileUrl) {
+      return uploadedFileUrl;
+    }
+
+    return selectedTemplate?.videoUrl;
+  };
+
+  const videoUrl = getVideoUrl();
 
   return (
     <section
@@ -13,13 +24,14 @@ export const EditorPreview = () => {
         <MockPhone>
           {selectedTemplate && (
             <video
+              key={videoUrl}
               className="rounded-xl"
               crossOrigin="anonymous"
               muted
               loop
               autoPlay
             >
-              <source src={selectedTemplate.videoUrl} type="video/mp4" />
+              <source src={videoUrl} type="video/mp4" />
             </video>
           )}
         </MockPhone>

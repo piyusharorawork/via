@@ -1,14 +1,16 @@
 import { useSearchParams } from "react-router-dom";
 import { EditorPreview } from "./editor-preview.tsx";
-import { Timeline } from "./timeline.tsx";
 import { useEffect } from "react";
 import { useStore } from "../../store.ts";
+import { VideoUploadButton } from "./video-upload-button.tsx";
+import { Timeline } from "./timeline.tsx";
 
 export default function EditorPage() {
   const [searchParams] = useSearchParams();
   const templateId = searchParams.get("templateId");
 
   const setSelectedTemplate = useStore((state) => state.setSelectedTemplate);
+  const videoUploadStatus = useStore((state) => state.videoUploadStatus);
 
   useEffect(() => {
     setSelectedTemplate(Number(templateId));
@@ -18,7 +20,9 @@ export default function EditorPage() {
     <>
       <section id="editor-page" className="h-full flex flex-col">
         <EditorPreview />
-        <Timeline />
+        {(videoUploadStatus === "not-uploaded" ||
+          videoUploadStatus === "uploading") && <VideoUploadButton />}
+        {videoUploadStatus === "uploaded" && <Timeline />}
       </section>
     </>
   );

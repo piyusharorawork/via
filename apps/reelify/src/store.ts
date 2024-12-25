@@ -9,8 +9,16 @@ type VideoTemplate = {
 type State = {
   videoTemplates: VideoTemplate[];
   selectedTemplate: VideoTemplate | null;
+  uploadedFileUrl: string | null;
+  videoUploadStatus: "not-uploaded" | "uploading" | "uploaded";
+  videoUploadProgress: number;
 
   setSelectedTemplate: (id: number) => void;
+  setUploadedFileUrl: (url: string) => void;
+  setVideoUploadStatus: (
+    status: "not-uploaded" | "uploading" | "uploaded"
+  ) => void;
+  setVideoUploadProgress: (progress: number) => void;
 };
 
 export const useStore = create<State>((set) => ({
@@ -47,10 +55,22 @@ export const useStore = create<State>((set) => ({
     },
   ],
   selectedTemplate: null,
+  uploadedFileUrl: null,
+  videoUploadStatus: "not-uploaded",
+  videoUploadProgress: 0,
   setSelectedTemplate: (id: number) => {
     const template = useStore
       .getState()
       .videoTemplates.find((template) => template.id === id);
     set({ selectedTemplate: template });
+  },
+  setUploadedFileUrl: (url: string) => {
+    set({ uploadedFileUrl: url });
+  },
+  setVideoUploadStatus: (status: "not-uploaded" | "uploading" | "uploaded") => {
+    set({ videoUploadStatus: status });
+  },
+  setVideoUploadProgress: (progress: number) => {
+    set({ videoUploadProgress: progress });
   },
 }));

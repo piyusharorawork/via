@@ -9,3 +9,15 @@ body {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
+
+.upload-button div {
+  display: none;
+}
+
+.upload-button input {
+  opacity: 0;
+}
+
+.upload-button label {
+  opacity: 0;
+}

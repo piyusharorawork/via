@@ -4,6 +4,8 @@ import cors from "cors";
 import { createRouter } from "./router.js";
 import { getUploadFileRouter } from "./routes/upload-file.route.js";
 import { Server, IncomingMessage, ServerResponse } from "http";
+import { createRouteHandler } from "uploadthing/express";
+import { uploadRouter } from "./upload-thing.js";
 
 type ApplicationConfig = {
   databaseName: string;
@@ -57,6 +59,14 @@ export class Application {
           trpcExpress.createExpressMiddleware({
             router: appRouter,
             createContext,
+          })
+        );
+
+        app.use(
+          "/api/uploadthing",
+          createRouteHandler({
+            router: uploadRouter,
+            config: {},
           })
         );
 
