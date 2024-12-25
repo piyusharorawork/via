@@ -1,9 +1,8 @@
 import { useSearchParams } from "react-router-dom";
-import { EditorPreview } from "../editor-preview/editor-preview.tsx";
-import { Timeline } from "../editor-preview/timeline.tsx";
-import { Navbar } from "../navbar/navbar.component.tsx";
+import { EditorPreview } from "./editor-preview.tsx";
+import { Timeline } from "./timeline.tsx";
 import { useEffect } from "react";
-import { useStore } from "../store.ts";
+import { useStore } from "../../store.ts";
 
 export default function EditorPage() {
   const [searchParams] = useSearchParams();
@@ -16,10 +15,11 @@ export default function EditorPage() {
   }, []);
 
   return (
-    <section id="editor-page" className="h-screen  w-full py-2 flex flex-col">
-      <Navbar />
-      <EditorPreview />
-      <Timeline />
-    </section>
+    <>
+      <section id="editor-page" className="h-full flex flex-col">
+        <EditorPreview />
+        <Timeline />
+      </section>
+    </>
   );
 }

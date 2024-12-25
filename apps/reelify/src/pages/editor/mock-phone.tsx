@@ -11,7 +11,7 @@ export const MockPhone = (props: Props) => {
       <span className="border border-black bg-black w-3 h-3 mt-2 rounded-full"></span>
       <span className="absolute -right-2 top-20  border-4 border-black h-10 rounded-md"></span>
       <span className="absolute -right-2 top-44  border-4 border-black h-24 rounded-md"></span>
-      {props.children}
+      <div className="absolute w-full h-full rounded-xl">{props.children}</div>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "../components/card.component.tsx";
+} from "../../components/card.component.tsx";
 import { Link } from "react-router-dom";
 
 type VideoTemplate = {

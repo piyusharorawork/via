@@ -1,5 +1,5 @@
 import { MockPhone } from "./mock-phone.tsx";
-import { useStore } from "../store.ts";
+import { useStore } from "../../store.ts";
 
 export const EditorPreview = () => {
   const selectedTemplate = useStore((state) => state.selectedTemplate);
@@ -13,7 +13,7 @@ export const EditorPreview = () => {
         <MockPhone>
           {selectedTemplate && (
             <video
-              className="w-full h-full rounded-xl"
+              className="rounded-xl"
               crossOrigin="anonymous"
               muted
               loop
