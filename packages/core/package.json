@@ -34,6 +34,10 @@
     "./find-video": {
       "types": "./src/find-video/find-video.ts",
       "default": "./dist/find-video/find-video.js"
+    },
+    "./video-timmer": {
+      "types": "./src/video-trimmer/video-trimmer.ts",
+      "default": "./dist/video-trimmer/video-trimmer.js"
     }
   },
   "devDependencies": {

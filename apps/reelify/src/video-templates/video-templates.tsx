@@ -1,12 +1,9 @@
-import { Button } from "../components/button.component.tsx";
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "../components/card.component.tsx";
-import { VideoIcon } from "../icons.tsx";
 import { Link } from "react-router-dom";
 
 type VideoTemplate = {
@@ -31,38 +28,28 @@ export const VideoTemplates = (props: Props) => {
             <CardHeader>
               <CardTitle>{template.name}</CardTitle>
             </CardHeader>
-            <CardContent className="relative">
-              <video
-                className="rounded-lg"
-                crossOrigin="anonymous"
-                playsInline
-                muted
-                loop
-                controls
-                onMouseEnter={(e) => {
-                  const video = e.target as HTMLVideoElement;
-                  video.play();
-                }}
-                onMouseLeave={(e) => {
-                  const video = e.target as HTMLVideoElement;
-                  video.pause();
-                }}
-                onClick={(e) => {
-                  const video = e.target as HTMLVideoElement;
-                  video.paused ? video.play() : video.pause();
-                }}
-              >
-                <source src={template.videoUrl} type="video/mp4" />
-              </video>
-            </CardContent>
-            <CardFooter className="flex justify-center">
-              <Link to={`/editor`}>
-                <Button variant="link">
-                  <VideoIcon />
-                  <span>Create Video</span>
-                </Button>
+
+            <CardContent className="relative cursor-pointer">
+              <Link to={`/editor?templateId=${template.id}`}>
+                <video
+                  className="rounded-lg"
+                  crossOrigin="anonymous"
+                  playsInline
+                  muted
+                  loop
+                  onMouseEnter={(e) => {
+                    const video = e.target as HTMLVideoElement;
+                    video.play();
+                  }}
+                  onMouseLeave={(e) => {
+                    const video = e.target as HTMLVideoElement;
+                    video.pause();
+                  }}
+                >
+                  <source src={template.videoUrl} type="video/mp4" />
+                </video>
               </Link>
-            </CardFooter>
+            </CardContent>
           </Card>
         );
       })}

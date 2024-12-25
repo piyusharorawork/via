@@ -5,7 +5,7 @@ type Props = {
 export const MockPhone = (props: Props) => {
   return (
     <div
-      className="relative flex justify-center border-4 border-black rounded-2xl w-full h-full"
+      className="relative flex justify-center border-4 border-black rounded-2xl w-full h-full bg-black"
       style={{ boxShadow: "10px 10px 5px 12px rgb(209, 218, 218)" }}
     >
       <span className="border border-black bg-black w-3 h-3 mt-2 rounded-full"></span>
