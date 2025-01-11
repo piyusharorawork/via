@@ -1,5 +1,17 @@
 # TODO
 
+**_Jan 11, 2025_**
+
+- [ ] Break Down video into transitions
+- [ ] Use sample travel vlog video for testing
+- [ ] Come up with a plan to show transitions
+
+**_December 25, 2024_**
+
+- [ ] Original Template (https://www.renderforest.com/template/luxurious-hotel-highlights-reel)
+- [ ] Upload video timeline show
+- [ ]
+
 **_December 24, 2024_**
 
 - [x] remove create video button
@@ -13,9 +25,3 @@
 - [x] allow only 1 video to be uploaded
 - [x] when upload done , replace template with the uploaded video
 - [x] and show the timeline layout
-
-**_December 25, 2024_**
-
-- [ ] Original Template (https://www.renderforest.com/template/luxurious-hotel-highlights-reel)
-- [ ] Upload video timeline show
-- [ ]
