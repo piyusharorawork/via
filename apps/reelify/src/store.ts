@@ -6,6 +6,7 @@ type VideoTemplate = {
   video: {
     high: string;
     low: string;
+    combined: string;
   };
 };
 
@@ -62,6 +63,8 @@ export const useStore = create<State>((set) => ({
       video: {
         high: "https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736600178/hotel-highlight-reel-original.mp4",
         low: "https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736599645/render-forest.mp4",
+        combined:
+          "https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736603169/combined.mp4",
       },
     },
   ],

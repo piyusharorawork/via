@@ -6,7 +6,9 @@
     "clean": "rm -rf .turbo dist node_modules temp",
     "start": "tsc; node dist/cli.js",
     "load-videos": "tsc; node dist/load-videos.js",
-    "download-video": "tsc; node dist/download-video.js"
+    "download-video": "tsc; node dist/download-video.js",
+    "download-audio": "tsc; node dist/download-audio.js",
+    "form-video": "tsc; node dist/form-video.js"
   },
   "devDependencies": {
     "@types/uuid": "^10.0.0",
