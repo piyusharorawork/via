@@ -63,7 +63,7 @@ export class VideoManager {
       const resizedVideoPath = getTempFilePath(`${generateId()}.mp4`);
       await resizeVideo({
         outputFilePath: resizedVideoPath,
-        resolution: "LOW",
+        resolution: "VERY_LOW_SD_360p",
         videoPath,
       });
       const trimmedVideoPath = getTempFilePath(`${generateId()}.mp4`);

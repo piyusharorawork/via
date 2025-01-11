@@ -3,7 +3,10 @@ import { create } from "zustand";
 type VideoTemplate = {
   id: number;
   name: string;
-  videoUrl: string;
+  video: {
+    high: string;
+    low: string;
+  };
 };
 
 type State = {
@@ -23,35 +26,43 @@ type State = {
 
 export const useStore = create<State>((set) => ({
   videoTemplates: [
+    // {
+    //   id: 1,
+    //   name: "Food",
+    //   videoUrl:
+    //     "https://utfs.io/f/aDJlEJjuVaFgCWdCWa5T0xEBHIfCMchA6Yk3ty1XJsRZa7nQ",
+    // },
+    // {
+    //   id: 2,
+    //   name: "Beach",
+    //   videoUrl:
+    //     "https://utfs.io/f/aDJlEJjuVaFg3ZxQgwViNjRm1G7TAhsxa9eHMtWOcJIgrypD",
+    // },
+    // {
+    //   id: 3,
+    //   name: "Famliy",
+    //   videoUrl:
+    //     "https://utfs.io/f/aDJlEJjuVaFg2gnk8MeSIZgcv5qlHAL49KsXudbG68eWtOQ3",
+    // },
+    // {
+    //   id: 4,
+    //   name: "Mountain",
+    //   videoUrl:
+    //     "https://utfs.io/f/aDJlEJjuVaFgUHWNDvLHKJFBuz38RdYy6PwMITVvACW7qDsh",
+    // },
+    // {
+    //   id: 5,
+    //   name: "House",
+    //   videoUrl:
+    //     "https://utfs.io/f/aDJlEJjuVaFgHS4cyR9oXzh2PLQK4uigABFO7rkq8cwa5Wyl",
+    // },
     {
-      id: 1,
-      name: "Food",
-      videoUrl:
-        "https://utfs.io/f/aDJlEJjuVaFgCWdCWa5T0xEBHIfCMchA6Yk3ty1XJsRZa7nQ",
-    },
-    {
-      id: 2,
-      name: "Beach",
-      videoUrl:
-        "https://utfs.io/f/aDJlEJjuVaFg3ZxQgwViNjRm1G7TAhsxa9eHMtWOcJIgrypD",
-    },
-    {
-      id: 3,
-      name: "Famliy",
-      videoUrl:
-        "https://utfs.io/f/aDJlEJjuVaFg2gnk8MeSIZgcv5qlHAL49KsXudbG68eWtOQ3",
-    },
-    {
-      id: 4,
-      name: "Mountain",
-      videoUrl:
-        "https://utfs.io/f/aDJlEJjuVaFgUHWNDvLHKJFBuz38RdYy6PwMITVvACW7qDsh",
-    },
-    {
-      id: 5,
-      name: "House",
-      videoUrl:
-        "https://utfs.io/f/aDJlEJjuVaFgHS4cyR9oXzh2PLQK4uigABFO7rkq8cwa5Wyl",
+      id: 8,
+      name: "Hotel Highlight Reel",
+      video: {
+        high: "https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736600178/hotel-highlight-reel-original.mp4",
+        low: "https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736599645/render-forest.mp4",
+      },
     },
   ],
   selectedTemplate: null,

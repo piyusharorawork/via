@@ -6,28 +6,29 @@ import { trimVideo } from "@via/core/video-timmer";
 (async () => {
   console.log("downloading video");
 
-  const videoURL = "https://www.youtube.com/shorts/Why7d611PVA";
+  const videoURL =
+    "https://www.renderforest.com/template/luxurious-hotel-highlights-reel";
 
-  const videoName = "house";
+  const videoName = "hotel-highlight-reel";
 
   const originalVideoPath = getTempFilePath(`${videoName}-original.mp4`);
 
   await downloadYoutubeVideo(videoURL, originalVideoPath);
 
-  const resizedVideoPath = getTempFilePath(`${videoName}-resized.mp4`);
+  // const resizedVideoPath = getSampleVideoFilePath(`${videoName}-240p.mp4`);
 
-  await resizeVideo({
-    outputFilePath: resizedVideoPath,
-    resolution: "LOW",
-    videoPath: originalVideoPath,
-  });
+  // await resizeVideo({
+  //   outputFilePath: resizedVideoPath,
+  //   resolution: "SUPER_LOW_SD_240p",
+  //   videoPath: originalVideoPath,
+  // });
 
-  const trimmedVideoPath = getSampleVideoFilePath(`${videoName}.mp4`);
+  // const trimmedVideoPath = getSampleVideoFilePath(`${videoName}.mp4`);
 
-  await trimVideo({
-    start: 0,
-    end: 9,
-    outputPath: trimmedVideoPath,
-    videoPath: resizedVideoPath,
-  });
+  // await trimVideo({
+  //   start: 0,
+  //   end: 9,
+  //   outputPath: trimmedVideoPath,
+  //   videoPath: resizedVideoPath,
+  // });
 })();

@@ -10,7 +10,7 @@ export const EditorPreview = () => {
       return uploadedFileUrl;
     }
 
-    return selectedTemplate?.videoUrl;
+    return selectedTemplate?.video.high;
   };
 
   const videoUrl = getVideoUrl();
@@ -25,7 +25,7 @@ export const EditorPreview = () => {
           {selectedTemplate && (
             <video
               key={videoUrl}
-              className="rounded-xl"
+              className="rounded-xl h-full"
               crossOrigin="anonymous"
               muted
               loop

@@ -2,35 +2,49 @@ import { exec } from "child_process";
 // medium : 960 X 540 export
 
 export type VideoResolution =
-  | "ULTRA_LOW"
-  | "LOW"
-  | "MEDIUM"
-  | "HIGH"
-  | "ULTRA_HIGH";
-
+  | "4K_ULTRA_HD_2160p"
+  | "QUAD_HD_1440p"
+  | "FULL_HD_1080p"
+  | "HD_720p"
+  | "LOW_RES_HD_540p"
+  | "SD_480p"
+  | "VERY_LOW_SD_360p"
+  | "SUPER_LOW_SD_240p";
 const resolutionMap: Record<
   VideoResolution,
   { width: number; height: number }
 > = {
-  ULTRA_HIGH: {
+  "4K_ULTRA_HD_2160p": {
+    height: 3840,
+    width: 2160,
+  },
+  QUAD_HD_1440p: {
+    height: 2560,
+    width: 1440,
+  },
+  FULL_HD_1080p: {
     height: 1920,
     width: 1080,
   },
-  HIGH: {
+  HD_720p: {
     height: 1280,
     width: 720,
   },
-  MEDIUM: {
+  LOW_RES_HD_540p: {
     height: 960,
     width: 540,
   },
-  LOW: {
+  SD_480p: {
+    height: 854,
+    width: 480,
+  },
+  VERY_LOW_SD_360p: {
     height: 640,
     width: 360,
   },
-  ULTRA_LOW: {
-    height: 320,
-    width: 180,
+  SUPER_LOW_SD_240p: {
+    height: 426,
+    width: 240,
   },
 };
 
