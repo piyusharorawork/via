@@ -11,6 +11,7 @@ import {
 import HomePage from "./pages/home/home.page.tsx";
 import EditorPage from "./pages/editor/editor.page.tsx";
 import { Navbar } from "./navbar/navbar.component.tsx";
+import VideoAnalyserPage from "./pages/video-analyser/video-analyser.page.tsx";
 
 const Layout = () => {
   return (
@@ -33,6 +34,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route index element={<HomePage />} />
           <Route path="editor" element={<EditorPage />} />
         </Route>
+        <Route path="/video-analyser" element={<VideoAnalyserPage />} />
       </Routes>
     </Router>
   </React.StrictMode>
