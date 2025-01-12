@@ -7,9 +7,9 @@ export const useVideoUrl = () => {
   if (uploadedFileUrl) return uploadedFileUrl;
 
   if (!selectedTemplate) {
-    console.error("no video url found");
+    // console.error("no video url found");
     return;
   }
 
-  return selectedTemplate.video.combined;
+  return selectedTemplate.videoURL.combined;
 };

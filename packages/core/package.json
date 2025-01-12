@@ -38,6 +38,10 @@
     "./video-timmer": {
       "types": "./src/video-trimmer/video-trimmer.ts",
       "default": "./dist/video-trimmer/video-trimmer.js"
+    },
+    "./video-info": {
+      "types": "./src/video-info/video-info.ts",
+      "default": "./dist/video-info/video-info.js"
     }
   },
   "devDependencies": {

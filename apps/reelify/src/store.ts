@@ -3,12 +3,35 @@ import { create } from "zustand";
 type VideoTemplate = {
   id: number;
   name: string;
-  video: {
+  videoURL: {
     high: string;
     low: string;
     combined: string;
   };
+  videoInfo: {
+    fps: number;
+    frameCount: number;
+    frameSize: {
+      width: number;
+      height: number;
+    };
+  };
+  transitions: Transition[];
 };
+
+type Transition = {
+  start: number;
+  end: number;
+  info: TransitionInfo;
+};
+
+type TransitionInfo =
+  | {
+      type: "cut";
+    }
+  | {
+      type: "fade-out-instant";
+    };
 
 type State = {
   videoTemplates: VideoTemplate[];
@@ -60,11 +83,20 @@ export const useStore = create<State>((set) => ({
     {
       id: 8,
       name: "Hotel Highlight Reel",
-      video: {
+      videoURL: {
         high: "https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736600178/hotel-highlight-reel-original.mp4",
         low: "https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736599645/render-forest.mp4",
         combined:
           "https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736603169/combined.mp4",
+      },
+      transitions: [],
+      videoInfo: {
+        fps: 30,
+        frameCount: 422,
+        frameSize: {
+          height: 1920,
+          width: 1080,
+        },
       },
     },
   ],
