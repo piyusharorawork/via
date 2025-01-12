@@ -9,7 +9,7 @@ export const Navbar = () => {
       <main className="h-12 flex items-center justify-between mx-4">
         <Link to="/">
           <Button variant="link">
-            <span className="text-xl">Reelify</span>
+            <span className="text-xl">Quick Reel</span>
           </Button>
         </Link>
         <Button variant="link">

@@ -7,6 +7,7 @@ import {
 import { Navbar } from "@/components/features/navbar";
 import HomePage from "./pages/home/home.page";
 import EditorPage from "./pages/editor/editor.page";
+import VideoAnalyserPage from "./pages/video-analyser/video-analyser.page";
 
 const Layout = () => {
   return (
@@ -29,7 +30,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="editor" element={<EditorPage />} />
         </Route>
-        {/* <Route path="/video-analyser" element={<VideoAnalyserPage />} /> */}
+        <Route path="/video-analyser" element={<VideoAnalyserPage />} />
       </Routes>
     </Router>
   );
