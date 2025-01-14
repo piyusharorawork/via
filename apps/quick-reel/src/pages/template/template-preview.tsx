@@ -6,7 +6,7 @@ export const TemplatePreview = () => {
 
   return (
     <section
-      id="editor-preview"
+      id="template-preview"
       className="w-full grow flex justify-center p-4 "
     >
       <div className="aspect-[9/16] h-full">

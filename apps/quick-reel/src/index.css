@@ -116,13 +116,13 @@
   }
 }
 
-html {
+/* html {
   overflow: hidden;
 }
 body {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-}
+} */
 
 .upload-button div {
   display: none;
