@@ -7,21 +7,21 @@ import { trimVideo } from "@via/core/video-timmer";
   console.log("downloading video");
 
   const videoURL =
-    "https://www.renderforest.com/template/luxurious-hotel-highlights-reel";
+    "https://drive.google.com/file/d/1_mAHN_yiw8S_p0zvSMMAg6-cx-eQLWEt/view?usp=sharing";
 
-  const videoName = "hotel-highlight-reel";
+  const videoName = "v1";
 
   const originalVideoPath = getTempFilePath(`${videoName}-original.mp4`);
 
   await downloadYoutubeVideo(videoURL, originalVideoPath);
 
-  // const resizedVideoPath = getSampleVideoFilePath(`${videoName}-240p.mp4`);
+  const resizedVideoPath = getSampleVideoFilePath(`${videoName}-240p.mp4`);
 
-  // await resizeVideo({
-  //   outputFilePath: resizedVideoPath,
-  //   resolution: "SUPER_LOW_SD_240p",
-  //   videoPath: originalVideoPath,
-  // });
+  await resizeVideo({
+    outputFilePath: resizedVideoPath,
+    resolution: "HD_720p",
+    videoPath: originalVideoPath,
+  });
 
   // const trimmedVideoPath = getSampleVideoFilePath(`${videoName}.mp4`);
 
