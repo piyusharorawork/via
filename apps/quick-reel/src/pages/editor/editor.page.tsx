@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { EditorPreview } from "./editor-preview";
 import { useEffect } from "react";
-import { useStore } from "../../store.ts";
+import { useStore } from "../../store/store.ts";
 
 export default function EditorPage() {
   const [searchParams] = useSearchParams();

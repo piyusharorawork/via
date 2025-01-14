@@ -1,4 +1,4 @@
-import { useStore } from "@/store";
+import { useStore } from "@/store/store";
 import { VideoTemplates } from "./video-templates";
 
 export default function HomePage() {

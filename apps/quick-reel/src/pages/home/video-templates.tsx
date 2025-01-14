@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { VideoTemplate } from "@/store/video-template.store";
+import { VideoTemplate } from "@/store/store";
 import { Link } from "react-router-dom";
 
 type Props = {
