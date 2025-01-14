@@ -13,7 +13,7 @@ export const CardTimeline = (props: Props) => {
   const transitions = useStore((state) => state.transitions);
 
   return (
-    <section id="card-timeline" className="h-32 flex flex-col gap-4">
+    <section id="card-timeline" className="h-64 flex flex-col gap-4">
       <Slider
         defaultValue={[props.frameNumber]}
         min={1}
@@ -21,12 +21,12 @@ export const CardTimeline = (props: Props) => {
         onValueChange={(values) => props.onFrameChange(values[0])}
       />
 
-      <div className="grow flex gap-3 overflow-x-scroll">
+      <div className="grow flex gap-4 overflow-x-scroll">
         {transitions.map((transition, index) => {
           return (
             <Card
               key={index}
-              className="w-32 h-20  border-black border-4 shrink-0"
+              className="aspect-[9/16] h-full  border-black border-4 shrink-0"
             >
               <FrameImage frameNumber={transition.start} fps={30} />
             </Card>

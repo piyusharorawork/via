@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 type Props = { frameNumber: number; fps: number };
 
 export const FrameImage = (props: Props) => {
-  console.log("frame image");
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [imgURL, setImgURL] = useState<string | null>(null);
@@ -38,7 +37,6 @@ export const FrameImage = (props: Props) => {
   return (
     <>
       <video
-        src="https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736599645/render-forest.mp4"
         ref={videoRef}
         className="hidden"
         crossOrigin="anonymous"
@@ -56,7 +54,12 @@ export const FrameImage = (props: Props) => {
           const imageDataUrl = canvas.toDataURL("image/png");
           setImgURL(imageDataUrl);
         }}
-      />
+      >
+        <source
+          src="https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736600178/hotel-highlight-reel-original.mp4"
+          type="video/mp4"
+        ></source>
+      </video>
 
       <canvas ref={canvasRef} width={1080} height={1920} className="hidden" />
 
