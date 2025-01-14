@@ -56,7 +56,7 @@ export const FrameImage = (props: Props) => {
         }}
       >
         <source
-          src="https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736600178/hotel-highlight-reel-original.mp4"
+          src="https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736840303/hotel-highlight-reel-240p.mp4"
           type="video/mp4"
         ></source>
       </video>
