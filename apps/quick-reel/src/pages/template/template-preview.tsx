@@ -1,7 +1,7 @@
 import { MockPhone } from "./mock-phone";
 import { useVideoUrl } from "./use-video-url";
 
-export const EditorPreview = () => {
+export const TemplatePreview = () => {
   const videoUrl = useVideoUrl();
 
   return (

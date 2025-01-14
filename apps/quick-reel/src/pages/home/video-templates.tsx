@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { VideoTemplate } from "@/store/store";
+import { VideoTemplate } from "@/store/video-template.store";
 import { Link } from "react-router-dom";
 
 type Props = {
@@ -20,7 +20,7 @@ export const VideoTemplates = (props: Props) => {
             </CardHeader>
 
             <CardContent className="relative cursor-pointer">
-              <Link to={`/editor?templateId=${template.id}`}>
+              <Link to={`/template/${template.id}`}>
                 <video
                   className="rounded-lg"
                   crossOrigin="anonymous"

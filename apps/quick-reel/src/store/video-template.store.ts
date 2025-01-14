@@ -3,8 +3,7 @@ import { State } from "./store";
 
 export type VideoTemplateSlice = {
   videoTemplates: VideoTemplate[];
-  selectedTemplate: VideoTemplate | null;
-  setSelectedTemplate: (id: number) => void;
+  videoTemplate: (id: number) => VideoTemplate | undefined;
 };
 
 export type VideoTemplate = {
@@ -30,7 +29,7 @@ export const useVideoTemplateStore: StateCreator<
   [],
   [],
   VideoTemplateSlice
-> = (set, get) => ({
+> = (_set, get) => ({
   videoTemplates: [
     {
       id: 8,
@@ -417,14 +416,6 @@ export const useVideoTemplateStore: StateCreator<
       },
     },
   ],
-  selectedTemplate: null,
-  uploadedFileUrl: null,
-  videoUploadStatus: "not-uploaded",
-  videoUploadProgress: 0,
-  setSelectedTemplate: (id: number) => {
-    const template = get().videoTemplates.find(
-      (template) => template.id === id
-    );
-    set({ selectedTemplate: template });
-  },
+  videoTemplate: (id) =>
+    get().videoTemplates.find((template) => template.id === id),
 });
