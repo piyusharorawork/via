@@ -1,8 +1,8 @@
-// import { useStore } from "@/store/store";
-import { Frame } from "./frame";
 import { useState } from "react";
 import { useTemplateFrameCount } from "./use-template-frame-count";
 import { CardTimeline } from "./card-timeline";
+
+import { EditorPreview } from "./editor-preview";
 
 export default function EditorPage() {
   const frameCount = useTemplateFrameCount();
@@ -10,16 +10,13 @@ export default function EditorPage() {
 
   return (
     <div className="h-full flex flex-col px-4 py-2 gap-4">
-      <section id="editor-preview" className="grow flex justify-center">
-        <div className="aspect-[9/16] max-w-sm">
-          <Frame frameNumber={frameNumber} />
-        </div>
-      </section>
+      <EditorPreview frameNumber={frameNumber} fps={30} />
 
       <CardTimeline
         frameCount={frameCount}
         frameNumber={frameNumber}
         onFrameChange={setFrameNumber}
+        onTransitionSelect={(transition) => setFrameNumber(transition.start)}
       />
     </div>
   );

@@ -5,7 +5,7 @@ export type TransitionSlice = {
   transitions: Transition[];
 };
 
-type Transition = {
+export type Transition = {
   start: number;
   info: TransitionInfo;
 };

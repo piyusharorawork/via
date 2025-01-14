@@ -2,11 +2,13 @@ import { Card } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { useStore } from "@/store/store";
 import { FrameImage } from "./frame-image";
+import { Transition } from "@/store/transition.store";
 
 type Props = {
   frameNumber: number;
   frameCount: number;
   onFrameChange: (frameNumber: number) => void;
+  onTransitionSelect: (transition: Transition) => void;
 };
 
 export const CardTimeline = (props: Props) => {
@@ -27,6 +29,9 @@ export const CardTimeline = (props: Props) => {
             <Card
               key={index}
               className="aspect-[9/16] h-full  border-black border-4 shrink-0"
+              onClick={() => {
+                props.onTransitionSelect(transition);
+              }}
             >
               <FrameImage frameNumber={transition.start} fps={30} />
             </Card>
