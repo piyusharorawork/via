@@ -28,7 +28,7 @@ export const CardTimeline = (props: Props) => {
           return (
             <Card
               key={index}
-              className="aspect-[9/16] h-full  border-black border-4 shrink-0"
+              className="cursor-pointer aspect-[9/16] h-full  border-black border-4 shrink-0"
               onClick={() => {
                 props.onTransitionSelect(transition);
               }}

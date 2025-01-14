@@ -3,6 +3,7 @@ import { useTemplateFrameCount } from "./use-template-frame-count";
 import { CardTimeline } from "./card-timeline";
 
 import { EditorPreview } from "./editor-preview";
+import { PlayButton } from "./play-button";
 
 export default function EditorPage() {
   const frameCount = useTemplateFrameCount();
@@ -11,6 +12,8 @@ export default function EditorPage() {
   return (
     <div className="h-full flex flex-col px-4 py-2 gap-4">
       <EditorPreview frameNumber={frameNumber} fps={30} />
+
+      <PlayButton onIncrement={() => console.log("inc")} />
 
       <CardTimeline
         frameCount={frameCount}

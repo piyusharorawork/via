@@ -21,7 +21,7 @@ export const EditorPreview = (props: Props) => {
     <section id="editor-preview" className="grow flex justify-center">
       <video
         ref={videoRef}
-        className="aspect-[9/16] w-[335px] "
+        className="aspect-[9/16] w-[300px] "
         crossOrigin="anonymous"
         onSeeking={() => setSeeking(true)}
         onSeeked={() => setSeeking(false)}
