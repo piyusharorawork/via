@@ -1,9 +1,14 @@
 # Quick Reel
 
+**_Jan 18, 2025_**
+
+- [*] Use Frame Image Store with preloaded images of low quality
+- [*] Highlight the current transition in the timeline
+
 **_Jan 11, 2025_**
 
-- [ ] Break Down video into transitions
-- [ ] Use sample travel vlog video for testing
+- [*] Break Down video into transitions
+- [*] Use sample travel vlog video for testing
 - [ ] Come up with a plan to show transitions
 
 **_December 25, 2024_**

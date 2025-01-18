@@ -1,7 +1,7 @@
-import { Card } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { useStore } from "@/store/store";
 import { Transition } from "@/store/transition.store";
+import { TimelineFrame } from "./timeline-frame";
 
 type Props = {
   frameNumber: number;
@@ -22,19 +22,21 @@ export const CardTimeline = (props: Props) => {
         max={props.frameCount}
         onValueChange={(values) => props.onFrameChange(values[0])}
       />
+      {props.frameNumber}
 
       <div className="grow flex gap-4 overflow-x-scroll">
         {transitions.map((transition, index) => {
           return (
-            <Card
+            <TimelineFrame
               key={index}
-              className="cursor-pointer aspect-[9/16] h-full  border-black border-4 shrink-0"
-              onClick={() => {
-                props.onTransitionSelect(transition);
-              }}
-            >
-              <img src={transitionFrames[index]} className="w-full h-full" />
-            </Card>
+              isSelected={
+                props.frameNumber >= transition.start &&
+                props.frameNumber <= transition.end
+              }
+              transition={transition}
+              transitionFrame={transitionFrames[index]}
+              onTransitionSelect={props.onTransitionSelect}
+            />
           );
         })}
       </div>

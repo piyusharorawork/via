@@ -7,6 +7,7 @@ export type TransitionSlice = {
 
 export type Transition = {
   start: number;
+  end: number;
   info: TransitionInfo;
 };
 
@@ -40,6 +41,7 @@ export const useTransitionStore: StateCreator<
   transitions: [
     {
       start: 1,
+      end: 27,
       info: {
         type: "layout",
         grid: { columns: 1, rows: 1 },
@@ -48,6 +50,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 28,
+      end: 57,
       info: {
         type: "layout",
         grid: { rows: 0, columns: 0 },
@@ -56,6 +59,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 58,
+      end: 61,
       info: {
         type: "layout",
         grid: {
@@ -67,6 +71,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 62,
+      end: 63,
       info: {
         type: "layout",
         grid: {
@@ -78,6 +83,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 64,
+      end: 66,
       info: {
         type: "layout",
         grid: {
@@ -89,6 +95,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 67,
+      end: 69,
       info: {
         type: "layout",
         grid: {
@@ -100,6 +107,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 70,
+      end: 72,
       info: {
         type: "layout",
         grid: {
@@ -111,6 +119,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 73,
+      end: 75,
       info: {
         type: "layout",
         grid: {
@@ -122,6 +131,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 76,
+      end: 78,
       info: {
         type: "layout",
         grid: {
@@ -133,6 +143,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 79,
+      end: 81,
       info: {
         type: "layout",
         grid: {
@@ -144,6 +155,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 82,
+      end: 84,
       info: {
         type: "layout",
         grid: {
@@ -155,6 +167,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 85,
+      end: 87,
       info: {
         type: "layout",
         grid: {
@@ -166,6 +179,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 88,
+      end: 90,
       info: {
         type: "layout",
         grid: {
@@ -177,6 +191,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 91,
+      end: 93,
       info: {
         type: "layout",
         grid: {
@@ -188,6 +203,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 94,
+      end: 96,
       info: {
         type: "layout",
         grid: {
@@ -199,6 +215,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 97,
+      end: 99,
       info: {
         type: "layout",
         grid: {
@@ -210,6 +227,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 100,
+      end: 102,
       info: {
         type: "layout",
         grid: {
@@ -221,6 +239,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 103,
+      end: 105,
       info: {
         type: "layout",
         grid: {
@@ -232,6 +251,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 106,
+      end: 108,
       info: {
         type: "layout",
         grid: {
@@ -243,6 +263,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 109,
+      end: 126,
       info: {
         type: "layout",
         grid: { columns: 1, rows: 1 },
@@ -251,6 +272,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 127,
+      end: 172,
       info: {
         type: "layout",
         grid: { columns: 1, rows: 1 },
@@ -259,12 +281,14 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 173,
+      end: 183,
       info: {
         type: "dissolve",
       },
     },
     {
       start: 184,
+      end: 218,
       info: {
         type: "layout",
         grid: { columns: 1, rows: 1 },
@@ -273,6 +297,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 219,
+      end: 233,
       info: {
         type: "layout",
         grid: { columns: 1, rows: 1 },
@@ -281,6 +306,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 234,
+      end: 246,
       info: {
         type: "layout",
         grid: { columns: 1, rows: 1 },
@@ -289,6 +315,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 247,
+      end: 258,
       info: {
         type: "layout",
         grid: { columns: 1, rows: 1 },
@@ -297,6 +324,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 259,
+      end: 272,
       info: {
         type: "layout",
         grid: { columns: 1, rows: 1 },
@@ -305,6 +333,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 273,
+      end: 285,
       info: {
         type: "layout",
         grid: { columns: 1, rows: 1 },
@@ -313,6 +342,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 286,
+      end: 299,
       info: {
         type: "layout",
         grid: { columns: 1, rows: 1 },
@@ -321,6 +351,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 300,
+      end: 312,
       info: {
         type: "layout",
         grid: { columns: 1, rows: 1 },
@@ -329,6 +360,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 313,
+      end: 326,
       info: {
         type: "layout",
         grid: { columns: 1, rows: 1 },
@@ -337,6 +369,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 327,
+      end: 341,
       info: {
         type: "layout",
         grid: { rows: 3, columns: 1 },
@@ -345,6 +378,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 342,
+      end: 353,
       info: {
         type: "layout",
         grid: { rows: 3, columns: 1 },
@@ -356,6 +390,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 354,
+      end: 363,
       info: {
         type: "layout",
         grid: { rows: 3, columns: 1 },
@@ -368,6 +403,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 364,
+      end: 378,
       info: {
         type: "layout",
         grid: { rows: 3, columns: 1 },
@@ -380,6 +416,7 @@ export const useTransitionStore: StateCreator<
     },
     {
       start: 379,
+      end: 392,
       info: {
         type: "layout",
         grid: { rows: 3, columns: 1 },
@@ -391,7 +428,8 @@ export const useTransitionStore: StateCreator<
       },
     },
     {
-      start: 93,
+      start: 393,
+      end: 422,
       info: {
         type: "layout",
         grid: { rows: 3, columns: 1 },
