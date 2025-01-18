@@ -3,11 +3,21 @@ import { PauseIcon, PlayIcon } from "@/components/features/icons";
 import { useEffect, useState } from "react";
 
 type Props = {
+  fps: number;
   onIncrement: () => void;
 };
 
 export const PlayButton = (props: Props) => {
   const [status, setStatus] = useState<"paused" | "playing">("paused");
+
+  useEffect(() => {
+    if (status === "paused") return;
+    const interval = setInterval(() => {
+      props.onIncrement();
+    }, 1000 / props.fps);
+
+    return () => clearInterval(interval);
+  }, [status]);
 
   return (
     <section id="play-button" className="flex justify-center items-center">

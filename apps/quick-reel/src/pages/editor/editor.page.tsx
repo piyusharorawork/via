@@ -13,7 +13,12 @@ export default function EditorPage() {
     <div className="h-full flex flex-col px-4 py-2 gap-4">
       <EditorPreview frameNumber={frameNumber} fps={30} />
 
-      <PlayButton onIncrement={() => console.log("inc")} />
+      <PlayButton
+        onIncrement={() =>
+          setFrameNumber((frameNumber) => (frameNumber + 1) % (frameCount + 1))
+        }
+        fps={30}
+      />
 
       <CardTimeline
         frameCount={frameCount}

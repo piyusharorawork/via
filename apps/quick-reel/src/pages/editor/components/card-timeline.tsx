@@ -18,6 +18,7 @@ export const CardTimeline = (props: Props) => {
     <section id="card-timeline" className="h-64 flex flex-col gap-4">
       <Slider
         defaultValue={[props.frameNumber]}
+        value={[props.frameNumber]}
         min={1}
         max={props.frameCount}
         onValueChange={(values) => props.onFrameChange(values[0])}
