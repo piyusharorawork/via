@@ -23,8 +23,6 @@ export const CardTimeline = (props: Props) => {
         max={props.frameCount}
         onValueChange={(values) => props.onFrameChange(values[0])}
       />
-      {props.frameNumber}
-
       <div className="grow flex gap-4 overflow-x-scroll">
         {transitions.map((transition, index) => {
           return (

@@ -10,12 +10,11 @@ type Props = {
 };
 
 export const TimelineFrame = (props: Props) => {
-  const borderColor = props.isSelected ? "green-400" : "gray-900";
   return (
     <Card
       className={cn(
-        "cursor-pointer aspect-[9/16] h-full   border-4 shrink-0",
-        `border-${borderColor}`
+        "cursor-pointer aspect-[9/16] h-full border-4 shrink-0 border-gray-800",
+        props.isSelected ? "border-green-400" : "border-gray-900"
       )}
       onClick={() => props.onTransitionSelect(props.transition)}
     >
