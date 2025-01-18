@@ -7,19 +7,21 @@ import { trimVideo } from "@via/core/video-timmer";
   console.log("downloading video");
 
   const videoURL =
-    "https://drive.google.com/file/d/1_mAHN_yiw8S_p0zvSMMAg6-cx-eQLWEt/view?usp=sharing";
+    "https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736600178/hotel-highlight-reel-original.mp4";
 
-  const videoName = "v1";
+  const videoName = "hotel-highlight-reel";
 
   const originalVideoPath = getTempFilePath(`${videoName}-original.mp4`);
 
   await downloadYoutubeVideo(videoURL, originalVideoPath);
 
-  const resizedVideoPath = getSampleVideoFilePath(`${videoName}-240p.mp4`);
+  const resizedVideoPath = getSampleVideoFilePath(
+    `${videoName}-hotel-highlight-reel-SD-240p.mp4`
+  );
 
   await resizeVideo({
     outputFilePath: resizedVideoPath,
-    resolution: "HD_720p",
+    resolution: "SUPER_LOW_SD_240p",
     videoPath: originalVideoPath,
   });
 

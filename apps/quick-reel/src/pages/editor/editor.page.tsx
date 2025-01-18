@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useTemplateFrameCount } from "./use-template-frame-count";
-import { CardTimeline } from "./card-timeline";
+import { useTemplateFrameCount } from "./hooks/use-template-frame-count";
+import { CardTimeline } from "./components/card-timeline";
 
-import { EditorPreview } from "./editor-preview";
-import { PlayButton } from "./play-button";
+import { EditorPreview } from "./components/editor-preview";
+import { PlayButton } from "./components/play-button";
 
 export default function EditorPage() {
   const frameCount = useTemplateFrameCount();
