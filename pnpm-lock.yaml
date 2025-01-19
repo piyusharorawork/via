@@ -186,6 +186,55 @@ importers:
         specifier: ^6.0.5
         version: 6.0.7(@types/node@20.17.9)(jiti@1.21.6)(yaml@2.6.1)
 
+  apps/quick-reel-next:
+    dependencies:
+      '@radix-ui/react-slot':
+        specifier: ^1.1.1
+        version: 1.1.1(@types/react@19.0.7)(react@19.0.0)
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      lucide-react:
+        specifier: ^0.471.0
+        version: 0.471.0(react@19.0.0)
+      next:
+        specifier: 15.1.5
+        version: 15.1.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react:
+        specifier: ^19.0.0
+        version: 19.0.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.0.0(react@19.0.0)
+      tailwind-merge:
+        specifier: ^2.5.5
+        version: 2.5.5
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.16(ts-node@10.9.2(@types/node@20.17.9)(typescript@5.6.3)))
+    devDependencies:
+      '@types/node':
+        specifier: ^20
+        version: 20.17.9
+      '@types/react':
+        specifier: ^19
+        version: 19.0.7
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.0.3(@types/react@19.0.7)
+      postcss:
+        specifier: ^8
+        version: 8.5.1
+      tailwindcss:
+        specifier: ^3.4.1
+        version: 3.4.16(ts-node@10.9.2(@types/node@20.17.9)(typescript@5.6.3))
+      typescript:
+        specifier: ^5
+        version: 5.6.3
+
   apps/server:
     dependencies:
       '@trpc/server':
