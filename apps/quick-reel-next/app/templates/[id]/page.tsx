@@ -9,7 +9,7 @@ export default function TemplatesPage() {
     <section id="editor-page" className="h-full flex flex-col ">
       <TemplatePreview />
       <div className="h-32 flex justify-center items-center ">
-        <Link href={`/template/${templates[0].id}/editor`}>
+        <Link href={`/templates/${templates[0].id}/editor`}>
           <Button className="w-32 flex gap-4">
             <VideoIcon />
             <span>Edit Video</span>
