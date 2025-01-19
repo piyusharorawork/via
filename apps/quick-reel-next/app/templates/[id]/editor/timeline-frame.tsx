@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Transition } from "@/store/transition.store";
+import { Transition } from "../../data/transitions";
 
 type Props = {
   transition: Transition;
