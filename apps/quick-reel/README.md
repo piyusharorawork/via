@@ -4,6 +4,7 @@
 
 - [*] Use Frame Image Store with preloaded images of low quality
 - [*] Highlight the current transition in the timeline
+- [ ] Move green highlighed transitions with arrow keys
 
 **_Jan 11, 2025_**
 

@@ -14,9 +14,7 @@ export default function EditorPage() {
       <EditorPreview frameNumber={frameNumber} fps={30} />
 
       <PlayButton
-        onIncrement={() =>
-          setFrameNumber((frameNumber) => (frameNumber + 1) % (frameCount + 1))
-        }
+        onIncrement={() => setFrameNumber((frameNumber) => frameNumber + 1)}
         fps={30}
       />
 

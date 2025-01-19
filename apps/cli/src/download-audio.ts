@@ -7,7 +7,7 @@ import { downloadAudioFromVideo } from "@via/core/video-downloader";
   const videoURL =
     "https://www.renderforest.com/template/luxurious-hotel-highlights-reel";
 
-  const audioName = "hotel-highlight-reel";
+  const audioName = "hotel-highlight-reel-1234";
 
   const originalAudioPath = getSampleVideoFilePath(`${audioName}-original.mp3`);
 
