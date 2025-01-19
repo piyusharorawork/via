@@ -9,7 +9,8 @@
     "download-video": "tsc; node dist/download-video.js",
     "download-audio": "tsc; node dist/download-audio.js",
     "form-video": "tsc; node dist/form-video.js",
-    "display-video-info": "tsc; node dist/display-video-info.js"
+    "display-video-info": "tsc; node dist/display-video-info.js",
+    "clip-video": "tsc; node dist/clip-video.js"
   },
   "devDependencies": {
     "@types/uuid": "^10.0.0",

@@ -42,6 +42,10 @@
     "./video-info": {
       "types": "./src/video-info/video-info.ts",
       "default": "./dist/video-info/video-info.js"
+    },
+    "./clip-video": {
+      "types": "./src/clip-video/clip-video.ts",
+      "default": "./dist/clip-video/clip-video.js"
     }
   },
   "devDependencies": {
