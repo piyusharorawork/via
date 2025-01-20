@@ -15,6 +15,7 @@ export const VideoFrame = (props: Props) => {
   const videoRef = useRef<HTMLVideoElement>(document.createElement("video"));
   const { invalidate } = useThree();
   const [seeking, setSeeking] = useState(true);
+  const [isFrameUpdated, setIsFrameUpdated] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -24,6 +25,7 @@ export const VideoFrame = (props: Props) => {
     video.muted = true;
     video.playsInline = true;
     video.onloadeddata = () => setSeeking(false);
+    video.oncanplay = () => video.pause();
   }, [props.videoUrl]);
 
   const updateFrame = async (video: HTMLVideoElement) => {
@@ -33,6 +35,7 @@ export const VideoFrame = (props: Props) => {
     texture.image = bitmap;
     texture.needsUpdate = true;
     invalidate();
+    setIsFrameUpdated(true);
   };
 
   useEffect(() => {
@@ -40,12 +43,17 @@ export const VideoFrame = (props: Props) => {
     if (!video) return;
     if (seeking) return;
     if (!video.readyState) return;
+    if (isFrameUpdated) return;
 
     video.addEventListener("seeking", () => setSeeking(true));
     video.addEventListener("seeked", () => setSeeking(false));
 
     updateFrame(video);
   }, [props.fps, props.frameNumber, videoRef.current, seeking]);
+
+  useEffect(() => {
+    setIsFrameUpdated(false);
+  }, [props.frameNumber]);
 
   return (
     <mesh rotation={[0, 0, Math.PI]}>
