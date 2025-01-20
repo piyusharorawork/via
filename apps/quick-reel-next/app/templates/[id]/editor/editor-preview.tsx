@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { VideoFrame } from "./video-frame";
 import { Canvas } from "@react-three/fiber";
+import { VideoTextureFrame } from "./video-texture-frame";
 
 type Props = {
   frameNumber: number;
@@ -22,10 +23,10 @@ export const EditorPreview = (props: Props) => {
 
   return (
     <section id="editor-preview" className="grow flex justify-center ">
-      <main className="aspect-[9/16] w-[300px] bg-red-100">
-        <Canvas>
+      <main className="aspect-[9/16] w-[300px] ">
+        <Canvas frameloop="demand">
           <ambientLight />
-          <VideoFrame
+          <VideoTextureFrame
             frameNumber={props.frameNumber}
             fps={props.fps}
             videoUrl="https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736600178/hotel-highlight-reel-original.mp4"
