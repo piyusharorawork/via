@@ -1,6 +1,6 @@
 # Next Starter Website
 
-- react 19
-- next 15
-- tailwindcss
+- react 18
+- next 14 (with app router)
+- tailwindcss 3
 - shadcn ui
