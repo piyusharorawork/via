@@ -4,3 +4,4 @@
 - next 14 (with app router)
 - tailwindcss 3
 - shadcn ui
+- threejs r3f
