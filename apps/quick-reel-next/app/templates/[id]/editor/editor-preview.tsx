@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { VideoFrame } from "./video-frame";
+import { Canvas } from "@react-three/fiber";
 
 type Props = {
   frameNumber: number;
@@ -19,19 +21,17 @@ export const EditorPreview = (props: Props) => {
   }, [props.frameNumber, videoRef.current, props.fps]);
 
   return (
-    <section id="editor-preview" className="grow flex justify-center">
-      <video
-        ref={videoRef}
-        className="aspect-[9/16] w-[300px] "
-        crossOrigin="anonymous"
-        onSeeking={() => setSeeking(true)}
-        onSeeked={() => setSeeking(false)}
-      >
-        <source
-          src="https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736600178/hotel-highlight-reel-original.mp4"
-          type="video/mp4"
-        />
-      </video>
+    <section id="editor-preview" className="grow flex justify-center ">
+      <main className="aspect-[9/16] w-[300px] bg-red-100">
+        <Canvas>
+          <ambientLight />
+          <VideoFrame
+            frameNumber={props.frameNumber}
+            fps={props.fps}
+            videoUrl="https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736600178/hotel-highlight-reel-original.mp4"
+          />
+        </Canvas>
+      </main>
     </section>
   );
 };

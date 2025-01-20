@@ -15,7 +15,7 @@ type Props = {
 
 export const CardTimeline = (props: Props) => {
   return (
-    <section id="card-timeline" className="h-64 flex flex-col gap-4">
+    <section id="card-timeline" className="h-48 flex flex-col gap-4">
       <Slider
         defaultValue={[props.frameNumber]}
         value={[props.frameNumber]}
