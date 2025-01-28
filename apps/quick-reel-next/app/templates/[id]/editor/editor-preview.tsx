@@ -15,7 +15,7 @@ export const EditorPreview = (props: Props) => {
           <ambientLight />
           <VideoTextureFrame
             fps={props.fps}
-            videoUrl="https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736600178/hotel-highlight-reel-original.mp4"
+            videoUrl="https://res.cloudinary.com/dmtxtgvsb/video/upload/v1738046574/hotel-highlight-reel-hotel-highlight-reel-540p_kgksts.mp4"
           />
         </Canvas>
       </main>

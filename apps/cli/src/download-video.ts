@@ -16,12 +16,12 @@ import { trimVideo } from "@via/core/video-timmer";
   await downloadYoutubeVideo(videoURL, originalVideoPath);
 
   const resizedVideoPath = getSampleVideoFilePath(
-    `${videoName}-hotel-highlight-reel-SD-240p.mp4`
+    `${videoName}-hotel-highlight-reel-540p.mp4`
   );
 
   await resizeVideo({
     outputFilePath: resizedVideoPath,
-    resolution: "SUPER_LOW_SD_240p",
+    resolution: "LOW_RES_HD_540p",
     videoPath: originalVideoPath,
   });
 
