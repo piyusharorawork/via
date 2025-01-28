@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* <script src="//unpkg.com/react-scan/dist/auto.global.js" /> */}
+        <script src="//unpkg.com/react-scan/dist/auto.global.js" />
       </head>
       <body>{children}</body>
     </html>
