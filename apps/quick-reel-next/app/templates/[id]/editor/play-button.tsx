@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { PauseIcon, PlayIcon } from "@/components/features/icons";
 import { useEffect, useRef, useState } from "react";
+import { store } from "@/store/store";
 
 type Props = {
   fps: number;
-  onIncrement: () => void;
 };
 
 export const PlayButton = (props: Props) => {
@@ -25,7 +25,7 @@ export const PlayButton = (props: Props) => {
       const timeElapsed = currentTime - lastTime;
       const frameDuration = 1000 / props.fps;
       if (timeElapsed > frameDuration) {
-        props.onIncrement();
+        store.send({ type: "incementFrame" });
         lastTime += frameDuration;
       }
       animationFrameId = requestAnimationFrame(update);
