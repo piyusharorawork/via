@@ -11,7 +11,10 @@ export default function EditorPage() {
 
   return (
     <div className="h-full flex flex-col px-4 py-2 gap-4">
-      <EditorPreview fps={30} />
+      <EditorPreview
+        fps={30}
+        videoUrl="https://res.cloudinary.com/dmtxtgvsb/video/upload/v1738046574/hotel-highlight-reel-hotel-highlight-reel-540p_kgksts.mp4"
+      />
       <PlayButton fps={30} />
       <CardTimeline
         frameCount={frameCount}
