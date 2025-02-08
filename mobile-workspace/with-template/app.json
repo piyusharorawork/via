@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "WithRouter",
-    "slug": "with-router",
+    "name": "WithTemplate",
+    "slug": "with-template",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -43,7 +43,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "a8e5f1b8-39fa-4ce6-99fb-6ce88dda09ea"
+        "projectId": "3b4414bd-9eeb-4983-8a47-f9100c19685b"
       }
     }
   }

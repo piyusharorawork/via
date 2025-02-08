@@ -14,9 +14,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <script src="//unpkg.com/react-scan/dist/auto.global.js" />
+        {/* <script src="//unpkg.com/react-scan/dist/auto.global.js" /> */}
       </head>
-      <body>{children}</body>
+      <body
+        style={
+          {
+            // overflow: "hidden",
+            // position: "fixed",
+            // width: "100%",
+          }
+        }
+      >
+        {children}
+      </body>
     </html>
   );
 }
