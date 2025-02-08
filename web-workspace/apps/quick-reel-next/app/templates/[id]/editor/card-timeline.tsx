@@ -5,6 +5,7 @@ import { TimelineFrame } from "./timeline-frame";
 import { Transition } from "../../data/transitions";
 import { useSelector } from "@xstate/store/react";
 import { store } from "@/store/store";
+import { SliderWithoutThumb } from "@/components/ui/slider-without-thimb";
 
 type Props = {
   transitions: Transition[];
@@ -42,7 +43,7 @@ const FrameSlider = (props: FrameSliderProps) => {
   const frame = useSelector(store, (state) => state.context.frame);
   // console.log(frame);
   return (
-    <Slider
+    <SliderWithoutThumb
       defaultValue={[frame]}
       value={[frame]}
       min={1}
