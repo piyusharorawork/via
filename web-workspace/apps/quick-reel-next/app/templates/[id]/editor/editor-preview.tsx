@@ -2,8 +2,6 @@
 
 import { Canvas } from "@react-three/fiber";
 import { VideoTextureFrame } from "./video-texture-frame";
-import { useEffect, useRef } from "react";
-import { store } from "@/store/store";
 import { EditorPreviewVideo } from "./editor-preview-video";
 
 type Props = {

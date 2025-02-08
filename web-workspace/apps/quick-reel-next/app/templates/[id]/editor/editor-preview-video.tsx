@@ -1,8 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
-import { useUpdateFrame } from "./use-update-frame";
 import { store } from "@/store/store";
-// import { useVideoController } from "./use-video-controller";
-import { useSelector } from "@xstate/store/react";
 import { useLoadVideo } from "./use-load-video";
 
 type Props = {

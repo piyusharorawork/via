@@ -16,6 +16,7 @@ type Context = {
   selectedTransitionIdx: number;
   videoStatus: VideoStatus;
   videoElement: HTMLVideoElement | null;
+  audioElement: HTMLAudioElement | null;
 };
 
 const context: Context = {
@@ -23,6 +24,7 @@ const context: Context = {
   selectedTransitionIdx: 0,
   videoStatus: "not-ready",
   videoElement: null,
+  audioElement: null,
 };
 
 export const store = createStore({
@@ -35,13 +37,18 @@ export const store = createStore({
         selectedTransitionIdx: getSelectedTransitionIdx(event.frame),
       };
     },
-    setVideoStatus: ({ videoElement }, event: { status: VideoStatus }) => {
-      if (!videoElement) return {};
+    setVideoStatus: (
+      { videoElement, audioElement },
+      event: { status: VideoStatus }
+    ) => {
+      if (!videoElement || !audioElement) return {};
 
       if (event.status === "playing") {
         videoElement.play();
+        audioElement.play();
       } else if (event.status === "paused") {
         videoElement.pause();
+        audioElement.pause();
       }
 
       return {
@@ -54,16 +61,23 @@ export const store = createStore({
       };
     },
     jumpToTransition: (
-      { videoElement },
+      { videoElement, audioElement },
       event: { transition: Transition; fps: number }
     ) => {
-      if (!videoElement) return {};
+      if (!videoElement || !audioElement) return {};
 
       videoElement.pause();
+      audioElement.pause();
       videoElement.currentTime = event.transition.start / event.fps;
+      audioElement.currentTime = event.transition.start / event.fps;
 
       return {
         frame: event.transition.start,
+      };
+    },
+    setAudioElement: ({}, event: { audioElement: HTMLAudioElement }) => {
+      return {
+        audioElement: event.audioElement,
       };
     },
   },
