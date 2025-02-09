@@ -12,6 +12,7 @@ import (
 
 func main() {
 	AnalyseVideoExample()
+
 }
 
 func AnalyseVideoExample() {

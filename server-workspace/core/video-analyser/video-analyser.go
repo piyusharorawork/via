@@ -1,11 +1,12 @@
 package videoanalyser
 
 import (
-	"bytes"
 	"errors"
 	"os/exec"
 	"strconv"
 	"strings"
+
+	commandutil "quick-reel.com/util/command-util"
 )
 
 type GetFrameSizeOutput struct {
@@ -16,17 +17,12 @@ type GetFrameSizeOutput struct {
 func GetFrameSize(videoPath string) (*GetFrameSizeOutput, error) {
 	cmd := exec.Command("ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "default=noprint_wrappers=1", videoPath)
 
-	var stdout, stderr bytes.Buffer
-
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-
-	err := cmd.Run()
+	cmdOut, err := commandutil.RunCommand(cmd)
 	if err != nil {
 		return nil, err
 	}
 
-	cmdOut := strings.TrimSpace(stdout.String())
+	cmdOut = strings.TrimSpace(cmdOut)
 	tokens := strings.Split(cmdOut, "\n")
 	widthStr := strings.Split(tokens[0], "width=")[1]
 	heightStr := strings.Split(tokens[1], "height=")[1]

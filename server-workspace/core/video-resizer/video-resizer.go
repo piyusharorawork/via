@@ -1,10 +1,11 @@
 package videoresizer
 
 import (
-	"bytes"
 	"errors"
 	"os/exec"
 	"strconv"
+
+	commandutil "quick-reel.com/util/command-util"
 )
 
 type Resolution string
@@ -69,15 +70,9 @@ func ResizeVideo(input ResizeVideoInput) error {
 
 	cmd := exec.Command("ffmpeg", "-y", "-i", input.VideoPath, "-vf", "scale="+strconv.Itoa(dimensions.Width)+":"+strconv.Itoa(dimensions.Height), "-c:a", "copy", input.OutputPath)
 
-	var stdout, stderr bytes.Buffer
-
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-
-	err := cmd.Run()
+	_, err := commandutil.RunCommand(cmd)
 
 	if err != nil {
-		println(stderr.String())
 		return err
 	}
 
