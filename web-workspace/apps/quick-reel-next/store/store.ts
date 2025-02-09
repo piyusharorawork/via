@@ -31,34 +31,17 @@ export const store = createStore({
   types: {},
   context,
   on: {
-    setFrame: ({}, event: { frame: number }) => {
-      return {
-        frame: event.frame,
-        selectedTransitionIdx: getSelectedTransitionIdx(event.frame),
-      };
-    },
-    setVideoStatus: (
-      { videoElement, audioElement },
-      event: { status: VideoStatus }
-    ) => {
+    play: ({ videoElement, audioElement }) => {
       if (!videoElement || !audioElement) return {};
-
-      if (event.status === "playing") {
-        videoElement.play();
-        audioElement.play();
-      } else if (event.status === "paused") {
-        videoElement.pause();
-        audioElement.pause();
-      }
-
-      return {
-        videoStatus: event.status,
-      };
+      videoElement.play();
+      audioElement.play();
+      return {};
     },
-    setVideoElement: ({}, event: { videoElement: HTMLVideoElement }) => {
-      return {
-        videoElement: event.videoElement,
-      };
+    pause: ({ videoElement, audioElement }) => {
+      if (!videoElement || !audioElement) return {};
+      videoElement.pause();
+      audioElement.pause();
+      return {};
     },
     jumpToTransition: (
       { videoElement, audioElement },
@@ -73,6 +56,24 @@ export const store = createStore({
 
       return {
         frame: event.transition.start,
+      };
+    },
+
+    /**Setters */
+    setFrame: ({}, event: { frame: number }) => {
+      return {
+        frame: event.frame,
+        selectedTransitionIdx: getSelectedTransitionIdx(event.frame),
+      };
+    },
+    setVideoStatus: ({}, event: { status: VideoStatus }) => {
+      return {
+        videoStatus: event.status,
+      };
+    },
+    setVideoElement: ({}, event: { videoElement: HTMLVideoElement }) => {
+      return {
+        videoElement: event.videoElement,
       };
     },
     setAudioElement: ({}, event: { audioElement: HTMLAudioElement }) => {

@@ -1,5 +1,8 @@
 import { store } from "@/store/store";
 import { useLoadVideo } from "./use-load-video";
+import { Loader } from "./loader";
+import { useSelector } from "@xstate/store/react";
+import clsx from "clsx";
 
 type Props = {
   fps: number;
@@ -8,27 +11,43 @@ type Props = {
 
 export const EditorPreviewVideo = (props: Props) => {
   const videoRef = useLoadVideo();
+  const videoStatus = useSelector(store, (state) => state.context.videoStatus);
 
   return (
-    <video
-      className="h-full w-auto object-contain rounded-xl"
-      ref={videoRef}
-      muted
-      playsInline
-      onCanPlay={(e) =>
-        store.send({
-          type: "setVideoStatus",
-          status: "paused",
-        })
-      }
-      onTimeUpdate={(e) => {
-        store.send({
-          type: "setFrame",
-          frame: e.currentTarget.currentTime * props.fps,
-        });
-      }}
-    >
-      <source src={props.videoUrl} type="video/mp4" />
-    </video>
+    <main className="relative">
+      <video
+        className={clsx("h-full w-auto object-contain rounded-xl", {
+          "blur-sm": videoStatus === "not-ready",
+        })}
+        ref={videoRef}
+        muted
+        playsInline
+        onCanPlay={(e) =>
+          store.send({
+            type: "setVideoStatus",
+            status: "paused",
+          })
+        }
+        onTimeUpdate={(e) => {
+          store.send({
+            type: "setFrame",
+            frame: e.currentTarget.currentTime * props.fps,
+          });
+        }}
+        onPlaying={() =>
+          store.send({ type: "setVideoStatus", status: "playing" })
+        }
+        onPause={() => store.send({ type: "setVideoStatus", status: "paused" })}
+        onEnded={() => console.log("ended")}
+      >
+        <source src={props.videoUrl} type="video/mp4" />
+      </video>
+
+      {videoStatus === "not-ready" && (
+        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
+          <Loader />
+        </div>
+      )}
+    </main>
   );
 };

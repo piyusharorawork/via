@@ -25,8 +25,9 @@ export const PlayButton = (props: Props) => {
         disabled={videoStatus === "not-ready"}
         className="w-16 relative"
         onClick={() => {
-          const status = videoStatus === "playing" ? "paused" : "playing";
-          store.send({ type: "setVideoStatus", status });
+          videoStatus === "playing"
+            ? store.send({ type: "pause" })
+            : store.send({ type: "play" });
         }}
       >
         <PlayButtonIcon />
