@@ -30,20 +30,13 @@ type UploadFileOutput struct {
 }
 
 func UploadFile(input UploadFileInput) (UploadFileOutput, error) {
-	cfg, err := config.LoadDefaultConfig(context.TODO(),
-		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(input.AccessKey, input.SecretKey, "")),
-		config.WithRegion(input.Region),
-	)
 
+	client, err := createClient(input.AccessKey, input.SecretKey, input.Region)
 	if err != nil {
 		return UploadFileOutput{}, err
 	}
 
-	client := s3.NewFromConfig(cfg, func(o *s3.Options) {
-		o.BaseEndpoint = aws.String(fmt.Sprintf("https://%s.digitaloceanspaces.com", input.Region))
-		o.UsePathStyle = false // Ensure virtual-hosted-style URLs
-	})
-
+	// TODO extract this to file read function
 	file, err := os.Open(input.VideoPath)
 
 	if err != nil {
@@ -92,4 +85,22 @@ func UploadFile(input UploadFileInput) (UploadFileOutput, error) {
 		ContentType: contentType,
 	}, nil
 
+}
+
+func createClient(accessKey string, secretKey string, region string) (*s3.Client, error) {
+	cfg, err := config.LoadDefaultConfig(context.TODO(),
+		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(accessKey, secretKey, "")),
+		config.WithRegion(region),
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	client := s3.NewFromConfig(cfg, func(o *s3.Options) {
+		o.BaseEndpoint = aws.String(fmt.Sprintf("https://%s.digitaloceanspaces.com", region))
+		o.UsePathStyle = false
+	})
+
+	return client, nil
 }

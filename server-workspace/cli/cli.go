@@ -5,10 +5,41 @@ import (
 
 	"github.com/joho/godotenv"
 	"quick-reel.com/vidfx/uploader"
+	videoanalyser "quick-reel.com/vidfx/video-analyser"
+
+	videoresizer "quick-reel.com/vidfx/video-resizer"
 )
 
 func main() {
+	AnalyseVideoExample()
+}
 
+func AnalyseVideoExample() {
+	frameSize, err := videoanalyser.GetFrameSize("/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4")
+
+	if err != nil {
+		panic(err)
+	}
+
+	println(frameSize.Width)
+	println(frameSize.Height)
+}
+
+func ResizeVideoExample() {
+	input := videoresizer.ResizeVideoInput{
+		VideoPath:  "/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4",
+		Resolution: videoresizer.SD_480p,
+		OutputPath: "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4",
+	}
+
+	err := videoresizer.ResizeVideo(input)
+	if err != nil {
+		panic(err)
+	}
+
+}
+
+func UploadFileExample() {
 	err := godotenv.Load()
 	if err != nil {
 		panic(err)
@@ -34,5 +65,4 @@ func main() {
 	}
 
 	println(data.Url)
-
 }

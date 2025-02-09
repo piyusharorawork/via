@@ -1,7 +1,8 @@
-package videoinfo
+package videoanalyser
 
 import (
 	"bytes"
+	"errors"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -12,7 +13,7 @@ type GetFrameSizeOutput struct {
 	Height int
 }
 
-func GetFrameSize(videoPath string) GetFrameSizeOutput {
+func GetFrameSize(videoPath string) (*GetFrameSizeOutput, error) {
 	cmd := exec.Command("ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "default=noprint_wrappers=1", videoPath)
 
 	var stdout, stderr bytes.Buffer
@@ -22,9 +23,7 @@ func GetFrameSize(videoPath string) GetFrameSizeOutput {
 
 	err := cmd.Run()
 	if err != nil {
-		println("ffprobe not found")
-		println(stderr.String())
-		panic(err)
+		return nil, err
 	}
 
 	cmdOut := strings.TrimSpace(stdout.String())
@@ -36,11 +35,11 @@ func GetFrameSize(videoPath string) GetFrameSizeOutput {
 	height, heightErr := strconv.Atoi(heightStr)
 
 	if widthErr != nil || heightErr != nil {
-		panic("width and height not found")
+		return nil, errors.New("invalid width and height")
 	}
 
 	if width == 0 || height == 0 {
-		panic("width and height not found")
+		return nil, errors.New("width and height not found")
 	}
 
 	output := GetFrameSizeOutput{
@@ -48,5 +47,5 @@ func GetFrameSize(videoPath string) GetFrameSizeOutput {
 		Height: height,
 	}
 
-	return output
+	return &output, nil
 }
