@@ -1,22 +1,38 @@
 package main
 
-import videoinfo "quick-reel.com/vidfx/video-info"
+import (
+	"os"
+
+	"github.com/joho/godotenv"
+	"quick-reel.com/vidfx/uploader"
+)
 
 func main() {
 
-	// clipVideoInput := videoclipper.ClipVideoInput{
-	// 	VideoPath:  "video.mp4",
-	// 	OutputPath: "output.mp4",
-	// 	Start:      0,
-	// 	End:        10,
-	// }
+	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
 
-	// videoclipper.ClipVideo(clipVideoInput)
+	accessKey := os.Getenv("ACCESS_KEY")
+	secretKey := os.Getenv("SECRET_KEY")
+	region := os.Getenv("REGION")
+	spaceName := os.Getenv("SPACE_NAME")
 
-	videoPath := "/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4"
+	input := uploader.UploadFileInput{
+		VideoPath: "/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4",
+		SpaceName: spaceName,
+		Region:    region,
+		AccessKey: accessKey,
+		SecretKey: secretKey,
+	}
 
-	res := videoinfo.GetFrameSize(videoPath)
+	data, err := uploader.UploadFile(input)
 
-	println(res.Width)
+	if err != nil {
+		panic(err)
+	}
+
+	println(data.Url)
 
 }
