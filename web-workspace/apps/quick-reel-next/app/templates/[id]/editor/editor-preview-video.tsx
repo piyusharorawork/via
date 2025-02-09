@@ -10,26 +10,25 @@ export const EditorPreviewVideo = (props: Props) => {
   const videoRef = useLoadVideo();
 
   return (
-    <>
-      <video
-        ref={videoRef}
-        muted
-        playsInline
-        onCanPlay={(e) =>
-          store.send({
-            type: "setVideoStatus",
-            status: "paused",
-          })
-        }
-        onTimeUpdate={(e) => {
-          store.send({
-            type: "setFrame",
-            frame: e.currentTarget.currentTime * props.fps,
-          });
-        }}
-      >
-        <source src={props.videoUrl} type="video/mp4" />
-      </video>
-    </>
+    <video
+      className="h-full w-auto object-contain rounded-xl"
+      ref={videoRef}
+      muted
+      playsInline
+      onCanPlay={(e) =>
+        store.send({
+          type: "setVideoStatus",
+          status: "paused",
+        })
+      }
+      onTimeUpdate={(e) => {
+        store.send({
+          type: "setFrame",
+          frame: e.currentTarget.currentTime * props.fps,
+        });
+      }}
+    >
+      <source src={props.videoUrl} type="video/mp4" />
+    </video>
   );
 };

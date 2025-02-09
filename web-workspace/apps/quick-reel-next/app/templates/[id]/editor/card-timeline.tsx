@@ -16,7 +16,7 @@ type Props = {
 
 export const CardTimeline = (props: Props) => {
   return (
-    <section id="card-timeline" className="h-48 flex flex-col gap-4">
+    <section id="card-timeline" className="h-full flex flex-col gap-4 py-2">
       <FrameSlider frameCount={props.frameCount} />
       <div className="grow flex gap-4 overflow-x-scroll">
         {props.transitions.map((transition, index) => {

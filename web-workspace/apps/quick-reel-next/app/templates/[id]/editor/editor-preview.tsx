@@ -11,12 +11,10 @@ type Props = {
 
 export const EditorPreview = (props: Props) => {
   return (
-    <section id="editor-preview" className="grow flex justify-center ">
-      <main className="aspect-[9/16] w-[300px] ">
-        {/* <EditorPreviewCanvas {...props} /> */}
-        <EditorPreviewVideo {...props} />
-      </main>
-    </section>
+    <main className="w-full h-full flex justify-center py-2">
+      <EditorPreviewVideo {...props} />
+      {/* <EditorPreviewCanvas {...props} /> */}
+    </main>
   );
 };
 

@@ -16,7 +16,9 @@ export default function RootLayout({
       <header>
         <Navbar />
       </header>
-      <main className="grow">{children}</main>
+      <main className="grow">
+        <div className="content-height">{children}</div>
+      </main>
     </section>
   );
 }
