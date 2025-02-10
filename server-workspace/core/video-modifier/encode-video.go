@@ -1,4 +1,4 @@
-package videoresizer
+package videomodifier
 
 import (
 	"os/exec"

@@ -7,12 +7,11 @@ import (
 	"quick-reel.com/vidfx/uploader"
 	videoanalyser "quick-reel.com/vidfx/video-analyser"
 	videoextractor "quick-reel.com/vidfx/video-extractor"
-
-	videoresizer "quick-reel.com/vidfx/video-resizer"
+	videomodifier "quick-reel.com/vidfx/video-modifier"
 )
 
 func main() {
-	ExtractClipExample()
+	GetFpsExample()
 
 }
 
@@ -28,13 +27,13 @@ func GetFrameSizeExample() {
 }
 
 func ResizeVideoExample() {
-	input := videoresizer.ResizeVideoInput{
+	input := videomodifier.ResizeVideoInput{
 		VideoPath:  "/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4",
-		Resolution: videoresizer.SD_480p,
+		Resolution: videomodifier.SD_480p,
 		OutputPath: "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4",
 	}
 
-	err := videoresizer.ResizeVideo(input)
+	err := videomodifier.ResizeVideo(input)
 	if err != nil {
 		panic(err)
 	}
@@ -106,7 +105,7 @@ func ExtractClipExample() {
 }
 
 func EncodeVideoExample() {
-	err := videoresizer.EncodeVideo(videoresizer.EncodeVideoInput{
+	err := videomodifier.EncodeVideo(videomodifier.EncodeVideoInput{
 		VideoPath:  "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4",
 		OutputPath: "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-encoded.mp4",
 	})
@@ -114,4 +113,13 @@ func EncodeVideoExample() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func GetFpsExample() {
+	fps, err := videoanalyser.GetFPS("/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4")
+	if err != nil {
+		panic(err)
+	}
+
+	println(fps)
 }
