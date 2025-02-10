@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	ExtractImageExample()
+	ExtractClipExample()
 
 }
 
@@ -84,6 +84,31 @@ func ExtractImageExample() {
 		VideoPath:  "/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4",
 		Frame:      200,
 		OutputPath: "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-1.png",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+func ExtractClipExample() {
+	err := videoextractor.ExtractClip(videoextractor.ExtractClipInput{
+		VideoPath:  "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4",
+		StartFrame: 379,
+		EndFrame:   392,
+		OutputPath: "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-1.mp4",
+		Fps:        30,
+	})
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+func EncodeVideoExample() {
+	err := videoresizer.EncodeVideo(videoresizer.EncodeVideoInput{
+		VideoPath:  "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4",
+		OutputPath: "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-encoded.mp4",
 	})
 
 	if err != nil {

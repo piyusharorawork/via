@@ -14,7 +14,7 @@ type ExtractImageInput struct {
 }
 
 func ExtractImage(input ExtractImageInput) error {
-	selection := getSelection(input.Frame)
+	selection := getSelectionForImage(input.Frame)
 	cmd := exec.Command("ffmpeg", "-y", "-i", input.VideoPath, "-vf", selection, "-vsync", "vfr", "-frames:v", "1", input.OutputPath)
 
 	_, err := commandutil.RunCommand(cmd)
@@ -27,6 +27,6 @@ func ExtractImage(input ExtractImageInput) error {
 
 }
 
-func getSelection(frame int) string {
+func getSelectionForImage(frame int) string {
 	return "select=gte(n\\," + strconv.Itoa(frame) + ")"
 }
