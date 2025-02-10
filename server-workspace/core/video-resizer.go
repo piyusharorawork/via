@@ -5,7 +5,7 @@ import (
 	"os/exec"
 	"strconv"
 
-	util "quick-reel.com/util/command-util"
+	util "quick-reel.com/util"
 )
 
 type Resolution string

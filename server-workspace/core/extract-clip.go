@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os/exec"
 
-	util "quick-reel.com/util/command-util"
+	util "quick-reel.com/util"
 )
 
 type ExtractClipInput struct {

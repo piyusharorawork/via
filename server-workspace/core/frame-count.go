@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	util "quick-reel.com/util/command-util"
+	util "quick-reel.com/util"
 )
 
 func GetFrameCount(videoPath string) (int, error) {
