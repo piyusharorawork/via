@@ -1,4 +1,4 @@
-package momentFinder
+package core
 
 import (
 	"errors"

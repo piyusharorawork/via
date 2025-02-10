@@ -1,4 +1,4 @@
-module quick-reel.com/vidfx
+module quick-reel.com/core
 
 go 1.23.6
 

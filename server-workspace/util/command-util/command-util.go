@@ -1,4 +1,4 @@
-package commandutil
+package util
 
 import (
 	"bytes"

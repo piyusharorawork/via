@@ -1,10 +1,10 @@
-package videoextractor
+package core
 
 import (
 	"os/exec"
 	"strconv"
 
-	commandutil "quick-reel.com/util/command-util"
+	util "quick-reel.com/util/command-util"
 )
 
 type ExtractImageInput struct {
@@ -17,7 +17,7 @@ func ExtractImage(input ExtractImageInput) error {
 	selection := getSelectionForImage(input.Frame)
 	cmd := exec.Command("ffmpeg", "-y", "-i", input.VideoPath, "-vf", selection, "-vsync", "vfr", "-frames:v", "1", input.OutputPath)
 
-	_, err := commandutil.RunCommand(cmd)
+	_, err := util.RunCommand(cmd)
 
 	if err != nil {
 		return err

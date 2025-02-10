@@ -1,9 +1,9 @@
-package videomodifier
+package core
 
 import (
 	"os/exec"
 
-	commandutil "quick-reel.com/util/command-util"
+	util "quick-reel.com/util/command-util"
 )
 
 type MuteVideoInput struct {
@@ -13,7 +13,7 @@ type MuteVideoInput struct {
 
 func MuteVideo(input MuteVideoInput) error {
 	cmd := exec.Command("ffmpeg", "-i", input.VideoPath, "-an", "-vcodec", "copy", input.OutputPath)
-	_, err := commandutil.RunCommand(cmd)
+	_, err := util.RunCommand(cmd)
 
 	if err != nil {
 		return err

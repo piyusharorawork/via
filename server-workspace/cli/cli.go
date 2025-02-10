@@ -4,11 +4,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	momentFinder "quick-reel.com/vidfx/moment-finder"
-	"quick-reel.com/vidfx/uploader"
-	videoanalyser "quick-reel.com/vidfx/video-analyser"
-	videoextractor "quick-reel.com/vidfx/video-extractor"
-	videomodifier "quick-reel.com/vidfx/video-modifier"
+	core "quick-reel.com/core"
 )
 
 func main() {
@@ -17,7 +13,7 @@ func main() {
 }
 
 func GetFrameSizeExample() {
-	frameSize, err := videoanalyser.GetFrameSize("/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4")
+	frameSize, err := core.GetFrameSize("/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4")
 
 	if err != nil {
 		panic(err)
@@ -28,13 +24,14 @@ func GetFrameSizeExample() {
 }
 
 func ResizeVideoExample() {
-	input := videomodifier.ResizeVideoInput{
+
+	input := core.ResizeVideoInput{
 		VideoPath:  "/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4",
-		Resolution: videomodifier.SD_480p,
+		Resolution: core.SD_480p,
 		OutputPath: "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4",
 	}
 
-	err := videomodifier.ResizeVideo(input)
+	err := core.ResizeVideo(input)
 	if err != nil {
 		panic(err)
 	}
@@ -52,7 +49,7 @@ func UploadFileExample() {
 	region := os.Getenv("REGION")
 	spaceName := os.Getenv("SPACE_NAME")
 
-	input := uploader.UploadFileInput{
+	input := core.UploadFileInput{
 		VideoPath: "/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4",
 		SpaceName: spaceName,
 		Region:    region,
@@ -60,7 +57,7 @@ func UploadFileExample() {
 		SecretKey: secretKey,
 	}
 
-	data, err := uploader.UploadFile(input)
+	data, err := core.UploadFile(input)
 
 	if err != nil {
 		panic(err)
@@ -70,7 +67,7 @@ func UploadFileExample() {
 }
 
 func GetFrameCountExample() {
-	frameCount, err := videoanalyser.GetFrameCount("/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4")
+	frameCount, err := core.GetFrameCount("/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4")
 
 	if err != nil {
 		panic(err)
@@ -80,7 +77,7 @@ func GetFrameCountExample() {
 }
 
 func ExtractImageExample() {
-	err := videoextractor.ExtractImage(videoextractor.ExtractImageInput{
+	err := core.ExtractImage(core.ExtractImageInput{
 		VideoPath:  "/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4",
 		Frame:      200,
 		OutputPath: "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-1.png",
@@ -92,7 +89,7 @@ func ExtractImageExample() {
 }
 
 func ExtractClipExample() {
-	err := videoextractor.ExtractClip(videoextractor.ExtractClipInput{
+	err := core.ExtractClip(core.ExtractClipInput{
 		VideoPath:  "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4",
 		StartFrame: 379,
 		EndFrame:   392,
@@ -106,7 +103,7 @@ func ExtractClipExample() {
 }
 
 func EncodeVideoExample() {
-	err := videomodifier.EncodeVideo(videomodifier.EncodeVideoInput{
+	err := core.EncodeVideo(core.EncodeVideoInput{
 		VideoPath:  "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4",
 		OutputPath: "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-encoded.mp4",
 	})
@@ -117,7 +114,7 @@ func EncodeVideoExample() {
 }
 
 func GetFpsExample() {
-	fps, err := videoanalyser.GetFPS("/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4")
+	fps, err := core.GetFPS("/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4")
 	if err != nil {
 		panic(err)
 	}
@@ -126,8 +123,8 @@ func GetFpsExample() {
 }
 
 func GetMomentExample() {
-	moment, err := momentFinder.FindMoment(momentFinder.FindMomentInput{
-		Kind:           momentFinder.VIDEO,
+	moment, err := core.FindMoment(core.FindMomentInput{
+		Kind:           core.VIDEO,
 		Fps:            30,
 		FrameCount:     100,
 		DurationFrames: 40,

@@ -1,9 +1,9 @@
-package videomodifier
+package core
 
 import (
 	"os/exec"
 
-	commandutil "quick-reel.com/util/command-util"
+	util "quick-reel.com/util/command-util"
 )
 
 type EncodeVideoInput struct {
@@ -14,7 +14,7 @@ type EncodeVideoInput struct {
 func EncodeVideo(input EncodeVideoInput) error {
 	cmd := exec.Command("ffmpeg", "-y", "-i", input.VideoPath, "-c:v", "libx264", "-crf", "23", "-preset", "fast", "-c:a", "aac", "-b:a", "128k", input.OutputPath)
 
-	_, err := commandutil.RunCommand(cmd)
+	_, err := util.RunCommand(cmd)
 
 	if err != nil {
 		return err

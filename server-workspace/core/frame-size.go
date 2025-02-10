@@ -1,4 +1,4 @@
-package videoanalyser
+package core
 
 import (
 	"errors"
@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	commandutil "quick-reel.com/util/command-util"
+	util "quick-reel.com/util/command-util"
 )
 
 type GetFrameSizeOutput struct {
@@ -17,7 +17,7 @@ type GetFrameSizeOutput struct {
 func GetFrameSize(videoPath string) (*GetFrameSizeOutput, error) {
 	cmd := exec.Command("ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "default=noprint_wrappers=1", videoPath)
 
-	cmdOut, err := commandutil.RunCommand(cmd)
+	cmdOut, err := util.RunCommand(cmd)
 	if err != nil {
 		return nil, err
 	}

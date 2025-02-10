@@ -1,4 +1,4 @@
-package videoanalyser
+package core
 
 import (
 	"errors"
@@ -6,13 +6,13 @@ import (
 	"strconv"
 	"strings"
 
-	commandutil "quick-reel.com/util/command-util"
+	util "quick-reel.com/util/command-util"
 )
 
 func GetFrameCount(videoPath string) (int, error) {
 	cmd := exec.Command("ffprobe", "-v", "error", "-count_frames", "-select_streams", "v:0", "-show_entries", "stream=nb_read_frames", "-of", "default=nokey=1:noprint_wrappers=1", videoPath)
 
-	cmdOut, err := commandutil.RunCommand(cmd)
+	cmdOut, err := util.RunCommand(cmd)
 	if err != nil {
 		return 0, err
 	}

@@ -1,11 +1,11 @@
-package videomodifier
+package core
 
 import (
 	"errors"
 	"os/exec"
 	"strconv"
 
-	commandutil "quick-reel.com/util/command-util"
+	util "quick-reel.com/util/command-util"
 )
 
 type Resolution string
@@ -70,7 +70,7 @@ func ResizeVideo(input ResizeVideoInput) error {
 
 	cmd := exec.Command("ffmpeg", "-y", "-i", input.VideoPath, "-vf", "scale="+strconv.Itoa(dimensions.Width)+":"+strconv.Itoa(dimensions.Height), "-c:a", "copy", input.OutputPath)
 
-	_, err := commandutil.RunCommand(cmd)
+	_, err := util.RunCommand(cmd)
 
 	if err != nil {
 		return err

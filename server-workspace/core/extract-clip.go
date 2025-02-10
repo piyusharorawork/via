@@ -1,10 +1,10 @@
-package videoextractor
+package core
 
 import (
 	"fmt"
 	"os/exec"
 
-	commandutil "quick-reel.com/util/command-util"
+	util "quick-reel.com/util/command-util"
 )
 
 type ExtractClipInput struct {
@@ -31,7 +31,7 @@ func ExtractClip(input ExtractClipInput) error {
 		input.OutputPath,
 	)
 
-	_, err := commandutil.RunCommand(cmd)
+	_, err := util.RunCommand(cmd)
 	if err != nil {
 		return err
 	}
