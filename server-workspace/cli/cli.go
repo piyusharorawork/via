@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	momentFinder "quick-reel.com/vidfx/moment-finder"
 	"quick-reel.com/vidfx/uploader"
 	videoanalyser "quick-reel.com/vidfx/video-analyser"
 	videoextractor "quick-reel.com/vidfx/video-extractor"
@@ -11,7 +12,7 @@ import (
 )
 
 func main() {
-	GetFpsExample()
+	GetMomentExample()
 
 }
 
@@ -122,4 +123,18 @@ func GetFpsExample() {
 	}
 
 	println(fps)
+}
+
+func GetMomentExample() {
+	moment, err := momentFinder.FindMoment(momentFinder.FindMomentInput{
+		Kind:           momentFinder.VIDEO,
+		Fps:            30,
+		FrameCount:     100,
+		DurationFrames: 40,
+	})
+	if err != nil {
+		panic(err)
+	}
+	println(moment.StartFrame)
+	println(moment.EndFrame)
 }
