@@ -6,12 +6,13 @@ import (
 	"github.com/joho/godotenv"
 	"quick-reel.com/vidfx/uploader"
 	videoanalyser "quick-reel.com/vidfx/video-analyser"
+	videoextractor "quick-reel.com/vidfx/video-extractor"
 
 	videoresizer "quick-reel.com/vidfx/video-resizer"
 )
 
 func main() {
-	GetFrameCountExample()
+	ExtractImageExample()
 
 }
 
@@ -76,4 +77,16 @@ func GetFrameCountExample() {
 	}
 
 	println(frameCount)
+}
+
+func ExtractImageExample() {
+	err := videoextractor.ExtractImage(videoextractor.ExtractImageInput{
+		VideoPath:  "/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4",
+		Frame:      200,
+		OutputPath: "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-1.png",
+	})
+
+	if err != nil {
+		panic(err)
+	}
 }

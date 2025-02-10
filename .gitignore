@@ -8,3 +8,4 @@ dist
 temp
 .next
 .vscode
+__debug_bin*
