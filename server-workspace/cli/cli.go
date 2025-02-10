@@ -11,11 +11,11 @@ import (
 )
 
 func main() {
-	AnalyseVideoExample()
+	GetFrameCountExample()
 
 }
 
-func AnalyseVideoExample() {
+func GetFrameSizeExample() {
 	frameSize, err := videoanalyser.GetFrameSize("/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4")
 
 	if err != nil {
@@ -66,4 +66,14 @@ func UploadFileExample() {
 	}
 
 	println(data.Url)
+}
+
+func GetFrameCountExample() {
+	frameCount, err := videoanalyser.GetFrameCount("/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4")
+
+	if err != nil {
+		panic(err)
+	}
+
+	println(frameCount)
 }
