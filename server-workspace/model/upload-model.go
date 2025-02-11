@@ -3,8 +3,8 @@ package model
 type ContextKey string
 
 const (
-	AccessKeyKey ContextKey = "accessKey"
-	SecretKeyKey ContextKey = "secretKey"
-	RegionKey    ContextKey = "region"
-	SpaceNameKey ContextKey = "spaceName"
+	AccessKey ContextKey = "accessKey"
+	SecretKey ContextKey = "secretKey"
+	Region    ContextKey = "region"
+	SpaceName ContextKey = "spaceName"
 )

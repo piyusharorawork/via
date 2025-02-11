@@ -15,10 +15,10 @@ func createCtx() (context.Context, error) {
 	}
 
 	ctx := context.Background()
-	ctx = context.WithValue(ctx, model.AccessKeyKey, os.Getenv("ACCESS_KEY"))
-	ctx = context.WithValue(ctx, model.SecretKeyKey, os.Getenv("SECRET_KEY"))
-	ctx = context.WithValue(ctx, model.RegionKey, os.Getenv("REGION"))
-	ctx = context.WithValue(ctx, model.SpaceNameKey, os.Getenv("SPACE_NAME"))
+	ctx = context.WithValue(ctx, model.AccessKey, os.Getenv("ACCESS_KEY"))
+	ctx = context.WithValue(ctx, model.SecretKey, os.Getenv("SECRET_KEY"))
+	ctx = context.WithValue(ctx, model.Region, os.Getenv("REGION"))
+	ctx = context.WithValue(ctx, model.SpaceName, os.Getenv("SPACE_NAME"))
 
 	return ctx, nil
 }

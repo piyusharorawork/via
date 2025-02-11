@@ -20,16 +20,13 @@ type GenerateMediaInput struct {
 
 func GenerateMedia(ctx context.Context, input GenerateMediaInput) error {
 
-	accessKey := ctx.Value(model.AccessKeyKey).(string)
-	println(accessKey)
+	encodedVideoUrl, err := getEncodedVideoUrl(input.OriginalVideoUrl)
 
-	// encodedVideoUrl, err := getEncodedVideoUrl(input.OriginalVideoUrl)
+	if err != nil {
+		return err
+	}
 
-	// if err != nil {
-	// 	return err
-	// }
-
-	// println(encodedVideoUrl)
+	println(encodedVideoUrl)
 	return nil
 }
 
