@@ -18,8 +18,7 @@ type LayoutGrid struct {
 }
 
 type LayoutContent struct {
-	Row      int
-	Column   int
-	Kind     string
-	MediaUrl string
+	Row    int
+	Column int
+	Kind   string
 }

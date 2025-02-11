@@ -19,11 +19,12 @@ func UploadFileExample() {
 	spaceName := os.Getenv("SPACE_NAME")
 
 	input := core.UploadFileInput{
-		VideoPath: "/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4",
-		SpaceName: spaceName,
-		Region:    region,
-		AccessKey: accessKey,
-		SecretKey: secretKey,
+		VideoPath:  "/Users/piyusharora/projects/via/assets/temp/shorts.mp4",
+		SpaceName:  spaceName,
+		Region:     region,
+		AccessKey:  accessKey,
+		SecretKey:  secretKey,
+		FolderPath: "test-folder",
 	}
 
 	data, err := core.UploadFile(input)

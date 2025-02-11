@@ -2,6 +2,7 @@
   {
     "name": "rishikesh sample",
     "originalVideoUrl": "https://test-v1.blr1.digitaloceanspaces.com/rishikesh-sample.mp4",
+    "originalVideo720pUrl": "https://test-v1.blr1.digitaloceanspaces.com/rishikesh-sample-720p.mp4"
     "originalVideo360pUrl": "https://test-v1.blr1.digitaloceanspaces.com/rishikesh-sample-360p.mp4",
     "originalVideo360pMutedUrl": "https://test-v1.blr1.digitaloceanspaces.com/rishikesh-sample-360p-muted.mp4"
   }

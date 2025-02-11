@@ -15,11 +15,12 @@ import (
 )
 
 type UploadFileInput struct {
-	VideoPath string
-	SpaceName string
-	Region    string
-	AccessKey string
-	SecretKey string
+	VideoPath  string
+	FolderPath string
+	SpaceName  string
+	Region     string
+	AccessKey  string
+	SecretKey  string
 }
 
 type UploadFileOutput struct {
@@ -30,53 +31,43 @@ type UploadFileOutput struct {
 }
 
 func UploadFile(input UploadFileInput) (UploadFileOutput, error) {
-
 	client, err := createClient(input.AccessKey, input.SecretKey, input.Region)
 	if err != nil {
 		return UploadFileOutput{}, err
 	}
 
-	// TODO extract this to file read function
 	file, err := os.Open(input.VideoPath)
-
 	if err != nil {
 		return UploadFileOutput{}, err
 	}
-
 	defer file.Close()
 
 	stat, err := file.Stat()
-
 	if err != nil {
 		return UploadFileOutput{}, err
 	}
 
 	contentType := mime.TypeByExtension(filepath.Ext(input.VideoPath))
-
 	if contentType == "" {
 		contentType = "application/octet-stream"
 	}
 
 	fileName := filepath.Base(input.VideoPath)
-
-	bucket := aws.String(input.SpaceName)
-	key := aws.String(fileName)
-	contentTypePtr := aws.String(contentType)
-	acl := types.ObjectCannedACLPublicRead
+	key := filepath.Join(input.FolderPath, fileName)
 
 	_, err = client.PutObject(context.TODO(), &s3.PutObjectInput{
-		Bucket:      bucket,
-		Key:         key,
+		Bucket:      aws.String(input.SpaceName),
+		Key:         aws.String(key),
 		Body:        file,
-		ContentType: contentTypePtr,
-		ACL:         acl,
+		ContentType: aws.String(contentType),
+		ACL:         types.ObjectCannedACLPublicRead,
 	})
 
 	if err != nil {
 		return UploadFileOutput{}, err
 	}
 
-	videoURL := fmt.Sprintf("https://%s.%s.digitaloceanspaces.com/%s", input.SpaceName, input.Region, fileName)
+	videoURL := fmt.Sprintf("https://%s.%s.digitaloceanspaces.com/%s", input.SpaceName, input.Region, key)
 
 	return UploadFileOutput{
 		Url:         videoURL,
@@ -84,10 +75,9 @@ func UploadFile(input UploadFileInput) (UploadFileOutput, error) {
 		Size:        stat.Size(),
 		ContentType: contentType,
 	}, nil
-
 }
 
-func createClient(accessKey string, secretKey string, region string) (*s3.Client, error) {
+func createClient(accessKey, secretKey, region string) (*s3.Client, error) {
 	cfg, err := config.LoadDefaultConfig(context.TODO(),
 		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(accessKey, secretKey, "")),
 		config.WithRegion(region),

@@ -1,8 +1,17 @@
 package main
 
-import "quick-reel.com/cli/example"
+import (
+	"quick-reel.com/cli/example"
+)
 
 func main() {
-	example.UploadFileExample()
 
+	ctx, err := createCtx()
+
+	if err != nil {
+		panic(err)
+	}
+
+	example.GenerateMediaExample(ctx)
+	// example.UploadFileExample()
 }
