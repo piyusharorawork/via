@@ -14,5 +14,5 @@ func main() {
 
 	println(ctx)
 
-	example.GenerateMediaExample(ctx)
+	example.UploadFileExample(ctx)
 }

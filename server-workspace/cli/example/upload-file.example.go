@@ -2,9 +2,7 @@ package example
 
 import (
 	"context"
-	"fmt"
 
-	"github.com/google/uuid"
 	"quick-reel.com/core"
 	model "quick-reel.com/models"
 )
@@ -14,10 +12,10 @@ func UploadFileExample(ctx context.Context) {
 	secretKey := ctx.Value(model.SecretKey).(string)
 	region := ctx.Value(model.Region).(string)
 	spaceName := ctx.Value(model.SpaceName).(string)
-	folderPath := fmt.Sprintf("temp/%s", uuid.NewString())
+	folderPath := "CMS"
 
 	input := core.UploadFileInput{
-		FilePath:   "/Users/piyusharora/projects/via/assets/temp/pondi-shorts.mp4",
+		FilePath:   "/Users/piyusharora/projects/via/assets/temp/luxurious-hotel-highlights-reel-original-without-music-240p.mp4",
 		SpaceName:  spaceName,
 		Region:     region,
 		AccessKey:  accessKey,

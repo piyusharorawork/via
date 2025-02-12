@@ -11,13 +11,14 @@ import (
 type Resolution string
 
 const (
-	ULTRA_HD_2160p   Resolution = "ULTRA_HD_2160p"
-	QUAD_HD_1440p    Resolution = "QUAD_HD_1440p"
-	FULL_HD_1080p    Resolution = "FULL_HD_1080p"
-	HD_720p          Resolution = "HD_720p"
-	LOW_RES_HD_540p  Resolution = "LOW_RES_HD_540p"
-	SD_480p          Resolution = "SD_480p"
-	VERY_LOW_SD_360p Resolution = "VERY_LOW_SD_360p"
+	ULTRA_HD_2160p       Resolution = "ULTRA_HD_2160p"
+	QUAD_HD_1440p        Resolution = "QUAD_HD_1440p"
+	FULL_HD_1080p        Resolution = "FULL_HD_1080p"
+	HD_720p              Resolution = "HD_720p"
+	LOW_RES_HD_540p      Resolution = "LOW_RES_HD_540p"
+	SD_480p              Resolution = "SD_480p"
+	VERY_LOW_SD_360p     Resolution = "VERY_LOW_SD_360p"
+	EXTREMLY_LOW_SD_240p Resolution = "EXTREMLY_LOW_SD_240p"
 )
 
 type Dimenstions struct {
@@ -53,6 +54,10 @@ var resolutions = map[Resolution]Dimenstions{
 	"VERY_LOW_SD_360p": {
 		Height: 640,
 		Width:  360,
+	},
+	"EXTREMLY_LOW_SD_240p": {
+		Height: 426,
+		Width:  240,
 	},
 }
 

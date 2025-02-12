@@ -1,7 +1,9 @@
 [
   {
     "name": "Hotel Highligh Reel",
-    "video_url_without_audio": "https://test-v1.blr1.digitaloceanspaces.com/hotel-highlight-reel-without-audio.mp4",
-    "audio_url": "https://test-v1.blr1.digitaloceanspaces.com/hotel-highlight-reel-background-music.mp3"
+    "thumbnail_url": "https://test-v1.blr1.digitaloceanspaces.com/CMS/luxurious-hotel-highlights-reel-original-without-music-240p.mp4",
+    "audio_url": "https://test-v1.blr1.digitaloceanspaces.com/CMS/luxurious-hotel-highlights-reel-original-music.mp3",
+    "preview_url": "https://test-v1.blr1.digitaloceanspaces.com/CMS/luxurious-hotel-highlights-reel-original-music-video-720p.mp4",
+    "original_url": "https://test-v1.blr1.digitaloceanspaces.com/CMS/luxurious-hotel-highlights-reel-original-music-video.mp4"
   }
 ]

@@ -2,7 +2,6 @@ export type VideoTemplate = {
   id: number;
   name: string;
   videoURL: {
-    high: string;
     low: string;
     combined: string;
   };
@@ -21,10 +20,9 @@ export const templates: VideoTemplate[] = [
     id: 8,
     name: "Hotel Highlight Reel",
     videoURL: {
-      high: "https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736600178/hotel-highlight-reel-original.mp4",
-      low: "https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736599645/render-forest.mp4",
+      low: "https://test-v1.blr1.digitaloceanspaces.com/CMS/luxurious-hotel-highlights-reel-original-without-music-240p.mp4",
       combined:
-        "https://res.cloudinary.com/dmtxtgvsb/video/upload/v1736603169/combined.mp4",
+        "https://test-v1.blr1.digitaloceanspaces.com/CMS/luxurious-hotel-highlights-reel-original-music-video-720p.mp4",
     },
     videoInfo: {
       fps: 30,

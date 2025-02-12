@@ -8,8 +8,8 @@ import (
 
 func DownloadVideoExample() {
 	err := core.DownloadVideo(core.DownloadVideoInput{
-		VideoURL:   "https://www.youtube.com/shorts/xuwJ81E2lX8",
-		OutputPath: "/Users/piyusharora/projects/via/assets/temp/pondi-shorts.mp4",
+		VideoURL:   "https://www.renderforest.com/template/luxurious-hotel-highlights-reel",
+		OutputPath: "/Users/piyusharora/projects/via/assets/sample-videos/cms/luxurious-hotel-highlights-reel-original.mp4",
 	})
 
 	if err != nil {
