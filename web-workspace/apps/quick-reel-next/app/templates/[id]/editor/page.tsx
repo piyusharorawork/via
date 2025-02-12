@@ -17,7 +17,7 @@ export default function EditorPage() {
       >
         <EditorPreview
           fps={30}
-          videoUrl="https://res.cloudinary.com/dmtxtgvsb/video/upload/v1738046574/hotel-highlight-reel-hotel-highlight-reel-540p_kgksts.mp4"
+          videoUrl="https://test-v1.blr1.digitaloceanspaces.com/CMS/luxurious-hotel-highlights-reel-original-music-video-720p.mp4"
         />
       </section>
       <section id="player-controller" className="h-12">

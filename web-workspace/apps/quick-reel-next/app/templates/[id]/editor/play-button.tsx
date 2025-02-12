@@ -19,7 +19,7 @@ export const PlayButton = (props: Props) => {
       <audio
         ref={audioRef}
         preload="auto"
-        src="https://res.cloudinary.com/dmtxtgvsb/video/upload/v1737252046/hotel-highlight-reel-1234-original.mp3"
+        src="https://test-v1.blr1.digitaloceanspaces.com/CMS/luxurious-hotel-highlights-reel-original-music.mp3"
       />
       <Button
         disabled={videoStatus === "not-ready"}
