@@ -1,9 +1,7 @@
 [
   {
-    "name": "rishikesh sample",
-    "originalVideoUrl": "https://test-v1.blr1.digitaloceanspaces.com/rishikesh-sample.mp4",
-    "originalVideo720pUrl": "https://test-v1.blr1.digitaloceanspaces.com/rishikesh-sample-720p.mp4"
-    "originalVideo360pUrl": "https://test-v1.blr1.digitaloceanspaces.com/rishikesh-sample-360p.mp4",
-    "originalVideo360pMutedUrl": "https://test-v1.blr1.digitaloceanspaces.com/rishikesh-sample-360p-muted.mp4"
+    "name": "podicherry sample",
+    "originalVideoUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/97e97514-0491-4523-9fa1-5fae74854916/pondi-shorts.mp4",
+    "originalVideo360pUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/b99b797c-783e-4512-84dd-941d1cc498cd/f60b96a2-5751-46d4-a48e-8fdb1f4b1297.mp4"
   }
 ]

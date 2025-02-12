@@ -3,10 +3,8 @@ package workflow
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/google/uuid"
-	"github.com/joho/godotenv"
 	"quick-reel.com/core"
 	model "quick-reel.com/models"
 	"quick-reel.com/util"
@@ -20,7 +18,7 @@ type GenerateMediaInput struct {
 
 func GenerateMedia(ctx context.Context, input GenerateMediaInput) error {
 
-	encodedVideoUrl, err := getEncodedVideoUrl(input.OriginalVideoUrl)
+	encodedVideoUrl, err := getEncodedVideoUrl(ctx, input.OriginalVideoUrl)
 
 	if err != nil {
 		return err
@@ -30,7 +28,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) error {
 	return nil
 }
 
-func getEncodedVideoUrl(originalVideoUrl string) (string, error) {
+func getEncodedVideoUrl(ctx context.Context, originalVideoUrl string) (string, error) {
 
 	// Resize video to 360p
 	resizedVideoPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.mp4", uuid.New())
@@ -72,15 +70,11 @@ func getEncodedVideoUrl(originalVideoUrl string) (string, error) {
 
 	defer util.RemoveFile(encodedVideoPath)
 
-	err = godotenv.Load()
-	if err != nil {
-		panic(err)
-	}
+	accessKey := ctx.Value(model.AccessKey).(string)
+	secretKey := ctx.Value(model.SecretKey).(string)
+	region := ctx.Value(model.Region).(string)
+	spaceName := ctx.Value(model.SpaceName).(string)
 
-	accessKey := os.Getenv("ACCESS_KEY")
-	secretKey := os.Getenv("SECRET_KEY")
-	region := os.Getenv("REGION")
-	spaceName := os.Getenv("SPACE_NAME")
 	folderName := fmt.Sprintf("temp/%s", uuid.NewString())
 
 	uploadFileInput := core.UploadFileInput{

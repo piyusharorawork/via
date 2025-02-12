@@ -1,30 +1,28 @@
 package example
 
 import (
-	"os"
+	"context"
+	"fmt"
 
-	"github.com/joho/godotenv"
+	"github.com/google/uuid"
 	"quick-reel.com/core"
+	model "quick-reel.com/models"
 )
 
-func UploadFileExample() {
-	err := godotenv.Load()
-	if err != nil {
-		panic(err)
-	}
-
-	accessKey := os.Getenv("ACCESS_KEY")
-	secretKey := os.Getenv("SECRET_KEY")
-	region := os.Getenv("REGION")
-	spaceName := os.Getenv("SPACE_NAME")
+func UploadFileExample(ctx context.Context) {
+	accessKey := ctx.Value(model.AccessKey).(string)
+	secretKey := ctx.Value(model.SecretKey).(string)
+	region := ctx.Value(model.Region).(string)
+	spaceName := ctx.Value(model.SpaceName).(string)
+	folderPath := fmt.Sprintf("temp/%s", uuid.NewString())
 
 	input := core.UploadFileInput{
-		VideoPath:  "/Users/piyusharora/projects/via/assets/temp/shorts.mp4",
+		VideoPath:  "/Users/piyusharora/projects/via/assets/temp/pondi-shorts.mp4",
 		SpaceName:  spaceName,
 		Region:     region,
 		AccessKey:  accessKey,
 		SecretKey:  secretKey,
-		FolderPath: "test-folder",
+		FolderPath: folderPath,
 	}
 
 	data, err := core.UploadFile(input)
