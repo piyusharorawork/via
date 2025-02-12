@@ -17,18 +17,137 @@ type GenerateMediaInput struct {
 }
 
 func GenerateMedia(ctx context.Context, input GenerateMediaInput) error {
-
-	encodedVideoUrl, err := getEncodedVideoUrl(ctx, input.OriginalVideoUrl)
+	folderName := fmt.Sprintf("temp/workspace-%s", uuid.NewString())
+	encodedVideoUrl, err := getEncodedVideoUrl(ctx, input.OriginalVideoUrl, folderName)
 
 	if err != nil {
 		return err
+	}
+
+	fps, err := core.GetFPS(encodedVideoUrl)
+	if err != nil {
+		return err
+	}
+
+	frameCount, err := core.GetFrameCount(encodedVideoUrl)
+	if err != nil {
+		return err
+	}
+
+	for _, transition := range input.Transitions {
+		for _, content := range transition.Info.Content {
+			moment, err := getMoment(content, transition.StartFrame, transition.EndFrame, fps, frameCount)
+			if err != nil {
+				return err
+			}
+
+			mediaUrl, err := getMediaUrl(ctx, encodedVideoUrl, moment.StartFrame, moment.EndFrame, content.Kind, folderName, fps)
+			if err != nil {
+				return err
+			}
+
+			println(mediaUrl)
+
+		}
 	}
 
 	println(encodedVideoUrl)
 	return nil
 }
 
-func getEncodedVideoUrl(ctx context.Context, originalVideoUrl string) (string, error) {
+func getMediaUrl(ctx context.Context, encodedVideoUrl string, startFrame int, endFrame int, kind string, folderName string, fps int) (string, error) {
+	if kind == "image" {
+		imagePath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.png", uuid.NewString())
+		err := core.ExtractImage(core.ExtractImageInput{
+			VideoPath:  encodedVideoUrl,
+			Frame:      startFrame,
+			OutputPath: imagePath,
+		})
+
+		if err != nil {
+			return "", err
+		}
+
+		defer util.RemoveFile(imagePath)
+
+		imageUrl, err := upload(ctx, imagePath, folderName)
+
+		if err != nil {
+			return "", err
+		}
+
+		return imageUrl, nil
+	}
+
+	videoPath :=
+		fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.mp4", uuid.NewString())
+	core.ExtractClip(core.ExtractClipInput{
+		VideoPath:  encodedVideoUrl,
+		StartFrame: startFrame,
+		EndFrame:   endFrame,
+		OutputPath: videoPath,
+		Fps:        fps,
+	})
+
+	defer util.RemoveFile(videoPath)
+
+	videoUrl, err := upload(ctx, videoPath, folderName)
+
+	return videoUrl, err
+
+}
+
+func upload(ctx context.Context, filePath string, folderName string) (string, error) {
+	spaceName := ctx.Value(model.SpaceName).(string)
+	region := ctx.Value(model.Region).(string)
+	accessKey := ctx.Value(model.AccessKey).(string)
+	secretKey := ctx.Value(model.SecretKey).(string)
+
+	input := core.UploadFileInput{
+		FilePath:   filePath,
+		SpaceName:  spaceName,
+		Region:     region,
+		AccessKey:  accessKey,
+		SecretKey:  secretKey,
+		FolderPath: folderName,
+	}
+
+	data, err := core.UploadFile(input)
+
+	if err != nil {
+		return "", err
+	}
+
+	return data.Url, nil
+
+}
+
+func getMoment(content model.LayoutContent, transitionStart int, transitionEnd int, fps int, frameCount int) (core.FindMomentOutput, error) {
+	var kind core.MomentKind
+
+	if content.Kind == "image" {
+		kind = core.IMAGE
+	} else if content.Kind == "video" {
+		kind = core.VIDEO
+	}
+
+	input := core.FindMomentInput{
+		Kind:           kind,
+		Fps:            fps,
+		RequiredFrames: transitionEnd - transitionStart,
+		TotalFrames:    frameCount,
+	}
+
+	moment, err := core.FindMoment(input)
+	if err != nil {
+		return core.FindMomentOutput{}, err
+	}
+
+	return moment, nil
+
+}
+
+func getEncodedVideoUrl(ctx context.Context, originalVideoUrl string, folderName string) (string, error) {
 
 	// Resize video to 360p
 	resizedVideoPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.mp4", uuid.New())
@@ -70,28 +189,12 @@ func getEncodedVideoUrl(ctx context.Context, originalVideoUrl string) (string, e
 
 	defer util.RemoveFile(encodedVideoPath)
 
-	accessKey := ctx.Value(model.AccessKey).(string)
-	secretKey := ctx.Value(model.SecretKey).(string)
-	region := ctx.Value(model.Region).(string)
-	spaceName := ctx.Value(model.SpaceName).(string)
-
-	folderName := fmt.Sprintf("temp/%s", uuid.NewString())
-
-	uploadFileInput := core.UploadFileInput{
-		VideoPath:  encodedVideoPath,
-		SpaceName:  spaceName,
-		Region:     region,
-		AccessKey:  accessKey,
-		SecretKey:  secretKey,
-		FolderPath: folderName,
-	}
-
-	data, err := core.UploadFile(uploadFileInput)
+	encodedVideoUrl, err := upload(ctx, encodedVideoPath, folderName)
 
 	if err != nil {
 		return "", err
 	}
 
-	return data.Url, nil
+	return encodedVideoUrl, nil
 
 }

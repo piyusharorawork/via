@@ -15,7 +15,7 @@ import (
 )
 
 type UploadFileInput struct {
-	VideoPath  string
+	FilePath   string
 	FolderPath string
 	SpaceName  string
 	Region     string
@@ -36,7 +36,7 @@ func UploadFile(input UploadFileInput) (UploadFileOutput, error) {
 		return UploadFileOutput{}, err
 	}
 
-	file, err := os.Open(input.VideoPath)
+	file, err := os.Open(input.FilePath)
 	if err != nil {
 		return UploadFileOutput{}, err
 	}
@@ -47,12 +47,12 @@ func UploadFile(input UploadFileInput) (UploadFileOutput, error) {
 		return UploadFileOutput{}, err
 	}
 
-	contentType := mime.TypeByExtension(filepath.Ext(input.VideoPath))
+	contentType := mime.TypeByExtension(filepath.Ext(input.FilePath))
 	if contentType == "" {
 		contentType = "application/octet-stream"
 	}
 
-	fileName := filepath.Base(input.VideoPath)
+	fileName := filepath.Base(input.FilePath)
 	key := filepath.Join(input.FolderPath, fileName)
 
 	_, err = client.PutObject(context.TODO(), &s3.PutObjectInput{
