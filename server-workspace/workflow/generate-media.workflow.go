@@ -12,7 +12,7 @@ import (
 
 type GenerateMediaInput struct {
 	OriginalVideoUrl string
-	Transitions      []model.Transition
+	Transitions      []*model.Transition
 	OutputFilePath   string
 }
 
@@ -46,9 +46,15 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) error {
 				return err
 			}
 
-			println(mediaUrl)
+			content.MediaUrl = mediaUrl
 
 		}
+	}
+
+	err = util.SaveArrayToJSON(input.OutputFilePath, input.Transitions)
+
+	if err != nil {
+		return err
 	}
 
 	println(encodedVideoUrl)
@@ -122,7 +128,7 @@ func upload(ctx context.Context, filePath string, folderName string) (string, er
 
 }
 
-func getMoment(content model.LayoutContent, transitionStart int, transitionEnd int, fps int, frameCount int) (core.FindMomentOutput, error) {
+func getMoment(content *model.LayoutContent, transitionStart int, transitionEnd int, fps int, frameCount int) (core.FindMomentOutput, error) {
 	var kind core.MomentKind
 
 	if content.Kind == "image" {

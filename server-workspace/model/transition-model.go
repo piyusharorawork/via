@@ -3,13 +3,13 @@ package model
 type Transition struct {
 	StartFrame int
 	EndFrame   int
-	Info       TransitionInfo
+	Info       *TransitionInfo
 }
 
 type TransitionInfo struct {
 	Type    string
-	Grid    LayoutGrid
-	Content []LayoutContent
+	Grid    *LayoutGrid
+	Content []*LayoutContent
 }
 
 type LayoutGrid struct {
