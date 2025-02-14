@@ -5,7 +5,8 @@ import { TimelineFrame } from "./timeline-frame";
 import { Transition } from "../../data/transitions";
 import { useSelector } from "@xstate/store/react";
 import { store } from "@/store/store";
-import { SliderWithoutThumb } from "@/components/ui/slider-without-thimb";
+
+import { Progress } from "@/components/ui/progress";
 
 type Props = {
   transitions: Transition[];
@@ -17,7 +18,9 @@ type Props = {
 export const CardTimeline = (props: Props) => {
   return (
     <section id="card-timeline" className="h-full flex flex-col gap-4 py-2">
-      <FrameSlider frameCount={props.frameCount} />
+      <div className="px-4">
+        <FrameSlider frameCount={props.frameCount} />
+      </div>
       <div className="grow flex gap-4 overflow-x-scroll">
         {props.transitions.map((transition, index) => {
           return (
@@ -41,13 +44,6 @@ type FrameSliderProps = {
 
 const FrameSlider = (props: FrameSliderProps) => {
   const frame = useSelector(store, (state) => state.context.frame);
-  // console.log(frame);
-  return (
-    <SliderWithoutThumb
-      defaultValue={[frame]}
-      value={[frame]}
-      min={1}
-      max={props.frameCount}
-    />
-  );
+
+  return <Progress className="h-1" value={(frame / props.frameCount) * 100} />;
 };
