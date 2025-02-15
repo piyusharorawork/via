@@ -38,7 +38,10 @@ export const VideoTemplates = (props: Props) => {
                     video.pause();
                   }}
                 >
-                  <source src={template.videoURL.low} type="video/mp4" />
+                  <source
+                    src={template.videoInfo.thumbnailUrl}
+                    type="video/mp4"
+                  />
                 </video>
               </Link>
             </CardContent>

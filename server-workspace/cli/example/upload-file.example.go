@@ -15,7 +15,7 @@ func UploadFileExample(ctx context.Context) {
 	folderPath := "CMS"
 
 	input := core.UploadFileInput{
-		FilePath:   "/Users/piyusharora/projects/via/assets/temp/luxurious-hotel-highlights-reel-original-without-music-240p.mp4",
+		FilePath:   "/Users/piyusharora/projects/via/assets/temp/luxurious-hotel-highlights-reel-original-without-music-360p.mp4",
 		SpaceName:  spaceName,
 		Region:     region,
 		AccessKey:  accessKey,

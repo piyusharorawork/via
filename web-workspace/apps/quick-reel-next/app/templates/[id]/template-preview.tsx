@@ -2,7 +2,7 @@ import { templates } from "../data/templates";
 import { MockPhone } from "./mock-phone";
 
 export const TemplatePreview = () => {
-  const videoUrl = templates[0].videoURL.combined;
+  const videoUrl = templates[0].videoInfo.previewUrl;
 
   return (
     <section

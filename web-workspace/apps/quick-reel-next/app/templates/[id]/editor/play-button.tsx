@@ -6,6 +6,7 @@ import { useLoadAudio } from "./use-load-audio";
 
 type Props = {
   fps: number;
+  audioUrl: string;
 };
 
 export type VideoStatus = "paused" | "playing";
@@ -16,11 +17,7 @@ export const PlayButton = (props: Props) => {
 
   return (
     <section id="play-button" className="flex justify-center items-center">
-      <audio
-        ref={audioRef}
-        preload="auto"
-        src="https://test-v1.blr1.digitaloceanspaces.com/CMS/luxurious-hotel-highlights-reel-original-music.mp3"
-      />
+      <audio ref={audioRef} preload="auto" src={props.audioUrl} />
       <Button
         disabled={videoStatus === "not-ready"}
         className="w-16 relative"
