@@ -24,31 +24,16 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) error {
 		return err
 	}
 
-	fps, err := core.GetFPS(encodedVideoUrl)
+	fps, frameCount, err := getVideoInfo(encodedVideoUrl)
+
 	if err != nil {
 		return err
 	}
 
-	frameCount, err := core.GetFrameCount(encodedVideoUrl)
+	err = populateTransitionMedia(ctx, input.Transitions, folderName, encodedVideoUrl, fps, frameCount)
+
 	if err != nil {
 		return err
-	}
-
-	for _, transition := range input.Transitions {
-		for _, content := range transition.Info.Content {
-			moment, err := getMoment(content, transition.StartFrame, transition.EndFrame, fps, frameCount)
-			if err != nil {
-				return err
-			}
-
-			mediaUrl, err := getMediaUrl(ctx, encodedVideoUrl, moment.StartFrame, moment.EndFrame, content.Kind, folderName, fps)
-			if err != nil {
-				return err
-			}
-
-			content.MediaUrl = mediaUrl
-
-		}
 	}
 
 	err = util.SaveArrayToJSON(input.OutputFilePath, input.Transitions)
@@ -57,7 +42,6 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) error {
 		return err
 	}
 
-	println(encodedVideoUrl)
 	return nil
 }
 
@@ -203,4 +187,39 @@ func getEncodedVideoUrl(ctx context.Context, originalVideoUrl string, folderName
 
 	return encodedVideoUrl, nil
 
+}
+
+func getVideoInfo(encodedVideoUrl string) (fps, frameCount int, err error) {
+	fps, err = core.GetFPS(encodedVideoUrl)
+	if err != nil {
+		return 0, 0, err
+	}
+
+	frameCount, err = core.GetFrameCount(encodedVideoUrl)
+	if err != nil {
+		return 0, 0, err
+	}
+
+	return
+}
+
+func populateTransitionMedia(ctx context.Context, transitions []*model.Transition, folderName string, encodedVideoUrl string, fps int, frameCount int) error {
+
+	for _, transition := range transitions {
+		for _, content := range transition.Info.Content {
+			moment, err := getMoment(content, transition.StartFrame, transition.EndFrame, fps, frameCount)
+			if err != nil {
+				return err
+			}
+
+			mediaUrl, err := getMediaUrl(ctx, encodedVideoUrl, moment.StartFrame, moment.EndFrame, content.Kind, folderName, fps)
+			if err != nil {
+				return err
+			}
+
+			content.MediaUrl = mediaUrl
+
+		}
+	}
+	return nil
 }
