@@ -1,5 +1,3 @@
 {
-  "build": {
-    "ignoreCommand": "node ignore-deploy.js"
-  }
+  "ignoreCommand": "node ignore-deploy.js"
 }
