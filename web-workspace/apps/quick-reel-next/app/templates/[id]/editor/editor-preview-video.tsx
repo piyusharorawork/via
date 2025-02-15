@@ -1,8 +1,9 @@
 import { store } from "@/store/store";
-import { useLoadVideo } from "./use-load-video";
+
 import { Loader } from "./loader";
 import { useSelector } from "@xstate/store/react";
 import clsx from "clsx";
+import { useLoadVideo } from "@/lib/use-load-video";
 
 type Props = {
   fps: number;
@@ -10,7 +11,9 @@ type Props = {
 };
 
 export const EditorPreviewVideo = (props: Props) => {
-  const videoRef = useLoadVideo();
+  const videoRef = useLoadVideo((video) =>
+    store.send({ type: "setVideoElement", videoElement: video })
+  );
   const videoStatus = useSelector(store, (state) => state.context.videoStatus);
 
   return (

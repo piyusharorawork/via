@@ -1,11 +1,10 @@
-import { store } from "@/store/store";
 import { useCallback } from "react";
 
-export const useLoadVideo = () => {
+export const useLoadVideo = (callback: (video: HTMLVideoElement) => void) => {
   return useCallback((video: HTMLVideoElement | null) => {
     if (!video) return;
     video.currentTime = 0;
     video.pause();
-    store.send({ type: "setVideoElement", videoElement: video });
+    callback(video);
   }, []);
 };
