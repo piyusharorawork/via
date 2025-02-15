@@ -31,7 +31,11 @@ export const TimelineFrame = (props: Props) => {
         });
       }}
     >
-      <img src={props.transitionFrame} className="w-full h-full" />
+      <img
+        src={props.transitionFrame}
+        className="w-full h-full"
+        draggable={false}
+      />
     </Card>
   );
 };
