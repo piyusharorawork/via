@@ -16,46 +16,22 @@
 - attach audio (/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4 ,https://test-v1.blr1.digitaloceanspaces.com/CMS/luxurious-hotel-highlights-reel-original-music.mp3 )
 - final output https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-output-with-audio.mp4
 
+## Next Steps
+
+- use margin propely
+- why export ffmpeg stuck
+- generate preview small images
+- show progress on export console
+- fix dissolve transition
+
 ## TODO : Long Term
 
-- get rid of node sdk too by using cloudinary
-- add utility package for getting lodash getter , generate uuid (use common for now)
-- clean the test db before running any tests
-- run migrate fully via script
-- support start and end trim video at the time of download
-- client side form validation
-- Reduce some states via reusable child machines
-- Show progress on what exactlly is happening
-- Create a prompt to help with updating the description of the video
-- when video not found , add randomisation
-- improve leaky tests with cleanup files
+- Use AI to analyse video
+- Add unit tests
 - create a common package that handles binary path and scripts path
-- ability to update the description of the video
-- improve progress on export specially at the end when 99% progress is done
-- Make Application work on mobile web
-- cleanup temp folders
-- support filters in videos page like limit , pagination
-- progress on adding video
-- multiple videos add batching
-- video preview stopped when we scroll the video
-- Directly allow to download video
-- Add debug config for node
-- add video button only enable when can add video using guard
-- Make reliable export
-- Write all pngs in a folder in ffmpeg and clean it once done
-- proper error notification system
-- use enter key for forms to submit
-- when select the text , surround it with the bounding box
-- ability to create projects
-- ability to convert project into template
-
-## Immendiate Next Steps
-
-- ability to change color of text
-- ability to move the text around
-- ability to scale the text
-- ability to change the font of the text
-- need to consider the position of text before exporting
+- cleanup temp frames folder
+- use DB
+- Export Video with higher resolution
 
 ## Helper Commands
 
