@@ -1,6 +1,6 @@
-import { ImageElement } from "./image";
+"use client";
+import { useLoadVideo } from "@/lib/use-load-video";
 import { Transition } from "./types";
-import { VideoElement } from "./video";
 
 type Props = {
   transition: Transition;
@@ -8,28 +8,32 @@ type Props = {
 };
 
 export const TransitionElement = (props: Props) => {
+  const videoRef = useLoadVideo((video) => {
+    // console.log(video);
+  });
+
   if (!props.transition.Info.Content) {
-    return <></>;
+    return <div className="w-full h-full absolute bg-gray-950"></div>;
   }
 
   return props.transition.Info.Content.map((item, index) => {
     if (item.Kind === "image") {
       return (
-        <ImageElement
-          MediaUrl={item.MediaUrl}
+        <img
           key={index}
-          layoutIndex={index}
-          transitionIndex={props.transitionIndex}
+          className="w-full h-full absolute"
+          src={item.MediaUrl}
         />
       );
     }
 
     return (
-      <VideoElement
-        MediaUrl={item.MediaUrl}
+      <video
         key={index}
-        transitionIndex={props.transitionIndex}
-        layoutIndex={index}
+        className="w-full h-full absolute"
+        ref={videoRef}
+        src={item.MediaUrl}
+        playsInline
       />
     );
   });
