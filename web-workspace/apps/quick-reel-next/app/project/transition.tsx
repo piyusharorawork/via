@@ -1,6 +1,8 @@
 "use client";
 import { useLoadVideo } from "@/lib/use-load-video";
 import { Transition } from "./types";
+import { projectStore } from "@/store/project.store";
+import { useLoadImage } from "@/lib/use-load-image";
 
 type Props = {
   transition: Transition;
@@ -8,10 +10,6 @@ type Props = {
 };
 
 export const TransitionElement = (props: Props) => {
-  const videoRef = useLoadVideo((video) => {
-    // console.log(video);
-  });
-
   if (!props.transition.Info.Content) {
     return <div className="w-full h-full absolute bg-gray-950"></div>;
   }
@@ -19,22 +17,69 @@ export const TransitionElement = (props: Props) => {
   return props.transition.Info.Content.map((item, index) => {
     if (item.Kind === "image") {
       return (
-        <img
+        <ImageElement
           key={index}
-          className="w-full h-full absolute"
-          src={item.MediaUrl}
+          contentIdx={index}
+          transitionIdx={props.transitionIndex}
+          imgUrl={item.MediaUrl}
         />
       );
     }
 
     return (
-      <video
+      <VideoElement
         key={index}
-        className="w-full h-full absolute"
-        ref={videoRef}
-        src={item.MediaUrl}
-        playsInline
+        contentIdx={index}
+        transitionIdx={props.transitionIndex}
+        videoUrl={item.MediaUrl}
       />
     );
   });
+};
+
+type VideoElementProps = {
+  transitionIdx: number;
+  contentIdx: number;
+  videoUrl: string;
+};
+
+const VideoElement = (props: VideoElementProps) => {
+  const videoRef = useLoadVideo((video) => {
+    projectStore.send({
+      type: "addVideoInfo",
+      video,
+      transitionIdx: props.transitionIdx,
+      contentIdx: props.contentIdx,
+    });
+  });
+
+  return (
+    <video
+      className="w-full h-full absolute"
+      ref={videoRef}
+      src={props.videoUrl}
+      playsInline
+      crossOrigin="anonymous"
+    />
+  );
+};
+
+type ImageElementProps = {
+  transitionIdx: number;
+  contentIdx: number;
+  imgUrl: string;
+};
+
+const ImageElement = (props: ImageElementProps) => {
+  const imageRef = useLoadImage((image) => {
+    projectStore.send({
+      type: "addImageInfo",
+      imageUrl: props.imgUrl,
+      transitionIdx: props.transitionIdx,
+      contentIdx: props.contentIdx,
+    });
+  });
+  return (
+    <img ref={imageRef} className="w-full h-full absolute" src={props.imgUrl} />
+  );
 };

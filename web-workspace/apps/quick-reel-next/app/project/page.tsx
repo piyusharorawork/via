@@ -4,7 +4,6 @@ import { Preview } from "./preview";
 import { TransitionElement } from "./transition";
 
 export default function ProjectPage() {
-  const transitions = project.transitions;
   return (
     <>
       <div className="h-screen flex justify-center items-center ">
@@ -12,7 +11,7 @@ export default function ProjectPage() {
           className="h-full relative "
           style={{ width: "calc(100vh * 0.5625)" }}
         >
-          <MediaElements transitions={transitions} />
+          <MediaElements />
           <Preview />
         </section>
       </div>

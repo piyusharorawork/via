@@ -1,16 +1,24 @@
+"use client";
+import { useSelector } from "@xstate/store/react";
 import { TransitionElement } from "./transition";
-import { Transition } from "./types";
 
-type Props = {
-  transitions: Transition[];
-};
+import { projectStore } from "@/store/project.store";
 
-export const MediaElements = (props: Props) => {
+export const MediaElements = () => {
+  const transitions = useSelector(
+    projectStore,
+    (state) => state.context.transitions
+  );
+
   return (
     <div className="absolute h-full w-full invisible bg-red-500 ">
-      {props.transitions.map((transition, index) => {
+      {transitions.map((transition, index) => {
         return (
-          <TransitionElement transition={transition} transitionIndex={index} />
+          <TransitionElement
+            key={index}
+            transition={transition}
+            transitionIndex={index}
+          />
         );
       })}
     </div>
