@@ -16,8 +16,9 @@ type TransitionInfo = {
 type TransitionContent = {
   Row: number;
   Column: number;
-  Kind: "video" | "image";
+  Kind: "video" | "image" | "empty";
   MediaUrl: string;
+  Margin: number;
   texture?: THREE.Texture;
 };
 

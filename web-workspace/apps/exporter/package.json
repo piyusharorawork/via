@@ -1,0 +1,19 @@
+{
+  "name": "exporter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc; node dist/exporter.js",
+    "launch": "pnpm playwright open -b chromium http://localhost:3000/project"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^22.13.8",
+    "@via/typescript-config": "workspace:*",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "playwright": "^1.50.1"
+  }
+}

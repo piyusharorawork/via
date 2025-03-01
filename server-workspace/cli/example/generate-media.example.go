@@ -11,9 +11,9 @@ func GenerateMediaExample(ctx context.Context) {
 	transitions := getTransitions()
 
 	input := workflow.GenerateMediaInput{
-		OriginalVideoUrl: "https://test-v1.blr1.digitaloceanspaces.com/temp/97e97514-0491-4523-9fa1-5fae74854916/pondi-shorts.mp4",
+		OriginalVideoUrl: "https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-sample-720p.mp4",
 		Transitions:      transitions,
-		OutputFilePath:   "/Users/piyusharora/projects/via/assets/temp/media.json",
+		OutputFilePath:   "/Users/piyusharora/projects/via/assets/temp/rishikesh-transitions.json",
 	}
 
 	err := workflow.GenerateMedia(ctx, input)
@@ -322,7 +322,8 @@ func getTransitions() []*model.Transition {
 			StartFrame: 173,
 			EndFrame:   183,
 			Info: &model.TransitionInfo{
-				Type: "dissolve",
+				Type:    "dissolve",
+				Content: []*model.LayoutContent{},
 			},
 		},
 		{
@@ -471,16 +472,17 @@ func getTransitions() []*model.Transition {
 						Row:    0,
 						Column: 0,
 						Kind:   "image",
+						Margin: 0.3,
 					},
 					{
 						Row:    1,
 						Column: 0,
-						Kind:   "image",
+						Kind:   "empty",
 					},
 					{
 						Row:    2,
 						Column: 0,
-						Kind:   "image",
+						Kind:   "empty",
 					},
 				},
 			},
@@ -505,7 +507,7 @@ func getTransitions() []*model.Transition {
 					{
 						Row:    2,
 						Column: 0,
-						Kind:   "image",
+						Kind:   "empty",
 					},
 				},
 			},

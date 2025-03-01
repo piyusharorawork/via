@@ -46,6 +46,10 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) error {
 }
 
 func getMediaUrl(ctx context.Context, encodedVideoUrl string, startFrame int, endFrame int, kind string, folderName string, fps int) (string, error) {
+	if kind == "empty" {
+		return "", nil
+	}
+
 	if kind == "image" {
 		imagePath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.png", uuid.NewString())
 		err := core.ExtractImage(core.ExtractImageInput{
@@ -81,7 +85,18 @@ func getMediaUrl(ctx context.Context, encodedVideoUrl string, startFrame int, en
 
 	defer util.RemoveFile(videoPath)
 
-	videoUrl, err := upload(ctx, videoPath, folderName)
+	webmVideoPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.webm", uuid.New())
+	err := core.ConvertWebm(core.ConvertWebmInput{
+		VideoPath:  videoPath,
+		OutputPath: webmVideoPath,
+	})
+
+	if err != nil {
+		return "", err
+	}
+	defer util.RemoveFile(webmVideoPath)
+
+	videoUrl, err := upload(ctx, webmVideoPath, folderName)
 
 	return videoUrl, err
 
@@ -205,7 +220,7 @@ func getVideoInfo(encodedVideoUrl string) (fps, frameCount int, err error) {
 
 func populateTransitionMedia(ctx context.Context, transitions []*model.Transition, folderName string, encodedVideoUrl string, fps int, frameCount int) error {
 
-	for _, transition := range transitions {
+	for transitionIdx, transition := range transitions {
 		for _, content := range transition.Info.Content {
 			moment, err := getMoment(content, transition.StartFrame, transition.EndFrame, fps, frameCount)
 			if err != nil {
@@ -220,6 +235,7 @@ func populateTransitionMedia(ctx context.Context, transitions []*model.Transitio
 			content.MediaUrl = mediaUrl
 
 		}
+		fmt.Printf("Transition %d / %d\n", transitionIdx+1, len(transitions))
 	}
 	return nil
 }

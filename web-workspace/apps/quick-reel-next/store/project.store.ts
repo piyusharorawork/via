@@ -7,6 +7,9 @@ type Context = {
   transition: Transition | null;
 };
 
+const FPS = 30;
+
+// TODO can be moved to data
 const transitions: Transition[] = [
   {
     StartFrame: 1,
@@ -23,7 +26,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/824f0922-fa4a-4b97-9393-b05026b9804a.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/c846233d-5a6c-498c-9ea0-f93a41688aaf.webm",
+          Margin: 0,
         },
       ],
     },
@@ -55,7 +59,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/1c38f32a-edcb-4f07-be92-15b0581014a0.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/6edcf654-b045-4faf-9f54-61943408cec4.png",
+          Margin: 0,
         },
       ],
     },
@@ -75,7 +80,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/83e7a88f-660c-449a-b331-a2930bfc781c.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/aaf9df0c-cd02-40be-bb8a-491ad878fa7c.png",
+          Margin: 0,
         },
       ],
     },
@@ -95,7 +101,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/83172565-e6fc-4f93-b2c2-572f811355cc.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/bbfba73a-5deb-48fa-8a33-1096cdd5b32c.png",
+          Margin: 0,
         },
       ],
     },
@@ -115,7 +122,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/f42ea84e-5642-4e21-8ed0-32b42dae4936.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/ca366d47-66a1-4b30-9fd5-fc9f9dd6e8c8.png",
+          Margin: 0,
         },
       ],
     },
@@ -135,7 +143,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/7a1ab6b3-e8f7-4880-8ed8-522cd7debe2d.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/c6ce147c-a957-40be-a447-fe93ce7a9a4f.png",
+          Margin: 0,
         },
       ],
     },
@@ -155,7 +164,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/6e57ac38-a86e-4e32-b8f4-c7ed3df34a4c.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/847f5942-394c-4f97-9343-f9ee0ec6fa1b.png",
+          Margin: 0,
         },
       ],
     },
@@ -175,7 +185,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/c092fb94-5176-4b9d-87a9-b3aa3d8d613b.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/b29c9171-c5c8-4a83-9806-5c693ac3fc7e.png",
+          Margin: 0,
         },
       ],
     },
@@ -195,7 +206,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/a0d68584-016d-4051-a5a8-fdd2dac93e3f.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/f7fa8bc8-9590-4814-bc1b-4e1a46fb8ed1.png",
+          Margin: 0,
         },
       ],
     },
@@ -215,7 +227,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/bb7a3e15-9489-4afe-b208-a4420793d109.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/99f79a2d-5cee-45b4-9b6b-868610c72645.png",
+          Margin: 0,
         },
       ],
     },
@@ -235,7 +248,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/faecde20-5997-4f00-b31b-dbe20606bb2c.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/d37b462b-abf4-44d1-a534-1e144f55d592.png",
+          Margin: 0,
         },
       ],
     },
@@ -255,7 +269,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/eea5b5c4-9fc8-4726-97a9-bce5479c0bbe.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/775d6cf9-1b5a-476c-9782-0748b555ed4e.png",
+          Margin: 0,
         },
       ],
     },
@@ -275,7 +290,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/8b3bbe3a-869e-489a-90b7-227e610759cf.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/15953d5e-8d29-458a-8f0e-2441f7fe2891.png",
+          Margin: 0,
         },
       ],
     },
@@ -295,7 +311,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/3da46fb6-e6a4-4345-8e79-2bba54ff3a31.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/6b1789e0-597f-4aff-bbfe-f30145ff8cd3.png",
+          Margin: 0,
         },
       ],
     },
@@ -315,7 +332,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/6958a0ce-846d-4d09-b30c-c528a7de2d49.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/26758373-b55c-41be-b0f0-90277ee42726.png",
+          Margin: 0,
         },
       ],
     },
@@ -335,7 +353,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/158c7f3a-17b1-4caa-9297-a444cd467b54.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/fb614d80-e8cd-42c8-ad6d-16e613dd282b.png",
+          Margin: 0,
         },
       ],
     },
@@ -355,7 +374,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/0c0f227c-a52b-42d0-9a8b-1d777f7eb7cf.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/33aadff4-dd94-4e78-bab4-55c9a3daf780.png",
+          Margin: 0,
         },
       ],
     },
@@ -375,7 +395,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/d9c8464b-f127-475e-879a-2d6bea895440.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/926ff861-420d-41cf-8540-ca5f026be0b9.webm",
+          Margin: 0,
         },
       ],
     },
@@ -395,7 +416,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/61ae4890-c737-43b9-bb1b-a10268949b85.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/940b56e0-2927-4cb0-b80c-5ee2431145ae.webm",
+          Margin: 0,
         },
       ],
     },
@@ -424,7 +446,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/6801da30-3659-4804-9e7e-595150de2c63.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/6be76e72-85a2-41d6-8176-d32d7270e960.webm",
+          Margin: 0,
         },
       ],
     },
@@ -444,7 +467,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/59acd76b-7e24-4438-82dc-6d48f687cf5a.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/1e6bb403-9e9d-4ec9-b2d3-9037afdbfc72.webm",
+          Margin: 0,
         },
       ],
     },
@@ -464,7 +488,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/0ad35d92-e2d1-4ea7-9a26-11a76171de1b.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/e727d02b-5914-4de3-b9bf-508c0e76eea7.webm",
+          Margin: 0,
         },
       ],
     },
@@ -484,7 +509,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/f4a9ee51-522d-4e42-9e24-59b1b148fa0f.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/d1acd1ec-8e83-4181-96c3-d3f039e5b16e.webm",
+          Margin: 0,
         },
       ],
     },
@@ -504,7 +530,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/ab1d2a66-3e8e-4821-bc84-71fa84f9d965.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/a70bbef2-008f-4c7d-8512-d3ffcb909227.webm",
+          Margin: 0,
         },
       ],
     },
@@ -524,7 +551,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/8af83a3a-cfff-43ee-a83c-0f3e4a613132.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/2dfe6053-9313-439b-8a8a-7aa431ede1e3.webm",
+          Margin: 0,
         },
       ],
     },
@@ -544,7 +572,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/828b6371-13e4-4138-aabc-76a56f417b69.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/a8f10a00-4dd4-498f-9873-a69b3412ba33.webm",
+          Margin: 0,
         },
       ],
     },
@@ -564,7 +593,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/55ffe265-f5e7-48f7-9c8e-4f365661ae45.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/cf05e134-6054-415d-a4c6-c08f2a6399c7.webm",
+          Margin: 0,
         },
       ],
     },
@@ -584,7 +614,8 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/3c54c7b9-b66b-4fba-8c82-7bbc4ede074a.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/18b0682d-450a-4e0d-a5c5-fed73ca20c4a.webm",
+          Margin: 0,
         },
       ],
     },
@@ -604,21 +635,22 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/c71f4000-3873-4195-8647-2815d52db776.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/ee7f9b3e-6c28-4587-a529-398571c8c5a1.png",
+          Margin: 0.3,
         },
         {
           Row: 1,
           Column: 0,
-          Kind: "image",
-          MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/08140670-dcb1-4226-b1d8-f18fa21c4b4a.png",
+          Kind: "empty",
+          MediaUrl: "",
+          Margin: 0,
         },
         {
           Row: 2,
           Column: 0,
-          Kind: "image",
-          MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/37723f9a-67e8-4073-b3f3-30256e10549c.png",
+          Kind: "empty",
+          MediaUrl: "",
+          Margin: 0,
         },
       ],
     },
@@ -638,21 +670,23 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/bbd3a8a6-1a25-4ac5-94c5-809b2676a1d2.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/995d4da1-46d1-476e-9fd2-7eaec49f8684.png",
+          Margin: 0,
         },
         {
           Row: 1,
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/f3b41ff4-6df7-4bf3-8741-0eadba3b3b04.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/ae057afa-457f-4460-b674-7b1d99d42681.png",
+          Margin: 0,
         },
         {
           Row: 2,
           Column: 0,
-          Kind: "image",
-          MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/61b1d975-9596-4956-b978-31ba4719518d.png",
+          Kind: "empty",
+          MediaUrl: "",
+          Margin: 0,
         },
       ],
     },
@@ -672,21 +706,24 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/da5e50eb-a6f0-41a0-94e1-2768b8496e7a.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/2ecec81d-7304-4559-92e9-a27e108fc74f.png",
+          Margin: 0,
         },
         {
           Row: 1,
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/dbf63265-c37c-4bd1-a40d-fe0c773eda24.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/e4e7d4dd-cc03-4723-a9e7-fb5b014ce455.png",
+          Margin: 0,
         },
         {
           Row: 2,
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/e2eec708-6d86-4b7e-84ba-800689e0fbea.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/02b26b24-6e89-48f0-b590-d90fd74314b4.png",
+          Margin: 0,
         },
       ],
     },
@@ -706,21 +743,24 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/5681046f-9f80-4257-931a-7e0f9a2d2273.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/fee0f31d-a5e9-419a-91e3-7a4535e1a2e3.webm",
+          Margin: 0,
         },
         {
           Row: 1,
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/5c44aa10-6473-4396-b5b0-ee76e26fba31.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/668c4a7f-7974-41b9-8969-8bb31fd2033d.png",
+          Margin: 0,
         },
         {
           Row: 2,
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/eb401dc5-8f80-4cde-ba0c-47725fb0949c.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/2b4ab1fc-efa9-4728-954d-2037cb439833.png",
+          Margin: 0,
         },
       ],
     },
@@ -740,21 +780,24 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/00ca21c5-58db-454c-ba53-c190e700817a.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/37a0f559-249d-46ae-82ff-fc76c2254448.webm",
+          Margin: 0,
         },
         {
           Row: 1,
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/b6bfe7ad-5ae2-422b-9b91-0f4b1cac5533.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/82cb7579-b392-4342-a9ff-e8f4bf65c5d2.webm",
+          Margin: 0,
         },
         {
           Row: 2,
           Column: 0,
           Kind: "image",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/d10af29f-1666-4a55-9f48-17f3f0a16723.png",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/0abe1819-9fe2-48a1-a525-035a47071a4d.png",
+          Margin: 0,
         },
       ],
     },
@@ -774,21 +817,24 @@ const transitions: Transition[] = [
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/48e8d619-3e7a-4574-a37c-5524179f648f.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/d18a1a8d-3235-4892-9e96-5faca0117e0d.webm",
+          Margin: 0,
         },
         {
           Row: 1,
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/c3d7eec9-6274-4e22-92a1-4cdf09296856.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/e7b6ca79-d58c-4cf2-821f-59e4e8c6075f.webm",
+          Margin: 0,
         },
         {
           Row: 2,
           Column: 0,
           Kind: "video",
           MediaUrl:
-            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-3d55533a-bd09-4f73-bc85-4f0649284b55/6b114bac-dd9e-4f7c-ae32-264c94279495.mp4",
+            "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-43f543b7-d08c-4d94-9dae-932dc66826fc/169599ec-b43c-40d1-9a02-9c75a8747baa.webm",
+          Margin: 0,
         },
       ],
     },
@@ -843,8 +889,8 @@ export const projectStore = createStore({
           if (content.Kind === "video") {
             const videoElement = content.texture?.source
               .data as HTMLVideoElement;
-            console.log(videoElement);
-            videoElement.play();
+            const frame = event.frame - transition.StartFrame;
+            videoElement.currentTime = frame / FPS;
           }
         }
       }

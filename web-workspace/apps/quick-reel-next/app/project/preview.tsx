@@ -17,17 +17,24 @@ export const Preview = () => {
   }, []);
 
   return (
-    <Canvas style={{ width: "100%", height: "100%", border: "1px solid red" }}>
+    <Canvas
+      style={{
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#000",
+      }}
+    >
       <ambientLight />
       <VideoMesh />
     </Canvas>
   );
 };
+
 // Reference https://chatgpt.com/c/67c2f9cb-2f70-8006-a77c-13c0ae081766
 const getCenter = (rows: number, index: number): number => {
   if (rows % 2 === 1) {
     const distance = FRAME_HEIGHT / rows;
-    return (index - Math.floor(rows / 2)) * distance; // Fixed parentheses
+    return (Math.floor(rows / 2) - index) * distance;
   }
 
   const distance = (2 * FRAME_HEIGHT) / rows;
@@ -58,12 +65,20 @@ const VideoMesh = () => {
 
   const rows = transition.Info.Grid.Rows;
   const columns = transition.Info.Grid.Columns;
-  const height = FRAME_HEIGHT / rows;
+  const height = FRAME_HEIGHT / rows - 0.15; // TODO use margin
   const width = FRAME_WIDTH / columns;
 
   return transition.Info.Content.map((content, index) => {
     const center = getCenter(rows, index);
-    console.log({ rows, index, center });
+
+    if (content.Kind === "empty") {
+      return (
+        <mesh key={index} position={[0, center, 0]}>
+          <planeGeometry args={[width, height]} />
+          <meshBasicMaterial color={"black"} />
+        </mesh>
+      );
+    }
 
     return (
       <mesh key={index} position={[0, center, 0]}>

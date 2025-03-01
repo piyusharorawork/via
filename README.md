@@ -1,5 +1,21 @@
 # via
 
+## PROCESS
+
+- take original video
+- compress the video to 720p (/Users/piyusharora/projects/via/assets/temp/rishikesh-sample.mp4)
+- get the url for 720p (https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-sample-720p.mp4)
+- run the workflow to generate media json (/Users/piyusharora/projects/via/assets/temp/rishikesh-transitions.json)
+- load the json to render video in project (/Users/piyusharora/projects/via/web-workspace/apps/quick-reel-next/store/project.store.ts)
+- check the video in the project page (http://localhost:3000/project)
+- create a frames folder (/Users/piyusharora/projects/via/assets/temp/rishikesh-frames)
+- update the folder and output path (/Users/piyusharora/projects/via/web-workspace/apps/exporter/src/exporter.ts)
+- run the exporter which will capture frames and create video (/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4)
+- upload the output video (https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-output.mp4)
+- update the editor page url (/Users/piyusharora/projects/via/web-workspace/apps/quick-reel-next/app/templates/[id]/editor/page.tsx)
+- attach audio (/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4 ,https://test-v1.blr1.digitaloceanspaces.com/CMS/luxurious-hotel-highlights-reel-original-music.mp3 )
+- final output https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-output-with-audio.mp4
+
 ## TODO : Long Term
 
 - get rid of node sdk too by using cloudinary

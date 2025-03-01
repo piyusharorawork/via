@@ -10,7 +10,9 @@ export default function EditorPage() {
   const frameCount = templates[0].videoInfo.frameCount;
   const fps = templates[0].videoInfo.fps;
   const audioUrl = templates[0].videoInfo.audioUrl;
-  const editorUrl = templates[0].videoInfo.editorUrl;
+  // const editorUrl = templates[0].videoInfo.editorUrl;
+  const editorUrl =
+    "https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-output.mp4";
 
   return (
     <main className="h-full flex flex-col">

@@ -12,10 +12,10 @@ func UploadFileExample(ctx context.Context) {
 	secretKey := ctx.Value(model.SecretKey).(string)
 	region := ctx.Value(model.Region).(string)
 	spaceName := ctx.Value(model.SpaceName).(string)
-	folderPath := "CMS"
+	folderPath := "temp"
 
 	input := core.UploadFileInput{
-		FilePath:   "/Users/piyusharora/projects/via/assets/temp/luxurious-hotel-highlights-reel-original-without-music-360p.mp4",
+		FilePath:   "/Users/piyusharora/projects/via/assets/temp/rishikesh-output-with-audio-encoded.mp4",
 		SpaceName:  spaceName,
 		Region:     region,
 		AccessKey:  accessKey,

@@ -22,4 +22,5 @@ type LayoutContent struct {
 	Column   int
 	Kind     string
 	MediaUrl string
+	Margin   float32 // TODO  Margin should be at layout grid not content
 }
