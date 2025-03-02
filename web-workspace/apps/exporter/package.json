@@ -14,6 +14,8 @@
     "typescript": "latest"
   },
   "dependencies": {
-    "playwright": "^1.50.1"
+    "commander": "^13.1.0",
+    "playwright": "^1.50.1",
+    "zod": "^3.23.8"
   }
 }
