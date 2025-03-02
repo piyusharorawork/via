@@ -23,6 +23,7 @@ export const captureFrames = async (input: Options) => {
     const page = await browser.newPage();
     await page.setViewportSize({ width: videoWidth, height: videoHeight });
     await page.goto(pageUrl);
+    console.log("loading page ...");
     await page.waitForTimeout(5000);
 
     for (let frame = frameCount; frame >= 1; frame--) {

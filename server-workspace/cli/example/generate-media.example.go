@@ -11,15 +11,17 @@ func GenerateMediaExample(ctx context.Context) {
 	transitions := getTransitions()
 
 	input := workflow.GenerateMediaInput{
-		OriginalVideoUrl: "https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-sample-720p.mp4",
-		Transitions:      transitions,
-		OutputFilePath:   "/Users/piyusharora/projects/via/assets/temp/rishikesh-transitions.json",
+		OriginalVideoUrl:    "https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-sample-720p.mp4",
+		Transitions:         transitions,
+		TransitionsJSONPath: "/Users/piyusharora/projects/via/web-workspace/apps/quick-reel-next/data/transitions.json",
 	}
 
-	err := workflow.GenerateMedia(ctx, input)
+	url, err := workflow.GenerateMedia(ctx, input)
 	if err != nil {
 		panic(err)
 	}
+
+	print(url)
 }
 
 func getTransitions() []*model.Transition {

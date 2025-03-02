@@ -11,38 +11,66 @@ import (
 )
 
 type GenerateMediaInput struct {
-	OriginalVideoUrl string
-	Transitions      []*model.Transition
-	OutputFilePath   string
+	OriginalVideoUrl    string
+	Transitions         []*model.Transition
+	TransitionsJSONPath string
 }
 
-func GenerateMedia(ctx context.Context, input GenerateMediaInput) error {
+// TODO might need to divide into smaller tasks
+func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error) {
 	folderName := fmt.Sprintf("temp/workspace-%s", uuid.NewString())
 	encodedVideoUrl, err := getEncodedVideoUrl(ctx, input.OriginalVideoUrl, folderName)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	fps, frameCount, err := getVideoInfo(encodedVideoUrl)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	err = populateTransitionMedia(ctx, input.Transitions, folderName, encodedVideoUrl, fps, frameCount)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	err = util.SaveArrayToJSON(input.OutputFilePath, input.Transitions)
+	err = util.SaveArrayToJSON(input.TransitionsJSONPath, input.Transitions)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	err = core.ExportFrames(core.ExportFramesInput{
+		FrameCount:    422,
+		FramesDirPath: "/Users/piyusharora/projects/via/assets/temp/rishikesh-frames",
+		PageUrl:       "http://localhost:3000/project",
+		VideoWidth:    360,
+		VideoHeight:   640,
+	})
+
+	if err != nil {
+		return "", err
+	}
+
+	defer util.RemoveDir("/Users/piyusharora/projects/via/assets/temp/rishikesh-frames")
+
+	err = core.ConvertFramesToVideo(core.ConvertFramesToVideoInput{
+		FramesDirPath: "/Users/piyusharora/projects/via/assets/temp/rishikesh-frames",
+		OutputPath:    "/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4",
+		Fps:           30,
+	})
+
+	if err != nil {
+		return "", err
+	}
+	defer util.RemoveFile("/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4")
+
+	exportedVideoUrl, err := upload(ctx, "/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4", "temp")
+
+	return exportedVideoUrl, err
 }
 
 func getMediaUrl(ctx context.Context, encodedVideoUrl string, startFrame int, endFrame int, kind string, folderName string, fps int) (string, error) {

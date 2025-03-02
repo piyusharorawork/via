@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc; node dist/exporter.js",
+    "compile": "tsc --watch",
+    "start": "node dist/exporter.js",
     "launch": "pnpm playwright open -b chromium http://localhost:3000/project"
   },
   "devDependencies": {

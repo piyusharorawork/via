@@ -1,6 +1,3 @@
-import { chromium, Page } from "playwright";
-import { exec } from "child_process";
-import path from "path";
 import { program } from "commander";
 import { captureFrames } from "./capture-frames";
 import { Options } from "./exporter.types";
@@ -20,20 +17,15 @@ import { Options } from "./exporter.types";
         "Frames dir path",
         "/Users/piyusharora/projects/via/assets/temp/rishikesh-frames"
       )
-      .option(
-        "-o, --output-path [output-path]",
-        "Output path",
-        "/Users/piyusharora/projects/via/assets/temp/rishikesh-video.mp4"
-      )
       .option("-f, --fps [fps]", "FPS", "30")
-      .option("-c, --frame-count [frame-count]", "Frame count", "100");
+      .option("-c, --frame-count [frame-count]", "Frame count", "422");
 
     program.parse();
 
     const options = program.opts<Options>();
+    console.log(options);
 
     await captureFrames(options);
-    // await makeVideo();
   } catch (error) {
     console.error();
   }

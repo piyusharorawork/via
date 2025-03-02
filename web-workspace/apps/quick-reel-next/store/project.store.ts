@@ -1,7 +1,7 @@
 import { createStore } from "@xstate/store";
 import * as THREE from "three";
 import { Transition } from "./project.store.types";
-import { transitions } from "@/data/transitions";
+import transitionsJSON from "@/data/transitions.json";
 
 type Context = {
   transitions: Transition[];
@@ -9,6 +9,8 @@ type Context = {
 };
 
 const FPS = 30;
+
+const transitions = transitionsJSON as Transition[];
 
 const context: Context = {
   transitions,
