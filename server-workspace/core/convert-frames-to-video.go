@@ -19,7 +19,8 @@ func ConvertFramesToVideo(input ConvertFramesToVideoInput) error {
 	filePattern := "%d.png"
 	fullPath := filepath.Join(input.FramesDirPath, filePattern)
 
-	cmd := exec.Command("ffmpeg", "-y", "-i", fullPath, "-framerate", strconv.Itoa(input.Fps), "-c:v", "libx264", "-pix_fmt", "yuv420p", input.OutputPath)
+	cmd := exec.Command("ffmpeg", "-y", "-framerate", strconv.Itoa(input.Fps), "-i", fullPath, "-c:v", "libx264", "-pix_fmt", "yuv420p", input.OutputPath)
+
 	_, err := util.RunCommand(cmd)
 
 	if err != nil {

@@ -11,7 +11,7 @@ func GenerateMediaExample(ctx context.Context) {
 	transitions := getTransitions()
 
 	input := workflow.GenerateMediaInput{
-		OriginalVideoUrl:    "https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-sample-720p.mp4",
+		OriginalVideoUrl:    "https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-room-720p.mp4",
 		Transitions:         transitions,
 		TransitionsJSONPath: "/Users/piyusharora/projects/via/web-workspace/apps/quick-reel-next/data/transitions.json",
 	}
