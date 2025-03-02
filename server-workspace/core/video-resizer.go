@@ -19,6 +19,10 @@ const (
 	SD_480p              Resolution = "SD_480p"
 	VERY_LOW_SD_360p     Resolution = "VERY_LOW_SD_360p"
 	EXTREMLY_LOW_SD_240p Resolution = "EXTREMLY_LOW_SD_240p"
+	ULTRA_LOW_SD_180p    Resolution = "ULTRA_LOW_SD_180p"
+	MINIMAL_SD_144p      Resolution = "MINIMAL_SD_144p"
+	LOWEST_SD_120p       Resolution = "LOWEST_SD_120p"
+	BARE_MINIMUM_SD_96p  Resolution = "BARE_MINIMUM_SD_96p"
 )
 
 type Dimenstions struct {
@@ -58,6 +62,22 @@ var resolutions = map[Resolution]Dimenstions{
 	"EXTREMLY_LOW_SD_240p": {
 		Height: 426,
 		Width:  240,
+	},
+	"ULTRA_LOW_SD_180p": {
+		Height: 320,
+		Width:  180,
+	},
+	"MINIMAL_SD_144p": {
+		Height: 256,
+		Width:  144,
+	},
+	"LOWEST_SD_120p": {
+		Height: 213,
+		Width:  120,
+	},
+	"BARE_MINIMUM_SD_96p": {
+		Height: 170,
+		Width:  96,
 	},
 }
 

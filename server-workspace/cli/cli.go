@@ -14,5 +14,5 @@ func main() {
 
 	println(ctx)
 
-	example.UploadFileExample(ctx)
+	example.ResizeImageExample()
 }
