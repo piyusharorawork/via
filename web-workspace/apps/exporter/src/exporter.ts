@@ -46,11 +46,10 @@ const takeScreenshot = async (page: Page, frame: number) => {
 const makeVideo = () => {
   return new Promise<void>(async (resolve, reject) => {
     try {
-      const command = `ffmpeg -framerate ${FPS} -i "${path.join(FRAMES_FOLDER_PATH, "%d.png")}" -c:v libx264 -pix_fmt yuv420p "${OUTPUT_PATH}"`;
+      const command = `ffmpeg -y -i ${path.join(FRAMES_FOLDER_PATH, "%d.png")} -framerate ${FPS} -c:v libx264 -pix_fmt yuv420p ${OUTPUT_PATH}`;
 
       console.log(command);
 
-      // this is stuck for some reason
       exec(command, (error, stdout, stderr) => {
         if (error) {
           console.error(`Error: ${error.message}`);
@@ -71,7 +70,7 @@ const makeVideo = () => {
 
 (async () => {
   try {
-    // await captureFrames();
+    await captureFrames();
     await makeVideo();
   } catch (error) {
     console.error();

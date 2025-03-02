@@ -15,6 +15,7 @@ type TransitionInfo struct {
 type LayoutGrid struct {
 	Rows    int
 	Columns int
+	Margin  float32
 }
 
 type LayoutContent struct {
@@ -22,5 +23,4 @@ type LayoutContent struct {
 	Column   int
 	Kind     string
 	MediaUrl string
-	Margin   float32 // TODO  Margin should be at layout grid not content
 }

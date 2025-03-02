@@ -6,8 +6,8 @@
 - compress the video to 720p (/Users/piyusharora/projects/via/assets/temp/rishikesh-sample.mp4)
 - get the url for 720p (https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-sample-720p.mp4)
 - run the workflow to generate media json (/Users/piyusharora/projects/via/assets/temp/rishikesh-transitions.json)
-- load the json to render video in project (/Users/piyusharora/projects/via/web-workspace/apps/quick-reel-next/store/project.store.ts)
-- check the video in the project page (http://localhost:3000/project)
+- load the json to render video in project (/Users/piyusharora/projects/via/web-workspace/apps/quick-reel-next/data/transitions.ts)
+- check the video in the project page : store.send({type : "changeFrame", frame :421}) (http://localhost:3000/project)
 - create a frames folder (/Users/piyusharora/projects/via/assets/temp/rishikesh-frames)
 - update the folder and output path (/Users/piyusharora/projects/via/web-workspace/apps/exporter/src/exporter.ts)
 - run the exporter which will capture frames and create video (/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4)
@@ -18,8 +18,6 @@
 
 ## Next Steps
 
-- use margin propely
-- why export ffmpeg stuck
 - generate preview small images
 - show progress on export console
 - fix dissolve transition

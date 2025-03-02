@@ -65,7 +65,8 @@ const VideoMesh = () => {
 
   const rows = transition.Info.Grid.Rows;
   const columns = transition.Info.Grid.Columns;
-  const height = FRAME_HEIGHT / rows - 0.15; // TODO use margin
+  const margin = transition.Info.Grid.Margin;
+  const height = FRAME_HEIGHT / rows - margin;
   const width = FRAME_WIDTH / columns;
 
   return transition.Info.Content.map((content, index) => {

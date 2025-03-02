@@ -466,13 +466,12 @@ func getTransitions() []*model.Transition {
 			EndFrame:   341,
 			Info: &model.TransitionInfo{
 				Type: "layout",
-				Grid: &model.LayoutGrid{Columns: 1, Rows: 3},
+				Grid: &model.LayoutGrid{Columns: 1, Rows: 3, Margin: 0.18},
 				Content: []*model.LayoutContent{
 					{
 						Row:    0,
 						Column: 0,
 						Kind:   "image",
-						Margin: 0.3,
 					},
 					{
 						Row:    1,
@@ -492,7 +491,7 @@ func getTransitions() []*model.Transition {
 			EndFrame:   353,
 			Info: &model.TransitionInfo{
 				Type: "layout",
-				Grid: &model.LayoutGrid{Columns: 1, Rows: 3},
+				Grid: &model.LayoutGrid{Columns: 1, Rows: 3, Margin: 0.18},
 				Content: []*model.LayoutContent{
 					{
 						Row:    0,
@@ -517,7 +516,7 @@ func getTransitions() []*model.Transition {
 			EndFrame:   363,
 			Info: &model.TransitionInfo{
 				Type: "layout",
-				Grid: &model.LayoutGrid{Columns: 1, Rows: 3},
+				Grid: &model.LayoutGrid{Columns: 1, Rows: 3, Margin: 0.18},
 				Content: []*model.LayoutContent{
 					{
 						Row:    0,
@@ -567,7 +566,7 @@ func getTransitions() []*model.Transition {
 			EndFrame:   392,
 			Info: &model.TransitionInfo{
 				Type: "layout",
-				Grid: &model.LayoutGrid{Columns: 1, Rows: 3},
+				Grid: &model.LayoutGrid{Columns: 1, Rows: 3, Margin: 0.18},
 				Content: []*model.LayoutContent{
 					{
 						Row:    0,
@@ -592,7 +591,7 @@ func getTransitions() []*model.Transition {
 			EndFrame:   422,
 			Info: &model.TransitionInfo{
 				Type: "layout",
-				Grid: &model.LayoutGrid{Columns: 1, Rows: 3},
+				Grid: &model.LayoutGrid{Columns: 1, Rows: 3, Margin: 0.18},
 				Content: []*model.LayoutContent{
 					{
 						Row:    0,

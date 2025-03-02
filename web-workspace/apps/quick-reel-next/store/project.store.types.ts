@@ -18,11 +18,11 @@ type TransitionContent = {
   Column: number;
   Kind: "video" | "image" | "empty";
   MediaUrl: string;
-  Margin: number;
   texture?: THREE.Texture;
 };
 
 type TransitionGrid = {
   Rows: number;
   Columns: number;
+  Margin: number;
 };
