@@ -291,6 +291,21 @@ func getTransitions() []*model.Transition {
 			},
 		},
 		{
+			StartFrame: 106,
+			EndFrame:   108,
+			Info: &model.TransitionInfo{
+				Type: "layout",
+				Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
+				Content: []*model.LayoutContent{
+					{
+						Row:    0,
+						Column: 0,
+						Kind:   "image",
+					},
+				},
+			},
+		},
+		{
 			StartFrame: 109,
 			EndFrame:   126,
 			Info: &model.TransitionInfo{
