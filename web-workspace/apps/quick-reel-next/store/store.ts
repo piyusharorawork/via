@@ -1,9 +1,14 @@
-import { Transition, transitions } from "@/app/templates/data/transitions";
+import { Transition } from "@/store/project.store.types";
+import { transitions } from "./project.store";
+
 import { createStore } from "@xstate/store";
 
 const getSelectedTransitionIdx = (frame: number) => {
   for (let i = 0; i < transitions.length; i++) {
-    if (frame >= transitions[i].start && frame <= transitions[i].end) {
+    if (
+      frame >= transitions[i].StartFrame &&
+      frame <= transitions[i].EndFrame
+    ) {
       return i;
     }
   }
@@ -51,11 +56,11 @@ export const store = createStore({
 
       videoElement.pause();
       audioElement.pause();
-      videoElement.currentTime = event.transition.start / event.fps;
-      audioElement.currentTime = event.transition.start / event.fps;
+      videoElement.currentTime = event.transition.StartFrame / event.fps;
+      audioElement.currentTime = event.transition.StartFrame / event.fps;
 
       return {
-        frame: event.transition.start,
+        frame: event.transition.StartFrame,
       };
     },
 

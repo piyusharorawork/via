@@ -10,7 +10,7 @@ type Context = {
 
 const FPS = 30;
 
-const transitions = transitionsJSON as Transition[];
+export const transitions = transitionsJSON as Transition[];
 
 const context: Context = {
   transitions,

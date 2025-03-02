@@ -14,5 +14,5 @@ func main() {
 
 	println(ctx)
 
-	example.ResizeImageExample()
+	example.GenerateMediaExample(ctx)
 }

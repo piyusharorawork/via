@@ -37,19 +37,15 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		return "", err
 	}
 
-	err = util.SaveArrayToJSON(input.TransitionsJSONPath, input.Transitions)
-
-	if err != nil {
-		return "", err
-	}
-
-	err = core.ExportFrames(core.ExportFramesInput{
+	exportFramesInput := core.ExportFramesInput{
 		FrameCount:    422,
 		FramesDirPath: "/Users/piyusharora/projects/via/assets/temp/rishikesh-frames",
 		PageUrl:       "http://localhost:3000/project",
 		VideoWidth:    360,
 		VideoHeight:   640,
-	})
+	}
+
+	err = core.ExportFrames(exportFramesInput)
 
 	if err != nil {
 		return "", err
@@ -68,9 +64,52 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	}
 	defer util.RemoveFile("/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4")
 
+	err = generatePreview(ctx, input.Transitions, exportFramesInput.FramesDirPath)
+
+	if err != nil {
+		return "", err
+	}
+
+	err = util.SaveArrayToJSON(input.TransitionsJSONPath, input.Transitions)
+
+	if err != nil {
+		return "", err
+	}
+
 	exportedVideoUrl, err := upload(ctx, "/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4", "temp")
 
 	return exportedVideoUrl, err
+}
+
+func generatePreview(ctx context.Context, transitions []*model.Transition, framesDirPath string) error {
+	for transitionIdx, transition := range transitions {
+		imagePath := fmt.Sprintf("%s/%d.png", framesDirPath, transition.StartFrame)
+		outPath := fmt.Sprintf("%s/%d-low.png", framesDirPath, transition.StartFrame)
+		err := core.ResizeImage(core.ResizeImageInput{
+			ImagePath:  imagePath,
+			Resolution: core.BARE_MINIMUM_SD_96p,
+			OutputPath: outPath,
+		})
+
+		if err != nil {
+			return err
+		}
+
+		defer util.RemoveFile(outPath)
+
+		previewUrl, err := upload(ctx, outPath, "temp")
+
+		if err != nil {
+			return err
+		}
+
+		transition.PreviewUrl = previewUrl
+
+		fmt.Printf("Preview %d / %d\n", transitionIdx+1, len(transitions))
+
+	}
+
+	return nil
 }
 
 func getMediaUrl(ctx context.Context, encodedVideoUrl string, startFrame int, endFrame int, kind string, folderName string, fps int) (string, error) {

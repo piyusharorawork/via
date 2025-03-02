@@ -3,7 +3,7 @@ import * as THREE from "three";
 export type Transition = {
   StartFrame: number;
   EndFrame: number;
-
+  PreviewUrl: string;
   Info: TransitionInfo;
 };
 

@@ -4,6 +4,7 @@ type Transition struct {
 	StartFrame int
 	EndFrame   int
 	Info       *TransitionInfo
+	PreviewUrl string
 }
 
 type TransitionInfo struct {

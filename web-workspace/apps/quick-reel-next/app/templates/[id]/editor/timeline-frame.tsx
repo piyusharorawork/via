@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Transition } from "../../data/transitions";
+import { Transition } from "@/store/project.store.types";
 import { store } from "@/store/store";
 import { useSelector } from "@xstate/store/react";
 

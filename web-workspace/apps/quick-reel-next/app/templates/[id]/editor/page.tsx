@@ -3,14 +3,22 @@ import { templates } from "../../data/templates";
 import { EditorPreview } from "./editor-preview";
 import { PlayButton } from "./play-button";
 import { CardTimeline } from "./card-timeline";
-import { transitionFrames } from "../../data/transition-frames";
-import { transitions } from "../../data/transitions";
+import { useSelector } from "@xstate/store/react";
+import { projectStore } from "@/store/project.store";
 
 export default function EditorPage() {
   const frameCount = templates[0].videoInfo.frameCount;
   const fps = templates[0].videoInfo.fps;
   const audioUrl = templates[0].videoInfo.audioUrl;
-  // const editorUrl = templates[0].videoInfo.editorUrl;
+
+  const transitions = useSelector(
+    projectStore,
+    (state) => state.context.transitions
+  );
+  const transitionFrames = transitions.map(
+    (transition) => transition.PreviewUrl
+  );
+
   const editorUrl =
     "https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-output.mp4";
 

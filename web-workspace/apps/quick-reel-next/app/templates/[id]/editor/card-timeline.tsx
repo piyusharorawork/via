@@ -1,11 +1,11 @@
 "use client";
 
 import { TimelineFrame } from "./timeline-frame";
-import { Transition } from "../../data/transitions";
 import { useSelector } from "@xstate/store/react";
 import { store } from "@/store/store";
 
 import { AnimatedProgress } from "@/components/ui/animated-progress";
+import { Transition } from "@/store/project.store.types";
 
 type Props = {
   transitions: Transition[];
