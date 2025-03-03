@@ -7,11 +7,11 @@ import (
 )
 
 func ValidateTransitionExample(ctx context.Context) {
-	transitions := getTransitions()
+	layers := getLayers()
 
 	input := workflow.ValidateTransitionInput{
 		TemplateVideoUrl:    "https://test-v1.blr1.digitaloceanspaces.com/CMS/luxurious-hotel-highlights-reel-original-music-video-720p.mp4",
-		Transitions:         transitions,
+		Layers:              layers,
 		TransitionsJSONPath: "/Users/piyusharora/projects/via/web-workspace/apps/quick-reel-next/data/transitions.json",
 	}
 

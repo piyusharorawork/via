@@ -12,7 +12,7 @@ import (
 
 type ValidateTransitionInput struct {
 	TemplateVideoUrl    string
-	Transitions         []*model.Transition
+	Layers              []*model.Layer
 	TransitionsJSONPath string
 }
 
@@ -30,13 +30,13 @@ func ValidateTransition(ctx context.Context, input ValidateTransitionInput) (str
 		return "", err
 	}
 
-	err = populateTemplateMedia(ctx, input.Transitions, folderName, encodedVideoUrl, fps)
+	err = populateTemplateMedia(ctx, input.Layers, folderName, encodedVideoUrl, fps)
 
 	if err != nil {
 		return "", err
 	}
 
-	err = util.SaveArrayToJSON(input.TransitionsJSONPath, input.Transitions)
+	err = util.SaveArrayToJSON(input.TransitionsJSONPath, input.Layers)
 
 	if err != nil {
 		return "", err
@@ -73,23 +73,28 @@ func ValidateTransition(ctx context.Context, input ValidateTransitionInput) (str
 
 }
 
-func populateTemplateMedia(ctx context.Context, transitions []*model.Transition, folderName string, encodedVideoUrl string, fps int) error {
-	for transitionIdx, transition := range transitions {
-		for _, content := range transition.Info.Content {
+func populateTemplateMedia(ctx context.Context, layers []*model.Layer, folderName string, encodedVideoUrl string, fps int) error {
+	for layerIdx, layer := range layers {
+		transitions := layer.Transitions
+		for transitionIdx, transition := range transitions {
+			if transition.Info == nil {
+				continue
+			}
+
 			moment := core.FindMomentOutput{
 				StartFrame: transition.StartFrame,
 				EndFrame:   transition.EndFrame,
 			}
 
-			mediaUrl, err := getMediaUrl(ctx, encodedVideoUrl, moment.StartFrame, moment.EndFrame, content.Kind, folderName, fps)
+			mediaUrl, err := getMediaUrl(ctx, encodedVideoUrl, moment.StartFrame, moment.EndFrame, transition.Info.Content.Kind, folderName, fps)
 			if err != nil {
 				return err
 			}
 
-			content.MediaUrl = mediaUrl
-
+			transition.Info.Content.MediaUrl = mediaUrl
+			fmt.Printf(" Layer %d : Transition %d / %d\n", layerIdx+1, transitionIdx+1, len(transitions))
 		}
-		fmt.Printf("Transition %d / %d\n", transitionIdx+1, len(transitions))
 	}
+
 	return nil
 }

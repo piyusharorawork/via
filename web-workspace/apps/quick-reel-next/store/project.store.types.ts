@@ -1,16 +1,20 @@
 import * as THREE from "three";
 
+export type Layer = {
+  Transitions: Transition[];
+};
+
 export type Transition = {
   StartFrame: number;
   EndFrame: number;
   PreviewUrl: string;
-  Info: TransitionInfo;
+  Info: TransitionInfo | null;
 };
 
 type TransitionInfo = {
   Type: "layout" | "dissolve";
   Grid: TransitionGrid | null;
-  Content: TransitionContent[];
+  Content: TransitionContent | null;
 };
 
 type TransitionContent = {

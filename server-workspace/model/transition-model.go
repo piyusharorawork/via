@@ -10,7 +10,7 @@ type Transition struct {
 type TransitionInfo struct {
 	Type    string
 	Grid    *LayoutGrid
-	Content []*LayoutContent
+	Content *LayoutContent
 }
 
 type LayoutGrid struct {

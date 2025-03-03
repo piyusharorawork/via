@@ -11,9 +11,9 @@ import (
 )
 
 type GenerateMediaInput struct {
-	OriginalVideoUrl    string
-	Transitions         []*model.Transition
-	TransitionsJSONPath string
+	OriginalVideoUrl string
+	Layers           []*model.Layer
+	LayersJSONPath   string
 }
 
 // TODO might need to divide into smaller tasks
@@ -31,7 +31,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		return "", err
 	}
 
-	err = populateTransitionMedia(ctx, input.Transitions, folderName, encodedVideoUrl, fps, frameCount)
+	err = populateTransitionMedia(ctx, input.Layers, folderName, encodedVideoUrl, fps, frameCount)
 
 	if err != nil {
 		return "", err
@@ -64,13 +64,13 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	}
 	defer util.RemoveFile("/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4")
 
-	err = generatePreview(ctx, input.Transitions, exportFramesInput.FramesDirPath)
+	err = generatePreview(ctx, input.Layers, exportFramesInput.FramesDirPath)
 
 	if err != nil {
 		return "", err
 	}
 
-	err = util.SaveArrayToJSON(input.TransitionsJSONPath, input.Transitions)
+	err = util.SaveArrayToJSON(input.LayersJSONPath, input.Layers)
 
 	if err != nil {
 		return "", err
@@ -81,32 +81,35 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	return exportedVideoUrl, err
 }
 
-func generatePreview(ctx context.Context, transitions []*model.Transition, framesDirPath string) error {
-	for transitionIdx, transition := range transitions {
-		imagePath := fmt.Sprintf("%s/%d.png", framesDirPath, transition.StartFrame)
-		outPath := fmt.Sprintf("%s/%d-low.png", framesDirPath, transition.StartFrame)
-		err := core.ResizeImage(core.ResizeImageInput{
-			ImagePath:  imagePath,
-			Resolution: core.BARE_MINIMUM_SD_96p,
-			OutputPath: outPath,
-		})
+func generatePreview(ctx context.Context, layers []*model.Layer, framesDirPath string) error {
+	for layerIdx, layer := range layers {
+		transitions := layer.Transitions
+		for transitionIdx, transition := range transitions {
+			imagePath := fmt.Sprintf("%s/%d.png", framesDirPath, transition.StartFrame)
+			outPath := fmt.Sprintf("%s/%d-low.png", framesDirPath, transition.StartFrame)
+			err := core.ResizeImage(core.ResizeImageInput{
+				ImagePath:  imagePath,
+				Resolution: core.BARE_MINIMUM_SD_96p,
+				OutputPath: outPath,
+			})
 
-		if err != nil {
-			return err
+			if err != nil {
+				return err
+			}
+
+			defer util.RemoveFile(outPath)
+
+			previewUrl, err := upload(ctx, outPath, "temp")
+
+			if err != nil {
+				return err
+			}
+
+			transition.PreviewUrl = previewUrl
+
+			fmt.Printf("Layer %d : Preview %d / %d\n", layerIdx+1, transitionIdx+1, len(transitions))
+
 		}
-
-		defer util.RemoveFile(outPath)
-
-		previewUrl, err := upload(ctx, outPath, "temp")
-
-		if err != nil {
-			return err
-		}
-
-		transition.PreviewUrl = previewUrl
-
-		fmt.Printf("Preview %d / %d\n", transitionIdx+1, len(transitions))
-
 	}
 
 	return nil
@@ -285,10 +288,21 @@ func getVideoInfo(encodedVideoUrl string) (fps, frameCount int, err error) {
 	return
 }
 
-func populateTransitionMedia(ctx context.Context, transitions []*model.Transition, folderName string, encodedVideoUrl string, fps int, frameCount int) error {
+func populateTransitionMedia(ctx context.Context, layers []*model.Layer, folderName string, encodedVideoUrl string, fps int, frameCount int) error {
 
-	for transitionIdx, transition := range transitions {
-		for _, content := range transition.Info.Content {
+	for layerIdx, layer := range layers {
+		transitions := layer.Transitions
+		for transitionIdx, transition := range transitions {
+			if transition.Info == nil {
+				continue
+			}
+
+			content := getContent(transition)
+
+			if content == nil {
+				continue
+			}
+
 			moment, err := getMoment(content, transition.StartFrame, transition.EndFrame, fps, frameCount)
 			if err != nil {
 				return err
@@ -300,9 +314,17 @@ func populateTransitionMedia(ctx context.Context, transitions []*model.Transitio
 			}
 
 			content.MediaUrl = mediaUrl
-
+			fmt.Printf("Layer %d : Transition %d / %d\n", layerIdx+1, transitionIdx+1, len(transitions))
 		}
-		fmt.Printf("Transition %d / %d\n", transitionIdx+1, len(transitions))
 	}
+
 	return nil
+}
+
+func getContent(transition *model.Transition) *model.LayoutContent {
+	if transition.Info == nil {
+		return nil
+	}
+
+	return transition.Info.Content
 }

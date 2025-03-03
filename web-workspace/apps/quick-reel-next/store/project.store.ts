@@ -1,9 +1,11 @@
 import { createStore } from "@xstate/store";
 import * as THREE from "three";
-import { Transition } from "./project.store.types";
+import { Layer, Transition } from "./project.store.types";
 import transitionsJSON from "@/data/transitions.json";
+import layersJSON from "@/data/layers.json";
 
 type Context = {
+  layers: Layer[];
   transitions: Transition[];
   transition: Transition | null;
 };
@@ -13,6 +15,7 @@ const FPS = 30;
 export const transitions = transitionsJSON as Transition[];
 
 const context: Context = {
+  layers: layersJSON as Layer[],
   transitions,
   transition: null,
 };
@@ -28,9 +31,11 @@ export const projectStore = createStore({
         contentIdx: number;
       }
     ) => {
+      const info = transitions[event.transitionIdx].Info;
+      if (!info) return { transitions };
+
       const videoTexture = new THREE.VideoTexture(event.video);
-      transitions[event.transitionIdx].Info.Content[event.contentIdx].texture =
-        videoTexture;
+      info.Content[event.contentIdx].texture = videoTexture;
       return { transitions };
     },
     addImageInfo: (
@@ -41,10 +46,14 @@ export const projectStore = createStore({
         contentIdx: number;
       }
     ) => {
+      const info = transitions[event.transitionIdx].Info;
+      if (!info) return { transitions };
+      const content = info.Content;
+      if (!content) return { transitions };
+
       const textureLoader = new THREE.TextureLoader();
       const texture = textureLoader.load(event.imageUrl);
-      transitions[event.transitionIdx].Info.Content[event.contentIdx].texture =
-        texture;
+      info.Content[event.contentIdx].texture = texture;
 
       return { transitions };
     },
@@ -56,7 +65,10 @@ export const projectStore = createStore({
       );
 
       if (transition) {
-        for (const content of transition.Info.Content) {
+        const info = transition.Info;
+        if (!info) return { transitions };
+
+        for (const content of info.Content) {
           if (content.Kind === "video") {
             const videoElement = content.texture?.source
               .data as HTMLVideoElement;

@@ -5,6 +5,7 @@ import { PlayButton } from "./play-button";
 import { CardTimeline } from "./card-timeline";
 import { useSelector } from "@xstate/store/react";
 import { projectStore } from "@/store/project.store";
+import { LayersTimeline } from "./layers-timeline";
 
 export default function EditorPage() {
   const frameCount = templates[0].videoInfo.frameCount;
@@ -18,6 +19,8 @@ export default function EditorPage() {
   const transitionFrames = transitions.map(
     (transition) => transition.PreviewUrl
   );
+
+  const layers = useSelector(projectStore, (state) => state.context.layers);
 
   const editorUrl =
     "https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-output.mp4";
@@ -33,13 +36,14 @@ export default function EditorPage() {
       <section id="player-controller" className="h-12">
         <PlayButton fps={fps} audioUrl={audioUrl} />
       </section>
-      <section id="timeline" className="h-40">
-        <CardTimeline
+      <section id="timeline" className="h-48">
+        {/* <CardTimeline
           fps={fps}
           frameCount={frameCount}
           transitionFrames={transitionFrames}
           transitions={transitions}
-        />
+        /> */}
+        <LayersTimeline layers={layers} />
       </section>
     </main>
   );
