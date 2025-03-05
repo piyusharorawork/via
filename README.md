@@ -80,3 +80,8 @@ https://www.pexels.com/search/family/
 - transition
 - background music
 - own voice
+
+# Example Shorts
+
+- https://www.youtube.com/shorts/PyYfh_tHaYA
+- https://www.youtube.com/shorts/yc9mLpbxfdI
