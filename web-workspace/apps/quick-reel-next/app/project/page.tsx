@@ -1,7 +1,5 @@
-import { project } from "../templates/data/project";
 import { MediaElements } from "./media-elements";
 import { Preview } from "./preview";
-import { TransitionElement } from "./transition";
 
 export default function ProjectPage() {
   return (

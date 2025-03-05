@@ -75,24 +75,24 @@ func ValidateTransition(ctx context.Context, input ValidateTransitionInput) (str
 
 func populateTemplateMedia(ctx context.Context, layers []*model.Layer, folderName string, encodedVideoUrl string, fps int) error {
 	for layerIdx, layer := range layers {
-		transitions := layer.Transitions
-		for transitionIdx, transition := range transitions {
-			if transition.Info == nil {
+		segments := layer.Segments
+		for segmentIdx, segment := range segments {
+			if segment.Content == nil {
 				continue
 			}
 
 			moment := core.FindMomentOutput{
-				StartFrame: transition.StartFrame,
-				EndFrame:   transition.EndFrame,
+				Start: segment.Start,
+				End:   segment.End,
 			}
 
-			mediaUrl, err := getMediaUrl(ctx, encodedVideoUrl, moment.StartFrame, moment.EndFrame, transition.Info.Content.Kind, folderName, fps)
+			mediaUrl, err := getMediaUrl(ctx, encodedVideoUrl, moment.Start, moment.End, segment.Content.Type, folderName, fps)
 			if err != nil {
 				return err
 			}
 
-			transition.Info.Content.MediaUrl = mediaUrl
-			fmt.Printf(" Layer %d : Transition %d / %d\n", layerIdx+1, transitionIdx+1, len(transitions))
+			segment.Content.Url = mediaUrl
+			fmt.Printf(" Layer %d / %d : Transition %d / %d\n", layerIdx+1, len(layers), segmentIdx+1, len(segments))
 		}
 	}
 

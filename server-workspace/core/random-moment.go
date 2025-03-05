@@ -21,8 +21,8 @@ type FindMomentInput struct {
 }
 
 type FindMomentOutput struct {
-	StartFrame int
-	EndFrame   int
+	Start int
+	End   int
 }
 
 func FindMoment(input FindMomentInput) (FindMomentOutput, error) {
@@ -40,10 +40,10 @@ func FindMoment(input FindMomentInput) (FindMomentOutput, error) {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	if input.Kind == IMAGE {
 		randFrame := r.Intn(input.TotalFrames) + 1
-		return FindMomentOutput{StartFrame: randFrame, EndFrame: randFrame}, nil
+		return FindMomentOutput{Start: randFrame, End: randFrame}, nil
 	}
 
 	randFrame := r.Intn(input.TotalFrames-input.RequiredFrames) + 1
-	return FindMomentOutput{StartFrame: randFrame, EndFrame: randFrame + input.RequiredFrames}, nil
+	return FindMomentOutput{Start: randFrame, End: randFrame + input.RequiredFrames}, nil
 
 }

@@ -30,31 +30,13 @@ export const Preview = () => {
   );
 };
 
-// Reference https://chatgpt.com/c/67c2f9cb-2f70-8006-a77c-13c0ae081766
-const getCenter = (rows: number, index: number): number => {
-  if (rows % 2 === 1) {
-    const distance = FRAME_HEIGHT / rows;
-    return (Math.floor(rows / 2) - index) * distance;
-  }
-
-  const distance = (2 * FRAME_HEIGHT) / rows;
-  const half = rows / 2;
-  return index < half
-    ? (half - index) * -distance
-    : (index - half + 1) * distance;
-};
-
 const VideoMesh = () => {
-  const transition = useSelector(
+  const segments = useSelector(
     projectStore,
-    (state) => state.context.transition
+    (state) => state.context.currentSegments
   );
 
-  if (!transition) return null;
-
-  const contentList = transition.Info.Content;
-
-  if (contentList.length === 0 || !transition.Info.Grid) {
+  if (segments.length === 0) {
     return (
       <mesh>
         <planeGeometry args={[FRAME_WIDTH, FRAME_HEIGHT]} />
@@ -63,29 +45,56 @@ const VideoMesh = () => {
     );
   }
 
-  const rows = transition.Info.Grid.Rows;
-  const columns = transition.Info.Grid.Columns;
-  const margin = transition.Info.Grid.Margin;
-  const height = FRAME_HEIGHT / rows - margin;
-  const width = FRAME_WIDTH / columns;
+  return segments.map((segment, index) => {
+    switch (segment.Content.Type) {
+      case "empty":
+        // return (
+        //   <mesh key={index}>
+        //     <planeGeometry args={[FRAME_WIDTH, FRAME_HEIGHT]} />
+        //     <meshBasicMaterial color={"black"} />
+        //   </mesh>
+        // );
+        return <mesh key={index}></mesh>;
 
-  return transition.Info.Content.map((content, index) => {
-    const center = getCenter(rows, index);
+      case "image":
+        return (
+          <mesh
+            key={index}
+            position={[
+              (FRAME_WIDTH / 2) * segment.Content.Region.X,
+              (FRAME_HEIGHT / 2) * segment.Content.Region.Y,
+              0,
+            ]}
+          >
+            <planeGeometry
+              args={[
+                FRAME_WIDTH * segment.Content.Region.Width,
+                FRAME_HEIGHT * segment.Content.Region.Height,
+              ]}
+            />
+            <meshBasicMaterial map={segment.Content.texture} />
+          </mesh>
+        );
 
-    if (content.Kind === "empty") {
-      return (
-        <mesh key={index} position={[0, center, 0]}>
-          <planeGeometry args={[width, height]} />
-          <meshBasicMaterial color={"black"} />
-        </mesh>
-      );
+      case "video":
+        return (
+          <mesh
+            key={index}
+            position={[
+              (FRAME_WIDTH / 2) * segment.Content.Region.X,
+              (FRAME_HEIGHT / 2) * segment.Content.Region.Y,
+              0,
+            ]}
+          >
+            <planeGeometry
+              args={[
+                FRAME_WIDTH * segment.Content.Region.Width,
+                FRAME_HEIGHT * segment.Content.Region.Height,
+              ]}
+            />
+            <meshBasicMaterial map={segment.Content.videoTexture} />
+          </mesh>
+        );
     }
-
-    return (
-      <mesh key={index} position={[0, center, 0]}>
-        <planeGeometry args={[width, height]} />
-        <meshBasicMaterial map={content.texture} />
-      </mesh>
-    );
   });
 };

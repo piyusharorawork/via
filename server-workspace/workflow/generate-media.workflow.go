@@ -64,11 +64,11 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	}
 	defer util.RemoveFile("/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4")
 
-	err = generatePreview(ctx, input.Layers, exportFramesInput.FramesDirPath)
+	// err = generatePreview(ctx, input.Layers, exportFramesInput.FramesDirPath)
 
-	if err != nil {
-		return "", err
-	}
+	// if err != nil {
+	// 	return "", err
+	// }
 
 	err = util.SaveArrayToJSON(input.LayersJSONPath, input.Layers)
 
@@ -81,41 +81,41 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	return exportedVideoUrl, err
 }
 
-func generatePreview(ctx context.Context, layers []*model.Layer, framesDirPath string) error {
-	for layerIdx, layer := range layers {
-		transitions := layer.Transitions
-		for transitionIdx, transition := range transitions {
-			imagePath := fmt.Sprintf("%s/%d.png", framesDirPath, transition.StartFrame)
-			outPath := fmt.Sprintf("%s/%d-low.png", framesDirPath, transition.StartFrame)
-			err := core.ResizeImage(core.ResizeImageInput{
-				ImagePath:  imagePath,
-				Resolution: core.BARE_MINIMUM_SD_96p,
-				OutputPath: outPath,
-			})
+// func generatePreview(ctx context.Context, layers []*model.Layer, framesDirPath string) error {
+// 	for layerIdx, layer := range layers {
+// 		transitions := layer.Transitions
+// 		for segmentIdx, transition := range transitions {
+// 			imagePath := fmt.Sprintf("%s/%d.png", framesDirPath, transition.Start)
+// 			outPath := fmt.Sprintf("%s/%d-low.png", framesDirPath, transition.Start)
+// 			err := core.ResizeImage(core.ResizeImageInput{
+// 				ImagePath:  imagePath,
+// 				Resolution: core.BARE_MINIMUM_SD_96p,
+// 				OutputPath: outPath,
+// 			})
 
-			if err != nil {
-				return err
-			}
+// 			if err != nil {
+// 				return err
+// 			}
 
-			defer util.RemoveFile(outPath)
+// 			defer util.RemoveFile(outPath)
 
-			previewUrl, err := upload(ctx, outPath, "temp")
+// 			previewUrl, err := upload(ctx, outPath, "temp")
 
-			if err != nil {
-				return err
-			}
+// 			if err != nil {
+// 				return err
+// 			}
 
-			transition.PreviewUrl = previewUrl
+// 			transition.PreviewUrl = previewUrl
 
-			fmt.Printf("Layer %d : Preview %d / %d\n", layerIdx+1, transitionIdx+1, len(transitions))
+// 			fmt.Printf("Layer %d : Preview %d / %d\n", layerIdx+1, segmentIdx+1, len(transitions))
 
-		}
-	}
+// 		}
+// 	}
 
-	return nil
-}
+// 	return nil
+// }
 
-func getMediaUrl(ctx context.Context, encodedVideoUrl string, startFrame int, endFrame int, kind string, folderName string, fps int) (string, error) {
+func getMediaUrl(ctx context.Context, encodedVideoUrl string, start int, end int, kind string, folderName string, fps int) (string, error) {
 	if kind == "empty" {
 		return "", nil
 	}
@@ -124,7 +124,7 @@ func getMediaUrl(ctx context.Context, encodedVideoUrl string, startFrame int, en
 		imagePath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.png", uuid.NewString())
 		err := core.ExtractImage(core.ExtractImageInput{
 			VideoPath:  encodedVideoUrl,
-			Frame:      startFrame,
+			Frame:      start,
 			OutputPath: imagePath,
 		})
 
@@ -147,8 +147,8 @@ func getMediaUrl(ctx context.Context, encodedVideoUrl string, startFrame int, en
 		fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.mp4", uuid.NewString())
 	core.ExtractClip(core.ExtractClipInput{
 		VideoPath:  encodedVideoUrl,
-		StartFrame: startFrame,
-		EndFrame:   endFrame,
+		Start:      start,
+		End:        end,
 		OutputPath: videoPath,
 		Fps:        fps,
 	})
@@ -174,9 +174,9 @@ func getMediaUrl(ctx context.Context, encodedVideoUrl string, startFrame int, en
 
 func upload(ctx context.Context, filePath string, folderName string) (string, error) {
 	spaceName := ctx.Value(model.SpaceName).(string)
-	region := ctx.Value(model.Region).(string)
-	accessKey := ctx.Value(model.AccessKey).(string)
-	secretKey := ctx.Value(model.SecretKey).(string)
+	region := ctx.Value(model.SpaceRegion).(string)
+	accessKey := ctx.Value(model.SpaceAccessKey).(string)
+	secretKey := ctx.Value(model.SpaceSecretKey).(string)
 
 	input := core.UploadFileInput{
 		FilePath:   filePath,
@@ -197,12 +197,12 @@ func upload(ctx context.Context, filePath string, folderName string) (string, er
 
 }
 
-func getMoment(content *model.LayoutContent, transitionStart int, transitionEnd int, fps int, frameCount int) (core.FindMomentOutput, error) {
+func getMoment(content *model.SegmentContent, transitionStart int, transitionEnd int, fps int, frameCount int) (core.FindMomentOutput, error) {
 	var kind core.MomentKind
 
-	if content.Kind == "image" {
+	if content.Type == "image" {
 		kind = core.IMAGE
-	} else if content.Kind == "video" {
+	} else if content.Type == "video" {
 		kind = core.VIDEO
 	}
 
@@ -291,40 +291,27 @@ func getVideoInfo(encodedVideoUrl string) (fps, frameCount int, err error) {
 func populateTransitionMedia(ctx context.Context, layers []*model.Layer, folderName string, encodedVideoUrl string, fps int, frameCount int) error {
 
 	for layerIdx, layer := range layers {
-		transitions := layer.Transitions
-		for transitionIdx, transition := range transitions {
-			if transition.Info == nil {
-				continue
-			}
-
-			content := getContent(transition)
-
+		segments := layer.Segments
+		for segmentIdx, transition := range segments {
+			content := transition.Content
 			if content == nil {
 				continue
 			}
 
-			moment, err := getMoment(content, transition.StartFrame, transition.EndFrame, fps, frameCount)
+			moment, err := getMoment(content, transition.Start, transition.End, fps, frameCount)
 			if err != nil {
 				return err
 			}
 
-			mediaUrl, err := getMediaUrl(ctx, encodedVideoUrl, moment.StartFrame, moment.EndFrame, content.Kind, folderName, fps)
+			mediaUrl, err := getMediaUrl(ctx, encodedVideoUrl, moment.Start, moment.End, content.Type, folderName, fps)
 			if err != nil {
 				return err
 			}
 
-			content.MediaUrl = mediaUrl
-			fmt.Printf("Layer %d : Transition %d / %d\n", layerIdx+1, transitionIdx+1, len(transitions))
+			content.Url = mediaUrl
+			fmt.Printf("Layer %d / %d : Segment %d / %d\n", layerIdx+1, len(layers), segmentIdx+1, len(segments))
 		}
 	}
 
 	return nil
-}
-
-func getContent(transition *model.Transition) *model.LayoutContent {
-	if transition.Info == nil {
-		return nil
-	}
-
-	return transition.Info.Content
 }

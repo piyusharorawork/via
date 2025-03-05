@@ -12,6 +12,6 @@ func GetMomentExample() {
 	if err != nil {
 		panic(err)
 	}
-	println(moment.StartFrame)
-	println(moment.EndFrame)
+	println(moment.Start)
+	println(moment.End)
 }

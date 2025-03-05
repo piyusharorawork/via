@@ -9,15 +9,15 @@ import (
 
 type ExtractClipInput struct {
 	VideoPath  string
-	StartFrame int
-	EndFrame   int
+	Start      int
+	End        int
 	OutputPath string
 	Fps        int
 }
 
 func ExtractClip(input ExtractClipInput) error {
-	startTime := float64(input.StartFrame) / float64(input.Fps)
-	endTime := float64(input.EndFrame) / float64(input.Fps)
+	startTime := float64(input.Start) / float64(input.Fps)
+	endTime := float64(input.End) / float64(input.Fps)
 	duration := endTime - startTime
 
 	// Re-encoding ensures frame-accurate cutting.

@@ -1,26 +1,33 @@
 "use client";
 import { useSelector } from "@xstate/store/react";
-import { TransitionElement } from "./transition";
 
 import { projectStore } from "@/store/project.store";
+import { Layer } from "@/store/project.store.types";
+import { SegmentElement } from "./segment-element";
 
 export const MediaElements = () => {
-  const transitions = useSelector(
-    projectStore,
-    (state) => state.context.transitions
-  );
+  const layers = useSelector(projectStore, (state) => state.context.layers);
 
   return (
     <div className="absolute h-full w-full invisible bg-red-500 ">
-      {transitions.map((transition, index) => {
-        return (
-          <TransitionElement
-            key={index}
-            transition={transition}
-            transitionIndex={index}
-          />
-        );
+      {layers.map((layer, index) => {
+        return <LayerElement key={index} layer={layer} layerIdx={index} />;
       })}
     </div>
   );
 };
+
+type LayerElementProps = {
+  layer: Layer;
+  layerIdx: number;
+};
+
+const LayerElement = (props: LayerElementProps) =>
+  props.layer.Segments.map((segment, index) => (
+    <SegmentElement
+      key={index}
+      layerIdx={props.layerIdx}
+      segmentIdx={index}
+      segment={segment}
+    />
+  ));

@@ -27,490 +27,431 @@ func GenerateMediaExample(ctx context.Context) {
 func getLayers() []*model.Layer {
 	return []*model.Layer{
 		{
-			Transitions: []*model.Transition{
+			Segments: []*model.Segment{
 				{
-					StartFrame: 1,
-					EndFrame:   27,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "video",
+					Start: 1,
+					End:   27,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 28,
-					EndFrame:   57,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 0, Rows: 0},
+					Start: 28,
+					End:   57,
+					Content: &model.SegmentContent{
+						Type: "empty",
 					},
 				},
 				{
-					StartFrame: 58,
-					EndFrame:   61,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 58,
+					End:   61,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 62,
-					EndFrame:   63,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 62,
+					End:   63,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 64,
-					EndFrame:   66,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 64,
+					End:   66,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 67,
-					EndFrame:   69,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 67,
+					End:   69,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 70,
-					EndFrame:   72,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 70,
+					End:   72,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 73,
-					EndFrame:   75,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 73,
+					End:   75,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 76,
-					EndFrame:   78,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 76,
+					End:   78,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 79,
-					EndFrame:   81,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 79,
+					End:   81,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 82,
-					EndFrame:   84,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 82,
+					End:   84,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 85,
-					EndFrame:   87,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 85,
+					End:   87,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 88,
-					EndFrame:   90,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 88,
+					End:   90,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 91,
-					EndFrame:   93,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 91,
+					End:   93,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 94,
-					EndFrame:   96,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 94,
+					End:   96,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 97,
-					EndFrame:   99,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 97,
+					End:   99,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 100,
-					EndFrame:   102,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 100,
+					End:   102,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 103,
-					EndFrame:   105,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 103,
+					End:   105,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 106,
-					EndFrame:   108,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 106,
+					End:   108,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 109,
-					EndFrame:   126,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "video",
+					Start: 109,
+					End:   126,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 127,
-					EndFrame:   172,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "video",
+					Start: 127,
+					End:   172,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 173,
-					EndFrame:   183,
-					Info: &model.TransitionInfo{
-						Type: "dissolve",
+					Start: 173,
+					End:   200,
+					Content: &model.SegmentContent{
+						Type: "empty", // todo dissolve
 					},
 				},
 				{
-					StartFrame: 184,
-					EndFrame:   218,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "video",
+					Start: 201,
+					End:   218,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 219,
-					EndFrame:   233,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "video",
+					Start: 219,
+					End:   233,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 234,
-					EndFrame:   246,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "video",
+					Start: 234,
+					End:   246,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 247,
-					EndFrame:   258,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "video",
+					Start: 247,
+					End:   258,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 259,
-					EndFrame:   272,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "video",
+					Start: 259,
+					End:   272,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 273,
-					EndFrame:   285,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "video",
+					Start: 273,
+					End:   285,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 286,
-					EndFrame:   299,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "video",
+					Start: 286,
+					End:   299,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 300,
-					EndFrame:   312,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "video",
+					Start: 300,
+					End:   312,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 313,
-					EndFrame:   326,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "video",
+					Start: 313,
+					End:   326,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 1,
 						},
 					},
 				},
 				{
-					StartFrame: 327,
-					EndFrame:   363,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 3, Margin: 0.18},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "image",
+					Start: 327,
+					End:   363,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 0.30,
+							Y:      0.7,
 						},
 					},
 				},
 				{
-					StartFrame: 364,
-					EndFrame:   422,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 3, Margin: 0.18},
-						Content: &model.LayoutContent{
-							Row:    0,
-							Column: 0,
-							Kind:   "video",
+					Start: 364,
+					End:   422,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 0.30,
+							Y:      0.7,
 						},
 					},
 				},
 			},
 		},
 		{
-			Transitions: []*model.Transition{
+			Segments: []*model.Segment{
 				{
-					StartFrame: 1,
-					EndFrame:   341,
+					Start: 1,
+					End:   341,
+					Content: &model.SegmentContent{
+						Type: "empty",
+					},
 				},
 				{
-					StartFrame: 342,
-					EndFrame:   378,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    1,
-							Column: 0,
-							Kind:   "image",
+					Start: 342,
+					End:   378,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 0.30,
+							Y:      0,
 						},
 					},
 				},
 				{
-					StartFrame: 379,
-					EndFrame:   422,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    1,
-							Column: 0,
-							Kind:   "video",
+					Start: 379,
+					End:   422,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 0.30,
+							Y:      0,
 						},
 					},
 				},
 			},
 		},
 		{
-			Transitions: []*model.Transition{
+			Segments: []*model.Segment{
 				{
-					StartFrame: 1,
-					EndFrame:   353,
+					Start: 1,
+					End:   353,
+					Content: &model.SegmentContent{
+						Type: "empty",
+					},
 				},
 				{
-					StartFrame: 354,
-					EndFrame:   392,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    2,
-							Column: 0,
-							Kind:   "image",
+					Start: 354,
+					End:   392,
+					Content: &model.SegmentContent{
+						Type: "image",
+						Region: &model.Region{
+							Width:  1,
+							Height: 0.30,
+							Y:      -0.7,
 						},
 					},
 				},
 				{
-					StartFrame: 393,
-					EndFrame:   422,
-					Info: &model.TransitionInfo{
-						Type: "layout",
-						Grid: &model.LayoutGrid{Columns: 1, Rows: 1},
-						Content: &model.LayoutContent{
-							Row:    2,
-							Column: 0,
-							Kind:   "video",
+					Start: 393,
+					End:   422,
+					Content: &model.SegmentContent{
+						Type: "video",
+						Region: &model.Region{
+							Width:  1,
+							Height: 0.30,
+							Y:      -0.7,
 						},
 					},
 				},

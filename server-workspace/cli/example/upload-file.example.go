@@ -8,9 +8,9 @@ import (
 )
 
 func UploadFileExample(ctx context.Context) {
-	accessKey := ctx.Value(model.AccessKey).(string)
-	secretKey := ctx.Value(model.SecretKey).(string)
-	region := ctx.Value(model.Region).(string)
+	accessKey := ctx.Value(model.SpaceAccessKey).(string)
+	secretKey := ctx.Value(model.SpaceAccessKey).(string)
+	region := ctx.Value(model.SpaceRegion).(string)
 	spaceName := ctx.Value(model.SpaceName).(string)
 	folderPath := "temp"
 

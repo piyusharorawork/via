@@ -1,714 +1,539 @@
 [
   {
-    "Transitions": [
+    "Segments": [
       {
-        "StartFrame": 1,
-        "EndFrame": 27,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/81242eec-fe8e-4fde-8eeb-431f8b0b61d7.webm"
+        "Start": 1,
+        "End": 27,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/950bd511-e1e7-4fec-9fd7-7230157ac86f.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/1-low.png"
+        }
       },
       {
-        "StartFrame": 28,
-        "EndFrame": 57,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 0,
-            "Columns": 0,
-            "Margin": 0
-          },
-          "Content": null
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/28-low.png"
+        "Start": 28,
+        "End": 57,
+        "Content": {
+          "Type": "empty",
+          "Url": "",
+          "Region": null
+        }
       },
       {
-        "StartFrame": 58,
-        "EndFrame": 61,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/0041f09d-1aeb-4b8f-a865-fffd30e6290f.png"
+        "Start": 58,
+        "End": 61,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/cd0ae323-62af-4a5a-a473-63440d8ead62.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/58-low.png"
+        }
       },
       {
-        "StartFrame": 62,
-        "EndFrame": 63,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/b96e615a-74d5-469b-93b9-c15b6b5c8334.png"
+        "Start": 62,
+        "End": 63,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/c66a7e5d-6fe1-4de8-937d-426fb655e080.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/62-low.png"
+        }
       },
       {
-        "StartFrame": 64,
-        "EndFrame": 66,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/9aed5712-be64-4d48-9bf9-5b92b548bc01.png"
+        "Start": 64,
+        "End": 66,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/af2d4e92-6f43-49f0-b366-f34c146a05e6.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/64-low.png"
+        }
       },
       {
-        "StartFrame": 67,
-        "EndFrame": 69,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/2de11b81-baf6-42fa-b88d-bc9df442b417.png"
+        "Start": 67,
+        "End": 69,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/e1f6ac5b-d5d4-4420-aa35-193993a0d1cc.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/67-low.png"
+        }
       },
       {
-        "StartFrame": 70,
-        "EndFrame": 72,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/84f3ff27-5b1a-4e76-87d6-bd95364f4e89.png"
+        "Start": 70,
+        "End": 72,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/ff3c5429-13f9-4eae-a2a5-b6ccbe47318a.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/70-low.png"
+        }
       },
       {
-        "StartFrame": 73,
-        "EndFrame": 75,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/b0b0d434-2576-47b3-ab3e-d642df20d4bd.png"
+        "Start": 73,
+        "End": 75,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/da48d193-f76b-4ad0-86e3-de1aaa611189.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/73-low.png"
+        }
       },
       {
-        "StartFrame": 76,
-        "EndFrame": 78,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/3744f422-c61f-416a-bcd5-5839a5a1053f.png"
+        "Start": 76,
+        "End": 78,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/bdf647e5-0981-4c1e-bb4d-73c20ee9c2ee.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/76-low.png"
+        }
       },
       {
-        "StartFrame": 79,
-        "EndFrame": 81,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/f3cfdac4-3b20-4d8a-94fa-63d70b77ecb9.png"
+        "Start": 79,
+        "End": 81,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/96281780-6d31-4181-a489-3d9e9d493505.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/79-low.png"
+        }
       },
       {
-        "StartFrame": 82,
-        "EndFrame": 84,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/b29a5cfa-facb-48aa-9307-943759062fed.png"
+        "Start": 82,
+        "End": 84,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/13cfba8b-de39-45c1-843c-5bd05277d5a8.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/82-low.png"
+        }
       },
       {
-        "StartFrame": 85,
-        "EndFrame": 87,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/2da4e51d-df2c-4e0a-921b-60c8e64fb53d.png"
+        "Start": 85,
+        "End": 87,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/e28a6f92-2dd0-4a9e-8107-c7f8efb428c9.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/85-low.png"
+        }
       },
       {
-        "StartFrame": 88,
-        "EndFrame": 90,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/09600375-4902-4fb8-a2a7-657521e55f7a.png"
+        "Start": 88,
+        "End": 90,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/86e3e9ac-7983-441d-bbb1-e5ce8f5d8373.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/88-low.png"
+        }
       },
       {
-        "StartFrame": 91,
-        "EndFrame": 93,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/b2c464da-c047-4c71-8816-294d38107a21.png"
+        "Start": 91,
+        "End": 93,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/52b7e2e1-87bd-463d-aa85-a57707c145d2.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/91-low.png"
+        }
       },
       {
-        "StartFrame": 94,
-        "EndFrame": 96,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/a2006cbb-2d1e-4d86-9d78-9e50a6f303b2.png"
+        "Start": 94,
+        "End": 96,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/2b46942c-6d5c-44a4-abef-80f808d8535f.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/94-low.png"
+        }
       },
       {
-        "StartFrame": 97,
-        "EndFrame": 99,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/145ed246-5e21-4450-ad9c-9926659022d0.png"
+        "Start": 97,
+        "End": 99,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/25e0f793-a751-422b-9028-22a3bc2d3d3a.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/97-low.png"
+        }
       },
       {
-        "StartFrame": 100,
-        "EndFrame": 102,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/5db95c5c-da45-43fc-bda0-b031eb7d1e98.png"
+        "Start": 100,
+        "End": 102,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/17090c94-2351-453b-82a3-35d819d3a765.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/100-low.png"
+        }
       },
       {
-        "StartFrame": 103,
-        "EndFrame": 105,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/134e5f3c-ecb2-4c26-82d3-8ee528534171.png"
+        "Start": 103,
+        "End": 105,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/61be882f-0352-4732-88e3-452dbddf399e.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/103-low.png"
+        }
       },
       {
-        "StartFrame": 106,
-        "EndFrame": 108,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/cdedf0d3-6d5d-4905-8711-821d0ad63acc.png"
+        "Start": 106,
+        "End": 108,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/2c43e9c4-77e3-4c2d-929b-f6e317b31bbb.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/106-low.png"
+        }
       },
       {
-        "StartFrame": 109,
-        "EndFrame": 126,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/ebb6442e-74b5-4663-b655-cda1c53adc9e.webm"
+        "Start": 109,
+        "End": 126,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/96588ee7-d842-4704-82fa-b5b653612bf1.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/109-low.png"
+        }
       },
       {
-        "StartFrame": 127,
-        "EndFrame": 172,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/d0624986-77ef-477f-82a5-ca6a1c4ef20f.webm"
+        "Start": 127,
+        "End": 172,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/8d0b94a2-6aed-40a9-bd2f-492db961e9db.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/127-low.png"
+        }
       },
       {
-        "StartFrame": 173,
-        "EndFrame": 183,
-        "Info": {
-          "Type": "dissolve",
-          "Grid": null,
-          "Content": null
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/173-low.png"
+        "Start": 173,
+        "End": 200,
+        "Content": {
+          "Type": "empty",
+          "Url": "",
+          "Region": null
+        }
       },
       {
-        "StartFrame": 184,
-        "EndFrame": 218,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/459c9367-2595-4d0c-9aab-bb14a250e6a7.webm"
+        "Start": 201,
+        "End": 218,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/6f2e0fbc-6e84-4bde-907f-b2c43fd77c48.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/184-low.png"
+        }
       },
       {
-        "StartFrame": 219,
-        "EndFrame": 233,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/cd93721e-08d9-4df1-8c81-20e9d451bc97.webm"
+        "Start": 219,
+        "End": 233,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/8e6a9eb0-7027-45b7-8916-19c20a40dc40.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/219-low.png"
+        }
       },
       {
-        "StartFrame": 234,
-        "EndFrame": 246,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/0da28b6b-8806-49c0-9546-c8de6c9156f6.webm"
+        "Start": 234,
+        "End": 246,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/a3ab5354-0315-4ba6-b7b8-df02e4a0c94e.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/234-low.png"
+        }
       },
       {
-        "StartFrame": 247,
-        "EndFrame": 258,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/97a0044e-2e45-463c-9a85-cf96780ca1ba.webm"
+        "Start": 247,
+        "End": 258,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/aae3c084-887f-4ae8-a80d-c71c133cc198.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/247-low.png"
+        }
       },
       {
-        "StartFrame": 259,
-        "EndFrame": 272,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/76a3f63f-06ea-40f3-93a0-79ca5cce2180.webm"
+        "Start": 259,
+        "End": 272,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/d424c600-e7e2-4bc6-a641-3b4d43e8a09e.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/259-low.png"
+        }
       },
       {
-        "StartFrame": 273,
-        "EndFrame": 285,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/a135519f-e641-46fb-9b18-d759a462e2ae.webm"
+        "Start": 273,
+        "End": 285,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/f6049b80-d59a-4c28-8b27-757fd4312fd9.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/273-low.png"
+        }
       },
       {
-        "StartFrame": 286,
-        "EndFrame": 299,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/f493c79c-0c8d-4eb2-b94e-38c4710c7638.webm"
+        "Start": 286,
+        "End": 299,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/1c853a4d-5676-48ff-875a-b7fe92cfd1e7.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/286-low.png"
+        }
       },
       {
-        "StartFrame": 300,
-        "EndFrame": 312,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/ac9f9778-21e4-4520-973c-08647f92faf4.webm"
+        "Start": 300,
+        "End": 312,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/962f20a4-7742-46b1-a0a3-fb315eb09c20.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/300-low.png"
+        }
       },
       {
-        "StartFrame": 313,
-        "EndFrame": 326,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/29277443-c508-4e5e-8bcd-ee035530d855.webm"
+        "Start": 313,
+        "End": 326,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/80d6e916-3ee1-4cf2-ac7e-44b87b748d9f.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 1
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/313-low.png"
+        }
       },
       {
-        "StartFrame": 327,
-        "EndFrame": 363,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 3,
-            "Columns": 1,
-            "Margin": 0.18
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/7e9df3d9-f03c-47fb-b270-8efa65ab1fed.png"
+        "Start": 327,
+        "End": 363,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/6178494c-f5c6-4882-8703-4eeb31eb92cd.png",
+          "Region": {
+            "X": 0,
+            "Y": 0.7,
+            "Width": 1,
+            "Height": 0.3
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/327-low.png"
+        }
       },
       {
-        "StartFrame": 364,
-        "EndFrame": 422,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 3,
-            "Columns": 1,
-            "Margin": 0.18
-          },
-          "Content": {
-            "Row": 0,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/d009629c-46f2-48ef-9cd5-e61ac07bba39.webm"
+        "Start": 364,
+        "End": 422,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/26ec3d47-9382-4953-bea0-dd8a9d3c475e.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0.7,
+            "Width": 1,
+            "Height": 0.3
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/364-low.png"
+        }
       }
     ]
   },
   {
-    "Transitions": [
+    "Segments": [
       {
-        "StartFrame": 1,
-        "EndFrame": 341,
-        "Info": null,
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/1-low.png"
+        "Start": 1,
+        "End": 341,
+        "Content": {
+          "Type": "empty",
+          "Url": "",
+          "Region": null
+        }
       },
       {
-        "StartFrame": 342,
-        "EndFrame": 378,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 1,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/7ccbb692-de76-4ce4-bb5b-c3e0a893cfbc.png"
+        "Start": 342,
+        "End": 378,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/2f4bf5b1-f7be-42ec-b05a-2ad597eac42b.png",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 0.3
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/342-low.png"
+        }
       },
       {
-        "StartFrame": 379,
-        "EndFrame": 422,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 1,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/237d4339-a874-4da2-ad91-a43084197277.webm"
+        "Start": 379,
+        "End": 422,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/3f2205fa-832d-46d6-bcbd-6fe69cae0c1d.webm",
+          "Region": {
+            "X": 0,
+            "Y": 0,
+            "Width": 1,
+            "Height": 0.3
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/379-low.png"
+        }
       }
     ]
   },
   {
-    "Transitions": [
+    "Segments": [
       {
-        "StartFrame": 1,
-        "EndFrame": 353,
-        "Info": null,
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/1-low.png"
+        "Start": 1,
+        "End": 353,
+        "Content": {
+          "Type": "empty",
+          "Url": "",
+          "Region": null
+        }
       },
       {
-        "StartFrame": 354,
-        "EndFrame": 392,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 2,
-            "Column": 0,
-            "Kind": "image",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/35867257-78fc-48cb-b308-a05338c3f70a.png"
+        "Start": 354,
+        "End": 392,
+        "Content": {
+          "Type": "image",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/c5041761-e98f-429d-9236-40365a3de592.png",
+          "Region": {
+            "X": 0,
+            "Y": -0.7,
+            "Width": 1,
+            "Height": 0.3
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/354-low.png"
+        }
       },
       {
-        "StartFrame": 393,
-        "EndFrame": 422,
-        "Info": {
-          "Type": "layout",
-          "Grid": {
-            "Rows": 1,
-            "Columns": 1,
-            "Margin": 0
-          },
-          "Content": {
-            "Row": 2,
-            "Column": 0,
-            "Kind": "video",
-            "MediaUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/1e2e9ced-b2e5-48b8-882e-636699edb029.webm"
+        "Start": 393,
+        "End": 422,
+        "Content": {
+          "Type": "video",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/91fc12b9-b29e-4e65-8ea8-13d184824201.webm",
+          "Region": {
+            "X": 0,
+            "Y": -0.7,
+            "Width": 1,
+            "Height": 0.3
           }
-        },
-        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/393-low.png"
+        }
       }
     ]
   }

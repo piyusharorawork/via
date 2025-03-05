@@ -5,20 +5,20 @@ import { PlayButton } from "./play-button";
 import { CardTimeline } from "./card-timeline";
 import { useSelector } from "@xstate/store/react";
 import { projectStore } from "@/store/project.store";
-import { LayersTimeline } from "./layers-timeline";
+// import { LayersTimeline } from "./layers-timeline";
 
 export default function EditorPage() {
   const frameCount = templates[0].videoInfo.frameCount;
   const fps = templates[0].videoInfo.fps;
   const audioUrl = templates[0].videoInfo.audioUrl;
 
-  const transitions = useSelector(
-    projectStore,
-    (state) => state.context.transitions
-  );
-  const transitionFrames = transitions.map(
-    (transition) => transition.PreviewUrl
-  );
+  // const transitions = useSelector(
+  //   projectStore,
+  //   (state) => state.context.transitions
+  // );
+  // const transitionFrames = transitions.map(
+  //   (transition) => transition.PreviewUrl
+  // );
 
   const layers = useSelector(projectStore, (state) => state.context.layers);
 
@@ -43,7 +43,7 @@ export default function EditorPage() {
           transitionFrames={transitionFrames}
           transitions={transitions}
         /> */}
-        <LayersTimeline layers={layers} />
+        {/* <LayersTimeline layers={layers} /> */}
       </section>
     </main>
   );

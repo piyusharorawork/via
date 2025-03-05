@@ -1,32 +1,64 @@
 import * as THREE from "three";
 
 export type Layer = {
-  Transitions: Transition[];
+  Segments: Segment[];
 };
 
-export type Transition = {
-  StartFrame: number;
-  EndFrame: number;
-  PreviewUrl: string;
-  Info: TransitionInfo | null;
+export type Segment = {
+  Start: number;
+  End: number;
+  Content: SegmentContent;
 };
 
-type TransitionInfo = {
-  Type: "layout" | "dissolve";
-  Grid: TransitionGrid | null;
-  Content: TransitionContent | null;
+export type SegmentContent =
+  | ImageSegmentContent
+  | VideoSegmentContent
+  | EmptySegmentContent;
+
+type ImageSegmentContent = {
+  Type: "image";
+  Url: string;
+  Region: Region;
+  texture: THREE.Texture;
 };
 
-type TransitionContent = {
-  Row: number;
-  Column: number;
-  Kind: "video" | "image" | "empty";
-  MediaUrl: string;
-  texture?: THREE.Texture;
+type VideoSegmentContent = {
+  Type: "video";
+  Url: string;
+  Region: Region;
+  videoTexture: THREE.VideoTexture;
 };
 
-type TransitionGrid = {
-  Rows: number;
-  Columns: number;
-  Margin: number;
+type EmptySegmentContent = {
+  Type: "empty";
 };
+
+type Region = {
+  X: number;
+  Y: number;
+  Width: number;
+  Height: number;
+};
+
+// export type Transition = {
+//   StartFrame: number;
+//   EndFrame: number;
+//   Type: "layout" | "dissolve" | null;
+//   Grid: TransitionGrid | null;
+//   Content: TransitionContent | null;
+//   PreviewUrl: string | null;
+// };
+
+// export type TransitionContent = {
+//   Row: number;
+//   Column: number;
+//   Kind: "video" | "image" | "empty";
+//   MediaUrl: string;
+//   texture?: THREE.Texture;
+// };
+
+// type TransitionGrid = {
+//   Rows: number;
+//   Columns: number;
+//   Margin: number;
+// };

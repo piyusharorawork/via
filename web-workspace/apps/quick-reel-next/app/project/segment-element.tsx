@@ -1,55 +1,55 @@
 "use client";
 import { useLoadVideo } from "@/lib/use-load-video";
-import { Transition } from "./types";
+
 import { projectStore } from "@/store/project.store";
 import { useLoadImage } from "@/lib/use-load-image";
+import { Segment } from "@/store/project.store.types";
 
 type Props = {
-  transition: Transition;
-  transitionIndex: number;
+  segment: Segment;
+  layerIdx: number;
+  segmentIdx: number;
 };
 
-export const TransitionElement = (props: Props) => {
-  if (!props.transition.Info.Content) {
+export const SegmentElement = (props: Props) => {
+  if (props.segment.Content.Type === "empty") {
     return <div className="w-full h-full absolute bg-gray-950"></div>;
   }
 
-  return props.transition.Info.Content.map((item, index) => {
-    if (item.Kind === "image") {
-      return (
-        <ImageElement
-          key={index}
-          contentIdx={index}
-          transitionIdx={props.transitionIndex}
-          imgUrl={item.MediaUrl}
-        />
-      );
-    }
-
+  if (props.segment.Content.Type === "image") {
     return (
-      <VideoElement
-        key={index}
-        contentIdx={index}
-        transitionIdx={props.transitionIndex}
-        videoUrl={item.MediaUrl}
+      <ImageElement
+        layerIdx={props.layerIdx}
+        segmentIdx={props.segmentIdx}
+        imgUrl={props.segment.Content.Url}
       />
     );
-  });
+  }
+
+  if (props.segment.Content.Type === "video") {
+    return (
+      <VideoElement
+        layerIdx={props.layerIdx}
+        videoUrl={props.segment.Content.Url}
+        segmentIdx={props.segmentIdx}
+      />
+    );
+  }
 };
 
 type VideoElementProps = {
-  transitionIdx: number;
-  contentIdx: number;
+  segmentIdx: number;
+  layerIdx: number;
   videoUrl: string;
 };
 
 const VideoElement = (props: VideoElementProps) => {
   const videoRef = useLoadVideo((video) => {
     projectStore.send({
-      type: "addVideoInfo",
+      type: "addVideoElement",
       video,
-      transitionIdx: props.transitionIdx,
-      contentIdx: props.contentIdx,
+      segmentIdx: props.segmentIdx,
+      layerIdx: props.layerIdx,
     });
   });
 
@@ -65,18 +65,18 @@ const VideoElement = (props: VideoElementProps) => {
 };
 
 type ImageElementProps = {
-  transitionIdx: number;
-  contentIdx: number;
+  layerIdx: number;
+  segmentIdx: number;
   imgUrl: string;
 };
 
 const ImageElement = (props: ImageElementProps) => {
   const imageRef = useLoadImage((image) => {
     projectStore.send({
-      type: "addImageInfo",
+      type: "addImageElement",
       imageUrl: props.imgUrl,
-      transitionIdx: props.transitionIdx,
-      contentIdx: props.contentIdx,
+      segmentIdx: props.segmentIdx,
+      layerIdx: props.layerIdx,
     });
   });
   return (
