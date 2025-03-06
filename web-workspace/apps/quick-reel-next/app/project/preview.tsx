@@ -6,9 +6,10 @@ import { Canvas } from "@react-three/fiber";
 import { useSelector } from "@xstate/store/react";
 import { useEffect } from "react";
 import * as THREE from "three";
+import { DissolveEffect } from "./dissolve-effect";
 
-const FRAME_HEIGHT = 7.7;
-const FRAME_WIDTH = 4.3;
+export const FRAME_HEIGHT = 7.7;
+export const FRAME_WIDTH = 4.3;
 
 export const Preview = () => {
   useEffect(() => {
@@ -18,6 +19,7 @@ export const Preview = () => {
 
   return (
     <Canvas
+      gl={{ preserveDrawingBuffer: true }}
       style={{
         width: "100%",
         height: "100%",
@@ -48,12 +50,6 @@ const VideoMesh = () => {
   return segments.map((segment, index) => {
     switch (segment.Content.Type) {
       case "empty":
-        // return (
-        //   <mesh key={index}>
-        //     <planeGeometry args={[FRAME_WIDTH, FRAME_HEIGHT]} />
-        //     <meshBasicMaterial color={"black"} />
-        //   </mesh>
-        // );
         return <mesh key={index}></mesh>;
 
       case "image":
@@ -92,9 +88,12 @@ const VideoMesh = () => {
                 FRAME_HEIGHT * segment.Content.Region.Height,
               ]}
             />
-            <meshBasicMaterial map={segment.Content.videoTexture} />
+            <meshBasicMaterial map={segment.Content.texture} />
           </mesh>
         );
+
+      case "dissolve":
+        return <DissolveEffect key={index} content={segment.Content} />;
     }
   });
 };

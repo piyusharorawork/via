@@ -14,6 +14,7 @@ type GenerateMediaInput struct {
 	OriginalVideoUrl string
 	Layers           []*model.Layer
 	LayersJSONPath   string
+	VideoName        string
 }
 
 // TODO might need to divide into smaller tasks
@@ -36,10 +37,11 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	if err != nil {
 		return "", err
 	}
+	framesDirPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s-frames", input.VideoName)
 
 	exportFramesInput := core.ExportFramesInput{
 		FrameCount:    422,
-		FramesDirPath: "/Users/piyusharora/projects/via/assets/temp/rishikesh-frames",
+		FramesDirPath: framesDirPath,
 		PageUrl:       "http://localhost:3000/project",
 		VideoWidth:    360,
 		VideoHeight:   640,
@@ -51,18 +53,20 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		return "", err
 	}
 
-	defer util.RemoveDir("/Users/piyusharora/projects/via/assets/temp/rishikesh-frames")
+	defer util.RemoveDir(framesDirPath)
+
+	outputPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s-output.mp4", input.VideoName)
 
 	err = core.ConvertFramesToVideo(core.ConvertFramesToVideoInput{
-		FramesDirPath: "/Users/piyusharora/projects/via/assets/temp/rishikesh-frames",
-		OutputPath:    "/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4",
+		FramesDirPath: framesDirPath,
+		OutputPath:    outputPath,
 		Fps:           30,
 	})
 
 	if err != nil {
 		return "", err
 	}
-	defer util.RemoveFile("/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4")
+	defer util.RemoveFile(outputPath)
 
 	err = generatePreview(ctx, input.Layers, exportFramesInput.FramesDirPath)
 
@@ -76,7 +80,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		return "", err
 	}
 
-	exportedVideoUrl, err := upload(ctx, "/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4", "temp")
+	exportedVideoUrl, err := upload(ctx, outputPath, "temp")
 
 	return exportedVideoUrl, err
 }
@@ -293,6 +297,10 @@ func populateTransitionMedia(ctx context.Context, layers []*model.Layer, folderN
 		for segmentIdx, transition := range segments {
 			content := transition.Content
 			if content == nil {
+				continue
+			}
+
+			if content.Type == "dissolve" || content.Type == "empty" {
 				continue
 			}
 

@@ -16,7 +16,7 @@ export default function EditorPage() {
   const layers = useSelector(projectStore, (state) => state.context.layers);
 
   const editorUrl =
-    "https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-output.mp4";
+    "https://test-v1.blr1.digitaloceanspaces.com/temp/tag-mahal-output.mp4";
 
   return (
     <main className="h-full flex flex-col">

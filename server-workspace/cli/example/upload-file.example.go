@@ -9,13 +9,13 @@ import (
 
 func UploadFileExample(ctx context.Context) {
 	accessKey := ctx.Value(model.SpaceAccessKey).(string)
-	secretKey := ctx.Value(model.SpaceAccessKey).(string)
+	secretKey := ctx.Value(model.SpaceSecretKey).(string)
 	region := ctx.Value(model.SpaceRegion).(string)
 	spaceName := ctx.Value(model.SpaceName).(string)
 	folderPath := "temp"
 
 	input := core.UploadFileInput{
-		FilePath:   "/Users/piyusharora/projects/via/assets/temp/rishikesh-room-with-audio.mp4",
+		FilePath:   "/Users/piyusharora/projects/via/assets/temp/tag-mahal-output-with-audio.mp4",
 		SpaceName:  spaceName,
 		Region:     region,
 		AccessKey:  accessKey,

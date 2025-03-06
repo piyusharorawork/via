@@ -11,9 +11,10 @@ func GenerateMediaExample(ctx context.Context) {
 	layers := getLayers()
 
 	input := workflow.GenerateMediaInput{
-		OriginalVideoUrl: "https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-room-720p.mp4",
+		OriginalVideoUrl: "https://test-v1.blr1.digitaloceanspaces.com/temp/taj-mahal-720p.mp4",
 		Layers:           layers,
 		LayersJSONPath:   "/Users/piyusharora/projects/via/web-workspace/apps/quick-reel-next/data/layers.json",
+		VideoName:        "tag-mahal",
 	}
 
 	url, err := workflow.GenerateMedia(ctx, input)
@@ -257,13 +258,13 @@ func getLayers() []*model.Layer {
 				},
 				{
 					Start: 173,
-					End:   233,
+					End:   212,
 					Content: &model.SegmentContent{
-						Type: "empty", // todo dissolve
+						Type: "dissolve", // todo dissolve
 					},
 				},
 				{
-					Start: 234,
+					Start: 213,
 					End:   246,
 					Content: &model.SegmentContent{
 						Type: "video",

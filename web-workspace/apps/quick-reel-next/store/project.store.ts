@@ -37,8 +37,8 @@ export const projectStore = createStore({
         return { layers };
       }
 
-      const videoTexture = new THREE.VideoTexture(event.video);
-      segment.Content.videoTexture = videoTexture;
+      const texture = new THREE.VideoTexture(event.video);
+      segment.Content.texture = texture;
       return { layers };
     },
     addImageElement: (
@@ -77,11 +77,41 @@ export const projectStore = createStore({
           if (event.frame < segment.Start || event.frame > segment.End)
             continue;
           if (segment.Content.Type === "video") {
-            const videoElement = segment.Content.videoTexture.source
+            const videoElement = segment.Content.texture.source
               .data as HTMLVideoElement;
             const frame = event.frame - segment.Start;
             videoElement.currentTime = frame / FPS;
           }
+
+          if (segment.Content.Type === "dissolve") {
+            const prevSegment = layer.Segments[segmentIdx - 1];
+            const nextSegment = layer.Segments[segmentIdx + 1];
+
+            if (
+              prevSegment.Content.Type === "empty" ||
+              prevSegment.Content.Type === "dissolve"
+            ) {
+              console.error("prev segment is empty");
+              return { layers };
+            }
+
+            if (
+              nextSegment.Content.Type === "empty" ||
+              nextSegment.Content.Type === "dissolve"
+            ) {
+              console.error("next segment is empty");
+              return { layers };
+            }
+
+            const prevTexture = prevSegment.Content.texture;
+            const nextTexture = nextSegment.Content.texture;
+            const progress =
+              (event.frame - segment.Start) / (segment.End - segment.Start);
+            segment.Content.progress = progress;
+            segment.Content.prevTexture = prevTexture;
+            segment.Content.nextTexture = nextTexture;
+          }
+
           currentSegments.push(segment);
         }
       }

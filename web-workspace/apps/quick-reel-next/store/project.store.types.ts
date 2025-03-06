@@ -14,7 +14,8 @@ export type Segment = {
 export type SegmentContent =
   | ImageSegmentContent
   | VideoSegmentContent
-  | EmptySegmentContent;
+  | EmptySegmentContent
+  | DissolveSegmentContent;
 
 type ImageSegmentContent = {
   Type: "image";
@@ -27,11 +28,18 @@ type VideoSegmentContent = {
   Type: "video";
   Url: string;
   Region: Region;
-  videoTexture: THREE.VideoTexture;
+  texture: THREE.Texture;
 };
 
 type EmptySegmentContent = {
   Type: "empty";
+};
+
+export type DissolveSegmentContent = {
+  Type: "dissolve";
+  prevTexture: THREE.Texture;
+  nextTexture: THREE.Texture;
+  progress: number;
 };
 
 type Region = {
