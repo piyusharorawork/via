@@ -5,9 +5,10 @@ type Layer struct {
 }
 
 type Segment struct {
-	Start   int
-	End     int
-	Content *SegmentContent
+	Start      int
+	End        int
+	Content    *SegmentContent
+	PreviewUrl string
 }
 
 type SegmentContent struct {

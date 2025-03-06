@@ -6,14 +6,15 @@
         "End": 27,
         "Content": {
           "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/950bd511-e1e7-4fec-9fd7-7230157ac86f.webm",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/5afdc076-26fb-4411-b3f1-e08d7055fa3d.webm",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/1-low.png"
       },
       {
         "Start": 28,
@@ -22,436 +23,438 @@
           "Type": "empty",
           "Url": "",
           "Region": null
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/28-low.png"
       },
       {
         "Start": 58,
         "End": 61,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/cd0ae323-62af-4a5a-a473-63440d8ead62.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/54217f25-81da-4e94-b0f6-49a699d0eb3e.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/58-low.png"
       },
       {
         "Start": 62,
         "End": 63,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/c66a7e5d-6fe1-4de8-937d-426fb655e080.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/400696fd-7e74-47f5-a0a9-2a7a84777f80.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/62-low.png"
       },
       {
         "Start": 64,
         "End": 66,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/af2d4e92-6f43-49f0-b366-f34c146a05e6.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/b8c36e09-1291-44f6-917f-4a9b72197ba3.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/64-low.png"
       },
       {
         "Start": 67,
         "End": 69,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/e1f6ac5b-d5d4-4420-aa35-193993a0d1cc.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/9775728e-f59b-4a12-abe5-c09e2099ed22.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/67-low.png"
       },
       {
         "Start": 70,
         "End": 72,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/ff3c5429-13f9-4eae-a2a5-b6ccbe47318a.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/a660d508-33ee-4e9e-93c8-8a569ce2fc29.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/70-low.png"
       },
       {
         "Start": 73,
         "End": 75,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/da48d193-f76b-4ad0-86e3-de1aaa611189.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/e9a74beb-9c41-44b2-9027-fb25decc48c3.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/73-low.png"
       },
       {
         "Start": 76,
         "End": 78,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/bdf647e5-0981-4c1e-bb4d-73c20ee9c2ee.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/df2dc2c0-3ff3-46bd-9de5-6a54dd27ac5b.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/76-low.png"
       },
       {
         "Start": 79,
         "End": 81,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/96281780-6d31-4181-a489-3d9e9d493505.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/c0d8396d-5cd3-4051-bbbc-28a079dba56f.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/79-low.png"
       },
       {
         "Start": 82,
         "End": 84,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/13cfba8b-de39-45c1-843c-5bd05277d5a8.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/57c3023b-2b0d-424a-b59d-3dbe75ee6acf.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/82-low.png"
       },
       {
         "Start": 85,
         "End": 87,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/e28a6f92-2dd0-4a9e-8107-c7f8efb428c9.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/7874525d-c59a-47fc-a6d2-6a1709bf5b5e.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/85-low.png"
       },
       {
         "Start": 88,
         "End": 90,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/86e3e9ac-7983-441d-bbb1-e5ce8f5d8373.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/38c34f87-11d7-408c-aa06-effa4905058b.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/88-low.png"
       },
       {
         "Start": 91,
         "End": 93,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/52b7e2e1-87bd-463d-aa85-a57707c145d2.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/94aa1647-a79c-4525-a71b-52ca70d1934d.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/91-low.png"
       },
       {
         "Start": 94,
         "End": 96,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/2b46942c-6d5c-44a4-abef-80f808d8535f.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/15142948-10a2-4ddd-900d-d5d737392fb0.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/94-low.png"
       },
       {
         "Start": 97,
         "End": 99,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/25e0f793-a751-422b-9028-22a3bc2d3d3a.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/8eb79e2c-4c01-4ad6-aaf5-c8a40adfb404.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/97-low.png"
       },
       {
         "Start": 100,
         "End": 102,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/17090c94-2351-453b-82a3-35d819d3a765.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/7da02837-605a-4bcf-aba4-c47f4ae182a5.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/100-low.png"
       },
       {
         "Start": 103,
         "End": 105,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/61be882f-0352-4732-88e3-452dbddf399e.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/b9839ffe-eba7-4dad-bf4f-45629deec530.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/103-low.png"
       },
       {
         "Start": 106,
         "End": 108,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/2c43e9c4-77e3-4c2d-929b-f6e317b31bbb.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/629e0464-5f8e-477f-868b-bf114db55760.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/106-low.png"
       },
       {
         "Start": 109,
         "End": 126,
         "Content": {
           "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/96588ee7-d842-4704-82fa-b5b653612bf1.webm",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/5fd227cf-8eef-4b78-b45b-0f3cbe6a891e.webm",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/109-low.png"
       },
       {
         "Start": 127,
         "End": 172,
         "Content": {
           "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/8d0b94a2-6aed-40a9-bd2f-492db961e9db.webm",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/6f9c6813-f959-4bb6-8f4a-feb3d1e3ae86.webm",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/127-low.png"
       },
       {
         "Start": 173,
-        "End": 200,
+        "End": 233,
         "Content": {
           "Type": "empty",
           "Url": "",
           "Region": null
-        }
-      },
-      {
-        "Start": 201,
-        "End": 218,
-        "Content": {
-          "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/6f2e0fbc-6e84-4bde-907f-b2c43fd77c48.webm",
-          "Region": {
-            "X": 0,
-            "Y": 0,
-            "Width": 1,
-            "Height": 1
-          }
-        }
-      },
-      {
-        "Start": 219,
-        "End": 233,
-        "Content": {
-          "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/8e6a9eb0-7027-45b7-8916-19c20a40dc40.webm",
-          "Region": {
-            "X": 0,
-            "Y": 0,
-            "Width": 1,
-            "Height": 1
-          }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/173-low.png"
       },
       {
         "Start": 234,
         "End": 246,
         "Content": {
           "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/a3ab5354-0315-4ba6-b7b8-df02e4a0c94e.webm",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/e254bb43-18f7-4914-9445-78750736ead8.webm",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/234-low.png"
       },
       {
         "Start": 247,
         "End": 258,
         "Content": {
           "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/aae3c084-887f-4ae8-a80d-c71c133cc198.webm",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/5bcd19c4-0f06-4895-b70d-ff79c64c7de1.webm",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/247-low.png"
       },
       {
         "Start": 259,
         "End": 272,
         "Content": {
           "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/d424c600-e7e2-4bc6-a641-3b4d43e8a09e.webm",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/9af4f420-9348-4923-823a-c1a41ced0a1b.webm",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/259-low.png"
       },
       {
         "Start": 273,
         "End": 285,
         "Content": {
           "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/f6049b80-d59a-4c28-8b27-757fd4312fd9.webm",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/be8c12aa-594d-432c-b90d-5b0e767bea87.webm",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/273-low.png"
       },
       {
         "Start": 286,
         "End": 299,
         "Content": {
           "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/1c853a4d-5676-48ff-875a-b7fe92cfd1e7.webm",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/8c742a9f-cf02-4502-abbd-ac3655f9e4e0.webm",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/286-low.png"
       },
       {
         "Start": 300,
         "End": 312,
         "Content": {
           "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/962f20a4-7742-46b1-a0a3-fb315eb09c20.webm",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/ef8a318a-67ec-4543-a638-d3b9c01429bf.webm",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/300-low.png"
       },
       {
         "Start": 313,
         "End": 326,
         "Content": {
           "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/80d6e916-3ee1-4cf2-ac7e-44b87b748d9f.webm",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/580a353f-4674-4988-a72b-764d26901416.webm",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 1
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/313-low.png"
       },
       {
         "Start": 327,
         "End": 363,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/6178494c-f5c6-4882-8703-4eeb31eb92cd.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/4587deac-9940-4e68-bc54-b81a9a7a7c2f.png",
           "Region": {
             "X": 0,
             "Y": 0.7,
             "Width": 1,
             "Height": 0.3
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/327-low.png"
       },
       {
         "Start": 364,
         "End": 422,
         "Content": {
           "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/26ec3d47-9382-4953-bea0-dd8a9d3c475e.webm",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/83a521c2-96f5-41be-9a30-1e67ca6889ae.webm",
           "Region": {
             "X": 0,
             "Y": 0.7,
             "Width": 1,
             "Height": 0.3
           }
-        }
+        },
+        "PreviewUrl": "https://test-v1.blr1.digitaloceanspaces.com/temp/364-low.png"
       }
     ]
   },
@@ -464,35 +467,38 @@
           "Type": "empty",
           "Url": "",
           "Region": null
-        }
+        },
+        "PreviewUrl": ""
       },
       {
         "Start": 342,
         "End": 378,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/2f4bf5b1-f7be-42ec-b05a-2ad597eac42b.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/ae21b7ea-9e9b-4248-b538-52ad7b4cdc8a.png",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 0.3
           }
-        }
+        },
+        "PreviewUrl": ""
       },
       {
         "Start": 379,
         "End": 422,
         "Content": {
           "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/3f2205fa-832d-46d6-bcbd-6fe69cae0c1d.webm",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/8c2d2430-09a1-4f6d-beae-d8507cf2c4bc.webm",
           "Region": {
             "X": 0,
             "Y": 0,
             "Width": 1,
             "Height": 0.3
           }
-        }
+        },
+        "PreviewUrl": ""
       }
     ]
   },
@@ -505,35 +511,38 @@
           "Type": "empty",
           "Url": "",
           "Region": null
-        }
+        },
+        "PreviewUrl": ""
       },
       {
         "Start": 354,
         "End": 392,
         "Content": {
           "Type": "image",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/c5041761-e98f-429d-9236-40365a3de592.png",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/9b536798-fc6a-46e8-8f4d-280bc52d25b7.png",
           "Region": {
             "X": 0,
             "Y": -0.7,
             "Width": 1,
             "Height": 0.3
           }
-        }
+        },
+        "PreviewUrl": ""
       },
       {
         "Start": 393,
         "End": 422,
         "Content": {
           "Type": "video",
-          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9475e939-878c-4404-aec9-22f9433c7ecb/91fc12b9-b29e-4e65-8ea8-13d184824201.webm",
+          "Url": "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-c4202311-fd3f-4f1f-bea3-ba3fbacfac40/03d89820-fb1f-4ebf-aeb1-9e139cd80c1f.webm",
           "Region": {
             "X": 0,
             "Y": -0.7,
             "Width": 1,
             "Height": 0.3
           }
-        }
+        },
+        "PreviewUrl": ""
       }
     ]
   }

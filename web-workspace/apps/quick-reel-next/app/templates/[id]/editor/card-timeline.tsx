@@ -1,15 +1,14 @@
 "use client";
 
-import { TimelineFrame } from "./timeline-frame";
+import { TimelineSegment } from "./timeline-frame";
 import { useSelector } from "@xstate/store/react";
 import { store } from "@/store/store";
 
 import { AnimatedProgress } from "@/components/ui/animated-progress";
-import { Transition } from "@/store/project.store.types";
+import { Segment } from "@/store/project.store.types";
 
 type Props = {
-  transitions: Transition[];
-  transitionFrames: string[];
+  segments: Segment[];
   frameCount: number;
   fps: number;
 };
@@ -22,13 +21,12 @@ export const CardTimeline = (props: Props) => {
     >
       <FrameSlider frameCount={props.frameCount} />
       <div className="grow flex gap-4 overflow-x-scroll">
-        {props.transitions.map((transition, index) => {
+        {props.segments.map((segment, index) => {
           return (
-            <TimelineFrame
+            <TimelineSegment
               key={index}
-              transitionIdx={index}
-              transition={transition}
-              transitionFrame={props.transitionFrames[index]}
+              segmentIdx={index}
+              segment={segment}
               fps={props.fps}
             />
           );

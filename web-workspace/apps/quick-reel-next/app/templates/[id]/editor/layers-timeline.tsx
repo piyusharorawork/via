@@ -1,4 +1,4 @@
-// import { Layer, Transition } from "@/store/project.store.types";
+// import { Layer, Segment } from "@/store/project.store.types";
 
 // type Props = {
 //   layers: Layer[];
@@ -27,7 +27,7 @@
 //       id="layer-row"
 //       className="flex flex-grow shrink-0 rounded-xl gap-1"
 //     >
-//       {props.layer.Transitions.map((transition, index) => (
+//       {props.layer.Segments.map((transition, index) => (
 //         <LayerTransition transition={transition} key={index} />
 //       ))}
 //     </section>

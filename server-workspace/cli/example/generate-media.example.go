@@ -257,31 +257,9 @@ func getLayers() []*model.Layer {
 				},
 				{
 					Start: 173,
-					End:   200,
-					Content: &model.SegmentContent{
-						Type: "empty", // todo dissolve
-					},
-				},
-				{
-					Start: 201,
-					End:   218,
-					Content: &model.SegmentContent{
-						Type: "video",
-						Region: &model.Region{
-							Width:  1,
-							Height: 1,
-						},
-					},
-				},
-				{
-					Start: 219,
 					End:   233,
 					Content: &model.SegmentContent{
-						Type: "video",
-						Region: &model.Region{
-							Width:  1,
-							Height: 1,
-						},
+						Type: "empty", // todo dissolve
 					},
 				},
 				{

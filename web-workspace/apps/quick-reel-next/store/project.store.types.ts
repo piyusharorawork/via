@@ -8,6 +8,7 @@ export type Segment = {
   Start: number;
   End: number;
   Content: SegmentContent;
+  PreviewUrl: string;
 };
 
 export type SegmentContent =
@@ -39,26 +40,3 @@ type Region = {
   Width: number;
   Height: number;
 };
-
-// export type Transition = {
-//   StartFrame: number;
-//   EndFrame: number;
-//   Type: "layout" | "dissolve" | null;
-//   Grid: TransitionGrid | null;
-//   Content: TransitionContent | null;
-//   PreviewUrl: string | null;
-// };
-
-// export type TransitionContent = {
-//   Row: number;
-//   Column: number;
-//   Kind: "video" | "image" | "empty";
-//   MediaUrl: string;
-//   texture?: THREE.Texture;
-// };
-
-// type TransitionGrid = {
-//   Rows: number;
-//   Columns: number;
-//   Margin: number;
-// };

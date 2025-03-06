@@ -1,14 +1,11 @@
-import { Transition } from "@/store/project.store.types";
-import { transitions } from "./project.store";
-
 import { createStore } from "@xstate/store";
+import { layers } from "./project.store";
+import { Segment } from "./project.store.types";
 
-const getSelectedTransitionIdx = (frame: number) => {
-  for (let i = 0; i < transitions.length; i++) {
-    if (
-      frame >= transitions[i].StartFrame &&
-      frame <= transitions[i].EndFrame
-    ) {
+const getSelectedSegmentIdx = (frame: number) => {
+  const segments = layers[0].Segments;
+  for (let i = 0; i < segments.length; i++) {
+    if (frame >= segments[i].Start && frame <= segments[i].End) {
       return i;
     }
   }
@@ -18,7 +15,7 @@ type VideoStatus = "not-ready" | "paused" | "playing";
 
 type Context = {
   frame: number;
-  selectedTransitionIdx: number;
+  selectedSegmentIdx: number;
   videoStatus: VideoStatus;
   videoElement: HTMLVideoElement | null;
   audioElement: HTMLAudioElement | null;
@@ -26,7 +23,7 @@ type Context = {
 
 const context: Context = {
   frame: 1,
-  selectedTransitionIdx: 0,
+  selectedSegmentIdx: 0,
   videoStatus: "not-ready",
   videoElement: null,
   audioElement: null,
@@ -50,17 +47,17 @@ export const store = createStore({
     },
     jumpToTransition: (
       { videoElement, audioElement },
-      event: { transition: Transition; fps: number }
+      event: { segment: Segment; fps: number }
     ) => {
       if (!videoElement || !audioElement) return {};
 
       videoElement.pause();
       audioElement.pause();
-      videoElement.currentTime = event.transition.StartFrame / event.fps;
-      audioElement.currentTime = event.transition.StartFrame / event.fps;
+      videoElement.currentTime = event.segment.Start / event.fps;
+      audioElement.currentTime = event.segment.Start / event.fps;
 
       return {
-        frame: event.transition.StartFrame,
+        frame: event.segment.Start,
       };
     },
 
@@ -68,7 +65,7 @@ export const store = createStore({
     setFrame: ({}, event: { frame: number }) => {
       return {
         frame: event.frame,
-        selectedTransitionIdx: getSelectedTransitionIdx(event.frame),
+        selectedTransitionIdx: getSelectedSegmentIdx(event.frame),
       };
     },
     setVideoStatus: ({}, event: { status: VideoStatus }) => {

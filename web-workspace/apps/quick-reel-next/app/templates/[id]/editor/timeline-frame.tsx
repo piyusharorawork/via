@@ -1,20 +1,19 @@
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Transition } from "@/store/project.store.types";
+import { Segment } from "@/store/project.store.types";
 import { store } from "@/store/store";
 import { useSelector } from "@xstate/store/react";
 
 type Props = {
-  transition: Transition;
-  transitionFrame: string;
-  transitionIdx: number;
+  segment: Segment;
+  segmentIdx: number;
   fps: number;
 };
 
-export const TimelineFrame = (props: Props) => {
+export const TimelineSegment = (props: Props) => {
   const isSelected = useSelector(
     store,
-    (state) => state.context.selectedTransitionIdx === props.transitionIdx
+    (state) => state.context.selectedSegmentIdx === props.segmentIdx
   );
 
   return (
@@ -26,13 +25,13 @@ export const TimelineFrame = (props: Props) => {
       onClick={() => {
         store.send({
           type: "jumpToTransition",
-          transition: props.transition,
+          segment: props.segment,
           fps: props.fps,
         });
       }}
     >
       <img
-        src={props.transitionFrame}
+        src={props.segment.PreviewUrl}
         className="w-full h-full"
         draggable={false}
       />

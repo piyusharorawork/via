@@ -10,8 +10,10 @@ type Context = {
 
 const FPS = 30;
 
+export const layers = layersJSON as Layer[];
+
 const context: Context = {
-  layers: layersJSON as Layer[],
+  layers,
   currentSegments: [],
 };
 
