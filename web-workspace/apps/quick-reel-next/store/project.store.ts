@@ -1,7 +1,6 @@
 import { createStore } from "@xstate/store";
 import * as THREE from "three";
 import { Layer, Segment } from "./project.store.types";
-import layersJSON from "@/data/layers.json";
 
 type Context = {
   layers: Layer[];
@@ -10,16 +9,19 @@ type Context = {
 
 const FPS = 30;
 
-export const layers = layersJSON as Layer[];
-
 const context: Context = {
-  layers,
+  layers: [],
   currentSegments: [],
 };
 
 export const projectStore = createStore({
   context,
   on: {
+    setLayers: ({}, event: { layers: Layer[] }) => {
+      return {
+        layers: event.layers,
+      };
+    },
     addVideoElement: (
       { layers },
       event: {

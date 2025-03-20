@@ -6,4 +6,5 @@ use (
 	./util
 	./model
 	./workflow
+	./server
 )

@@ -15,7 +15,14 @@ export const Preview = () => {
   useEffect(() => {
     const win = window as any;
     win.store = projectStore;
+    setLayers();
   }, []);
+
+  const setLayers = async () => {
+    const res = await fetch("http://localhost:8080/layers");
+    const layers = await res.json();
+    projectStore.send({ type: "setLayers", layers });
+  };
 
   return (
     <Canvas

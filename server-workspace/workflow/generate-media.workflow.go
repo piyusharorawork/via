@@ -37,6 +37,14 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	if err != nil {
 		return "", err
 	}
+
+	// save layers without preview first
+	err = util.SaveArrayToJSON(input.LayersJSONPath, input.Layers)
+
+	if err != nil {
+		return "", err
+	}
+
 	framesDirPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s-frames", input.VideoName)
 
 	exportFramesInput := core.ExportFramesInput{

@@ -21,6 +21,8 @@ export const captureFrames = async (input: Options) => {
       devtools: false,
     });
     const page = await browser.newPage();
+    page.route("**", (route) => route.continue());
+
     await page.setViewportSize({ width: videoWidth, height: videoHeight });
     await page.goto(pageUrl);
     console.log("loading page ...");

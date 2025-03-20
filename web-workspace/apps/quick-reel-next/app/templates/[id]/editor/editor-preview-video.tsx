@@ -4,6 +4,7 @@ import { Loader } from "./loader";
 import { useSelector } from "@xstate/store/react";
 import clsx from "clsx";
 import { useLoadVideo } from "@/lib/use-load-video";
+import { projectStore } from "@/store/project.store";
 
 type Props = {
   fps: number;
@@ -15,6 +16,7 @@ export const EditorPreviewVideo = (props: Props) => {
     store.send({ type: "setVideoElement", videoElement: video })
   );
   const videoStatus = useSelector(store, (state) => state.context.videoStatus);
+  const layers = useSelector(projectStore, (state) => state.context.layers);
 
   return (
     <main className="relative">
@@ -35,6 +37,7 @@ export const EditorPreviewVideo = (props: Props) => {
           store.send({
             type: "setFrame",
             frame: e.currentTarget.currentTime * props.fps,
+            layers,
           });
         }}
         onPlaying={() =>

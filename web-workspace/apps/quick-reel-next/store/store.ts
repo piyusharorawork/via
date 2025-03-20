@@ -1,8 +1,9 @@
 import { createStore } from "@xstate/store";
-import { layers } from "./project.store";
-import { Segment } from "./project.store.types";
+import { Layer, Segment } from "./project.store.types";
 
-const getSelectedSegmentIdx = (frame: number) => {
+const getSelectedSegmentIdx = (layers: Layer[], frame: number) => {
+  if (layers.length === 0) return;
+
   const segments = layers[0].Segments;
   for (let i = 0; i < segments.length; i++) {
     if (frame >= segments[i].Start && frame <= segments[i].End) {
@@ -62,10 +63,10 @@ export const store = createStore({
     },
 
     /**Setters */
-    setFrame: ({}, event: { frame: number }) => {
+    setFrame: ({}, event: { frame: number; layers: Layer[] }) => {
       return {
         frame: event.frame,
-        selectedTransitionIdx: getSelectedSegmentIdx(event.frame),
+        selectedTransitionIdx: getSelectedSegmentIdx(event.layers, event.frame),
       };
     },
     setVideoStatus: ({}, event: { status: VideoStatus }) => {
