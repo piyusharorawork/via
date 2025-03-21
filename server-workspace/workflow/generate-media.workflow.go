@@ -10,34 +10,49 @@ import (
 	"quick-reel.com/util"
 )
 
+type Callback func(progress int, msg string)
+
+// TODO
+type ProgressCallback func(progress int)
+
 type GenerateMediaInput struct {
 	OriginalVideoUrl string
 	Layers           []*model.Layer
 	LayersJSONPath   string
 	VideoName        string
+	Cb               Callback
 }
 
 // TODO might need to divide into smaller tasks
 func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error) {
 	folderName := fmt.Sprintf("temp/workspace-%s", uuid.NewString())
+
+	input.Cb(5, "Encoding ...")
 	encodedVideoUrl, err := getEncodedVideoUrl(ctx, input.OriginalVideoUrl, folderName)
 
 	if err != nil {
 		return "", err
 	}
 
+	input.Cb(10, "Analysing ...")
 	fps, frameCount, err := getVideoInfo(encodedVideoUrl)
 
 	if err != nil {
 		return "", err
 	}
 
-	err = populateTransitionMedia(ctx, input.Layers, folderName, encodedVideoUrl, fps, frameCount)
+	input.Cb(12, "Populating Media ...")
+	err = populateTransitionMedia(ctx, input.Layers, folderName, encodedVideoUrl, fps, frameCount, func(progress int) {
+		// TODO
+		// amount := interpolateAmount(12, 45, progress)
+		// input.Cb(amount, "Populating Media ...")
+	})
 
 	if err != nil {
 		return "", err
 	}
 
+	input.Cb(45, "Saving Layers ...")
 	// save layers without preview first
 	err = util.SaveArrayToJSON(input.LayersJSONPath, input.Layers)
 
@@ -45,6 +60,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		return "", err
 	}
 
+	input.Cb(50, "Exporting Frames ...")
 	framesDirPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s-frames", input.VideoName)
 
 	exportFramesInput := core.ExportFramesInput{
@@ -57,6 +73,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 
 	err = core.ExportFrames(exportFramesInput)
 
+	input.Cb(90, "Forming Video ...")
 	if err != nil {
 		return "", err
 	}
@@ -65,6 +82,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 
 	outputPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s-output.mp4", input.VideoName)
 
+	input.Cb(95, "Forming Video ...")
 	err = core.ConvertFramesToVideo(core.ConvertFramesToVideoInput{
 		FramesDirPath: framesDirPath,
 		OutputPath:    outputPath,
@@ -76,6 +94,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	}
 	defer util.RemoveFile(outputPath)
 
+	input.Cb(98, "Generating Preview ...")
 	err = generatePreview(ctx, input.Layers, exportFramesInput.FramesDirPath)
 
 	if err != nil {
@@ -88,6 +107,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		return "", err
 	}
 
+	input.Cb(99, "Finishing ...")
 	exportedVideoUrl, err := upload(ctx, outputPath, "temp")
 
 	return exportedVideoUrl, err
@@ -298,7 +318,16 @@ func getVideoInfo(encodedVideoUrl string) (fps, frameCount int, err error) {
 	return
 }
 
-func populateTransitionMedia(ctx context.Context, layers []*model.Layer, folderName string, encodedVideoUrl string, fps int, frameCount int) error {
+func populateTransitionMedia(ctx context.Context, layers []*model.Layer, folderName string, encodedVideoUrl string, fps int, frameCount int, cb ProgressCallback) error {
+	var totalSegmentCount int = 0
+
+	for _, layer := range layers {
+		totalSegmentCount += len(layer.Segments)
+	}
+
+	fmt.Printf("total %v", totalSegmentCount)
+
+	var completedSegmentCount int = 0
 
 	for layerIdx, layer := range layers {
 		segments := layer.Segments
@@ -324,8 +353,23 @@ func populateTransitionMedia(ctx context.Context, layers []*model.Layer, folderN
 
 			content.Url = mediaUrl
 			fmt.Printf("Layer %d / %d : Segment %d / %d\n", layerIdx+1, len(layers), segmentIdx+1, len(segments))
+			completedSegmentCount++
+			// fmt.Printf("completed %v / %v\n", completedSegmentCount, totalSegmentCount)
+			progress := completedSegmentCount * 100 / totalSegmentCount
+			// print(progress)
+			cb(progress)
 		}
 	}
 
 	return nil
 }
+
+// func interpolateAmount(low int, high int, progress int) int {
+// 	fmt.Print(progress)
+// 	return low + (high-low)*(progress/100)
+// }
+
+// roundoff 2 decimal places
+// func roundoff(num float32) float32 {
+// 	return float32(math.Round((float64)(num*100))) / 100
+// }

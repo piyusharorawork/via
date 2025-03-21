@@ -19,7 +19,20 @@ const uploadDir = "/Users/piyusharora/projects/via/assets/temp"
 const layersPath = "/Users/piyusharora/projects/via/assets/temp/layers.json"
 
 func makeReel(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/plain")
+	w.Header().Set("Transfer-Encoding", "chunked")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+
+	flusher, ok := w.(http.Flusher)
+	if !ok {
+		http.Error(w, "Streaming not supported", http.StatusInternalServerError)
+		return
+	}
+
+	sendChunk(w, flusher, "Uploading ...", 1)
 	originalVideoFileName := fmt.Sprintf("%s.mp4", uuid.NewString())
+
 	uploadFile(w, r, originalVideoFileName)
 	originalVideoPath := filepath.Join(uploadDir, originalVideoFileName)
 	defer util.RemoveFile(originalVideoPath)
@@ -31,6 +44,7 @@ func makeReel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	sendChunk(w, flusher, "Resizing ...", 3)
 	original720pVideoUrl, err := getOriginal720pVideoUrl(ctx, originalVideoPath)
 	if err != nil {
 		http.Error(w, "Failed to get original 720p video url", http.StatusInternalServerError)
@@ -44,16 +58,15 @@ func makeReel(w http.ResponseWriter, r *http.Request) {
 		Layers:           layers,
 		LayersJSONPath:   layersPath,
 		VideoName:        "reel-output",
+		Cb: func(progress int, msg string) {
+			sendChunk(w, flusher, msg, progress)
+		},
 	})
 
 	if err != nil {
 		http.Error(w, "Failed to generate reel", http.StatusInternalServerError)
 		return
 	}
-
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 	fmt.Fprintf(w, "Reel url: %s", reelUrl)
 
@@ -537,4 +550,10 @@ func getLayers() []*model.Layer {
 		},
 	}
 
+}
+
+func sendChunk(w http.ResponseWriter, flusher http.Flusher, msg string, progress int) {
+	message := fmt.Sprintf("%s,%d", msg, progress)
+	fmt.Fprint(w, message)
+	flusher.Flush() // Flush the response to the client
 }
