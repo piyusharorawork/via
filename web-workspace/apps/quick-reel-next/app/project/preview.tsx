@@ -1,12 +1,11 @@
 "use client";
 
 import { projectStore } from "@/store/project.store";
-import { useVideoTexture } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useSelector } from "@xstate/store/react";
 import { useEffect } from "react";
-import * as THREE from "three";
 import { DissolveEffect } from "./dissolve-effect";
+import { MediaContent } from "./segment-content";
 
 export const FRAME_HEIGHT = 7.7;
 export const FRAME_WIDTH = 4.3;
@@ -60,43 +59,14 @@ const VideoMesh = () => {
         return <mesh key={index}></mesh>;
 
       case "image":
-        return (
-          <mesh
-            key={index}
-            position={[
-              (FRAME_WIDTH / 2) * segment.Content.Region.X,
-              (FRAME_HEIGHT / 2) * segment.Content.Region.Y,
-              0,
-            ]}
-          >
-            <planeGeometry
-              args={[
-                FRAME_WIDTH * segment.Content.Region.Width,
-                FRAME_HEIGHT * segment.Content.Region.Height,
-              ]}
-            />
-            <meshBasicMaterial map={segment.Content.texture} />
-          </mesh>
-        );
-
       case "video":
         return (
-          <mesh
+          <MediaContent
             key={index}
-            position={[
-              (FRAME_WIDTH / 2) * segment.Content.Region.X,
-              (FRAME_HEIGHT / 2) * segment.Content.Region.Y,
-              0,
-            ]}
-          >
-            <planeGeometry
-              args={[
-                FRAME_WIDTH * segment.Content.Region.Width,
-                FRAME_HEIGHT * segment.Content.Region.Height,
-              ]}
-            />
-            <meshBasicMaterial map={segment.Content.texture} />
-          </mesh>
+            content={segment.Content}
+            frameWidth={FRAME_WIDTH}
+            frameHeight={FRAME_HEIGHT}
+          />
         );
 
       case "dissolve":
