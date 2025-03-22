@@ -1,3 +1,3 @@
-module quick-reel.com/workflow
+module quickreel.com/workflow
 
 go 1.23.6

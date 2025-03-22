@@ -3,8 +3,8 @@ package example
 import (
 	"context"
 
-	"quick-reel.com/core"
-	model "quick-reel.com/models"
+	"quickreel.com/core/model"
+	"quickreel.com/core/uploader"
 )
 
 func UploadFileExample(ctx context.Context) {
@@ -14,7 +14,7 @@ func UploadFileExample(ctx context.Context) {
 	spaceName := ctx.Value(model.SpaceName).(string)
 	folderPath := "temp"
 
-	input := core.UploadFileInput{
+	input := uploader.UploadFileInput{
 		FilePath:   "/Users/piyusharora/projects/via/assets/temp/tag-mahal-output-with-audio.mp4",
 		SpaceName:  spaceName,
 		Region:     region,
@@ -23,7 +23,7 @@ func UploadFileExample(ctx context.Context) {
 		FolderPath: folderPath,
 	}
 
-	data, err := core.UploadFile(input)
+	data, err := uploader.UploadFile(input)
 
 	if err != nil {
 		panic(err)

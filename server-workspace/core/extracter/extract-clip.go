@@ -1,10 +1,10 @@
-package core
+package extracter
 
 import (
 	"fmt"
 	"os/exec"
 
-	util "quick-reel.com/util"
+	"quickreel.com/core/util"
 )
 
 type ExtractClipInput struct {

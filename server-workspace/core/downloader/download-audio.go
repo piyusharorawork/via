@@ -1,9 +1,9 @@
-package core
+package downloader
 
 import (
 	"os/exec"
 
-	"quick-reel.com/util"
+	"quickreel.com/core/util"
 )
 
 type DownloadAudioInput struct {

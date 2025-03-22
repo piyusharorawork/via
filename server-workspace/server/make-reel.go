@@ -9,10 +9,11 @@ import (
 	"path/filepath"
 
 	"github.com/google/uuid"
-	"quick-reel.com/core"
-	model "quick-reel.com/models"
-	"quick-reel.com/util"
-	"quick-reel.com/workflow"
+	"quickreel.com/core/model"
+	"quickreel.com/core/uploader"
+	"quickreel.com/core/util"
+	"quickreel.com/core/vidmod"
+	"quickreel.com/core/workflow"
 )
 
 const uploadDir = "/Users/piyusharora/projects/via/assets/temp"
@@ -107,10 +108,10 @@ func uploadFile(w http.ResponseWriter, r *http.Request, fileName string) {
 func getOriginal720pVideoUrl(ctx context.Context, originalVideoPath string) (string, error) {
 	original720pVideoFileName := fmt.Sprintf("%s-720p.mp4", uuid.NewString())
 	original720pVideoFilePath := filepath.Join(uploadDir, original720pVideoFileName)
-	core.ResizeVideo(core.ResizeVideoInput{
+	vidmod.ResizeVideo(vidmod.ResizeVideoInput{
 		VideoPath:  originalVideoPath,
 		OutputPath: original720pVideoFilePath,
-		Resolution: core.HD_720p,
+		Resolution: model.HD_720p,
 	})
 	defer util.RemoveFile(original720pVideoFilePath)
 
@@ -120,7 +121,7 @@ func getOriginal720pVideoUrl(ctx context.Context, originalVideoPath string) (str
 	spaceName := ctx.Value(model.SpaceName).(string)
 	folderPath := "temp"
 
-	data, err := core.UploadFile(core.UploadFileInput{
+	data, err := uploader.UploadFile(uploader.UploadFileInput{
 		FilePath:   original720pVideoFilePath,
 		FolderPath: folderPath,
 		SpaceName:  spaceName,

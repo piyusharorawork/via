@@ -1,9 +1,9 @@
 package example
 
-import "quick-reel.com/core"
+import "quickreel.com/core/extracter"
 
 func ExtractClipExample() {
-	err := core.ExtractClip(core.ExtractClipInput{
+	err := extracter.ExtractClip(extracter.ExtractClipInput{
 		VideoPath:  "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4",
 		Start:      379,
 		End:        392,

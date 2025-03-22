@@ -1,9 +1,9 @@
 package example
 
-import "quick-reel.com/core"
+import "quickreel.com/core/clipinfo"
 
 func GetFpsExample() {
-	fps, err := core.GetFPS("/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4")
+	fps, err := clipinfo.GetFPS("/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4")
 	if err != nil {
 		panic(err)
 	}

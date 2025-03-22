@@ -1,9 +1,9 @@
-package core
+package downloader
 
 import (
 	"os/exec"
 
-	util "quick-reel.com/util"
+	"quickreel.com/core/util"
 )
 
 type DownloadVideoInput struct {

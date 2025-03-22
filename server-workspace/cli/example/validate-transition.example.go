@@ -3,7 +3,7 @@ package example
 import (
 	"context"
 
-	"quick-reel.com/workflow"
+	"quickreel.com/core/workflow"
 )
 
 func ValidateTransitionExample(ctx context.Context) {

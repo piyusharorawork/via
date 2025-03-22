@@ -1,16 +1,19 @@
 package example
 
-import "quick-reel.com/core"
+import (
+	"quickreel.com/core/model"
+	"quickreel.com/core/vidmod"
+)
 
 func ResizeVideoExample() {
 
-	input := core.ResizeVideoInput{
+	input := vidmod.ResizeVideoInput{
 		VideoPath:  "/Users/piyusharora/projects/via/assets/temp/taj-mahal.mp4",
-		Resolution: core.HD_720p,
+		Resolution: model.HD_720p,
 		OutputPath: "/Users/piyusharora/projects/via/assets/temp/taj-mahal-720p.mp4",
 	}
 
-	err := core.ResizeVideo(input)
+	err := vidmod.ResizeVideo(input)
 	if err != nil {
 		panic(err)
 	}

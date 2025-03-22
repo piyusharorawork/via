@@ -1,9 +1,9 @@
 package example
 
-import "quick-reel.com/core"
+import "quickreel.com/core/extracter"
 
 func CombineFramesToVideoExample() {
-	core.ConvertFramesToVideo(core.ConvertFramesToVideoInput{
+	extracter.ConvertFramesToVideo(extracter.ConvertFramesToVideoInput{
 		FramesDirPath: "/Users/piyusharora/projects/via/assets/temp/rishikesh-frames",
 		OutputPath:    "/Users/piyusharora/projects/via/assets/temp/rishikesh-output1.mp4",
 		Fps:           30,

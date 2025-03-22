@@ -3,8 +3,5 @@ go 1.23.6
 use (
 	./cli
 	./core
-	./util
-	./model
-	./workflow
 	./server
 )

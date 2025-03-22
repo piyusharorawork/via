@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"quick-reel.com/util"
+	"quickreel.com/core/util"
 )
 
 func getLayersJSON(w http.ResponseWriter, r *http.Request) {

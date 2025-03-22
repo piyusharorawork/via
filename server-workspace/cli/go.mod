@@ -1,4 +1,4 @@
-module quick-reel.com/cli
+module quickreel.com/cli
 
 go 1.23.6
 

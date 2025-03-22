@@ -1,4 +1,4 @@
-package core
+package clipinfo
 
 import (
 	"errors"
@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	util "quick-reel.com/util"
+	"quickreel.com/core/util"
 )
 
 func GetFPS(videoPath string) (int, error) {

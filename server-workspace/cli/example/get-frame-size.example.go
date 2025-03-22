@@ -1,9 +1,9 @@
 package example
 
-import "quick-reel.com/core"
+import "quickreel.com/core/clipinfo"
 
 func GetFrameSizeExample() {
-	frameSize, err := core.GetFrameSize("/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4")
+	frameSize, err := clipinfo.GetFrameSize("/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4")
 
 	if err != nil {
 		panic(err)

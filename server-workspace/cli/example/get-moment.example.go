@@ -1,10 +1,10 @@
 package example
 
-import "quick-reel.com/core"
+import "quickreel.com/core/moment"
 
 func GetMomentExample() {
-	moment, err := core.FindMoment(core.FindMomentInput{
-		Kind:           core.VIDEO,
+	moment, err := moment.FindMoment(moment.FindMomentInput{
+		Kind:           moment.VIDEO,
 		Fps:            30,
 		TotalFrames:    100,
 		RequiredFrames: 40,

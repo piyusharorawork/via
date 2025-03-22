@@ -5,9 +5,15 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"quick-reel.com/core"
-	model "quick-reel.com/models"
-	"quick-reel.com/util"
+
+	"quickreel.com/core/clipinfo"
+	"quickreel.com/core/extracter"
+	"quickreel.com/core/imgmod"
+	"quickreel.com/core/model"
+	"quickreel.com/core/moment"
+	"quickreel.com/core/uploader"
+	"quickreel.com/core/util"
+	"quickreel.com/core/vidmod"
 )
 
 type Callback func(progress int, msg string)
@@ -63,7 +69,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	input.Cb(50, "Exporting Frames ...")
 	framesDirPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s-frames", input.VideoName)
 
-	exportFramesInput := core.ExportFramesInput{
+	exportFramesInput := extracter.ExportFramesInput{
 		FrameCount:    422,
 		FramesDirPath: framesDirPath,
 		PageUrl:       "http://localhost:3000/project",
@@ -71,7 +77,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		VideoHeight:   640,
 	}
 
-	err = core.ExportFrames(exportFramesInput)
+	err = extracter.ExportFrames(exportFramesInput)
 
 	input.Cb(90, "Forming Video ...")
 	if err != nil {
@@ -83,7 +89,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	outputPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s-output.mp4", input.VideoName)
 
 	input.Cb(95, "Forming Video ...")
-	err = core.ConvertFramesToVideo(core.ConvertFramesToVideoInput{
+	err = extracter.ConvertFramesToVideo(extracter.ConvertFramesToVideoInput{
 		FramesDirPath: framesDirPath,
 		OutputPath:    outputPath,
 		Fps:           30,
@@ -118,9 +124,9 @@ func generatePreview(ctx context.Context, layers []*model.Layer, framesDirPath s
 	for segmentIdx, segment := range segments {
 		imagePath := fmt.Sprintf("%s/%d.png", framesDirPath, segment.Start)
 		outPath := fmt.Sprintf("%s/%d-low.png", framesDirPath, segment.Start)
-		err := core.ResizeImage(core.ResizeImageInput{
+		err := imgmod.ResizeImage(imgmod.ResizeImageInput{
 			ImagePath:  imagePath,
-			Resolution: core.BARE_MINIMUM_SD_96p,
+			Resolution: model.BARE_MINIMUM_SD_96p,
 			OutputPath: outPath,
 		})
 
@@ -152,7 +158,7 @@ func getMediaUrl(ctx context.Context, encodedVideoUrl string, start int, end int
 
 	if kind == "image" {
 		imagePath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.png", uuid.NewString())
-		err := core.ExtractImage(core.ExtractImageInput{
+		err := extracter.ExtractImage(extracter.ExtractImageInput{
 			VideoPath:  encodedVideoUrl,
 			Frame:      start,
 			OutputPath: imagePath,
@@ -175,7 +181,7 @@ func getMediaUrl(ctx context.Context, encodedVideoUrl string, start int, end int
 
 	videoPath :=
 		fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.mp4", uuid.NewString())
-	core.ExtractClip(core.ExtractClipInput{
+	extracter.ExtractClip(extracter.ExtractClipInput{
 		VideoPath:  encodedVideoUrl,
 		Start:      start,
 		End:        end,
@@ -186,7 +192,7 @@ func getMediaUrl(ctx context.Context, encodedVideoUrl string, start int, end int
 	defer util.RemoveFile(videoPath)
 
 	webmVideoPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.webm", uuid.New())
-	err := core.ConvertWebm(core.ConvertWebmInput{
+	err := vidmod.ConvertWebm(vidmod.ConvertWebmInput{
 		VideoPath:  videoPath,
 		OutputPath: webmVideoPath,
 	})
@@ -208,7 +214,7 @@ func upload(ctx context.Context, filePath string, folderName string) (string, er
 	accessKey := ctx.Value(model.SpaceAccessKey).(string)
 	secretKey := ctx.Value(model.SpaceSecretKey).(string)
 
-	input := core.UploadFileInput{
+	input := uploader.UploadFileInput{
 		FilePath:   filePath,
 		SpaceName:  spaceName,
 		Region:     region,
@@ -217,7 +223,7 @@ func upload(ctx context.Context, filePath string, folderName string) (string, er
 		FolderPath: folderName,
 	}
 
-	data, err := core.UploadFile(input)
+	data, err := uploader.UploadFile(input)
 
 	if err != nil {
 		return "", err
@@ -227,26 +233,31 @@ func upload(ctx context.Context, filePath string, folderName string) (string, er
 
 }
 
-func getMoment(content *model.SegmentContent, transitionStart int, transitionEnd int, fps int, frameCount int) (core.FindMomentOutput, error) {
-	var kind core.MomentKind
+func getMoment(content *model.SegmentContent, transitionStart int, transitionEnd int, fps int, frameCount int) (*moment.FindMomentOutput, error) {
+	var kind moment.MomentKind
 
 	if content.Type == "image" {
-		kind = core.IMAGE
+		kind = moment.IMAGE
 	} else if content.Type == "video" {
-		kind = core.VIDEO
+		kind = moment.VIDEO
 	}
 
-	input := core.FindMomentInput{
+	input := moment.FindMomentInput{
 		Kind:           kind,
 		Fps:            fps,
 		RequiredFrames: transitionEnd - transitionStart,
 		TotalFrames:    frameCount,
 	}
 
-	moment, err := core.FindMoment(input)
+	moment, err := moment.FindMoment(input)
+
 	if err != nil {
-		return core.FindMomentOutput{}, err
+		return nil, err
 	}
+
+	// if err != nil {
+	// 	return moment.FindMomentOutput{}, err
+	// }
 
 	return moment, nil
 
@@ -257,9 +268,9 @@ func getEncodedVideoUrl(ctx context.Context, originalVideoUrl string, folderName
 	// Resize video to 360p
 	resizedVideoPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.mp4", uuid.New())
 
-	err := core.ResizeVideo(core.ResizeVideoInput{
+	err := vidmod.ResizeVideo(vidmod.ResizeVideoInput{
 		VideoPath:  originalVideoUrl,
-		Resolution: core.VERY_LOW_SD_360p,
+		Resolution: model.VERY_LOW_SD_360p,
 		OutputPath: resizedVideoPath,
 	})
 
@@ -271,7 +282,7 @@ func getEncodedVideoUrl(ctx context.Context, originalVideoUrl string, folderName
 
 	// Remove the audio
 	mutedVideoPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.mp4", uuid.New())
-	err = core.MuteVideo(core.MuteVideoInput{
+	err = vidmod.MuteVideo(vidmod.MuteVideoInput{
 		VideoPath:  resizedVideoPath,
 		OutputPath: mutedVideoPath,
 	})
@@ -283,7 +294,7 @@ func getEncodedVideoUrl(ctx context.Context, originalVideoUrl string, folderName
 	defer util.RemoveFile(mutedVideoPath)
 	// Encode the video
 	encodedVideoPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.mp4", uuid.New())
-	err = core.EncodeVideo(core.EncodeVideoInput{
+	err = vidmod.EncodeVideo(vidmod.EncodeVideoInput{
 		VideoPath:  mutedVideoPath,
 		OutputPath: encodedVideoPath,
 	})
@@ -305,12 +316,12 @@ func getEncodedVideoUrl(ctx context.Context, originalVideoUrl string, folderName
 }
 
 func getVideoInfo(encodedVideoUrl string) (fps, frameCount int, err error) {
-	fps, err = core.GetFPS(encodedVideoUrl)
+	fps, err = clipinfo.GetFPS(encodedVideoUrl)
 	if err != nil {
 		return 0, 0, err
 	}
 
-	frameCount, err = core.GetFrameCount(encodedVideoUrl)
+	frameCount, err = clipinfo.GetFrameCount(encodedVideoUrl)
 	if err != nil {
 		return 0, 0, err
 	}

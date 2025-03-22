@@ -1,12 +1,4 @@
-package core
-
-import (
-	"errors"
-	"os/exec"
-	"strconv"
-
-	util "quick-reel.com/util"
-)
+package model
 
 type Resolution string
 
@@ -30,7 +22,7 @@ type Dimenstions struct {
 	Height int
 }
 
-var resolutions = map[Resolution]Dimenstions{
+var Resolutions = map[Resolution]Dimenstions{
 	"ULTRA_HD_2160p": {
 		Height: 3840,
 		Width:  2160,
@@ -79,28 +71,4 @@ var resolutions = map[Resolution]Dimenstions{
 		Height: 170,
 		Width:  96,
 	},
-}
-
-type ResizeVideoInput struct {
-	VideoPath  string
-	Resolution Resolution
-	OutputPath string
-}
-
-func ResizeVideo(input ResizeVideoInput) error {
-	dimensions, found := resolutions[input.Resolution]
-	if !found {
-		return errors.New("resolution not found")
-	}
-
-	cmd := exec.Command("ffmpeg", "-y", "-i", input.VideoPath, "-vf", "scale="+strconv.Itoa(dimensions.Width)+":"+strconv.Itoa(dimensions.Height), "-c:a", "copy", input.OutputPath)
-
-	_, err := util.RunCommand(cmd)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
-
 }

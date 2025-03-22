@@ -1,9 +1,9 @@
 package example
 
-import "quick-reel.com/core"
+import "quickreel.com/core/extracter"
 
 func ExportFramesExample() {
-	err := core.ExportFrames(core.ExportFramesInput{
+	err := extracter.ExportFrames(extracter.ExportFramesInput{
 		FrameCount:    400,
 		FramesDirPath: "/Users/piyusharora/projects/via/assets/temp/rishikesh-frames",
 		PageUrl:       "http://localhost:3000/project",

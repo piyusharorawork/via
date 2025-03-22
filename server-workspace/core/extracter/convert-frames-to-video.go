@@ -1,11 +1,11 @@
-package core
+package extracter
 
 import (
 	"os/exec"
 	"path/filepath"
 	"strconv"
 
-	"quick-reel.com/util"
+	"quickreel.com/core/util"
 )
 
 type ConvertFramesToVideoInput struct {

@@ -3,11 +3,11 @@ package example
 import (
 	"log"
 
-	"quick-reel.com/core"
+	"quickreel.com/core/downloader"
 )
 
 func DownloadVideoExample() {
-	err := core.DownloadVideo(core.DownloadVideoInput{
+	err := downloader.DownloadVideo(downloader.DownloadVideoInput{
 		VideoURL:   "https://www.renderforest.com/template/luxurious-hotel-highlights-reel",
 		OutputPath: "/Users/piyusharora/projects/via/assets/sample-videos/cms/luxurious-hotel-highlights-reel-original.mp4",
 	})

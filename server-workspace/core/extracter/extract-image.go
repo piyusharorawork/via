@@ -1,10 +1,10 @@
-package core
+package extracter
 
 import (
 	"os/exec"
 	"strconv"
 
-	util "quick-reel.com/util"
+	"quickreel.com/core/util"
 )
 
 type ExtractImageInput struct {

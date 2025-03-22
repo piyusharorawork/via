@@ -3,8 +3,8 @@ package example
 import (
 	"context"
 
-	model "quick-reel.com/models"
-	workflow "quick-reel.com/workflow"
+	"quickreel.com/core/model"
+	"quickreel.com/core/workflow"
 )
 
 func GenerateMediaExample(ctx context.Context) {

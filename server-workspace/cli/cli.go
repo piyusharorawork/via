@@ -1,7 +1,7 @@
 package main
 
 import (
-	"quick-reel.com/cli/example"
+	"quickreel.com/cli/example"
 )
 
 func main() {

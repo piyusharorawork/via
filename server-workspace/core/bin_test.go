@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"quick-reel.com/util"
+	"quickreel.com/core/util"
 )
 
 func TestFfmpeg(t *testing.T) {

@@ -1,11 +1,14 @@
 package example
 
-import "quick-reel.com/core"
+import (
+	"quickreel.com/core/imgmod"
+	"quickreel.com/core/model"
+)
 
 func ResizeImageExample() {
-	err := core.ResizeImage(core.ResizeImageInput{
+	err := imgmod.ResizeImage(imgmod.ResizeImageInput{
 		ImagePath:  "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-29ac7efe-66fe-458a-a2e4-90d6b7b9a43a/2d964491-488f-4ae7-a68f-0489b7d0413a.png",
-		Resolution: core.BARE_MINIMUM_SD_96p,
+		Resolution: model.BARE_MINIMUM_SD_96p,
 		OutputPath: "/Users/piyusharora/projects/via/assets/temp/low.png",
 	})
 

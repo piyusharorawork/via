@@ -5,9 +5,10 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"quick-reel.com/core"
-	model "quick-reel.com/models"
-	"quick-reel.com/util"
+	"quickreel.com/core/extracter"
+	"quickreel.com/core/model"
+	"quickreel.com/core/moment"
+	"quickreel.com/core/util"
 )
 
 type ValidateTransitionInput struct {
@@ -42,7 +43,7 @@ func ValidateTransition(ctx context.Context, input ValidateTransitionInput) (str
 		return "", err
 	}
 
-	err = core.ExportFrames(core.ExportFramesInput{
+	err = extracter.ExportFrames(extracter.ExportFramesInput{
 		FrameCount:    422,
 		FramesDirPath: "/Users/piyusharora/projects/via/assets/temp/rishikesh-frames",
 		PageUrl:       "http://localhost:3000/project",
@@ -56,7 +57,7 @@ func ValidateTransition(ctx context.Context, input ValidateTransitionInput) (str
 
 	defer util.RemoveDir("/Users/piyusharora/projects/via/assets/temp/rishikesh-frames")
 
-	err = core.ConvertFramesToVideo(core.ConvertFramesToVideoInput{
+	err = extracter.ConvertFramesToVideo(extracter.ConvertFramesToVideoInput{
 		FramesDirPath: "/Users/piyusharora/projects/via/assets/temp/rishikesh-frames",
 		OutputPath:    "/Users/piyusharora/projects/via/assets/temp/rishikesh-output.mp4",
 		Fps:           30,
@@ -81,7 +82,7 @@ func populateTemplateMedia(ctx context.Context, layers []*model.Layer, folderNam
 				continue
 			}
 
-			moment := core.FindMomentOutput{
+			moment := moment.FindMomentOutput{
 				Start: segment.Start,
 				End:   segment.End,
 			}

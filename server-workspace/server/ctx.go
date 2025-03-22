@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	model "quick-reel.com/models"
+	"quickreel.com/core/model"
 )
 
 func createCtx() (context.Context, error) {
