@@ -4,8 +4,12 @@ import { useSelector } from "@xstate/store/react";
 import { projectStore } from "@/store/project.store";
 import { Layer } from "@/store/project.store.types";
 import { SegmentElement } from "./segment-element";
+import { useLayers } from "@/lib/use-layers";
 
 export const MediaElements = () => {
+  // TODO need to call it somewhere common
+  // also need to pass the projectid
+  useLayers();
   const layers = useSelector(projectStore, (state) => state.context.layers);
 
   return (

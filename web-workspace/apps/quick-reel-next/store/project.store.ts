@@ -24,14 +24,6 @@ const context: Context = {
 export const projectStore = createStore({
   context,
   on: {
-    setLayers: ({}, event: { layers: Layer[] }) => {
-      return {
-        layers: event.layers,
-      };
-    },
-    setEditorUrl: ({}, event: { editorUrl: string }) => {
-      return { editorUrl: event.editorUrl };
-    },
     addVideoElement: (
       { layers },
       event: {
@@ -129,6 +121,23 @@ export const projectStore = createStore({
       }
 
       return { currentSegments };
+    },
+    setLayers: ({}, event: { layers: Layer[] }) => {
+      return {
+        layers: event.layers,
+      };
+    },
+    setEditorUrl: ({}, event: { editorUrl: string }) => {
+      return { editorUrl: event.editorUrl };
+    },
+    setProgress: (
+      {},
+      event: { progressPercentage: number; progressMessage: string }
+    ) => {
+      return {
+        progressPercentage: event.progressPercentage,
+        progressMessage: event.progressMessage,
+      };
     },
   },
 });

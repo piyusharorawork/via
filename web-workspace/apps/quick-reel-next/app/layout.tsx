@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "Quick Reel",
@@ -16,16 +17,8 @@ export default function RootLayout({
       <head>
         {/* <script src="//unpkg.com/react-scan/dist/auto.global.js" /> */}
       </head>
-      <body
-        style={
-          {
-            // overflow: "hidden",
-            // position: "fixed",
-            // width: "100%",
-          }
-        }
-      >
-        {children}
+      <body>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
