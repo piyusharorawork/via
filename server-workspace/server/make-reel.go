@@ -71,6 +71,8 @@ func makeReel(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprint(w, reelUrl)
 
+	fmt.Println(reelUrl)
+
 }
 
 func uploadFile(w http.ResponseWriter, r *http.Request, fileName string) {
