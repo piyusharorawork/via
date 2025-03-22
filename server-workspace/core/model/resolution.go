@@ -14,7 +14,7 @@ const (
 	ULTRA_LOW_SD_180p    Resolution = "ULTRA_LOW_SD_180p"
 	MINIMAL_SD_144p      Resolution = "MINIMAL_SD_144p"
 	LOWEST_SD_120p       Resolution = "LOWEST_SD_120p"
-	BARE_MINIMUM_SD_96p  Resolution = "BARE_MINIMUM_SD_96p"
+	BARE_MINIMUM_SD_90p  Resolution = "BARE_MINIMUM_SD_90p"
 )
 
 type Dimenstions struct {
@@ -67,8 +67,8 @@ var Resolutions = map[Resolution]Dimenstions{
 		Height: 213,
 		Width:  120,
 	},
-	"BARE_MINIMUM_SD_96p": {
-		Height: 170,
-		Width:  96,
+	"BARE_MINIMUM_SD_90p": {
+		Height: 160,
+		Width:  90,
 	},
 }

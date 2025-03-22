@@ -122,7 +122,7 @@ func generatePreview(ctx context.Context, layers []*model.Layer, framesDirPath s
 		outPath := fmt.Sprintf("%s/%d-low.png", framesDirPath, segment.Start)
 		err := imgmod.ResizeImage(imgmod.ResizeImageInput{
 			ImagePath:  imagePath,
-			Resolution: model.BARE_MINIMUM_SD_96p,
+			Resolution: model.BARE_MINIMUM_SD_90p,
 			OutputPath: outPath,
 		})
 
