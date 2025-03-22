@@ -5,6 +5,9 @@ import { Layer, Segment } from "./project.store.types";
 type Context = {
   layers: Layer[];
   currentSegments: Segment[];
+  editorUrl: string;
+  progressPercentage: number;
+  progressMessage: string;
 };
 
 const FPS = 30;
@@ -12,6 +15,9 @@ const FPS = 30;
 const context: Context = {
   layers: [],
   currentSegments: [],
+  editorUrl: "",
+  progressPercentage: 0,
+  progressMessage: "",
 };
 
 export const projectStore = createStore({
@@ -21,6 +27,9 @@ export const projectStore = createStore({
       return {
         layers: event.layers,
       };
+    },
+    setEditorUrl: ({}, event: { editorUrl: string }) => {
+      return { editorUrl: event.editorUrl };
     },
     addVideoElement: (
       { layers },

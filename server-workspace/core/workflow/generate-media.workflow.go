@@ -19,7 +19,6 @@ import (
 type Callback func(progress int, msg string)
 
 // TODO
-type ProgressCallback func(progress int)
 
 type GenerateMediaInput struct {
 	OriginalVideoUrl string
@@ -33,40 +32,35 @@ type GenerateMediaInput struct {
 func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error) {
 	folderName := fmt.Sprintf("temp/workspace-%s", uuid.NewString())
 
-	input.Cb(5, "Encoding ...")
 	encodedVideoUrl, err := getEncodedVideoUrl(ctx, input.OriginalVideoUrl, folderName)
 
 	if err != nil {
 		return "", err
 	}
 
-	input.Cb(10, "Analysing ...")
+	input.Cb(10, "Finding Beautiful Moments ...")
 	fps, frameCount, err := getVideoInfo(encodedVideoUrl)
 
 	if err != nil {
 		return "", err
 	}
 
-	input.Cb(12, "Populating Media ...")
-	err = populateTransitionMedia(ctx, input.Layers, folderName, encodedVideoUrl, fps, frameCount, func(progress int) {
-		// TODO
-		// amount := interpolateAmount(12, 45, progress)
-		// input.Cb(amount, "Populating Media ...")
+	err = populateTransitionMedia(ctx, input.Layers, folderName, encodedVideoUrl, fps, frameCount, func(progressPercentage int) {
+		amount := interpolateAmount(12, 50, progressPercentage)
+		input.Cb(amount, "Finding Beautiful Moments ...")
 	})
 
 	if err != nil {
 		return "", err
 	}
 
-	input.Cb(45, "Saving Layers ...")
-	// save layers without preview first
 	err = util.SaveArrayToJSON(input.LayersJSONPath, input.Layers)
 
 	if err != nil {
 		return "", err
 	}
 
-	input.Cb(50, "Exporting Frames ...")
+	input.Cb(50, "Capturing Those Memories ...")
 	framesDirPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s-frames", input.VideoName)
 
 	exportFramesInput := extracter.ExportFramesInput{
@@ -75,11 +69,15 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		PageUrl:       "http://localhost:3000/project",
 		VideoWidth:    360,
 		VideoHeight:   640,
+		Cb: func(percentage int) {
+			amount := interpolateAmount(50, 90, percentage)
+			input.Cb(amount, "Capturing Those Memories ...")
+		},
 	}
 
 	err = extracter.ExportFrames(exportFramesInput)
 
-	input.Cb(90, "Forming Video ...")
+	input.Cb(90, "Creating Quick Reel ...")
 	if err != nil {
 		return "", err
 	}
@@ -88,7 +86,6 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 
 	outputPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s-output.mp4", input.VideoName)
 
-	input.Cb(95, "Forming Video ...")
 	err = extracter.ConvertFramesToVideo(extracter.ConvertFramesToVideoInput{
 		FramesDirPath: framesDirPath,
 		OutputPath:    outputPath,
@@ -100,7 +97,6 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	}
 	defer util.RemoveFile(outputPath)
 
-	input.Cb(98, "Generating Preview ...")
 	err = generatePreview(ctx, input.Layers, exportFramesInput.FramesDirPath)
 
 	if err != nil {
@@ -113,7 +109,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		return "", err
 	}
 
-	input.Cb(99, "Finishing ...")
+	input.Cb(98, "Finishing ...")
 	exportedVideoUrl, err := upload(ctx, outputPath, "temp")
 
 	return exportedVideoUrl, err
@@ -329,26 +325,26 @@ func getVideoInfo(encodedVideoUrl string) (fps, frameCount int, err error) {
 	return
 }
 
-func populateTransitionMedia(ctx context.Context, layers []*model.Layer, folderName string, encodedVideoUrl string, fps int, frameCount int, cb ProgressCallback) error {
+func populateTransitionMedia(ctx context.Context, layers []*model.Layer, folderName string, encodedVideoUrl string, fps int, frameCount int, cb model.ProgressCallback) error {
 	var totalSegmentCount int = 0
 
 	for _, layer := range layers {
 		totalSegmentCount += len(layer.Segments)
 	}
 
-	fmt.Printf("total %v", totalSegmentCount)
-
 	var completedSegmentCount int = 0
 
-	for layerIdx, layer := range layers {
+	for _, layer := range layers {
 		segments := layer.Segments
-		for segmentIdx, transition := range segments {
+		for _, transition := range segments {
 			content := transition.Content
 			if content == nil {
+				completedSegmentCount++
 				continue
 			}
 
 			if content.Type == "dissolve" || content.Type == "empty" {
+				completedSegmentCount++
 				continue
 			}
 
@@ -363,24 +359,16 @@ func populateTransitionMedia(ctx context.Context, layers []*model.Layer, folderN
 			}
 
 			content.Url = mediaUrl
-			fmt.Printf("Layer %d / %d : Segment %d / %d\n", layerIdx+1, len(layers), segmentIdx+1, len(segments))
 			completedSegmentCount++
-			// fmt.Printf("completed %v / %v\n", completedSegmentCount, totalSegmentCount)
-			progress := completedSegmentCount * 100 / totalSegmentCount
-			// print(progress)
-			cb(progress)
+			progressPercent := completedSegmentCount * 100 / totalSegmentCount
+			cb(progressPercent)
 		}
 	}
 
 	return nil
 }
 
-// func interpolateAmount(low int, high int, progress int) int {
-// 	fmt.Print(progress)
-// 	return low + (high-low)*(progress/100)
-// }
+func interpolateAmount(low int, high int, progressPercentage int) int {
+	return low + (high-low)*progressPercentage/100
 
-// roundoff 2 decimal places
-// func roundoff(num float32) float32 {
-// 	return float32(math.Round((float64)(num*100))) / 100
-// }
+}

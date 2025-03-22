@@ -16,6 +16,4 @@ export const takeScreenshot = async (input: TakeScreenshotInput) => {
   await input.page.screenshot({
     path: `${input.framesDirPath}/${input.frame}.png`,
   });
-
-  console.log(`Frame ${input.frame}`);
 };

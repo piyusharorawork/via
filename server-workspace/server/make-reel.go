@@ -45,7 +45,7 @@ func makeReel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sendChunk(w, flusher, "Resizing ...", 3)
+	sendChunk(w, flusher, "Processing your video ...", 3)
 	original720pVideoUrl, err := getOriginal720pVideoUrl(ctx, originalVideoPath)
 	if err != nil {
 		http.Error(w, "Failed to get original 720p video url", http.StatusInternalServerError)
@@ -58,7 +58,7 @@ func makeReel(w http.ResponseWriter, r *http.Request) {
 		OriginalVideoUrl: original720pVideoUrl,
 		Layers:           layers,
 		LayersJSONPath:   layersPath,
-		VideoName:        "reel-output",
+		VideoName:        uuid.NewString(),
 		Cb: func(progress int, msg string) {
 			sendChunk(w, flusher, msg, progress)
 		},
@@ -69,7 +69,7 @@ func makeReel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, "Reel url: %s", reelUrl)
+	fmt.Fprint(w, reelUrl)
 
 }
 

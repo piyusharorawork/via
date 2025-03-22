@@ -4,12 +4,18 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"os"
 	"os/exec"
 )
 
+type StreamCommandInput struct {
+	Cmd      *exec.Cmd
+	Callback func(string)
+}
+
 // https://chatgpt.com/c/67c3d0c9-e2a0-8006-a7c7-0dd4a428ab79
-func StreamCommand(cmd *exec.Cmd) error {
+func StreamCommand(input StreamCommandInput) error {
+	cmd := input.Cmd
+
 	// Get stdout and stderr pipes
 	stdoutPipe, err := cmd.StdoutPipe()
 	if err != nil {
@@ -27,8 +33,8 @@ func StreamCommand(cmd *exec.Cmd) error {
 	}
 
 	// Create goroutines to read stdout and stderr
-	go streamOutput(stdoutPipe, os.Stdout) // Print stdout to console
-	go streamOutput(stderrPipe, os.Stderr) // Print stderr to console
+	go streamOutput(stdoutPipe, input.Callback) // Print stdout to console
+	go streamOutput(stderrPipe, input.Callback) // Print stderr to console
 
 	// Wait for the command to finish
 	if err := cmd.Wait(); err != nil {
@@ -39,9 +45,9 @@ func StreamCommand(cmd *exec.Cmd) error {
 }
 
 // Stream output from reader to writer in real-time
-func streamOutput(reader io.ReadCloser, writer io.Writer) {
-	scanner := bufio.NewScanner(reader)
+func streamOutput(pipe io.ReadCloser, callback func(string)) {
+	scanner := bufio.NewScanner(pipe)
 	for scanner.Scan() {
-		fmt.Fprintln(writer, scanner.Text()) // Print each line as it's received
+		callback(scanner.Text())
 	}
 }

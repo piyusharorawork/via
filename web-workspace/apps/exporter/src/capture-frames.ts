@@ -27,13 +27,29 @@ export const captureFrames = async (input: Options) => {
     await page.goto(pageUrl);
     console.log("loading page ...");
     await page.waitForTimeout(5000);
+    console.log(`progress=5`);
+
+    let completedFrameCount = 0;
 
     for (let frame = frameCount; frame >= 1; frame--) {
       await takeScreenshot({ frame, framesDirPath, page });
+      completedFrameCount++;
+      const progressPercentage = (completedFrameCount * 100) / frameCount;
+      const amount = interpolateAmount(5, 99, progressPercentage);
+      console.log(`progress=${amount}`);
     }
 
     await browser.close();
+    console.log(`progress=${100}`);
   } catch (error) {
     console.error(error);
   }
+};
+
+const interpolateAmount = (
+  low: number,
+  high: number,
+  progressPercentage: number
+): number => {
+  return Math.ceil(low + ((high - low) * progressPercentage) / 100);
 };

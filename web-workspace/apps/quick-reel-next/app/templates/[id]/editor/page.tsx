@@ -14,9 +14,12 @@ export default function EditorPage() {
   const audioUrl = templates[0].videoInfo.audioUrl;
 
   const layers = useSelector(projectStore, (state) => state.context.layers);
+  let editorUrl = useSelector(projectStore, (state) => state.context.editorUrl);
 
-  const editorUrl =
-    "https://test-v1.blr1.digitaloceanspaces.com/temp/reel-output-output.mp4";
+  if (editorUrl === "") {
+    editorUrl =
+      "https://test-v1.blr1.digitaloceanspaces.com/temp/reel-output-output.mp4";
+  }
 
   return (
     <main className="h-full flex flex-col">
