@@ -47,11 +47,13 @@ const PrimaryLayerSegment = (props: PrimaryLayerSegmentProps) => {
       }}
       onClick={() => console.log(props.segment)}
     >
-      <img
-        src={props.segment.PreviewUrl}
-        className="h-full w-auto object-cover block"
-        style={{ maxWidth: "100%", margin: "auto" }}
-      />
+      <div className="flex h-full gap-0.5">
+        <img
+          src={props.segment.PreviewUrl}
+          className="h-full w-auto object-cover block"
+          style={{ maxWidth: "100%", margin: "auto" }}
+        />
+      </div>
     </section>
   );
 };

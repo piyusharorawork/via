@@ -26,7 +26,7 @@ export default function EditorPage() {
         <PlayButton fps={fps} audioUrl={audioUrl} />
       </section>
 
-      <section id="timeline" className="h-48">
+      <section id="timeline" className="h-32">
         <LayersTimeline layers={layers} />
       </section>
     </main>
