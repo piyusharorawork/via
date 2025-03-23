@@ -3,6 +3,7 @@ import { Slider } from "@/components/ui/slider";
 
 type Props = {
   frame: number;
+  frameCount: number;
   onChange: (frame: number) => void;
 };
 
@@ -14,7 +15,7 @@ export const FrameController = (props: Props) => {
           props.onChange(values[0]);
         }}
         min={1}
-        max={422}
+        max={props.frameCount}
       />
       <div className="flex justify-center text-2xl">{props.frame}</div>
     </>

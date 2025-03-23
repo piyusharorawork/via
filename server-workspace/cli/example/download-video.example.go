@@ -1,15 +1,16 @@
 package example
 
 import (
+	"context"
 	"log"
 
 	"quickreel.com/core/downloader"
 )
 
-func DownloadVideoExample() {
+func DownloadVideoExample(ctx context.Context) {
 	err := downloader.DownloadVideo(downloader.DownloadVideoInput{
-		VideoURL:   "https://www.renderforest.com/template/luxurious-hotel-highlights-reel",
-		OutputPath: "/Users/piyusharora/projects/via/assets/sample-videos/cms/luxurious-hotel-highlights-reel-original.mp4",
+		VideoURL:   "https://www.youtube.com/shorts/zOXO1hM4J2g",
+		OutputPath: "/Users/piyusharora/projects/via/assets/sample-videos/10-counter.mp4",
 	})
 
 	if err != nil {

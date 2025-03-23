@@ -12,20 +12,29 @@ export const Ui = () => {
     setVideo(video);
   });
 
+  const FPS = 30;
+  const FRAME_COUNT = 362;
+  const WIDTH = 360;
+  const HEIGHT = 640;
+
   useEffect(() => {
     if (!video) return;
-    video.currentTime = frame / 30;
+    video.currentTime = frame / FPS;
   }, [frame]);
 
   return (
     <>
       <div className="flex justify-center">
-        <video ref={videoRef} className="w-[360px] h-[640px]">
-          <source src="https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/dcb6b4e9-b0b2-4a93-a2df-c977313f6ce1.webm"></source>
+        <video ref={videoRef} className={`w-[${WIDTH}px] h-[${HEIGHT}px]`}>
+          <source src="https://test-v1.blr1.digitaloceanspaces.com/temp/10-counter.mp4"></source>
         </video>
       </div>
       <div className="px-4 mt-8 flex flex-col gap-2">
-        <FrameController onChange={(frame) => setFrame(frame)} frame={frame} />
+        <FrameController
+          onChange={(frame) => setFrame(frame)}
+          frame={frame}
+          frameCount={FRAME_COUNT}
+        />
       </div>
     </>
   );

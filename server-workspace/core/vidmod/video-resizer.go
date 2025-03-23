@@ -1,7 +1,6 @@
 package vidmod
 
 import (
-	"errors"
 	"os/exec"
 	"strconv"
 
@@ -16,14 +15,15 @@ type ResizeVideoInput struct {
 }
 
 func ResizeVideo(input ResizeVideoInput) error {
-	dimensions, found := model.Resolutions[input.Resolution]
-	if !found {
-		return errors.New("resolution not found")
+
+	dimensions, err := model.GetDimensions(input.Resolution)
+	if err != nil {
+		return err
 	}
 
 	cmd := exec.Command("ffmpeg", "-y", "-i", input.VideoPath, "-vf", "scale="+strconv.Itoa(dimensions.Width)+":"+strconv.Itoa(dimensions.Height), "-c:a", "copy", input.OutputPath)
 
-	_, err := util.RunCommand(cmd)
+	_, err = util.RunCommand(cmd)
 
 	if err != nil {
 		return err

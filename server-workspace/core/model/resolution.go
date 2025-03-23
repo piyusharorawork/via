@@ -1,5 +1,9 @@
 package model
 
+import (
+	"errors"
+)
+
 type Resolution string
 
 const (
@@ -71,4 +75,14 @@ var Resolutions = map[Resolution]Dimenstions{
 		Height: 160,
 		Width:  90,
 	},
+}
+
+func GetDimensions(resolution Resolution) (*Dimenstions, error) {
+	dimensions, found := Resolutions[resolution]
+	if !found {
+		return nil, errors.New("resolution not found")
+	}
+
+	return &dimensions, nil
+
 }
