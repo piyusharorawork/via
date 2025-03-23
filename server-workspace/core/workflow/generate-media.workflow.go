@@ -91,7 +91,6 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		return "", err
 	}
 
-	input.Cb(50, "Capturing Those Memories ...")
 	framesDirPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s-frames", input.VideoName)
 
 	exportFramesInput := extracter.ExportFramesInput{
@@ -101,7 +100,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		VideoWidth:    360,
 		VideoHeight:   640,
 		Cb: func(percentage int) {
-			amount := util.InterpolateAmount(61, 90, percentage)
+			amount := util.InterpolateAmount(61, 95, percentage)
 			input.Cb(amount, "Capturing Those Memories ...")
 		},
 	}
@@ -116,7 +115,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 
 	outputPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s-output.mp4", input.VideoName)
 
-	input.Cb(95, "Creating Quick Reel ...")
+	input.Cb(97, "Creating Quick Reel ...")
 	err = extracter.ConvertFramesToVideo(extracter.ConvertFramesToVideoInput{
 		FramesDirPath: framesDirPath,
 		OutputPath:    outputPath,

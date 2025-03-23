@@ -8,7 +8,8 @@ export type Segment = {
   Start: number;
   End: number;
   Content: SegmentContent;
-  PreviewUrl: string;
+  PreviewUrl: string; // TODO Need to remove
+  PreviewUrls: string[];
 };
 
 export type SegmentContent =

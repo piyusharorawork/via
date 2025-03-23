@@ -38,7 +38,13 @@ func GeneratePreview(ctx context.Context, input GeneratePreviewInput) error {
 					return err
 				}
 
-				segment.PreviewUrls = append(segment.PreviewUrls, lowImgPath)
+				lowImgUrl, err := uploadFile(ctx, lowImgPath)
+
+				if err != nil {
+					return err
+				}
+
+				segment.PreviewUrls = append(segment.PreviewUrls, lowImgUrl)
 				continue
 			}
 

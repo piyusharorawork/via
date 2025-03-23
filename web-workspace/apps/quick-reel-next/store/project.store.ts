@@ -16,7 +16,7 @@ const context: Context = {
   layers: [],
   currentSegments: [],
   editorUrl:
-    "https://test-v1.blr1.digitaloceanspaces.com/temp/b2293974-71d9-4e32-8a03-5f05d00dfb66-output.mp4",
+    "https://test-v1.blr1.digitaloceanspaces.com/temp/f6f26fe7-e8c7-40c2-9003-d4389b73feae-output.mp4",
   progressPercentage: 0,
   progressMessage: "",
 };

@@ -36,7 +36,7 @@ func GenerateContentUrl(ctx context.Context, input GenerateContentUrlInput) (str
 
 	defer util.RemoveFile(filePath)
 
-	momentUrl, err := uploadRandomClip(ctx, filePath)
+	momentUrl, err := uploadFile(ctx, filePath)
 
 	if err != nil {
 		return "", err
@@ -82,7 +82,7 @@ func getMomentKind(segment *model.Segment) (moment.MomentKind, error) {
 	return "", errors.New("segment content type not supported")
 }
 
-func uploadRandomClip(ctx context.Context, filePath string) (string, error) {
+func uploadFile(ctx context.Context, filePath string) (string, error) {
 	accessKey := ctx.Value(model.SpaceAccessKey).(string)
 	secretKey := ctx.Value(model.SpaceSecretKey).(string)
 	region := ctx.Value(model.SpaceRegion).(string)
