@@ -62,13 +62,17 @@ func GeneratePreview(ctx context.Context, input GeneratePreviewInput) error {
 				previewPath, err := getVideoPreviewPath(input.PreviewDirPath, frame, segment)
 
 				if err != nil {
+					return err
+				}
+
+				if !util.IsFileExists(previewPath) {
 					// TODO need to fix
-					comlpetedPreviewCount++
-					progressPercentage := (comlpetedPreviewCount * 100) / totalPreviewCount
-					input.Callback(progressPercentage)
 					if input.ShowErrors {
-						fmt.Printf("couldnot get preview path for frame = %v", frame)
+						fmt.Printf("file not found for frame = %v", frame)
 					}
+
+					prevPrevUrl := segment.PreviewUrls[len(segment.PreviewUrls)-1]
+					segment.PreviewUrls = append(segment.PreviewUrls, prevPrevUrl)
 
 					continue
 				}
@@ -76,15 +80,7 @@ func GeneratePreview(ctx context.Context, input GeneratePreviewInput) error {
 				previewUrl, err := uploadPreview(ctx, previewPath)
 
 				if err != nil {
-					// TODO need to fix
-					comlpetedPreviewCount++
-					progressPercentage := (comlpetedPreviewCount * 100) / totalPreviewCount
-					input.Callback(progressPercentage)
-					if input.ShowErrors {
-						fmt.Printf("couldnot get preview url for frame = %v", frame)
-					}
-
-					continue
+					return err
 				}
 
 				segment.PreviewUrls = append(segment.PreviewUrls, previewUrl)
@@ -129,23 +125,17 @@ func getTotalPreviewCount(layers []*model.Layer) int {
 
 // TODO use extra resolution image
 func getVideoPreviewPath(previewDirPath string, frame int, segment *model.Segment) (string, error) {
-	imagePath := fmt.Sprintf("%s/%d.png", previewDirPath, frame)
-	err := extracter.ExtractImage(extracter.ExtractImageInput{
-		VideoPath:  segment.Content.Url,
-		Frame:      frame,
-		OutputPath: imagePath,
-	})
-
-	if err != nil {
-		return "", err
-	}
 
 	lowImgPath := fmt.Sprintf("%s/%d-low.png", previewDirPath, frame)
-	err = imgmod.ResizeImage(imgmod.ResizeImageInput{
-		ImagePath:  imagePath,
-		Resolution: model.BARE_MINIMUM_SD_90p,
+
+	input := extracter.ExtractResolutionImageInput{
+		VideoPath:  segment.Content.Url,
+		Frame:      frame,
 		OutputPath: lowImgPath,
-	})
+		Resolution: model.BARE_MINIMUM_SD_90p,
+	}
+
+	err := extracter.ExtractResolutionImage(input)
 
 	if err != nil {
 		return "", err

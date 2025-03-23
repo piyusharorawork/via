@@ -30,6 +30,7 @@ type GenerateMediaInput struct {
 func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error) {
 	folderName := fmt.Sprintf("temp/workspace-%s", uuid.NewString())
 
+	input.Cb(5, "Processing ...")
 	encodedVideoUrl, err := getLowResolutionEncodedVideoUrl(ctx, input.OriginalVideoUrl, folderName)
 
 	if err != nil {
@@ -50,7 +51,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		Fps:        fps,
 		FrameCount: frameCount,
 		Callback: func(progress int) {
-			amount := util.InterpolateAmount(11, 49, progress)
+			amount := util.InterpolateAmount(11, 40, progress)
 			input.Cb(amount, "Finding Beautiful Moments ...")
 		},
 	})
@@ -71,8 +72,8 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		Layers:         input.Layers,
 		PreviewDirPath: previewDirPath,
 		Callback: func(progress int) {
-			amount := util.InterpolateAmount(12, 50, progress)
-			input.Cb(amount, "Finding Beautiful Moments ...")
+			amount := util.InterpolateAmount(41, 60, progress)
+			input.Cb(amount, "Generating Preview ...")
 		},
 		ShowErrors: true,
 	})
@@ -100,14 +101,13 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 		VideoWidth:    360,
 		VideoHeight:   640,
 		Cb: func(percentage int) {
-			amount := util.InterpolateAmount(50, 90, percentage)
+			amount := util.InterpolateAmount(61, 90, percentage)
 			input.Cb(amount, "Capturing Those Memories ...")
 		},
 	}
 
 	err = extracter.ExportFrames(exportFramesInput)
 
-	input.Cb(90, "Creating Quick Reel ...")
 	if err != nil {
 		return "", err
 	}
@@ -116,6 +116,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 
 	outputPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s-output.mp4", input.VideoName)
 
+	input.Cb(95, "Creating Quick Reel ...")
 	err = extracter.ConvertFramesToVideo(extracter.ConvertFramesToVideoInput{
 		FramesDirPath: framesDirPath,
 		OutputPath:    outputPath,
@@ -130,6 +131,7 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	input.Cb(98, "Finishing ...")
 	exportedVideoUrl, err := upload(ctx, outputPath, "temp")
 
+	input.Cb(100, "Done ...")
 	return exportedVideoUrl, err
 }
 

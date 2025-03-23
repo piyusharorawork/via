@@ -28,6 +28,8 @@ func ExtractClip(input ExtractClipInput) error {
 		"-ss", fmt.Sprintf("%.3f", startTime),
 		"-t", fmt.Sprintf("%.3f", duration),
 		"-c:v", "libx264", "-crf", "23", "-preset", "fast",
+		"-r", fmt.Sprintf("%d", input.Fps),
+		"-vsync", "cfr",
 		input.OutputPath,
 	)
 

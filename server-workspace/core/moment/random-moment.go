@@ -43,7 +43,7 @@ func FindMoment(input FindMomentInput) (*FindMomentOutput, error) {
 		return &FindMomentOutput{Start: randFrame, End: randFrame}, nil
 	}
 
-	randFrame := r.Intn(input.TotalFrames - input.RequiredFrames)
+	randFrame := r.Intn(input.TotalFrames - input.RequiredFrames - 1)
 	return &FindMomentOutput{Start: randFrame, End: randFrame + input.RequiredFrames - 1}, nil
 
 }

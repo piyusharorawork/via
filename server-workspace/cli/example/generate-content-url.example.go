@@ -25,40 +25,23 @@ func GenerateContentUrlExample(ctx context.Context) {
 		panic(err)
 	}
 
-	// input := workflow.GenerateContentUrlInput{
-	// 	VideoPath: videoUrl,
-	// 	Segment: &model.Segment{
-	// 		Start: 1,
-	// 		End:   27,
-	// 		Content: &model.SegmentContent{
-	// 			Type: "video",
-	// 			Region: &model.Region{
-	// 				X:      0,
-	// 				Y:      0,
-	// 				Width:  1,
-	// 				Height: 1,
-	// 			},
-	// 		},
-	// 	},
-	// 	Fps:        fps,
-	// 	FrameCount: frameCount,
-	// }
-
-	input := workflow.GenerateContentUrlInput{
-		VideoPath: videoUrl,
-		Segment: &model.Segment{
-			Start: 58,
-			End:   61,
-			Content: &model.SegmentContent{
-				Type: "image",
-				Region: &model.Region{
-					X:      0,
-					Y:      0,
-					Width:  1,
-					Height: 1,
-				},
+	segment := model.Segment{
+		Start: 1,
+		End:   27,
+		Content: &model.SegmentContent{
+			Type: "video",
+			Region: &model.Region{
+				X:      0,
+				Y:      0,
+				Width:  1,
+				Height: 1,
 			},
 		},
+	}
+
+	input := workflow.GenerateContentUrlInput{
+		VideoPath:  videoUrl,
+		Segment:    &segment,
 		Fps:        fps,
 		FrameCount: frameCount,
 	}
@@ -82,4 +65,11 @@ func GenerateContentUrlExample(ctx context.Context) {
 	fmt.Printf("outFps: %d\n", outFps)
 	fmt.Printf("outFrameCount: %d\n", outFrameCount)
 
+	inFrameCount := segment.End - segment.Start + 1
+
+	if outFrameCount != inFrameCount {
+		panic("frame count mismatch")
+	}
+
+	println("success")
 }

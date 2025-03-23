@@ -138,6 +138,8 @@ func getContentFilePath(videoPath string, moment *moment.FindMomentOutput, conte
 		return "", err
 	}
 
+	defer util.RemoveFile(filePath)
+
 	webmPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.webm", uuid.NewString())
 
 	err = vidmod.ConvertWebm(vidmod.ConvertWebmInput{

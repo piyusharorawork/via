@@ -2,8 +2,8 @@ package example
 
 import (
 	"context"
-	"fmt"
 
+	"github.com/schollz/progressbar/v3"
 	"quickreel.com/core/model"
 	"quickreel.com/core/workflow"
 )
@@ -11,13 +11,16 @@ import (
 func GenerateMediaExample(ctx context.Context) {
 	layers := getLayers()
 
+	bar := progressbar.Default(100)
+
 	input := workflow.GenerateMediaInput{
 		OriginalVideoUrl: "https://test-v1.blr1.digitaloceanspaces.com/temp/food.mp4",
 		Layers:           layers,
-		LayersJSONPath:   "/Users/piyusharora/projects/via/assets/temp/food-layers.json",
+		LayersJSONPath:   "/Users/piyusharora/projects/via/assets/temp/layers.json",
 		VideoName:        "food",
 		Cb: func(progress int, msg string) {
-			fmt.Printf("progress : %d , msg : %s\n", progress, msg)
+			// fmt.Printf("progress : %d , msg : %s\n", progress, msg)
+			bar.Set(progress)
 		},
 	}
 
