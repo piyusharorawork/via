@@ -8,3 +8,7 @@ func StringSliceContains(slice []string, s string) bool {
 	}
 	return false
 }
+
+func StringPtr(s string) *string {
+	return &s
+}

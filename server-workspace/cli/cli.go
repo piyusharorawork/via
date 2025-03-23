@@ -12,5 +12,5 @@ func main() {
 		panic(err)
 	}
 
-	example.ExtractResolutionImageExample(ctx)
+	example.GeneratePreviewExample(ctx)
 }

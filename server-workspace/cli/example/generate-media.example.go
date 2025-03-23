@@ -2,6 +2,7 @@ package example
 
 import (
 	"context"
+	"fmt"
 
 	"quickreel.com/core/model"
 	"quickreel.com/core/workflow"
@@ -11,10 +12,13 @@ func GenerateMediaExample(ctx context.Context) {
 	layers := getLayers()
 
 	input := workflow.GenerateMediaInput{
-		OriginalVideoUrl: "https://test-v1.blr1.digitaloceanspaces.com/temp/taj-mahal-720p.mp4",
+		OriginalVideoUrl: "https://test-v1.blr1.digitaloceanspaces.com/temp/food.mp4",
 		Layers:           layers,
-		LayersJSONPath:   "/Users/piyusharora/projects/via/web-workspace/apps/quick-reel-next/data/layers.json",
-		VideoName:        "tag-mahal",
+		LayersJSONPath:   "/Users/piyusharora/projects/via/assets/temp/food-layers.json",
+		VideoName:        "food",
+		Cb: func(progress int, msg string) {
+			fmt.Printf("progress : %d , msg : %s\n", progress, msg)
+		},
 	}
 
 	url, err := workflow.GenerateMedia(ctx, input)

@@ -1,0 +1,85 @@
+package example
+
+import (
+	"context"
+	"fmt"
+
+	"quickreel.com/core/clipinfo"
+	"quickreel.com/core/model"
+	"quickreel.com/core/workflow"
+)
+
+func GenerateContentUrlExample(ctx context.Context) {
+
+	videoUrl := "https://test-v1.blr1.digitaloceanspaces.com/temp/b2293974-71d9-4e32-8a03-5f05d00dfb66-output.mp4"
+
+	fps, err := clipinfo.GetFPS(videoUrl)
+
+	if err != nil {
+		panic(err)
+	}
+
+	frameCount, err := clipinfo.GetFrameCount(videoUrl)
+
+	if err != nil {
+		panic(err)
+	}
+
+	// input := workflow.GenerateContentUrlInput{
+	// 	VideoPath: videoUrl,
+	// 	Segment: &model.Segment{
+	// 		Start: 1,
+	// 		End:   27,
+	// 		Content: &model.SegmentContent{
+	// 			Type: "video",
+	// 			Region: &model.Region{
+	// 				X:      0,
+	// 				Y:      0,
+	// 				Width:  1,
+	// 				Height: 1,
+	// 			},
+	// 		},
+	// 	},
+	// 	Fps:        fps,
+	// 	FrameCount: frameCount,
+	// }
+
+	input := workflow.GenerateContentUrlInput{
+		VideoPath: videoUrl,
+		Segment: &model.Segment{
+			Start: 58,
+			End:   61,
+			Content: &model.SegmentContent{
+				Type: "image",
+				Region: &model.Region{
+					X:      0,
+					Y:      0,
+					Width:  1,
+					Height: 1,
+				},
+			},
+		},
+		Fps:        fps,
+		FrameCount: frameCount,
+	}
+
+	momentUrl, err := workflow.GenerateContentUrl(ctx, input)
+
+	if err != nil {
+		panic(err)
+	}
+
+	outFps, err := clipinfo.GetFPS(momentUrl)
+	if err != nil {
+		panic(err)
+	}
+
+	outFrameCount, err := clipinfo.GetFrameCount(momentUrl)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("momentUrl: %s\n", momentUrl)
+	fmt.Printf("outFps: %d\n", outFps)
+	fmt.Printf("outFrameCount: %d\n", outFrameCount)
+
+}

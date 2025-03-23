@@ -19,10 +19,9 @@ func GeneratePreviewExample(ctx context.Context) {
 		Layers:         layers,
 		PreviewDirPath: "/Users/piyusharora/projects/via/assets/temp/rishikesh-preview",
 		Callback: func(progress int) {
-			// fmt.Printf("progress: %d\n", progress)
 			bar.Set(progress)
-			// bar.Add(progress)
 		},
+		ShowErrors: true,
 	}
 
 	duration := util.TimeTaken(func() {
@@ -49,7 +48,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/dcb6b4e9-b0b2-4a93-a2df-c977313f6ce1.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/7780f511-7d8e-4077-a545-72cf16f4b89b.webm",
 					},
 				},
 				{
@@ -68,7 +67,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/aae79f0e-2833-4556-8d7f-b443bf6fe72e.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/6ce9dedb-65fc-4ec7-8251-2212f7b61aa1.png",
 					},
 				},
 				{
@@ -80,7 +79,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/99c70f71-6c35-4105-9c3f-bed7e8db3eb2.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/aa095290-e7cb-4b9d-8247-fa2271dece45.png",
 					},
 				},
 				{
@@ -92,7 +91,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/961a3b2a-fbe0-416c-bf73-92e136031780.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/0b199306-5d3c-44ca-89f0-579b4a1e5b57.png",
 					},
 				},
 				{
@@ -104,7 +103,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/1d1acf83-a9e9-4e9a-a943-96c4d9f13cde.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/f19f0c16-d9ff-472e-835b-140c64a853a7.png",
 					},
 				},
 				{
@@ -116,7 +115,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/8e59d103-4353-40d3-b69f-aca580ff3f5f.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/8f1e0565-6a0c-4a56-a0d8-8150726f68ab.png",
 					},
 				},
 				{
@@ -128,7 +127,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/86f859bf-a276-4f2e-a4e3-d740aef2c3f8.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/10766c49-bd9a-49e2-b211-0e97cce18f6a.png",
 					},
 				},
 				{
@@ -140,7 +139,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/dca08a82-162f-43bb-8f1e-fbce0f121339.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/a912a8c2-84ad-4bea-a6b5-4032b9f17aee.png",
 					},
 				},
 				{
@@ -152,7 +151,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/cc9967e4-8afe-4b34-a222-9f84e7db0a90.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/4b9b9f12-890e-481e-bb5c-1779ef98d3a6.png",
 					},
 				},
 				{
@@ -164,7 +163,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/e2a9ba63-5f16-4bcd-8c31-07ac32b13105.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/f98b9051-75b8-4812-88a5-d8b4b3df8aac.png",
 					},
 				},
 				{
@@ -176,7 +175,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/55111db8-85b2-471a-898f-e2313476bdeb.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/41776890-e8f4-4544-b696-727615a81fa8.png",
 					},
 				},
 				{
@@ -188,7 +187,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/d247ca79-c9e2-4e17-898b-931dfa7340b2.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/3b1fbea5-438c-40ac-b703-106d1269e469.png",
 					},
 				},
 				{
@@ -200,7 +199,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/24a794c1-a811-432d-985b-a6dc2c62224f.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/87d418f7-046f-43c6-b82f-d83b5ad9fd06.png",
 					},
 				},
 				{
@@ -212,7 +211,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/63db3f17-1f2c-4729-a788-f6307c724a3e.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/706e3549-6e58-4c12-9ffe-ac36b77f4599.png",
 					},
 				},
 				{
@@ -224,7 +223,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/dd4ffa55-103b-41eb-ad8c-22a0b4c51979.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/7abaf6f8-ca36-4251-a768-b63b5f5f9097.png",
 					},
 				},
 				{
@@ -236,7 +235,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/845d9b2e-ea7d-47a8-9b58-be76579b7eba.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/728ff310-a9ff-4a18-8781-86d59e8aac37.png",
 					},
 				},
 				{
@@ -248,7 +247,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/ecd76f8f-401d-4a9f-a600-3cdac30889cd.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/e9e02dfa-d77f-4f69-bc3c-015aec4087ed.png",
 					},
 				},
 				{
@@ -260,7 +259,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/76bebd61-a9ab-45d3-a99a-d6761c5ba703.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/d7dd8723-1f9a-4c59-866d-50008a0c262e.png",
 					},
 				},
 				{
@@ -272,7 +271,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/0f6d435a-074f-4211-9977-54ee056d801f.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/ddd2140d-9e3f-4e7e-a16b-dd3327262a59.webm",
 					},
 				},
 				{
@@ -284,7 +283,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/e296dec8-77ae-435f-8d24-5caea6de1bfd.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/7c49aaaa-6745-4ae0-b3c4-8c523bb0ede1.webm",
 					},
 				},
 				{
@@ -303,7 +302,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/9e59263b-2533-4052-b049-faf5971d9a2c.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/5af8b6ce-a819-4924-a64d-4bd9797a5492.webm",
 					},
 				},
 				{
@@ -315,7 +314,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/0a277f97-f4d6-4ab7-bc7d-f6b8989f08b0.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/0c8e4b13-2121-43f8-a961-0cbae72afb71.webm",
 					},
 				},
 				{
@@ -327,7 +326,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/3986f252-c3ee-40cb-89b6-1246bb63e5b9.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/d0ba50f4-be1a-48d0-9a02-59e17cb21155.webm",
 					},
 				},
 				{
@@ -339,7 +338,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/23fcfb28-2c01-4b58-862f-84972d984811.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/94ee7a47-2285-485e-94b7-ffc5b01c80d8.webm",
 					},
 				},
 				{
@@ -351,7 +350,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/3692c0cf-710a-4590-80c3-99e19cc9c693.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/5fda20d1-8394-4036-ad17-dd8ae35b6cd5.webm",
 					},
 				},
 				{
@@ -363,7 +362,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/e3fa0795-54d1-43db-96b0-c6c9de256ba6.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/515646e1-c30d-40d9-a945-ef2fb35b558c.webm",
 					},
 				},
 				{
@@ -375,7 +374,7 @@ func getPreviewLayers() []*model.Layer {
 							Width:  1,
 							Height: 1,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/b6ec0d4a-a0cd-4d9c-b27d-0dd55642f84e.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/a6cdb995-cbfd-46dd-abfd-0d4a7eb2c866.webm",
 					},
 				},
 				{
@@ -388,7 +387,7 @@ func getPreviewLayers() []*model.Layer {
 							Height: 0.30,
 							Y:      0.7,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/43838c0b-a1f0-4924-9595-b1c337fb081c.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/7897f8a5-cae0-4210-9664-d2014e0123df.png",
 					},
 				},
 				{
@@ -401,7 +400,7 @@ func getPreviewLayers() []*model.Layer {
 							Height: 0.30,
 							Y:      0.7,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/88869271-1d93-4217-8c81-a6534cd0378a.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/a50c1e33-5df0-4067-a146-b3908370f046.webm",
 					},
 				},
 			},
@@ -425,7 +424,7 @@ func getPreviewLayers() []*model.Layer {
 							Height: 0.30,
 							Y:      0,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/e2a9ba63-5f16-4bcd-8c31-07ac32b13105.png",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/294b1f39-2dd1-45d5-a977-d0656e4c358d.png",
 					},
 				},
 				{
@@ -438,7 +437,7 @@ func getPreviewLayers() []*model.Layer {
 							Height: 0.30,
 							Y:      0,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/fa79b75d-2889-4f09-9df8-5cc35695993a.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/5292d9a5-97c7-4016-a740-7523862dc9e8.webm",
 					},
 				},
 			},
@@ -462,7 +461,7 @@ func getPreviewLayers() []*model.Layer {
 							Height: 0.30,
 							Y:      -0.7,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/fa79b75d-2889-4f09-9df8-5cc35695993a.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/0462c650-f250-4ee0-ab2f-b601041b1b9b.png",
 					},
 				},
 				{
@@ -475,7 +474,7 @@ func getPreviewLayers() []*model.Layer {
 							Height: 0.30,
 							Y:      -0.7,
 						},
-						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/fa79b75d-2889-4f09-9df8-5cc35695993a.webm",
+						Url: "https://test-v1.blr1.digitaloceanspaces.com/temp/8297d10c-6549-492a-81d4-1f6b2093cf5c.webm",
 					},
 				},
 			},

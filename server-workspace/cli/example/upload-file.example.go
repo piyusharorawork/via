@@ -15,7 +15,7 @@ func UploadFileExample(ctx context.Context) {
 	folderPath := "temp"
 
 	input := uploader.UploadFileInput{
-		FilePath:   "/Users/piyusharora/projects/via/assets/temp/10-counter.webm",
+		FilePath:   "/Users/piyusharora/projects/via/assets/sample-videos/food.mp4",
 		SpaceName:  spaceName,
 		Region:     region,
 		AccessKey:  accessKey,

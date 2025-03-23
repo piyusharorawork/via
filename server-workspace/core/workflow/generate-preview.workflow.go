@@ -53,6 +53,7 @@ func GeneratePreview(ctx context.Context, input GeneratePreviewInput) error {
 				// TODO need to fix
 				if input.ShowErrors {
 					fmt.Printf("expectedPreviewCount: %d, actualPreviewCount: %d\n", expectedPreviewCount, actualPreviewCount)
+					fmt.Print(segment.Content.Url)
 				}
 
 			}
@@ -126,6 +127,7 @@ func getTotalPreviewCount(layers []*model.Layer) int {
 	return totalPreviewCount
 }
 
+// TODO use extra resolution image
 func getVideoPreviewPath(previewDirPath string, frame int, segment *model.Segment) (string, error) {
 	imagePath := fmt.Sprintf("%s/%d.png", previewDirPath, frame)
 	err := extracter.ExtractImage(extracter.ExtractImageInput{

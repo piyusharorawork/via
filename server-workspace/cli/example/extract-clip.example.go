@@ -4,10 +4,10 @@ import "quickreel.com/core/extracter"
 
 func ExtractClipExample() {
 	err := extracter.ExtractClip(extracter.ExtractClipInput{
-		VideoPath:  "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-resized.mp4",
-		Start:      379,
-		End:        392,
-		OutputPath: "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-1.mp4",
+		VideoPath:  "https://test-v1.blr1.digitaloceanspaces.com/temp/taj-mahal-720p.mp4",
+		Start:      1,
+		End:        27,
+		OutputPath: "/Users/piyusharora/projects/via/assets/temp/taj-mahal-720p-1-27.mp4",
 		Fps:        30,
 	})
 
