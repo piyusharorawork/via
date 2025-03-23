@@ -19,7 +19,7 @@ type ValidateTransitionInput struct {
 
 func ValidateTransition(ctx context.Context, input ValidateTransitionInput) (string, error) {
 	folderName := fmt.Sprintf("temp/workspace-%s", uuid.NewString())
-	encodedVideoUrl, err := getEncodedVideoUrl(ctx, input.TemplateVideoUrl, folderName)
+	encodedVideoUrl, err := getLowResolutionEncodedVideoUrl(ctx, input.TemplateVideoUrl, folderName)
 
 	if err != nil {
 		return "", err

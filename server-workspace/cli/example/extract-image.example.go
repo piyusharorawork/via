@@ -4,9 +4,9 @@ import "quickreel.com/core/extracter"
 
 func ExtractImageExample() {
 	err := extracter.ExtractImage(extracter.ExtractImageInput{
-		VideoPath:  "/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4",
-		Frame:      200,
-		OutputPath: "/Users/piyusharora/projects/via/assets/temp/hotel-highlight-reel-original-1.png",
+		VideoPath:  "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-cb69af81-109e-4786-97e5-bc156b6811cb/dcb6b4e9-b0b2-4a93-a2df-c977313f6ce1.webm",
+		Frame:      1,
+		OutputPath: "/Users/piyusharora/projects/via/assets/temp/rishikesh-preview/some-image.png",
 	})
 
 	if err != nil {

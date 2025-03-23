@@ -5,10 +5,12 @@ type Layer struct {
 }
 
 type Segment struct {
-	Start      int
-	End        int
-	Content    *SegmentContent
-	PreviewUrl string
+	Start   int
+	End     int
+	Content *SegmentContent
+
+	PreviewUrl  string // TODO need to remove
+	PreviewUrls []string
 }
 
 type SegmentContent struct {

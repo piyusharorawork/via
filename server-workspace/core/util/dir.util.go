@@ -8,3 +8,10 @@ func RemoveDir(dirPath string) error {
 	}
 	return nil
 }
+
+func EnsureDir(dirPath string) error {
+	if _, err := os.Stat(dirPath); os.IsNotExist(err) {
+		return os.MkdirAll(dirPath, os.ModePerm)
+	}
+	return nil
+}

@@ -32,19 +32,19 @@ type GenerateMediaInput struct {
 func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error) {
 	folderName := fmt.Sprintf("temp/workspace-%s", uuid.NewString())
 
-	encodedVideoUrl, err := getEncodedVideoUrl(ctx, input.OriginalVideoUrl, folderName)
+	encodedVideoUrl, err := getLowResolutionEncodedVideoUrl(ctx, input.OriginalVideoUrl, folderName)
 
 	if err != nil {
 		return "", err
 	}
 
-	input.Cb(10, "Finding Beautiful Moments ...")
 	fps, frameCount, err := getVideoInfo(encodedVideoUrl)
 
 	if err != nil {
 		return "", err
 	}
 
+	input.Cb(10, "Finding Beautiful Moments ...")
 	err = populateTransitionMedia(ctx, input.Layers, folderName, encodedVideoUrl, fps, frameCount, func(progressPercentage int) {
 		amount := interpolateAmount(12, 50, progressPercentage)
 		input.Cb(amount, "Finding Beautiful Moments ...")
@@ -53,6 +53,16 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	if err != nil {
 		return "", err
 	}
+
+	previewDirPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s-preview", input.VideoName)
+
+	err = generatePreview(ctx, input.Layers, previewDirPath)
+
+	if err != nil {
+		return "", err
+	}
+
+	defer util.RemoveDir(previewDirPath)
 
 	err = util.SaveArrayToJSON(input.LayersJSONPath, input.Layers)
 
@@ -97,17 +107,17 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	}
 	defer util.RemoveFile(outputPath)
 
-	err = generatePreview(ctx, input.Layers, exportFramesInput.FramesDirPath)
+	// err = generatePreview(ctx, input.Layers, exportFramesInput.FramesDirPath)
 
-	if err != nil {
-		return "", err
-	}
+	// if err != nil {
+	// 	return "", err
+	// }
 
-	err = util.SaveArrayToJSON(input.LayersJSONPath, input.Layers)
+	// err = util.SaveArrayToJSON(input.LayersJSONPath, input.Layers)
 
-	if err != nil {
-		return "", err
-	}
+	// if err != nil {
+	// 	return "", err
+	// }
 
 	input.Cb(98, "Finishing ...")
 	exportedVideoUrl, err := upload(ctx, outputPath, "temp")
@@ -115,11 +125,11 @@ func GenerateMedia(ctx context.Context, input GenerateMediaInput) (string, error
 	return exportedVideoUrl, err
 }
 
-func generatePreview(ctx context.Context, layers []*model.Layer, framesDirPath string) error {
+func generatePreview(ctx context.Context, layers []*model.Layer, previewDirPath string) error {
 	segments := layers[0].Segments
 	for segmentIdx, segment := range segments {
-		imagePath := fmt.Sprintf("%s/%d.png", framesDirPath, segment.Start)
-		outPath := fmt.Sprintf("%s/%d-low.png", framesDirPath, segment.Start)
+		imagePath := fmt.Sprintf("%s/%d.png", previewDirPath, segment.Start)
+		outPath := fmt.Sprintf("%s/%d-low.png", previewDirPath, segment.Start)
 		err := imgmod.ResizeImage(imgmod.ResizeImageInput{
 			ImagePath:  imagePath,
 			Resolution: model.BARE_MINIMUM_SD_90p,
@@ -259,7 +269,7 @@ func getMoment(content *model.SegmentContent, transitionStart int, transitionEnd
 
 }
 
-func getEncodedVideoUrl(ctx context.Context, originalVideoUrl string, folderName string) (string, error) {
+func getLowResolutionEncodedVideoUrl(ctx context.Context, originalVideoUrl string, folderName string) (string, error) {
 
 	// Resize video to 360p
 	resizedVideoPath := fmt.Sprintf("/Users/piyusharora/projects/via/assets/temp/%s.mp4", uuid.New())
