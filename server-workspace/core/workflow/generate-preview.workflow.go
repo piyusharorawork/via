@@ -49,7 +49,12 @@ func GeneratePreview(ctx context.Context, input GeneratePreviewInput) error {
 			}
 
 			expectedPreviewCount := segment.End - segment.Start + 1
-			actualPreviewCount, err := clipinfo.GetFrameCount(segment.Content.Url)
+
+			info := clipinfo.ClipInfo{
+				VideoPath: segment.Content.Url,
+			}
+
+			actualPreviewCount, err := info.GetFrameCount()
 
 			if err != nil {
 				return err

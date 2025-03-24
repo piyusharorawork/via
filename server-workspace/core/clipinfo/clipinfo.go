@@ -2,6 +2,7 @@ package clipinfo
 
 type IClipInfo interface {
 	GetFPS() (int, error)
+	GetFrameCount() (int, error)
 }
 
 type ClipInfo struct {
@@ -12,10 +13,6 @@ func (clipInfo *ClipInfo) GetFPS() (int, error) {
 	return getFPS(clipInfo.VideoPath)
 }
 
-type MockClipInfo struct {
-	fps int
-}
-
-func (clipInfo *MockClipInfo) GetFPS() (int, error) {
-	return clipInfo.fps, nil
+func (clipInfo *ClipInfo) GetFrameCount() (int, error) {
+	return getFrameCount(clipInfo.VideoPath)
 }

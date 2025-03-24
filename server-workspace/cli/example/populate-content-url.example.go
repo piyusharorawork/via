@@ -24,7 +24,7 @@ func PopulateContentUrlExample(ctx context.Context) {
 		panic(err)
 	}
 
-	frameCount, err := clipinfo.GetFrameCount(videoPath)
+	frameCount, err := info.GetFrameCount()
 
 	if err != nil {
 		panic(err)

@@ -23,7 +23,7 @@ func GenerateContentUrlExample(ctx context.Context) {
 		panic(err)
 	}
 
-	frameCount, err := clipinfo.GetFrameCount(videoUrl)
+	frameCount, err := inInfo.GetFrameCount()
 
 	if err != nil {
 		panic(err)
@@ -63,8 +63,11 @@ func GenerateContentUrlExample(ctx context.Context) {
 	if err != nil {
 		panic(err)
 	}
+	info := clipinfo.ClipInfo{
+		VideoPath: momentUrl,
+	}
 
-	outFrameCount, err := clipinfo.GetFrameCount(momentUrl)
+	outFrameCount, err := info.GetFrameCount()
 	if err != nil {
 		panic(err)
 	}

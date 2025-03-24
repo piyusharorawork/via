@@ -22,7 +22,7 @@ func AnalyseVideoExample(ctx context.Context) {
 
 	fmt.Printf("fps: %d\n", fps)
 
-	frameCount, err := clipinfo.GetFrameCount(videoUrl)
+	frameCount, err := info.GetFrameCount()
 
 	if err != nil {
 		panic(err)

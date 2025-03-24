@@ -221,7 +221,7 @@ func getVideoInfo(encodedVideoUrl string) (fps, frameCount int, err error) {
 		return 0, 0, err
 	}
 
-	frameCount, err = clipinfo.GetFrameCount(encodedVideoUrl)
+	frameCount, err = info.GetFrameCount()
 	if err != nil {
 		return 0, 0, err
 	}
