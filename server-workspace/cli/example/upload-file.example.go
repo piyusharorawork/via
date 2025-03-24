@@ -12,10 +12,10 @@ func UploadFileExample(ctx context.Context) {
 	secretKey := ctx.Value(model.SpaceSecretKey).(string)
 	region := ctx.Value(model.SpaceRegion).(string)
 	spaceName := ctx.Value(model.SpaceName).(string)
-	folderPath := "temp"
+	folderPath := "media"
 
 	input := uploader.UploadFileInput{
-		FilePath:   "/Users/piyusharora/projects/via/assets/sample-videos/food.mp4",
+		FilePath:   "/Users/piyusharora/projects/via/assets/sample-videos/media/beach-30fps.mp4",
 		SpaceName:  spaceName,
 		Region:     region,
 		AccessKey:  accessKey,

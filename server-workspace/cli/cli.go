@@ -12,5 +12,5 @@ func main() {
 		panic(err)
 	}
 
-	example.GenerateMediaExample(ctx)
+	example.UploadFileExample(ctx)
 }
