@@ -13,7 +13,11 @@ func GenerateContentUrlExample(ctx context.Context) {
 
 	videoUrl := "https://test-v1.blr1.digitaloceanspaces.com/temp/b2293974-71d9-4e32-8a03-5f05d00dfb66-output.mp4"
 
-	fps, err := clipinfo.GetFPS(videoUrl)
+	inInfo := clipinfo.ClipInfo{
+		VideoPath: videoUrl,
+	}
+
+	fps, err := inInfo.GetFPS()
 
 	if err != nil {
 		panic(err)
@@ -51,8 +55,11 @@ func GenerateContentUrlExample(ctx context.Context) {
 	if err != nil {
 		panic(err)
 	}
+	outInfo := clipinfo.ClipInfo{
+		VideoPath: momentUrl,
+	}
 
-	outFps, err := clipinfo.GetFPS(momentUrl)
+	outFps, err := outInfo.GetFPS()
 	if err != nil {
 		panic(err)
 	}

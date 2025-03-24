@@ -14,7 +14,11 @@ func PopulateContentUrlExample(ctx context.Context) {
 
 	videoPath := "https://test-v1.blr1.digitaloceanspaces.com/temp/b2293974-71d9-4e32-8a03-5f05d00dfb66-output.mp4"
 
-	fps, err := clipinfo.GetFPS(videoPath)
+	info := clipinfo.ClipInfo{
+		VideoPath: videoPath,
+	}
+
+	fps, err := info.GetFPS()
 
 	if err != nil {
 		panic(err)

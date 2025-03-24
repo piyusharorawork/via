@@ -212,7 +212,11 @@ func getLowResolutionEncodedVideoUrl(ctx context.Context, originalVideoUrl strin
 }
 
 func getVideoInfo(encodedVideoUrl string) (fps, frameCount int, err error) {
-	fps, err = clipinfo.GetFPS(encodedVideoUrl)
+	info := clipinfo.ClipInfo{
+		VideoPath: encodedVideoUrl,
+	}
+
+	fps, err = info.GetFPS()
 	if err != nil {
 		return 0, 0, err
 	}

@@ -10,7 +10,11 @@ import (
 func AnalyseVideoExample(ctx context.Context) {
 	videoUrl := "https://test-v1.blr1.digitaloceanspaces.com/temp/10-counter.webm"
 
-	fps, err := clipinfo.GetFPS(videoUrl)
+	info := clipinfo.ClipInfo{
+		VideoPath: videoUrl,
+	}
+
+	fps, err := info.GetFPS()
 
 	if err != nil {
 		panic(err)

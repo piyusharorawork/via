@@ -9,7 +9,7 @@ import (
 	"quickreel.com/core/util"
 )
 
-func GetFPS(videoPath string) (int, error) {
+func getFPS(videoPath string) (int, error) {
 	cmd := exec.Command("ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=r_frame_rate", "-of", "default=noprint_wrappers=1:nokey=1", videoPath)
 	out, err := util.RunCommand(cmd)
 

@@ -27,7 +27,11 @@ func TestGetFPS(t *testing.T) {
 
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-			got, err := GetFPS(tc.videoPath)
+			clipInfo := &ClipInfo{
+				VideoPath: tc.videoPath,
+			}
+
+			got, err := clipInfo.GetFPS()
 			if err != nil {
 				t.Fatalf("GetFPS() error = %v", err)
 				return
