@@ -9,12 +9,7 @@ import (
 	"quickreel.com/core/util"
 )
 
-type GetFrameSizeOutput struct {
-	Width  int
-	Height int
-}
-
-func GetFrameSize(videoPath string) (*GetFrameSizeOutput, error) {
+func getFrameSize(videoPath string) (*FrameSize, error) {
 	cmd := exec.Command("ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "default=noprint_wrappers=1", videoPath)
 
 	cmdOut, err := util.RunCommand(cmd)
@@ -38,10 +33,10 @@ func GetFrameSize(videoPath string) (*GetFrameSizeOutput, error) {
 		return nil, errors.New("width and height not found")
 	}
 
-	output := GetFrameSizeOutput{
+	frameSize := &FrameSize{
 		Width:  width,
 		Height: height,
 	}
 
-	return &output, nil
+	return frameSize, nil
 }

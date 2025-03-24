@@ -3,7 +3,11 @@ package example
 import "quickreel.com/core/clipinfo"
 
 func GetFrameSizeExample() {
-	frameSize, err := clipinfo.GetFrameSize("/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4")
+	info := clipinfo.ClipInfo{
+		VideoPath: "/Users/piyusharora/projects/via/assets/sample-videos/hotel-highlight-reel-original.mp4",
+	}
+
+	frameSize, err := info.GetFrameSize()
 
 	if err != nil {
 		panic(err)

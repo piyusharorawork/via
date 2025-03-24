@@ -3,6 +3,12 @@ package clipinfo
 type IClipInfo interface {
 	GetFPS() (int, error)
 	GetFrameCount() (int, error)
+	GetFrameSize() (*FrameSize, error)
+}
+
+type FrameSize struct {
+	Width  int
+	Height int
 }
 
 type ClipInfo struct {
@@ -15,4 +21,8 @@ func (clipInfo *ClipInfo) GetFPS() (int, error) {
 
 func (clipInfo *ClipInfo) GetFrameCount() (int, error) {
 	return getFrameCount(clipInfo.VideoPath)
+}
+
+func (clipInfo *ClipInfo) GetFrameSize() (*FrameSize, error) {
+	return getFrameSize(clipInfo.VideoPath)
 }

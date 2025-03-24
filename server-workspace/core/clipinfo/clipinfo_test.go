@@ -1,6 +1,9 @@
 package clipinfo
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func TestGetFPS(t *testing.T) {
 	tt := []struct {
@@ -69,12 +72,56 @@ func TestGetFrameCount(t *testing.T) {
 
 			got, err := clipInfo.GetFrameCount()
 			if err != nil {
-				t.Fatalf("GetFPS() error = %v", err)
+				t.Fatalf("GetFrameCount() error = %v", err)
 				return
 			}
 			if got != tc.want {
-				t.Fatalf("GetFPS() = %v, want %v", got, tc.want)
+				t.Fatalf("GetFrameCount() = %v, want %v", got, tc.want)
 			}
+		})
+	}
+}
+
+func TestGetFrameSize(t *testing.T) {
+	tt := []struct {
+		name      string
+		videoPath string
+		want      *FrameSize
+	}{
+		{
+			name:      "480p Landscape Frame Size ",
+			videoPath: "https://test-v1.blr1.digitaloceanspaces.com/media/big-buck-bunny-480p-30sec.mp4",
+			want: &FrameSize{
+				Width:  854,
+				Height: 480,
+			},
+		},
+		{
+			name:      "1080p Landscape Frame Size ",
+			videoPath: "https://test-v1.blr1.digitaloceanspaces.com/media/big-buck-bunny-1080p-30sec.mp4",
+			want: &FrameSize{
+				Width:  1920,
+				Height: 1080,
+			},
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			clipInfo := &ClipInfo{
+				VideoPath: tc.videoPath,
+			}
+
+			got, err := clipInfo.GetFrameSize()
+			if err != nil {
+				t.Fatalf("GetFrameSize() error = %v", err)
+				return
+			}
+
+			if !reflect.DeepEqual(got, tc.want) {
+				t.Fatalf("GetFrameSize() = %v, want %v", got, tc.want)
+			}
+
 		})
 	}
 }
