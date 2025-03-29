@@ -12,3 +12,4 @@ __debug_bin*
 .DS_Store
 out
 __logs
+bin

@@ -13,7 +13,7 @@ export const showClipInfo = async (viaCliPath: string) => {
 
   const args = ["clip-info", "-v", videoPath];
 
-  exec(viaCliPath + " " + args.join(" "), async (error, stdout, stderr) => {
+  exec(`${viaCliPath} ` + args.join(" "), async (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);
       return;

@@ -1,11 +1,12 @@
 import * as vscode from "vscode";
 import { showClipInfo } from "./show-clip-info";
+import { getBinPath } from "./path";
+import { join } from "path";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "via" is now active!');
 
-  const viaCliPath =
-    "/Users/piyusharora/projects/via/server-workspace/temp/via-cli";
+  const viaCliPath = join(getBinPath(), "via-cli");
 
   const disposable = vscode.commands.registerCommand(
     "via.show-clip-info",
