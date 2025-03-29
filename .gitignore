@@ -10,3 +10,5 @@ temp
 .vscode
 __debug_bin*
 .DS_Store
+out
+__logs

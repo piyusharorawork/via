@@ -1,16 +1,16 @@
 package main
 
-import (
-	"quickreel.com/cli/example"
-)
+import "quickreel.com/cli/cmd"
 
 func main() {
 
-	ctx, err := createCtx()
+	cmd.Execute()
 
-	if err != nil {
-		panic(err)
-	}
+	// ctx, err := createCtx()
 
-	example.UploadFileExample(ctx)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	// example.UploadFileExample(ctx)
 }
