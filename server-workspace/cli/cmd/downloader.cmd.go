@@ -7,7 +7,6 @@ import (
 	clicontext "quickreel.com/cli/ctx"
 	"quickreel.com/cli/util"
 	"quickreel.com/core/downloader"
-	"quickreel.com/core/model"
 )
 
 type DownloadVideoOutput struct {
@@ -28,14 +27,12 @@ var downloaderCmd = &cobra.Command{
 			panic(err)
 		}
 
-		filePath, err := saveVideoFile(videoUrl, outDir, func(percentage int) {
-			printOutput(percentage, "")
+		err = saveVideoFile(videoUrl, outDir, func(percentage int, filePath string) {
+			printOutput(percentage, filePath)
 		})
 		if err != nil {
 			panic(err)
 		}
-
-		printOutput(100, filePath)
 
 	},
 }
@@ -52,7 +49,7 @@ func printOutput(percentage int, videoPath string) {
 	fmt.Println(json)
 }
 
-func saveVideoFile(videoUrl string, outDir string, callback model.ProgressCallback) (string, error) {
+func saveVideoFile(videoUrl string, outDir string, callback downloader.DownloaderCallback) error {
 	downloader := &downloader.Downloader{
 		VideoUrl: videoUrl,
 		OutDir:   outDir,
@@ -62,15 +59,15 @@ func saveVideoFile(videoUrl string, outDir string, callback model.ProgressCallba
 	ctx, err := clicontext.CreateCtx()
 
 	if err != nil {
-		return "", err
+		return err
 	}
 
-	filePath, err := downloader.DownloadVideo(ctx)
+	err = downloader.DownloadVideo(ctx)
 	if err != nil {
-		return "", err
+		return err
 	}
 
-	return filePath, nil
+	return nil
 }
 
 func init() {

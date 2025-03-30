@@ -15,6 +15,8 @@ export const downloadVideo = async (viaCliPath: string) => {
     return;
   }
 
+  let videoPath = "";
+
   const nowPath = getNowDirPath();
 
   const args = ["download-video", "-v", videoUrl, "-o", nowPath];
@@ -24,10 +26,12 @@ export const downloadVideo = async (viaCliPath: string) => {
       YT_DLP_CLI_PATH: YT_DLP_CLI_PATH,
     },
   });
-  // Working
+
   child.stdout.on("data", (data) => {
     const text = data.toString();
-    console.log(text);
+    const obj = JSON.parse(text) as { progress: number; videoPath: string };
+    console.log(obj);
+    videoPath = obj.videoPath;
   });
 
   child.stderr.on("data", (data) => {
@@ -35,8 +39,13 @@ export const downloadVideo = async (viaCliPath: string) => {
     console.error(text);
   });
 
-  child.on("close", (code) => {
-    console.log(`child process exited with code ${code}`);
+  child.on("close", async (code) => {
+    if (code !== 0) {
+      return;
+    }
+    console.log(videoPath);
+    // const openPath = vscode.Uri.file(videoPath);
+    // await vscode.commands.executeCommand("vscode.open", openPath);
   });
 
   // await vscode.window.withProgress(

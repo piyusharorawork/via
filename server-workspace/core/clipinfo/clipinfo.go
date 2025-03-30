@@ -1,9 +1,11 @@
 package clipinfo
 
+import "context"
+
 type IClipInfo interface {
-	GetFPS() (int, error)
-	GetFrameCount() (int, error)
-	GetFrameSize() (*FrameSize, error)
+	GetFPS(ctx context.Context) (int, error)
+	GetFrameCount(ctx context.Context) (int, error)
+	GetFrameSize(ctx context.Context) (*FrameSize, error)
 }
 
 type FrameSize struct {
@@ -15,14 +17,14 @@ type ClipInfo struct {
 	VideoPath string
 }
 
-func (clipInfo *ClipInfo) GetFPS() (int, error) {
-	return getFPS(clipInfo.VideoPath)
+func (clipInfo *ClipInfo) GetFPS(ctx context.Context) (int, error) {
+	return getFPS(ctx, clipInfo.VideoPath)
 }
 
-func (clipInfo *ClipInfo) GetFrameCount() (int, error) {
-	return getFrameCount(clipInfo.VideoPath)
+func (clipInfo *ClipInfo) GetFrameCount(ctx context.Context) (int, error) {
+	return getFrameCount(ctx, clipInfo.VideoPath)
 }
 
-func (clipInfo *ClipInfo) GetFrameSize() (*FrameSize, error) {
-	return getFrameSize(clipInfo.VideoPath)
+func (clipInfo *ClipInfo) GetFrameSize(ctx context.Context) (*FrameSize, error) {
+	return getFrameSize(ctx, clipInfo.VideoPath)
 }

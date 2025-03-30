@@ -1,9 +1,14 @@
 package model
 
+/*
+ContextKey is a type alias for string
+Must be defined to avoid collision
+*/
 type ContextKey string
 
 const (
-	YtDlpCliPath   ContextKey = "ytDlpCliPath"
+	FFProbePath    ContextKey = "FF_PROBE_PATH"
+	YtDlpCliPath   ContextKey = "YT_DLP_CLI_PATH"
 	SpaceAccessKey ContextKey = "accessKey"
 	SpaceSecretKey ContextKey = "secretKey"
 	SpaceRegion    ContextKey = "region"

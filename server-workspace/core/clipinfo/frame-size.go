@@ -1,16 +1,23 @@
 package clipinfo
 
 import (
+	"context"
 	"errors"
 	"os/exec"
 	"strconv"
 	"strings"
 
+	"quickreel.com/core/model"
 	"quickreel.com/core/util"
 )
 
-func getFrameSize(videoPath string) (*FrameSize, error) {
-	cmd := exec.Command("ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "default=noprint_wrappers=1", videoPath)
+func getFrameSize(ctx context.Context, videoPath string) (*FrameSize, error) {
+	ffProbePath, ok := ctx.Value(model.FFProbePath).(string)
+	if !ok {
+		return nil, errors.New("no ffprobe path provided")
+	}
+
+	cmd := exec.Command(ffProbePath, "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "default=noprint_wrappers=1", videoPath)
 
 	cmdOut, err := util.RunCommand(cmd)
 	if err != nil {

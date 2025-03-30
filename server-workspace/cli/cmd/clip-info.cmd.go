@@ -1,11 +1,13 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"os"
 
 	"github.com/spf13/cobra"
+	clicontext "quickreel.com/cli/ctx"
 	"quickreel.com/cli/util"
 	"quickreel.com/core/clipinfo"
 )
@@ -35,25 +37,31 @@ var clipInfoCmd = &cobra.Command{
 			VideoPath: videoPath,
 		}
 
-		err = printClipInfo(clipInfo, os.Stdout)
+		ctx, err := clicontext.CreateCtx()
+
+		if err != nil {
+			panic(err)
+		}
+
+		err = printClipInfo(ctx, clipInfo, os.Stdout)
 		if err != nil {
 			panic(err)
 		}
 	},
 }
 
-func printClipInfo(clipInfo clipinfo.IClipInfo, out io.Writer) error {
-	fps, err := clipInfo.GetFPS()
+func printClipInfo(ctx context.Context, clipInfo clipinfo.IClipInfo, out io.Writer) error {
+	fps, err := clipInfo.GetFPS(ctx)
 	if err != nil {
 		return err
 	}
 
-	frameCount, err := clipInfo.GetFrameCount()
+	frameCount, err := clipInfo.GetFrameCount(ctx)
 	if err != nil {
 		return err
 	}
 
-	frameSize, err := clipInfo.GetFrameSize()
+	frameSize, err := clipInfo.GetFrameSize(ctx)
 	if err != nil {
 		return err
 	}

@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"bytes"
+	"context"
 	"testing"
 
 	"quickreel.com/cli/util"
@@ -32,7 +33,8 @@ func TestPrintClipInfo(t *testing.T) {
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
 			buffer := &bytes.Buffer{}
-			err := printClipInfo(tc.clipInfo, buffer)
+			ctx := getTestContext()
+			err := printClipInfo(ctx, tc.clipInfo, buffer)
 			if (err != nil) != tc.wantErr {
 				t.Errorf("printClipInfo() error = %v, wantErr %v", err, tc.wantErr)
 				return
@@ -45,4 +47,9 @@ func TestPrintClipInfo(t *testing.T) {
 		})
 	}
 
+}
+
+func getTestContext() context.Context {
+	ctx := context.Background()
+	return ctx
 }

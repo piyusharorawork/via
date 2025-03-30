@@ -1,16 +1,27 @@
 package clipinfo
 
 import (
+	"context"
 	"errors"
 	"os/exec"
 	"strconv"
 	"strings"
 
+	"quickreel.com/core/model"
 	"quickreel.com/core/util"
 )
 
-func getFPS(videoPath string) (int, error) {
-	cmd := exec.Command("ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=r_frame_rate", "-of", "default=noprint_wrappers=1:nokey=1", videoPath)
+const (
+	NO_FFPROBE_PATH_ERROR = "no ffprobe path provided"
+)
+
+func getFPS(ctx context.Context, videoPath string) (int, error) {
+	ffProbePath, ok := ctx.Value(model.FFProbePath).(string)
+	if !ok {
+		return 0, errors.New(NO_FFPROBE_PATH_ERROR)
+	}
+
+	cmd := exec.Command(ffProbePath, "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=r_frame_rate", "-of", "default=noprint_wrappers=1:nokey=1", videoPath)
 	out, err := util.RunCommand(cmd)
 
 	if err != nil {

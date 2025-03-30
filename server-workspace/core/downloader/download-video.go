@@ -19,35 +19,36 @@ const (
 type DownloadVideoInput struct {
 	VideoURL string
 	OutDir   string
-	Callback model.ProgressCallback
+	Callback DownloaderCallback
 }
 
-func downloadVideo(ctx context.Context, input DownloadVideoInput) (string, error) {
+func downloadVideo(ctx context.Context, input DownloadVideoInput) error {
 	cliPath, ok := ctx.Value(model.YtDlpCliPath).(string)
 	if !ok {
-		return "", errors.New(NO_CLI_PATH_ERROR)
+		return errors.New(NO_CLI_PATH_ERROR)
 	}
 
 	outFilePath := input.OutDir + "/" + uuid.New().String()
 
 	cmd := exec.Command(cliPath, "-o", outFilePath, input.VideoURL)
 
+	// final file path with extension
 	outFile := ""
 
 	err := util.StreamCommand(util.StreamCommandInput{
 		Cmd: cmd,
 		Callback: func(text string) {
 			if strings.Contains(text, "Downloading") {
-				input.Callback(5)
+				input.Callback(5, outFile)
 			}
 
 			if strings.Contains(text, "Deleting") {
-				input.Callback(100)
+				input.Callback(100, outFile)
 			}
 
 			if strings.Contains(text, "[download]") && strings.Contains(text, "%") {
 				percentage := getDownloadPercent(text)
-				input.Callback(percentage)
+				input.Callback(percentage, outFile)
 			}
 
 			if strings.Contains(text, "[Merger]") {
@@ -57,7 +58,7 @@ func downloadVideo(ctx context.Context, input DownloadVideoInput) (string, error
 		},
 	})
 
-	return outFile, err
+	return err
 
 }
 
