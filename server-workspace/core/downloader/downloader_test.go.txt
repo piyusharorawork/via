@@ -1,0 +1,54 @@
+package downloader
+
+import (
+	"errors"
+	"testing"
+
+	"quickreel.com/core/util"
+)
+
+
+
+func TestDownloadVideo(t *testing.T) {
+	tt := []struct {
+		name       string
+		cliPath    string
+		videoUrl   string
+		outputPath string
+		wantErr    error
+	}{
+		{
+			name:       "when no clip path provided",
+			videoUrl:   "http://youtube.com/watch?v=MvsAesQ-4zA",
+			outputPath: "./temp/1-sec.mp4",
+			wantErr:    errors.New("error: no cli path provided"),
+		},
+		{
+			name:       "success",
+			cliPath:    "/Users/piyusharora/projects/via/bin/yt-dlp", // TODO need to fix this
+			videoUrl:   "http://youtube.com/watch?v=MvsAesQ-4zA",
+			outputPath: "./temp/1-sec.mp4",
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			downloader := &Downloader{
+				VideoUrl:   tc.videoUrl,
+				OutputPath: tc.outputPath,
+			}
+
+			err := downloader.DownloadVideo()
+
+			if err.Error() != tc.wantErr.Error() {
+				t.Errorf("downloadVideo() error = %v, wantErr %v", err, tc.wantErr)
+				return
+			}
+
+			if err == nil && !util.IsFileExists(tc.outputPath) {
+				t.Errorf("no file found at %s", tc.outputPath)
+				return
+			}
+		})
+	}
+}

@@ -12,6 +12,10 @@
       {
         "command": "via.show-clip-info",
         "title": "show-clip-info"
+      },
+      {
+        "command": "via.download-video",
+        "title": "download-video"
       }
     ]
   },

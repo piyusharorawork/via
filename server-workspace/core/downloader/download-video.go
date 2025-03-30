@@ -1,22 +1,91 @@
 package downloader
 
 import (
+	"context"
+	"errors"
 	"os/exec"
+	"strconv"
+	"strings"
 
+	"github.com/google/uuid"
+	"quickreel.com/core/model"
 	"quickreel.com/core/util"
 )
 
+const (
+	NO_CLI_PATH_ERROR = "no cli path provided"
+)
+
 type DownloadVideoInput struct {
-	VideoURL   string
-	OutputPath string
+	VideoURL string
+	OutDir   string
+	Callback model.ProgressCallback
 }
 
-func DownloadVideo(input DownloadVideoInput) error {
-	cmd := exec.Command("yt-dlp_macos", "-f", "mp4", "-o", input.OutputPath, input.VideoURL)
-	_, err := util.RunCommand(cmd)
-	if err != nil {
-		return err
+func downloadVideo(ctx context.Context, input DownloadVideoInput) (string, error) {
+	cliPath, ok := ctx.Value(model.YtDlpCliPath).(string)
+	if !ok {
+		return "", errors.New(NO_CLI_PATH_ERROR)
 	}
 
-	return nil
+	outFilePath := input.OutDir + "/" + uuid.New().String()
+
+	cmd := exec.Command(cliPath, "-o", outFilePath, input.VideoURL)
+
+	outFile := ""
+
+	err := util.StreamCommand(util.StreamCommandInput{
+		Cmd: cmd,
+		Callback: func(text string) {
+			if strings.Contains(text, "Downloading") {
+				input.Callback(5)
+			}
+
+			if strings.Contains(text, "Deleting") {
+				input.Callback(100)
+			}
+
+			if strings.Contains(text, "[download]") && strings.Contains(text, "%") {
+				percentage := getDownloadPercent(text)
+				input.Callback(percentage)
+			}
+
+			if strings.Contains(text, "[Merger]") {
+				outFile = getOutFileName(text)
+			}
+
+		},
+	})
+
+	return outFile, err
+
+}
+
+func getDownloadPercent(text string) int {
+	words := strings.Split(text, " ")
+	for _, word := range words {
+		if strings.Contains(word, "%") {
+			valStr := strings.Replace(word, "%", "", -1)
+			num, err := strconv.ParseFloat(valStr, 64)
+
+			if err != nil {
+				return 5
+			}
+
+			return util.InterpolateAmount(10, 99, int(num))
+
+		}
+	}
+	return 5
+}
+
+func getOutFileName(text string) string {
+	words := strings.Split(text, " ")
+	for _, word := range words {
+		if strings.Contains(word, ".webm") || strings.Contains(word, ".mp4") {
+			word = strings.Replace(word, "\"", "", -1)
+			return word
+		}
+	}
+	return ""
 }

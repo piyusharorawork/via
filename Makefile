@@ -6,4 +6,10 @@ build-cli:
 .PHONY: build-extention
 build-extention:
 	@echo "Building extension..."
-	cd extension && pnpm i && pnpm compile
+	cd extension && pnpm compile
+
+.PHONY: all
+all:
+	@echo "Building all..."
+	make build-cli
+	make build-extention

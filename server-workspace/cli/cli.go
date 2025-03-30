@@ -6,11 +6,4 @@ func main() {
 
 	cmd.Execute()
 
-	// ctx, err := createCtx()
-
-	// if err != nil {
-	// 	panic(err)
-	// }
-
-	// example.UploadFileExample(ctx)
 }
