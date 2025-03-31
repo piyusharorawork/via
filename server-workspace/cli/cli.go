@@ -4,6 +4,7 @@ import "quickreel.com/cli/cmd"
 
 func main() {
 
-	cmd.Execute()
+	 cmd.Execute()
 
+	 
 }

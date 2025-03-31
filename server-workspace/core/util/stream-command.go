@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os/exec"
+	"sync"
 )
 
 type StreamCommandInput struct {
@@ -12,7 +13,6 @@ type StreamCommandInput struct {
 	Callback func(string)
 }
 
-// https://chatgpt.com/c/67c3d0c9-e2a0-8006-a7c7-0dd4a428ab79
 func StreamCommand(input StreamCommandInput) error {
 	cmd := input.Cmd
 
@@ -32,11 +32,24 @@ func StreamCommand(input StreamCommandInput) error {
 		return fmt.Errorf("failed to start command: %w", err)
 	}
 
-	// Create goroutines to read stdout and stderr
-	go streamOutput(stdoutPipe, input.Callback) // Print stdout to console
-	go streamOutput(stderrPipe, input.Callback) // Print stderr to console
+	// Use WaitGroup to ensure both streams are fully read
+	var wg sync.WaitGroup
+	wg.Add(2)
 
-	// Wait for the command to finish
+	go func() {
+		defer wg.Done()
+		streamOutput(stdoutPipe, input.Callback)
+	}()
+
+	go func() {
+		defer wg.Done()
+		streamOutput(stderrPipe, input.Callback)
+	}()
+
+	// Wait for both streams to be read completely
+	wg.Wait()
+
+	// Wait for command to finish execution
 	if err := cmd.Wait(); err != nil {
 		return fmt.Errorf("command execution failed: %w", err)
 	}
@@ -49,5 +62,8 @@ func streamOutput(pipe io.ReadCloser, callback func(string)) {
 	scanner := bufio.NewScanner(pipe)
 	for scanner.Scan() {
 		callback(scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		callback(fmt.Sprintf("error reading output: %v", err))
 	}
 }

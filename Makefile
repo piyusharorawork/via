@@ -18,8 +18,16 @@ test-cli:
 	@echo "Testing cli..."
 	cd server-workspace && go test -count=5 ./cli/... 
 
-.PHONY: all
-all:
+.PHONY: build-all
+build-all:
 	@echo "Building all..."
 	make build-cli
 	make build-extention
+
+.PHONY: test-all
+test-all:
+	@echo "Testing all..."
+	make test-core
+	make test-cli
+
+

@@ -2,25 +2,28 @@ package downloader
 
 import (
 	"context"
+
+	"quickreel.com/core/model"
 )
 
 type IDownloader interface {
-	DownloadVideo()  error
+	DownloadVideo(ctx context.Context)  error
 }
 
-type DownloaderCallback func(int, string)
+
 
 type Downloader struct {
-	CliPath  string
-	VideoUrl string
-	OutDir   string
-	Callback DownloaderCallback
+	WebsiteUrl string
+	OutputDirPath string
+	OutputFileName string
+	Callback model.ProgressCallback
 }
 
 func (downloader *Downloader) DownloadVideo(ctx context.Context) error {
 	input := DownloadVideoInput{
-		VideoURL: downloader.VideoUrl,
-		OutDir:   downloader.OutDir,
+		WebsiteUrl: downloader.WebsiteUrl,
+		OutputDir: downloader.OutputDirPath,
+		OutputFileName: downloader.OutputFileName,
 		Callback: downloader.Callback,
 	}
 	return downloadVideo(ctx, input)
