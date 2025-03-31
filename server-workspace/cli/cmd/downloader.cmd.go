@@ -14,6 +14,13 @@ type DownloadVideoOutput struct {
 	VideoPath string `json:"videoPath"`
 }
 
+func init() {
+	rootCmd.AddCommand(downloaderCmd)
+	downloaderCmd.Flags().StringP("video-url", "v", "", "Video Url")
+	downloaderCmd.Flags().StringP("out-dir", "o", "", "Output Directory")
+}
+
+
 var downloaderCmd = &cobra.Command{
 	Use:   "download-video",
 	Short: "Download Video",
@@ -70,8 +77,3 @@ func saveVideoFile(videoUrl string, outDir string, callback downloader.Downloade
 	return nil
 }
 
-func init() {
-	rootCmd.AddCommand(downloaderCmd)
-	downloaderCmd.Flags().StringP("video-url", "v", "", "Video Url")
-	downloaderCmd.Flags().StringP("out-dir", "o", "", "Output Directory")
-}

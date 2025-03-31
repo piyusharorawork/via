@@ -5,7 +5,7 @@ import (
 )
 
 type IDownloader interface {
-	DownloadVideo() (string, error)
+	DownloadVideo()  error
 }
 
 type DownloaderCallback func(int, string)

@@ -1,5 +1,11 @@
 # via
 
+## TODO
+
+- Download video core with tests
+- Download video cli with tests
+- Download video extension
+
 ## PROCESS
 
 - user uploads original video (https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-sample.mp4)

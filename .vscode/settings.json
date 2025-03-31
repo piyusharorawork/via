@@ -11,5 +11,6 @@
   "typescript.tsc.autoDetect": "off",
   "files.readonlyInclude": {
     "__logs/**": true
-  }
+  },
+  "cSpell.words": ["FFPROBE"]
 }

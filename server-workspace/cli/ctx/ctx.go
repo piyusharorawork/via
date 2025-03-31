@@ -16,7 +16,9 @@ func CreateCtx() (context.Context, error) {
 
 	envs := map[interface{}]string{
 		model.FFProbePath:  os.Getenv("FF_PROBE_PATH"),
+		model.FFMpegPath:  os.Getenv("FFMPEG_PATH"),
 		model.YtDlpCliPath: os.Getenv("YT_DLP_CLI_PATH"),
+
 	}
 
 	for key, val := range envs {
