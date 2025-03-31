@@ -9,3 +9,9 @@
   - Frames per second (FPS)
   - Frame count
   - Resolution
+
+### Download Video
+
+- **Command**: `download-video`
+- **Description**: Download video from website containing video:
+  - Preview Mp4 inside vscode
