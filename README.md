@@ -2,6 +2,10 @@
 
 ## TODO
 
+- uploader interface core
+- uploader file via cli
+- upload file via extension
+
 ## PROCESS
 
 - user uploads original video (https://test-v1.blr1.digitaloceanspaces.com/temp/rishikesh-sample.mp4)
