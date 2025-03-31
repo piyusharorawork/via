@@ -16,6 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
     "via.download-video",
     async () => {
       await viaOperations.downloadVideo();
+      console.log("done");
     }
   );
 

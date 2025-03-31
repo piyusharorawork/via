@@ -3,6 +3,7 @@ package downloader
 import (
 	"context"
 	"errors"
+	"fmt"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -28,32 +29,32 @@ func downloadVideo(ctx context.Context, input DownloadVideoInput) error {
 		return errors.New(NO_CLI_PATH_ERROR)
 	}
 
-	outFilePath := input.OutDir + "/" + uuid.New().String()
+	outFilePath := fmt.Sprintf("%s/%s.wav",input.OutDir,uuid.New().String())
 
 	cmd := exec.Command(cliPath, "-o", outFilePath, input.VideoURL)
 
-	// final file path with extension
-	outFile := ""
+	
+	
 
 	err := util.StreamCommand(util.StreamCommandInput{
 		Cmd: cmd,
 		Callback: func(text string) {
 			if strings.Contains(text, "Downloading") {
-				input.Callback(5, outFile)
+				input.Callback(5, outFilePath)
 			}
 
 			if strings.Contains(text, "Deleting") {
-				input.Callback(100, outFile)
+				input.Callback(100, outFilePath)
 			}
 
 			if strings.Contains(text, "[download]") && strings.Contains(text, "%") {
 				percentage := getDownloadPercent(text)
-				input.Callback(percentage, outFile)
+				input.Callback(percentage, outFilePath)
 			}
 
-			if strings.Contains(text, "[Merger]") {
-				outFile = getOutFileName(text)
-			}
+			// if strings.Contains(text, "[Merger]") {
+			// 	outFile = getOutFileName(text)
+			// }
 
 		},
 	})

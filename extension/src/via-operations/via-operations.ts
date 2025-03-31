@@ -2,6 +2,7 @@ import { spawn } from "child_process";
 import * as vscode from "vscode";
 import { saveJsonFile } from "../keeper/keeper";
 import { getNowDirPath } from "../keeper/now";
+import { downloadVideo } from "./download-video.operation";
 
 const VIA_CLI_PATH = "/Users/piyusharora/projects/via/bin/via-cli";
 const YT_DLP_CLI_PATH = "/Users/piyusharora/projects/via/bin/yt-dlp";
@@ -53,44 +54,5 @@ export const viaOperations = {
     child.on("close", async (code) => {});
   },
 
-  downloadVideo: async () => {
-    const videoUrl = await vscode.window.showInputBox({
-      placeHolder: "Enter video url",
-    });
-
-    if (!videoUrl) {
-      return;
-    }
-
-    const outDir = getNowDirPath();
-
-    const args = ["download-video", "-v", videoUrl, "-o", outDir];
-
-    console.log(args);
-
-    const child = spawn(VIA_CLI_PATH, args, {
-      env: {
-        YT_DLP_CLI_PATH: YT_DLP_CLI_PATH,
-        FF_PROBE_PATH: FF_PROBE_PATH,
-      },
-    });
-
-    child.stdout.on("data", async (data) => {
-      const text = data.toString();
-      const output = JSON.parse(text) as DownloadVideoOutput;
-      console.log(output);
-      //   const path = saveJsonFile(clipInfo, "clip-info.json");
-      //   const doc = await vscode.workspace.openTextDocument(path);
-      //   await vscode.window.showTextDocument(doc);
-    });
-
-    child.stderr.on("data", (data) => {
-      const text = data.toString();
-      console.error(text);
-    });
-
-    child.on("close", async (code) => {
-      console.log("closed" + code);
-    });
-  },
+  downloadVideo,
 };

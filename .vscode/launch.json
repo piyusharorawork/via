@@ -18,7 +18,7 @@
         "-v",
         "https://www.youtube.com/shorts/zwMEhBq4kYM",
         "-o",
-        "/Users/piyusharora/projects/via/__logs/30-03-2025/11:52:27_pm"
+        "${workspaceFolder}/temp"
       ],
       "env": {
         "FF_PROBE_PATH": "/Users/piyusharora/projects/via/bin/ffprobe",
