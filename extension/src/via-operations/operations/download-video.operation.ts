@@ -1,10 +1,10 @@
 import * as vscode from "vscode";
-import { getNowDirPath } from "../keeper/now";
+import { getNowDirPath } from "../../keeper/now";
 import {
   FF_PROBE_PATH,
   VIA_CLI_PATH,
   YT_DLP_CLI_PATH,
-} from "./via-operations.constant";
+} from "../via-operations.constant";
 import spawn from "cross-spawn";
 
 const DOWNLOAD_VIDEO_EXIT_ERROR = "download video exit error";

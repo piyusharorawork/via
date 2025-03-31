@@ -8,18 +8,18 @@
       "mode": "auto",
       "program": "${workspaceFolder}/server-workspace/cli",
       "cwd": "${workspaceFolder}/server-workspace",
-      // "args": [
-      //   "clip-info",
-      //   "-v",
-      //   "https://test-v1.blr1.digitaloceanspaces.com/temp/91f0cbe6-9ea1-46d6-bbb9-1682f07ed403.webm"
-      // ],
       "args": [
-        "download-video",
+        "clip-info",
         "-v",
-        "https://www.youtube.com/shorts/zwMEhBq4kYM",
-        "-o",
-        "${workspaceFolder}/temp"
+        "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/81242eec-fe8e-4fde-8eeb-431f8b0b61d7.webm"
       ],
+      // "args": [
+      //   "download-video",
+      //   "-v",
+      //   "https://www.youtube.com/shorts/zwMEhBq4kYM",
+      //   "-o",
+      //   "${workspaceFolder}/temp"
+      // ],
       "env": {
         "FF_PROBE_PATH": "/Users/piyusharora/projects/via/bin/ffprobe",
         "YT_DLP_CLI_PATH": "/Users/piyusharora/projects/via/bin/yt-dlp"
