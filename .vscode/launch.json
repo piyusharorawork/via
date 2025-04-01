@@ -13,21 +13,22 @@
       //   "-v",
       //   "https://test-v1.blr1.digitaloceanspaces.com/temp/workspace-9ff4d680-647c-4f33-b6a8-1aff279ea39a/81242eec-fe8e-4fde-8eeb-431f8b0b61d7.webm"
       // ],
+      // "args": [
+      //   "download-video",
+      //   "-w",
+      //   "https://www.youtube.com/shorts/s-MsZo02dos",
+      //   "-d",
+      //   "${workspaceFolder}/temp",
+      //   "-f",
+      //   "3-sec.mp4"
+      // ],
       "args": [
-        "download-video",
-        "-w",
-        "https://www.youtube.com/shorts/s-MsZo02dos",
-        "-d",
-        "${workspaceFolder}/temp",
+        "upload-file",
         "-f",
-        "3-sec.mp4"
+        "${workspaceFolder}/assets/sample-videos/media/media.json"
       ],
 
-      "env": {
-        "FF_PROBE_PATH": "/Users/piyusharora/projects/via/bin/ffprobe",
-        "FFMPEG_PATH": "/Users/piyusharora/projects/via/bin/ffmpeg",
-        "YT_DLP_CLI_PATH": "/Users/piyusharora/projects/via/bin/yt-dlp"
-      }
+      "env": {}
     },
     {
       "name": "server",

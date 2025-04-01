@@ -16,8 +16,21 @@
       {
         "command": "via.download-video",
         "title": "download-video"
+      },
+      {
+        "command": "via.upload-file",
+        "title": "upload-file"
       }
-    ]
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "via.upload-file",
+          "when": "resourcePath",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "compile": "tsc -p ./",
@@ -33,6 +46,7 @@
   },
   "dependencies": {
     "cross-spawn": "^7.0.6",
+    "dotenv": "^16.4.7",
     "execa": "^9.5.2",
     "moment": "^2.30.1"
   }

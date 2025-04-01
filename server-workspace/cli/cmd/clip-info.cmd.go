@@ -7,9 +7,10 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	clicontext "quickreel.com/cli/ctx"
+
 	"quickreel.com/cli/util"
 	"quickreel.com/core/clipinfo"
+	myctx "quickreel.com/core/ctx"
 )
 
 type FrameSize struct {
@@ -37,7 +38,7 @@ var clipInfoCmd = &cobra.Command{
 			VideoPath: videoPath,
 		}
 
-		ctx, err := clicontext.CreateCtx()
+		ctx, err := myctx.GetCtx()
 
 		if err != nil {
 			panic(err)

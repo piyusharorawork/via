@@ -12,15 +12,12 @@ import (
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/service/s3/types"
+	"quickreel.com/core/model"
 )
 
 type UploadFileInput struct {
 	FilePath   string
 	FolderPath string
-	SpaceName  string
-	Region     string
-	AccessKey  string
-	SecretKey  string
 }
 
 type UploadFileOutput struct {
@@ -30,8 +27,13 @@ type UploadFileOutput struct {
 	ContentType string
 }
 
-func UploadFile(input UploadFileInput) (UploadFileOutput, error) {
-	client, err := createClient(input.AccessKey, input.SecretKey, input.Region)
+func uploadFile(ctx context.Context, input UploadFileInput) (UploadFileOutput, error) {
+	accessKey := ctx.Value(model.SpaceAccessKey).(string)
+	secretKey := ctx.Value(model.SpaceSecretKey).(string)
+	region := ctx.Value(model.SpaceRegion).(string)
+	spaceName := ctx.Value(model.SpaceName).(string)
+
+	client, err := createClient(accessKey, secretKey, region)
 	if err != nil {
 		return UploadFileOutput{}, err
 	}
@@ -56,7 +58,7 @@ func UploadFile(input UploadFileInput) (UploadFileOutput, error) {
 	key := filepath.Join(input.FolderPath, fileName)
 
 	_, err = client.PutObject(context.TODO(), &s3.PutObjectInput{
-		Bucket:      aws.String(input.SpaceName),
+		Bucket:      aws.String(spaceName),
 		Key:         aws.String(key),
 		Body:        file,
 		ContentType: aws.String(contentType),
@@ -67,7 +69,7 @@ func UploadFile(input UploadFileInput) (UploadFileOutput, error) {
 		return UploadFileOutput{}, err
 	}
 
-	videoURL := fmt.Sprintf("https://%s.%s.digitaloceanspaces.com/%s", input.SpaceName, input.Region, key)
+	videoURL := fmt.Sprintf("https://%s.%s.digitaloceanspaces.com/%s", spaceName, region, key)
 
 	return UploadFileOutput{
 		Url:         videoURL,

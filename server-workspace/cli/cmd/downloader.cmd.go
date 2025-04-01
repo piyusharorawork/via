@@ -4,22 +4,22 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	clicontext "quickreel.com/cli/ctx"
+
 	"quickreel.com/cli/util"
+	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/downloader"
 )
 
 type DownloadVideoOutput struct {
-	Progress  int    `json:"progress"`
+	Progress int `json:"progress"`
 }
 
 func init() {
 	rootCmd.AddCommand(downloaderCmd)
 	downloaderCmd.Flags().StringP("website-url", "w", "", "Website Url That contains video")
 	downloaderCmd.Flags().StringP("out-dir", "d", "", "Output Directory where video will be saved")
-	downloaderCmd.Flags().StringP("out-file","f","","Output File Name with extension")
+	downloaderCmd.Flags().StringP("out-file", "f", "", "Output File Name with extension")
 }
-
 
 var downloaderCmd = &cobra.Command{
 	Use:   "download-video",
@@ -40,15 +40,15 @@ var downloaderCmd = &cobra.Command{
 		}
 
 		downloader := &downloader.Downloader{
-			WebsiteUrl:  websiteUrl,
-			OutputDirPath: outDir,
+			WebsiteUrl:     websiteUrl,
+			OutputDirPath:  outDir,
 			OutputFileName: outFileName,
 			Callback: func(percentage int) {
 				printOutput(percentage)
 			},
 		}
 
-		err = saveVideoFile(downloader) 
+		err = saveVideoFile(downloader)
 
 		if err != nil {
 			panic(err)
@@ -57,11 +57,9 @@ var downloaderCmd = &cobra.Command{
 	},
 }
 
+func saveVideoFile(downloader downloader.IDownloader) error {
 
-
-func saveVideoFile(downloader downloader.IDownloader ) error {
-	
-	ctx, err := clicontext.CreateCtx()
+	ctx, err := myctx.GetCtx()
 
 	if err != nil {
 		return err
@@ -77,7 +75,7 @@ func saveVideoFile(downloader downloader.IDownloader ) error {
 
 func printOutput(percentage int) {
 	output := &DownloadVideoOutput{
-		Progress:  percentage,
+		Progress: percentage,
 	}
 	json, err := util.ToJSON(output)
 	if err != nil {
