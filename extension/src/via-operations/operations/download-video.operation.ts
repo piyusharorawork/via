@@ -1,14 +1,9 @@
 import * as vscode from "vscode";
 import { getNowDirPath } from "../../keeper/now";
-import {
-  FF_PROBE_PATH,
-  VIA_CLI_PATH,
-  YT_DLP_CLI_PATH,
-  FFMPEG_PATH,
-} from "../via-operations.constant";
-import { spawn } from "child_process";
+
 import { join } from "path";
 import { executeWithProgress } from "../execute-with-progress";
+import { killCli, spawnViaCli } from "../via-cli";
 
 const DOWNLOAD_VIDEO_EXIT_ERROR = "download video exit error";
 
@@ -37,23 +32,15 @@ export const downloadVideo = async () => {
     "video.mp4",
   ];
 
-  const child = spawn(VIA_CLI_PATH, args, {
-    env: {
-      YT_DLP_CLI_PATH,
-      FF_PROBE_PATH,
-      FFMPEG_PATH,
-    },
-  });
-
   executeWithProgress({
     task: ({ onCancellationRequested, showProgress }) => {
       return new Promise<void>((resolve, reject) => {
+        const child = spawnViaCli(args);
+
         onCancellationRequested(() => {
-          child.stdout.removeAllListeners();
-          child.stderr.removeAllListeners();
-          child.removeAllListeners();
-          child.kill();
+          killCli(child);
         });
+
         child.stdout.on("data", async (data) => {
           const text = data.toString();
           const output = JSON.parse(text) as DownloadVideoOutput;

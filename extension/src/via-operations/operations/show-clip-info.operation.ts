@@ -1,12 +1,7 @@
 import * as vscode from "vscode";
-import { spawn } from "child_process";
-import {
-  FF_PROBE_PATH,
-  VIA_CLI_PATH,
-  YT_DLP_CLI_PATH,
-} from "../via-operations.constant";
 import { saveJsonFile } from "../../keeper/keeper";
 import { executeWithProgress } from "../execute-with-progress";
+import { killCli, spawnViaCli } from "../via-cli";
 
 type ClipInfoOutput = {
   fps: number;
@@ -27,18 +22,10 @@ export const showClipInfo = async () => {
     task: ({ onCancellationRequested }) => {
       return new Promise<void>(async (resolve, reject) => {
         const args = ["clip-info", "-v", videoPath];
-        const child = spawn(VIA_CLI_PATH, args, {
-          env: {
-            YT_DLP_CLI_PATH: YT_DLP_CLI_PATH,
-            FF_PROBE_PATH: FF_PROBE_PATH,
-          },
-        });
+        const child = spawnViaCli(args);
 
         onCancellationRequested(() => {
-          child.stdout.removeAllListeners();
-          child.stderr.removeAllListeners();
-          child.removeAllListeners();
-          child.kill();
+          killCli(child);
         });
 
         child.stdout.on("data", async (data) => {

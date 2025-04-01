@@ -27,7 +27,7 @@
         {
           "command": "via.upload-file",
           "when": "resourcePath",
-          "group": "navigation"
+          "group": "1_modification"
         }
       ]
     }
