@@ -1,15 +1,14 @@
-import { Input } from "@/components/ui/input";
-import { Ui } from "./ui";
 import { VideoForm } from "./video-form";
+import { FramePreview } from "./frame-preview";
 
 export default function TransitionAnalyserPage() {
   return (
     <div className="h-screen flex flex-col">
-      {/* <Ui /> */}
-      <h1 className="text-center text-2xl">Transition Analyser</h1>
+      <section className="flex-grow relative">
+        <FramePreview videoUrl="https://test-v1.blr1.digitaloceanspaces.com/temp/09756d15-866c-4d4e-911d-ace01b9f6a81/house.mp4" />
+      </section>
 
-      <section className="bg-black flex-grow shrink-0"></section>
-      <section className="h-64 shrink-0">
+      <section className="h-72 shrink-0">
         <VideoForm />
       </section>
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,6 +12,7 @@ export const VideoForm = () => {
       <section className="flex flex-col gap-4 grow ">
         <UrlField />
         <ClipInfoField />
+        <Button>Submit</Button>
       </section>
     </div>
   );
@@ -18,7 +20,7 @@ export const VideoForm = () => {
 
 const UrlField = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-2">
       <Label>Video Url</Label>
       <Input
         type="url"
