@@ -1,6 +1,22 @@
 # via
 
-## TODO
+# Transition analyser tool
+
+- Input video url and clip info
+- Set the slider with min and max value (using frameCount)
+- create a transition analyser store
+
+  - context :
+    - video url
+    - clip info state
+  - events :
+
+    - change frame
+    - submit video info
+      - save it to local storage as well
+      - update the slider max value
+    - load video
+      - load it from local storage
 
 - extract specific frame number from video
 
