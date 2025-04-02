@@ -2,9 +2,7 @@
 
 ## TODO
 
-- uploader interface core
-- uploader file via cli
-- upload file via extension
+- extract specific frame number from video
 
 ## PROCESS
 
