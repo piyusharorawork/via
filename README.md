@@ -1,5 +1,7 @@
 # via
 
+- TODO sync video form with store
+
 # Transition analyser tool
 
 - Input video url and clip info
