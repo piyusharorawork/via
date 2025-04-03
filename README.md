@@ -1,5 +1,6 @@
 # via
 
+- TODO unit test store first
 - TODO sync video form with store
 
 # Transition analyser tool

@@ -1,7 +1,7 @@
 import { VideoForm } from "./video-form";
 import { FramePreview } from "./frame-preview";
 
-export default function TransitionAnalyserPage() {
+export default function VideoAnalyserPage() {
   return (
     <div className="h-screen flex flex-col">
       <section className="flex-grow relative">
