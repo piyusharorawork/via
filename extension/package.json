@@ -18,14 +18,14 @@
         "title": "download-video"
       },
       {
-        "command": "via.upload-file",
-        "title": "upload-file"
+        "command": "via.copy-file-url",
+        "title": "copy-file-url"
       }
     ],
     "menus": {
       "explorer/context": [
         {
-          "command": "via.upload-file",
+          "command": "via.copy-file-url",
           "when": "resourcePath",
           "group": "1_modification"
         }

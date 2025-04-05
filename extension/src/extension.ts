@@ -23,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   const uploadFileCmd = vscode.commands.registerCommand(
-    "via.upload-file",
+    "via.copy-file-url",
     async (uri: vscode.Uri) => {
       await viaOperations.uploadFile(uri.fsPath);
     }
