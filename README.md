@@ -1,27 +1,27 @@
 # via
 
-- TODO unit test store first
-- TODO sync video form with store
+## TODO
 
-# Transition analyser tool
+- Extract clip from video for a range of frames
+- Convert Frames to video
+- Extract frames of video
 
-- Input video url and clip info
-- Set the slider with min and max value (using frameCount)
-- create a transition analyser store
+# Video analyser tool
 
-  - context :
-    - video url
-    - clip info state
-  - events :
-
-    - change frame
-    - submit video info
-      - save it to local storage as well
-      - update the slider max value
-    - load video
-      - load it from local storage
+- Input video url
+- Input clip info containing
+  - frame count
+- Preview each frame
+- Support local storage for saving last session
 
 - extract specific frame number from video
+
+# Vs code extension
+
+- Show clip info
+- Download video from url
+- Upload any file from context menu
+- Extract frame no from video url
 
 ## PROCESS
 

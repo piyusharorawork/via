@@ -18,6 +18,11 @@ test-cli:
 	@echo "Testing cli..."
 	cd server-workspace && go test -count=5 ./cli/... 
 
+.PHONY: test-website
+test-website:
+	@echo "Testing website..."
+	cd web-workspace/apps/quick-reel-next && pnpm test
+
 .PHONY: build-all
 build-all:
 	@echo "Building all..."
@@ -29,5 +34,6 @@ test-all:
 	@echo "Testing all..."
 	make test-core
 	make test-cli
+	make test-website
 
 

@@ -29,9 +29,17 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const extractImageCmd = vscode.commands.registerCommand(
+    "via.extract-image",
+    async () => {
+      await viaOperations.extractImage();
+    }
+  );
+
   context.subscriptions.push(clipInfoCmd);
   context.subscriptions.push(downloadVideoCmd);
   context.subscriptions.push(uploadFileCmd);
+  context.subscriptions.push(extractImageCmd);
 }
 
 export function deactivate() {}

@@ -19,8 +19,9 @@ export const FrameController = () => {
         onValueChange={(values) => {
           store.send({ type: "setFrameNo", frameNo: values[0] });
         }}
-        min={1}
-        max={clipInfo.frameCount}
+        min={0}
+        max={clipInfo.frameCount - 1}
+        value={[frameNo]}
       />
       <div className="flex justify-center text-xl mt-2">{frameNo}</div>
     </div>

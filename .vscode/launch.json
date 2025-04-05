@@ -9,9 +9,13 @@
       "program": "${workspaceFolder}/server-workspace/cli",
       "cwd": "${workspaceFolder}/server-workspace",
       "args": [
-        "upload-file",
+        "extract-image",
+        "-u",
+        "https://test-v1.blr1.digitaloceanspaces.com/temp/c0e11e4f-d31a-40d2-884f-3b8968b59cdc/video.mp4",
+        "-o",
+        "${workspaceFolder}/assets/temp/out.png",
         "-f",
-        "${workspaceFolder}/assets/sample-videos/media/media.json"
+        "104"
       ],
       "env": {}
     },

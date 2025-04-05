@@ -21,7 +21,7 @@ describe("create video analyser store", () => {
   it("should initialize store with default values", () => {
     const expectedContext: Context = {
       clipInfoStr: "",
-      frameNo: 1,
+      frameNo: 0,
       videoUrl: "",
       videoElement: null,
     };

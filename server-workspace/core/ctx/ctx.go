@@ -13,16 +13,19 @@ func createCtx() (context.Context, error) {
 	ctx := context.Background()
 
 	envs := map[interface{}]string{
-		model.FFProbePath:    os.Getenv("FF_PROBE_PATH"),
-		model.FFMpegPath:     os.Getenv("FFMPEG_PATH"),
-		model.YtDlpCliPath:   os.Getenv("YT_DLP_CLI_PATH"),
-		model.SpaceAccessKey: os.Getenv("SPACE_ACCESS_KEY"),
-		model.SpaceSecretKey: os.Getenv("SPACE_SECRET_KEY"),
-		model.SpaceRegion:    os.Getenv("SPACE_REGION"),
-		model.SpaceName:      os.Getenv("SPACE_NAME"),
+		model.FFProbePath:        os.Getenv("FF_PROBE_PATH"),
+		model.FFMpegPath:         os.Getenv("FFMPEG_PATH"),
+		model.YtDlpCliPath:       os.Getenv("YT_DLP_CLI_PATH"),
+		model.SpaceAccessKey:     os.Getenv("SPACE_ACCESS_KEY"),
+		model.SpaceSecretKey:     os.Getenv("SPACE_SECRET_KEY"),
+		model.SpaceRegion:        os.Getenv("SPACE_REGION"),
+		model.SpaceName:          os.Getenv("SPACE_NAME"),
+		model.TempDirPath:        os.Getenv("TEMP_DIR_PATH"),
+		model.TestSamplesDirPath: os.Getenv("TEST_SAMPLES_DIR_PATH"),
 	}
 
 	for key, val := range envs {
+		// TODO now all keys are required for all envs which does not make sense
 		if val == "" {
 			return ctx, fmt.Errorf("no %s provided", key)
 		}

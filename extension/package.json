@@ -20,6 +20,10 @@
       {
         "command": "via.copy-file-url",
         "title": "copy-file-url"
+      },
+      {
+        "command": "via.extract-image",
+        "title": "extract-image"
       }
     ],
     "menus": {

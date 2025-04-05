@@ -80,7 +80,7 @@ const createContext = (storage: IStorage): Context => {
     return {
       videoUrl: "",
       clipInfoStr: "",
-      frameNo: 1,
+      frameNo: 0,
       videoElement: null,
     };
   }
@@ -91,7 +91,7 @@ const createContext = (storage: IStorage): Context => {
   const context: Context = {
     videoUrl,
     clipInfoStr,
-    frameNo: 1,
+    frameNo: 0,
     videoElement: null,
   };
   return context;
@@ -125,7 +125,9 @@ export const createVideoAnalyserStore = (storage: IStorage) => {
         storage.setItem(VIDEO_URL, videoUrl);
         storage.setItem(CLIP_INFO, clipInfoStr);
 
-        return {};
+        return {
+          frameNo: 0,
+        };
       },
       setFrameNo: (
         { videoElement, clipInfoStr },

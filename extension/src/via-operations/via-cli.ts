@@ -1,6 +1,7 @@
 import { ChildProcessWithoutNullStreams, spawn } from "child_process";
 
 export const spawnViaCli = (args: string[]) => {
+  // TODO move it to settings for extension
   const child = spawn(process.env.VIA_CLI_PATH!, args, {
     env: {
       FF_PROBE_PATH: process.env.FF_PROBE_PATH,
@@ -10,6 +11,8 @@ export const spawnViaCli = (args: string[]) => {
       SPACE_SECRET_KEY: process.env.SPACE_SECRET_KEY,
       SPACE_REGION: process.env.SPACE_REGION,
       SPACE_NAME: process.env.SPACE_NAME,
+      TEMP_DIR_PATH: process.env.TEMP_DIR_PATH,
+      TEST_SAMPLES_DIR_PATH: process.env.TEST_SAMPLES_DIR_PATH,
     },
   });
 
