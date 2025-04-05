@@ -1,75 +1,139 @@
+import { tryCatchSync } from "../../lib/try-catch";
 import { createStore } from "@xstate/store";
+import { z } from "zod";
+import { IStorage } from "./storage";
 
-const VIDEO_URL = "VIDEO_URL";
-const CLIP_INFO = "CLIP_INFO";
+export const VIDEO_URL = "VIDEO_URL";
+export const CLIP_INFO = "CLIP_INFO";
 
-type ClipInfo = {
-  fps: number;
-  frameCount: number;
-  frameSize: { height: number; width: number };
-};
+const clipInfoSchema = z.object({
+  fps: z.number(),
+  frameCount: z.number(),
+  frameSize: z.object({
+    height: z.number(),
+    width: z.number(),
+  }),
+});
+
+export type ClipInfo = z.infer<typeof clipInfoSchema>;
 
 export type Context = {
   videoUrl: string;
   clipInfoStr: string;
   frameNo: number;
+  videoElement: HTMLVideoElement | null;
 };
 
-const getVideoUrlFromLocal = () => {
-  const videoUrlLocally = localStorage.getItem(VIDEO_URL);
+const getVideoUrlFromLocal = (storage: IStorage) => {
+  const videoUrlLocally = storage.getItem(VIDEO_URL);
   if (!videoUrlLocally) return "";
 
   return videoUrlLocally;
 };
 
-const getClipInfoFromLocal = () => {
-  const clipInfoLocally = localStorage.getItem(CLIP_INFO);
+const getClipInfoFromLocal = (storage: IStorage) => {
+  const clipInfoLocally = storage.getItem(CLIP_INFO);
   if (!clipInfoLocally) return "";
 
-  try {
-    JSON.parse(clipInfoLocally);
-    // TODO more validation of clip info via zod
-    // Use try catch util
-    return clipInfoLocally;
-  } catch (_) {
-    return "";
-  }
+  const { error, data } = tryCatchSync(() => JSON.parse(clipInfoLocally));
+
+  if (error !== null) return "";
+
+  const { success } = clipInfoSchema.safeParse(data);
+
+  if (!success) return "";
+
+  return clipInfoLocally;
 };
 
-export const createVideoAnalyserStore = () => {
-  const videoUrl = getVideoUrlFromLocal();
-  const clipInfoStr = getClipInfoFromLocal();
+const updateVideoFrame = (
+  videoElement: HTMLVideoElement | null,
+  frameNo: number,
+  clipInfo: ClipInfo | null
+) => {
+  if (!videoElement) return;
+  if (!clipInfo) return;
+  if (frameNo < 1 || frameNo > clipInfo.frameCount) return;
+  videoElement.currentTime = (frameNo - 1) / clipInfo.fps;
+};
+
+const updateVideoSrc = (
+  videoElement: HTMLVideoElement | null,
+  videoUrl: string
+) => {
+  console.log("update video src");
+  if (!videoElement) return;
+  if (videoUrl === "") return;
+
+  videoElement.pause(); // Stop current playback
+  videoElement.srcObject = null; // Clear the current source object
+  videoElement.removeAttribute("src"); // Clear the old source
+  videoElement.load(); // Load the new source
+
+  videoElement.src = videoUrl;
+  videoElement.currentTime = 0;
+  videoElement.load();
+};
+
+const createContext = (storage: IStorage): Context => {
+  if (!storage) {
+    return {
+      videoUrl: "",
+      clipInfoStr: "",
+      frameNo: 1,
+      videoElement: null,
+    };
+  }
+
+  const videoUrl = getVideoUrlFromLocal(storage);
+  const clipInfoStr = getClipInfoFromLocal(storage);
 
   const context: Context = {
     videoUrl,
     clipInfoStr,
     frameNo: 1,
+    videoElement: null,
   };
+  return context;
+};
+
+export const createVideoAnalyserStore = (storage: IStorage) => {
+  const context = createContext(storage);
 
   const store = createStore({
     context,
     on: {
-      saveVideoInfo: ({ clipInfoStr, videoUrl }) => {
-        debugger;
+      // side effect
+      saveVideoInfo: ({ clipInfoStr, videoUrl, videoElement }) => {
         if (!clipInfoStr || !videoUrl) return {};
 
-        // TODO use trycatch()
-        try {
-          JSON.parse(clipInfoStr);
-        } catch (error) {
+        const { error, data } = tryCatchSync(() => JSON.parse(clipInfoStr));
+        if (error !== null) {
+          console.error("could not save a invalid json");
+          return {};
+        }
+
+        const { success } = clipInfoSchema.safeParse(data);
+
+        if (!success) {
           console.error("cannot save (invalid clip info)");
           return {};
         }
 
-        localStorage.setItem(VIDEO_URL, videoUrl);
-        localStorage.setItem(CLIP_INFO, clipInfoStr);
+        updateVideoSrc(videoElement, videoUrl);
 
-        return {
-          clipInfoStr,
-          videoUrl,
-        };
+        storage.setItem(VIDEO_URL, videoUrl);
+        storage.setItem(CLIP_INFO, clipInfoStr);
+
+        return {};
       },
-      changeFrame: ({}, event: { frameNo: number }) => {
+      setFrameNo: (
+        { videoElement, clipInfoStr },
+        event: { frameNo: number }
+      ) => {
+        const clipInfo = getClipInfo(clipInfoStr);
+        updateVideoFrame(videoElement, event.frameNo, clipInfo);
+
         return {
           frameNo: event.frameNo,
         };
@@ -84,23 +148,23 @@ export const createVideoAnalyserStore = () => {
           clipInfoStr: event.clipInfo,
         };
       },
+      setVideoElement: ({}, event: { videoElement: HTMLVideoElement }) => {
+        return {
+          videoElement: event.videoElement,
+        };
+      },
     },
   });
 
-  const windowRef = window as any;
-  windowRef.videoAnalyserStore = store;
   return store;
 };
 
-export const store = createVideoAnalyserStore();
-
 export const getClipInfo = (clipInfoStr: string): ClipInfo | null => {
-  try {
-    const clipInfo = JSON.parse(clipInfoStr);
-    // TODO more validation of clip info via zod
-    // Use try catch util
-    return clipInfo;
-  } catch (_) {
-    return null;
-  }
+  const { error, data: obj } = tryCatchSync(() => JSON.parse(clipInfoStr));
+  if (error !== null) return null;
+
+  const { success, data } = clipInfoSchema.safeParse(obj);
+  if (!success) return null;
+
+  return data;
 };

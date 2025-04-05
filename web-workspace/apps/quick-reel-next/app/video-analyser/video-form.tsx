@@ -4,10 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { store } from "./store";
 import { useSelector } from "@xstate/store/react";
+import { useVideoAnalyserStore } from "../providers/video-analyser.provider";
 
 export const VideoForm = () => {
+  const store = useVideoAnalyserStore();
+
   return (
     <div className="flex flex-col px-8 h-full py-4">
       <h2 className="text-center text-xl">Enter Video Info</h2>
@@ -29,6 +31,7 @@ export const VideoForm = () => {
 };
 
 const UrlField = () => {
+  const store = useVideoAnalyserStore();
   const videoUrl = useSelector(store, (state) => state.context.videoUrl);
 
   return (
@@ -50,6 +53,7 @@ const UrlField = () => {
 };
 
 const ClipInfoField = () => {
+  const store = useVideoAnalyserStore();
   const clipInfoStr = useSelector(store, (state) => state.context.clipInfoStr);
 
   return (

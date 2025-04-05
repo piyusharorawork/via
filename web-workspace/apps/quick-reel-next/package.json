@@ -29,7 +29,8 @@
     "react-dom": "18.3.1",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.167.0"
+    "three": "^0.167.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/lodash.throttle": "^4.1.9",
