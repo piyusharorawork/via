@@ -3,7 +3,7 @@
 ## TODO
 
 - Remove audio from video (context menu)
-- Resize video (video url , resolution)
+- Resize video (video url , resolution) command
 - Extract clip from video for a range of frames
 - Moment Testing
 - Extract image with resolution
@@ -14,8 +14,7 @@
 - Settings for extension for various env variables
 - Better env management so only those env are required whose functionality is used
 - Anything that starts with /Users/piyusharora must be in env variable
-- copy file url to have caching to increase
-- extract image with
+- copy file url to have caching to improve latency
 
 # Video Player tool
 
