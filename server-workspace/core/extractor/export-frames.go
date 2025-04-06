@@ -18,6 +18,7 @@ type ExportFramesInput struct {
 	Cb            model.ProgressCallback
 }
 
+// TODO
 const EXPORTER_SCRIPT_PATH = "/Users/piyusharora/projects/via/web-workspace/apps/exporter/dist/exporter.js"
 
 func ExportFrames(input ExportFramesInput) error {

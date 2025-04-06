@@ -2,6 +2,7 @@ package myctx
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
 
@@ -46,11 +47,18 @@ func GetCtx() (context.Context, error) {
 }
 
 /*
-Generates context to be used when env needs to be loader from .env.test file
+Generates context to be used when env needs to be loader from TEST_ENV_PATH file
 */
 func GetTestCtx() (context.Context, error) {
-	// Load .env.test file which may or may not exist
-	godotenv.Load("/Users/piyusharora/projects/via/server-workspace/.env.test") // TODO use relative path
+	envPath := os.Getenv("TEST_ENV_PATH")
+
+	println(envPath)
+
+	if envPath == "" {
+		return nil, errors.New("no env path provided")
+	}
+
+	godotenv.Load(envPath) // TODO use relative path
 	return createCtx()
 }
 

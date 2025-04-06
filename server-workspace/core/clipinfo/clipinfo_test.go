@@ -1,11 +1,10 @@
 package clipinfo
 
 import (
-	"context"
 	"reflect"
 	"testing"
 
-	"quickreel.com/core/model"
+	myctx "quickreel.com/core/ctx"
 )
 
 func TestGetFPS(t *testing.T) {
@@ -37,7 +36,10 @@ func TestGetFPS(t *testing.T) {
 				VideoPath: tc.videoPath,
 			}
 
-			ctx := getTestContext()
+			ctx, err := myctx.GetTestCtx()
+			if err != nil {
+				t.Fatal(err)
+			}
 			got, err := clipInfo.GetFPS(ctx)
 			if err != nil {
 				t.Fatalf("GetFPS() error = %v", err)
@@ -73,7 +75,11 @@ func TestGetFrameCount(t *testing.T) {
 			clipInfo := &ClipInfo{
 				VideoPath: tc.videoPath,
 			}
-			ctx := getTestContext()
+			ctx, err := myctx.GetTestCtx()
+			if err != nil {
+				t.Fatal(err)
+			}
+
 			got, err := clipInfo.GetFrameCount(ctx)
 			if err != nil {
 				t.Fatalf("GetFrameCount() error = %v", err)
@@ -117,7 +123,10 @@ func TestGetFrameSize(t *testing.T) {
 				VideoPath: tc.videoPath,
 			}
 
-			ctx := getTestContext()
+			ctx, err := myctx.GetTestCtx()
+			if err != nil {
+				t.Fatal(err)
+			}
 			got, err := clipInfo.GetFrameSize(ctx)
 			if err != nil {
 				t.Fatalf("GetFrameSize() error = %v", err)
@@ -130,10 +139,4 @@ func TestGetFrameSize(t *testing.T) {
 
 		})
 	}
-}
-
-func getTestContext() context.Context {
-	ctx := context.Background()
-	ctx = context.WithValue(ctx, model.FFProbePath, "/Users/piyusharora/projects/via/bin/ffprobe")
-	return ctx
 }

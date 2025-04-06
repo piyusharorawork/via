@@ -2,11 +2,11 @@
 
 ## TODO
 
-- Resize video (video url , resolution) command
 - Extract clip from video for a range of frames
-- Moment Testing
 - Extract image with resolution
+- Moment Testing
 - Exporter tool store
+- Replace makefile with vscode launch
 
 - Convert Frames to video
 - Extract frames of video
@@ -15,10 +15,10 @@
 - Anything that starts with /Users/piyusharora must be in env variable
 - copy file url to have caching to improve latency
 
-## Maybe later
+# Useful commands
 
-- via operation refactor from vscode operations
-- test via operations
+1. Run tests
+   TEST_ENV_PATH=/Users/piyusharora/projects/via/server-workspace/.env.test make test-all
 
 # Video Player tool
 
@@ -44,6 +44,12 @@
 - Extract frame no from video url
 - Copy mp4 url from webm file
 - Copy muted url
+- Compress video to specific resolution
+
+## Maybe later
+
+- via operation refactor from vscode operations
+- test via operations
 
 ## PROCESS
 
