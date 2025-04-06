@@ -2,7 +2,6 @@
 
 ## TODO
 
-- Remove audio from video (context menu)
 - Resize video (video url , resolution) command
 - Extract clip from video for a range of frames
 - Moment Testing
@@ -15,6 +14,11 @@
 - Better env management so only those env are required whose functionality is used
 - Anything that starts with /Users/piyusharora must be in env variable
 - copy file url to have caching to improve latency
+
+## Maybe later
+
+- via operation refactor from vscode operations
+- test via operations
 
 # Video Player tool
 
@@ -38,6 +42,8 @@
 - Download video from url
 - Upload any file from context menu
 - Extract frame no from video url
+- Copy mp4 url from webm file
+- Copy muted url
 
 ## PROCESS
 
