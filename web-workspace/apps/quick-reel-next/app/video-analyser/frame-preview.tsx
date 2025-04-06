@@ -16,7 +16,7 @@ export const FramePreview = () => {
 
   return (
     <div className="py-2">
-      <video ref={videoRef} className="absolute w-full h-full object-fit">
+      <video ref={videoRef} className="absolute w-full h-full">
         <source src={videoUrl} />
       </video>
     </div>

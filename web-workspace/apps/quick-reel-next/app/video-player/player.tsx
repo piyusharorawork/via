@@ -10,8 +10,8 @@ export const Player = () => {
   if (videoUrl === "") return null;
 
   return (
-    <div className="h-full flex justify-center py-3">
-      <video controls className="h-full rounded-xl">
+    <div className="h-full flex justify-center py-3 relative">
+      <video controls className="h-full rounded-xl absolute">
         <source src={videoUrl} />
       </video>
     </div>
