@@ -1,12 +1,12 @@
-package cmd
+package adapter
 
 import (
 	"bytes"
 	"testing"
 
-	"quickreel.com/cli/util"
 	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/uploader"
+	"quickreel.com/core/util"
 )
 
 func TestPrintUploadedUrl(t *testing.T) {
@@ -28,7 +28,7 @@ func TestPrintUploadedUrl(t *testing.T) {
 				Url: "https://test-v1.blr1.digitaloceanspaces.com/test/test-assets/dummy.txt",
 			}
 
-			printUploadedUrl(ctx, &uploader, buffer)
+			PrintUploadedUrl(ctx, &uploader, buffer)
 
 			if !util.CompareJSON(buffer.String(), tc.stdout) {
 				t.Errorf("printClipInfo() = %v, want %v", buffer.String(), tc.stdout)

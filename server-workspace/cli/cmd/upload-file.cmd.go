@@ -1,24 +1,18 @@
 package cmd
 
 import (
-	"context"
 	"fmt"
-	"io"
 	"os"
 
 	"github.com/google/uuid"
 	"github.com/spf13/cobra"
-	"quickreel.com/cli/util"
+	"quickreel.com/cli/adapter"
 	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/uploader"
 )
 
-type UploadFileOutput struct {
-	Url string `json:"url"`
-}
-
 func init() {
-	rootCmd.AddCommand(uploadFileCmd)
+	RootCmd.AddCommand(uploadFileCmd)
 	uploadFileCmd.Flags().StringP("file-path", "f", "", "Path of the file to upload")
 
 }
@@ -43,27 +37,7 @@ var uploadFileCmd = &cobra.Command{
 			panic(err)
 		}
 
-		printUploadedUrl(ctx, uploader, os.Stdout)
+		adapter.PrintUploadedUrl(ctx, uploader, os.Stdout)
 
 	},
-}
-
-func printUploadedUrl(ctx context.Context, uploader uploader.IUploader, writer io.Writer) {
-	url, err := uploader.UploadFile(ctx)
-
-	if err != nil {
-		panic(err)
-	}
-
-	output := &UploadFileOutput{
-		Url: url,
-	}
-
-	json, err := util.ToJSON(output)
-
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Fprintln(writer, json)
 }

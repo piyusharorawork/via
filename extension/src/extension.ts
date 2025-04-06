@@ -25,7 +25,7 @@ export function activate(context: vscode.ExtensionContext) {
   const uploadFileCmd = vscode.commands.registerCommand(
     "via.copy-file-url",
     async (uri: vscode.Uri) => {
-      await viaOperations.uploadFile(uri.fsPath);
+      await viaOperations.copyFileUrl(uri.fsPath);
     }
   );
 
@@ -36,10 +36,18 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const copyMp4UrlCmd = vscode.commands.registerCommand(
+    "via.copy-mp4-url",
+    async (uri: vscode.Uri) => {
+      await viaOperations.copyMp4Url(uri.fsPath);
+    }
+  );
+
   context.subscriptions.push(clipInfoCmd);
   context.subscriptions.push(downloadVideoCmd);
   context.subscriptions.push(uploadFileCmd);
   context.subscriptions.push(extractImageCmd);
+  context.subscriptions.push(copyMp4UrlCmd);
 }
 
 export function deactivate() {}

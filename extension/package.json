@@ -24,6 +24,10 @@
       {
         "command": "via.extract-image",
         "title": "extract-image"
+      },
+      {
+        "command": "via.copy-mp4-url",
+        "title": "copy-mp4-url"
       }
     ],
     "menus": {
@@ -31,6 +35,11 @@
         {
           "command": "via.copy-file-url",
           "when": "resourcePath",
+          "group": "1_modification"
+        },
+        {
+          "command": "via.copy-mp4-url",
+          "when": "resourceExtname == .webm",
           "group": "1_modification"
         }
       ]

@@ -36,4 +36,12 @@ describe("create video player store", () => {
     const videoUrlFromLocal = storage.getItem(VIDEO_PLAYER_URL_KEY);
     expect(videoUrlFromLocal).toBe("http://video-url.mp4");
   });
+  it("should set the video element in context on set video element", () => {
+    const store = createVideoPlayerStore(storage);
+    store.send({
+      type: "setVideoElement",
+      videoElement: {} as HTMLVideoElement,
+    });
+    expect(store.getSnapshot().context.videoElement).not.toBeNull();
+  });
 });

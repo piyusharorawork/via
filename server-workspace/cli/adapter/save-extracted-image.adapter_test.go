@@ -1,11 +1,11 @@
-package cmd
+package adapter
 
 import (
 	"bytes"
 	"testing"
 
 	myctx "quickreel.com/core/ctx"
-	extractor "quickreel.com/core/extractor"
+	"quickreel.com/core/extractor"
 )
 
 func TestSaveExtractedImage(t *testing.T) {
@@ -22,7 +22,7 @@ func TestSaveExtractedImage(t *testing.T) {
 			ctx := myctx.GetEmptyCtx()
 			imgExtractor := &extractor.MockExtractor{}
 			buffer := &bytes.Buffer{}
-			saveExtractedImage(ctx, imgExtractor, 0, buffer)
+			SaveExtractedImage(ctx, imgExtractor, 0, buffer)
 			if buffer.String() != "Image saved" {
 				t.Errorf("saveExtractedImage() = %v, want %v", buffer.String(), "Image saved")
 			}

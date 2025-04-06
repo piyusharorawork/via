@@ -5,17 +5,19 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"quickreel.com/cli/util"
+	"quickreel.com/cli/adapter"
 	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/downloader"
+	"quickreel.com/core/util"
 )
 
+// TODO see how can we move this to adapter
 type DownloadVideoOutput struct {
 	Progress int `json:"progress"`
 }
 
 func init() {
-	rootCmd.AddCommand(downloaderCmd)
+	RootCmd.AddCommand(downloaderCmd)
 	downloaderCmd.Flags().StringP("website-url", "w", "", "Website Url That contains video")
 	downloaderCmd.Flags().StringP("out-dir", "d", "", "Output Directory where video will be saved")
 	downloaderCmd.Flags().StringP("out-file", "f", "", "Output File Name with extension")
@@ -48,7 +50,13 @@ var downloaderCmd = &cobra.Command{
 			},
 		}
 
-		err = saveVideoFile(downloader)
+		ctx, err := myctx.GetCtx()
+
+		if err != nil {
+			panic(err)
+		}
+
+		err = adapter.SaveVideoFile(ctx, downloader)
 
 		if err != nil {
 			panic(err)
@@ -57,22 +65,7 @@ var downloaderCmd = &cobra.Command{
 	},
 }
 
-func saveVideoFile(downloader downloader.IDownloader) error {
-
-	ctx, err := myctx.GetCtx()
-
-	if err != nil {
-		return err
-	}
-
-	err = downloader.DownloadVideo(ctx)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
+// TODO see how can we move this to adapter
 func printOutput(percentage int) {
 	output := &DownloadVideoOutput{
 		Progress: percentage,

@@ -1,18 +1,16 @@
 package cmd
 
 import (
-	"context"
-	"fmt"
-	"io"
 	"os"
 
 	"github.com/spf13/cobra"
+	"quickreel.com/cli/adapter"
 	myctx "quickreel.com/core/ctx"
 	extractor "quickreel.com/core/extractor"
 )
 
 func init() {
-	rootCmd.AddCommand(extractorCmd)
+	RootCmd.AddCommand(extractorCmd)
 	extractorCmd.Flags().StringP("video-url", "u", "", "Video Url")
 	extractorCmd.Flags().StringP("out-file", "o", "", "Output image file path")
 	extractorCmd.Flags().IntP("frame", "f", 0, "frame number")
@@ -46,17 +44,7 @@ var extractorCmd = &cobra.Command{
 			panic(err)
 		}
 
-		saveExtractedImage(ctx, imgExtractor, frameNo, os.Stdout)
+		adapter.SaveExtractedImage(ctx, imgExtractor, frameNo, os.Stdout)
 
 	},
-}
-
-func saveExtractedImage(ctx context.Context, imgExtractor extractor.IExtractor, frameNo int, writer io.Writer) {
-	err := imgExtractor.ExtractImage(ctx, frameNo)
-
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Fprint(writer, "Image saved")
 }

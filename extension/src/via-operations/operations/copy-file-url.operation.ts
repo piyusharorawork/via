@@ -6,7 +6,7 @@ type UploadFileOutput = {
   url: string;
 };
 
-export const uploadFile = async (filePath: string) => {
+export const copyFileUrl = async (filePath: string) => {
   executeWithProgress({
     task: ({ onCancellationRequested, showMessage }) => {
       return new Promise<void>(async (resolve, reject) => {

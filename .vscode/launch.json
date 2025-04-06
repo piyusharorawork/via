@@ -9,13 +9,9 @@
       "program": "${workspaceFolder}/server-workspace/cli",
       "cwd": "${workspaceFolder}/server-workspace",
       "args": [
-        "extract-image",
-        "-u",
-        "https://test-v1.blr1.digitaloceanspaces.com/temp/c0e11e4f-d31a-40d2-884f-3b8968b59cdc/video.mp4",
-        "-o",
-        "${workspaceFolder}/assets/temp/out.png",
-        "-f",
-        "104"
+        "copy-mp4-url",
+        "-v",
+        "https://test-v1.blr1.digitaloceanspaces.com/temp/1f643487-fa95-497e-abdf-9db4231dcc22/big_buck_bunny.webm"
       ],
       "env": {}
     },

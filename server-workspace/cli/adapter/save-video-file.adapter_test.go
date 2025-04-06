@@ -1,8 +1,9 @@
-package cmd
+package adapter
 
 import (
 	"testing"
 
+	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/downloader"
 )
 
@@ -20,7 +21,9 @@ func TestSaveVideoFile(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			downloader := &downloader.MockDownloader{}
 
-			err := saveVideoFile(downloader)
+			ctx := myctx.GetEmptyCtx()
+
+			err := SaveVideoFile(ctx, downloader)
 
 			if err != nil && tc.wantErr != nil && err.Error() != tc.wantErr.Error() {
 				t.Errorf("saveVideoFile() error = %v, wantErr %v", err, tc.wantErr)

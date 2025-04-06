@@ -2,6 +2,7 @@ import { IStorage } from "@/lib/storage";
 import { tryCatchSync } from "../../lib/try-catch";
 import { createStore } from "@xstate/store";
 import { z } from "zod";
+import { updateVideoSrc } from "@/lib/video-element.util";
 
 export const VIDEO_URL = "VIDEO_URL";
 export const CLIP_INFO = "CLIP_INFO";
@@ -55,24 +56,6 @@ const updateVideoFrame = (
   if (!clipInfo) return;
   if (frameNo < 1 || frameNo > clipInfo.frameCount) return;
   videoElement.currentTime = (frameNo - 1) / clipInfo.fps;
-};
-
-const updateVideoSrc = (
-  videoElement: HTMLVideoElement | null,
-  videoUrl: string
-) => {
-  console.log("update video src");
-  if (!videoElement) return;
-  if (videoUrl === "") return;
-
-  videoElement.pause(); // Stop current playback
-  videoElement.srcObject = null; // Clear the current source object
-  videoElement.removeAttribute("src"); // Clear the old source
-  videoElement.load(); // Load the new source
-
-  videoElement.src = videoUrl;
-  videoElement.currentTime = 0;
-  videoElement.load();
 };
 
 const createContext = (storage: IStorage): Context => {

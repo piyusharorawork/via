@@ -2,6 +2,7 @@
 
 import { useSelector } from "@xstate/store/react";
 import { useVideoPlayerStore } from "./video-player-store-provider";
+import { useLoadVideo } from "@/lib/use-load-video";
 
 export const Player = () => {
   const store = useVideoPlayerStore();
@@ -9,9 +10,13 @@ export const Player = () => {
 
   if (videoUrl === "") return null;
 
+  const videoRef = useLoadVideo((videoElement) => {
+    store.send({ type: "setVideoElement", videoElement });
+  });
+
   return (
     <div className="h-full flex justify-center py-3 relative">
-      <video controls className="h-full rounded-xl absolute">
+      <video ref={videoRef} controls className="h-full rounded-xl absolute">
         <source src={videoUrl} />
       </video>
     </div>

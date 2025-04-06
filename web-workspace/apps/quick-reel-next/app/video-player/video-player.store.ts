@@ -1,10 +1,12 @@
 import { IStorage } from "@/lib/storage";
+import { updateVideoSrc } from "@/lib/video-element.util";
 import { createStore } from "@xstate/store";
 
 export const VIDEO_PLAYER_URL_KEY = "VIDEO_PLAYER_URL";
 
 type Context = {
   videoUrl: string;
+  videoElement: HTMLVideoElement | null;
 };
 
 export const createVideoPlayerStore = (storage: IStorage) => {
@@ -17,9 +19,15 @@ export const createVideoPlayerStore = (storage: IStorage) => {
           videoUrl: event.videoUrl,
         };
       },
-      save: ({ videoUrl }) => {
+      save: ({ videoUrl, videoElement }) => {
         storage.setItem(VIDEO_PLAYER_URL_KEY, videoUrl);
+        updateVideoSrc(videoElement, videoUrl);
         return {};
+      },
+      setVideoElement: ({}, event: { videoElement: HTMLVideoElement }) => {
+        return {
+          videoElement: event.videoElement,
+        };
       },
     },
   });
@@ -28,14 +36,15 @@ export const createVideoPlayerStore = (storage: IStorage) => {
 };
 
 const createContext = (storage: IStorage): Context => {
-  if (!storage) {
-    return { videoUrl: "" };
-  }
+  const videoUrl = getVideoUrlFromStorage(storage);
+  return { videoUrl, videoElement: null };
+};
+
+const getVideoUrlFromStorage = (storage: IStorage): string => {
+  if (!storage) return "";
 
   const videoUrl = storage.getItem(VIDEO_PLAYER_URL_KEY);
-  if (!videoUrl) {
-    return { videoUrl: "" };
-  }
+  if (!videoUrl) return "";
 
-  return { videoUrl };
+  return videoUrl;
 };
