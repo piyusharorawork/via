@@ -7,7 +7,7 @@ import {
   CLIP_INFO,
   getClipInfo,
 } from "./store";
-import { IStorage, MockStorage } from "./storage";
+import { MockStorage } from "@/lib/storage";
 
 describe("create video analyser store", () => {
   let store: ReturnType<typeof createVideoAnalyserStore>;

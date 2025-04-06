@@ -1,7 +1,7 @@
+import { IStorage } from "@/lib/storage";
 import { tryCatchSync } from "../../lib/try-catch";
 import { createStore } from "@xstate/store";
 import { z } from "zod";
-import { IStorage } from "./storage";
 
 export const VIDEO_URL = "VIDEO_URL";
 export const CLIP_INFO = "CLIP_INFO";

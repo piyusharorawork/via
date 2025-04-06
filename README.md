@@ -2,7 +2,6 @@
 
 ## TODO
 
-- Simple Video Player tool (takes video url and plays it in website , supports local storage)
 - Remove audio from video (context menu)
 - Resize video (video url , resolution)
 - Extract clip from video for a range of frames
@@ -17,6 +16,12 @@
 - Anything that starts with /Users/piyusharora must be in env variable
 - copy file url to have caching to increase
 - extract image with
+
+# Video Player tool
+
+- Input video url
+- Html video player
+- Supports local storage
 
 # Video analyser tool
 
