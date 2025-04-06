@@ -3,6 +3,7 @@ import { extractImage } from "./operations/extract-image.operation";
 import { showClipInfo } from "./operations/show-clip-info.operation";
 import { copyFileUrl } from "./operations/copy-file-url.operation";
 import { copyMp4Url } from "./operations/copy-mp4-url.operation";
+import { copyMutedUrl } from "./operations/copy-muted-url.operation";
 
 export const viaOperations = {
   showClipInfo,
@@ -10,4 +11,5 @@ export const viaOperations = {
   copyFileUrl,
   extractImage,
   copyMp4Url,
+  copyMutedUrl,
 };

@@ -2,9 +2,13 @@ package vidmod
 
 import "context"
 
-type VideoModifierMock struct {
+type MockVideoModifier struct {
 }
 
-func (m *VideoModifierMock) ConvertToMp4(ctx context.Context) error {
+func (m *MockVideoModifier) ConvertToMp4(ctx context.Context) error {
+	return nil
+}
+
+func (m *MockVideoModifier) MuteVideo(ctx context.Context) error {
 	return nil
 }

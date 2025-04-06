@@ -43,11 +43,19 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const copyMutedUrlCmd = vscode.commands.registerCommand(
+    "via.copy-muted-url",
+    async (uri: vscode.Uri) => {
+      await viaOperations.copyMutedUrl(uri.fsPath);
+    }
+  );
+
   context.subscriptions.push(clipInfoCmd);
   context.subscriptions.push(downloadVideoCmd);
   context.subscriptions.push(uploadFileCmd);
   context.subscriptions.push(extractImageCmd);
   context.subscriptions.push(copyMp4UrlCmd);
+  context.subscriptions.push(copyMutedUrlCmd);
 }
 
 export function deactivate() {}

@@ -9,9 +9,9 @@
       "program": "${workspaceFolder}/server-workspace/cli",
       "cwd": "${workspaceFolder}/server-workspace",
       "args": [
-        "copy-mp4-url",
+        "copy-muted-url",
         "-v",
-        "https://test-v1.blr1.digitaloceanspaces.com/temp/1f643487-fa95-497e-abdf-9db4231dcc22/big_buck_bunny.webm"
+        "https://test-v1.blr1.digitaloceanspaces.com/temp/025ceb46-3a1d-49f9-918e-1229a67cea6d/big-buck-bunny-480p-30sec-24fps.mp4"
       ],
       "env": {}
     },

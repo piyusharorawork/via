@@ -28,6 +28,10 @@
       {
         "command": "via.copy-mp4-url",
         "title": "copy-mp4-url"
+      },
+      {
+        "command": "via.copy-muted-url",
+        "title": "copy-muted-url"
       }
     ],
     "menus": {
@@ -40,6 +44,11 @@
         {
           "command": "via.copy-mp4-url",
           "when": "resourceExtname == .webm",
+          "group": "1_modification"
+        },
+        {
+          "command": "via.copy-muted-url",
+          "when": "resourceExtname == .webm || resourceExtname == .mp4",
           "group": "1_modification"
         }
       ]

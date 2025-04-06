@@ -9,13 +9,13 @@ import (
 	"quickreel.com/core/vidmod"
 )
 
-func TestPrintConvertToMp4Output(t *testing.T) {
+func TestPrintMutedVideoUrl(t *testing.T) {
 	tt := []struct {
 		name string
 		want string
 	}{
 		{
-			name: "Conversion success",
+			name: "success",
 			want: "{\"url\":\"https://video-url.mp4\"}",
 		},
 	}
@@ -28,9 +28,9 @@ func TestPrintConvertToMp4Output(t *testing.T) {
 				Url: "https://video-url.mp4",
 			}
 			buf := &bytes.Buffer{}
-			PrintMp4Url(ctx, modifier, uploader, buf)
+			PrintMutedVideoUrl(ctx, modifier, uploader, buf)
 			if buf.String() != tc.want {
-				t.Errorf("printConvertToMp4Output() = %v, want %v", buf.String(), tc.want)
+				t.Errorf("printMutedVideoUrl() = %v, want %v", buf.String(), tc.want)
 			}
 		})
 	}

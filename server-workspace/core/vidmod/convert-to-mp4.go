@@ -14,6 +14,7 @@ type ConvertToMp4Input struct {
 	OutputPath string
 }
 
+// TODO common constants
 const (
 	NO_FFMPEG_PATH_ERROR = "no ffmpeg path provided"
 )

@@ -4,6 +4,7 @@ import "context"
 
 type IVideoModifier interface {
 	ConvertToMp4(ctx context.Context) error
+	MuteVideo(ctx context.Context) error
 }
 
 type VideoModifier struct {
@@ -17,4 +18,12 @@ func (videoModifier *VideoModifier) ConvertToMp4(ctx context.Context) error {
 		OutputPath: videoModifier.OutputPath,
 	}
 	return convertToMp4(ctx, input)
+}
+
+func (videoModifier *VideoModifier) MuteVideo(ctx context.Context) error {
+	input := MuteVideoInput{
+		VideoPath:  videoModifier.VideoPath,
+		OutputPath: videoModifier.OutputPath,
+	}
+	return muteVideo(ctx, input)
 }
