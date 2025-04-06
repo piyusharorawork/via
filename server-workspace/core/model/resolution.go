@@ -7,18 +7,18 @@ import (
 type Resolution string
 
 const (
-	ULTRA_HD_2160p       Resolution = "ULTRA_HD_2160p"
-	QUAD_HD_1440p        Resolution = "QUAD_HD_1440p"
-	FULL_HD_1080p        Resolution = "FULL_HD_1080p"
-	HD_720p              Resolution = "HD_720p"
-	LOW_RES_HD_540p      Resolution = "LOW_RES_HD_540p"
-	SD_480p              Resolution = "SD_480p"
-	VERY_LOW_SD_360p     Resolution = "VERY_LOW_SD_360p"
-	EXTREMLY_LOW_SD_240p Resolution = "EXTREMLY_LOW_SD_240p"
-	ULTRA_LOW_SD_180p    Resolution = "ULTRA_LOW_SD_180p"
-	MINIMAL_SD_144p      Resolution = "MINIMAL_SD_144p"
-	LOWEST_SD_120p       Resolution = "LOWEST_SD_120p"
-	BARE_MINIMUM_SD_90p  Resolution = "BARE_MINIMUM_SD_90p"
+	ULTRA_HD_2160p        Resolution = "ULTRA_HD_2160p"
+	QUAD_HD_1440p         Resolution = "QUAD_HD_1440p"
+	FULL_HD_1080p         Resolution = "FULL_HD_1080p"
+	HD_720p               Resolution = "HD_720p"
+	LOW_RES_HD_540p       Resolution = "LOW_RES_HD_540p"
+	SD_480p               Resolution = "SD_480p"
+	VERY_LOW_SD_360p      Resolution = "VERY_LOW_SD_360p"
+	EXTREMELY_LOW_SD_240p Resolution = "EXTREMELY_LOW_SD_240p"
+	ULTRA_LOW_SD_180p     Resolution = "ULTRA_LOW_SD_180p"
+	MINIMAL_SD_144p       Resolution = "MINIMAL_SD_144p"
+	LOWEST_SD_120p        Resolution = "LOWEST_SD_120p"
+	BARE_MINIMUM_SD_90p   Resolution = "BARE_MINIMUM_SD_90p"
 )
 
 type Dimenstions struct {
@@ -55,7 +55,7 @@ var Resolutions = map[Resolution]Dimenstions{
 		Height: 640,
 		Width:  360,
 	},
-	"EXTREMLY_LOW_SD_240p": {
+	"EXTREMELY_LOW_SD_240p": {
 		Height: 426,
 		Width:  240,
 	},
@@ -85,4 +85,27 @@ func GetDimensions(resolution Resolution) (*Dimenstions, error) {
 
 	return &dimensions, nil
 
+}
+
+/*
+it will return the resolution and true if found
+*/
+func ParseResolution(s string) (Resolution, bool) {
+	switch Resolution(s) {
+	case ULTRA_HD_2160p,
+		QUAD_HD_1440p,
+		FULL_HD_1080p,
+		HD_720p,
+		LOW_RES_HD_540p,
+		SD_480p,
+		VERY_LOW_SD_360p,
+		EXTREMELY_LOW_SD_240p,
+		ULTRA_LOW_SD_180p,
+		MINIMAL_SD_144p,
+		LOWEST_SD_120p,
+		BARE_MINIMUM_SD_90p:
+		return Resolution(s), true
+	default:
+		return "", false
+	}
 }

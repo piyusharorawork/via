@@ -123,3 +123,65 @@ func TestMuteVideo(t *testing.T) {
 		})
 	}
 }
+
+func TestCompressVideo(t *testing.T) {
+	tt := []struct {
+		name           string
+		videoPath      string
+		outputFileName string
+		resolution     model.Resolution
+		wantFileName   string
+	}{
+		{
+			name:           "Test with valid video path",
+			videoPath:      "https://test-v1.blr1.digitaloceanspaces.com/temp/5423a55b-8455-44b0-a286-b9cca68bc8a1/hotel-highlight-reel-original.mp4",
+			outputFileName: "output.mp4",
+			resolution:     model.EXTREMELY_LOW_SD_240p,
+			wantFileName:   "hotel-highlight-reel-original-240p.mp4",
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			ctx, err := myctx.GetTestCtx()
+
+			if err != nil {
+				t.Fatal(err)
+			}
+			tempDirPath := ctx.Value(model.TempDirPath).(string)
+			outputPath := fmt.Sprintf("%s/%s", tempDirPath, tc.outputFileName)
+
+			modifier := &VideoModifier{
+				VideoPath:  tc.videoPath,
+				OutputPath: outputPath,
+			}
+
+			err = modifier.CompressVideo(ctx, tc.resolution)
+
+			if err != nil {
+				t.Errorf("Error: %v", err)
+			}
+			exists := util.IsFileExists(outputPath)
+
+			if !exists {
+				t.Errorf("File not found at %s", outputPath)
+			}
+
+			defer util.RemoveFile(outputPath)
+
+			testSamplesDirPath := ctx.Value(model.TestSamplesDirPath).(string)
+			wantFilePath := fmt.Sprintf("%s/%s", testSamplesDirPath, tc.wantFileName)
+
+			eq, err := util.AreFilesEqual(wantFilePath, outputPath)
+
+			if err != nil {
+				t.Fatalf("failed to compare images: %v", err)
+			}
+
+			if !eq {
+				t.Fatalf("files are not equal")
+			}
+
+		})
+	}
+}

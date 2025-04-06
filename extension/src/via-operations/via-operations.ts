@@ -4,6 +4,7 @@ import { showClipInfo } from "./operations/show-clip-info.operation";
 import { copyFileUrl } from "./operations/copy-file-url.operation";
 import { copyMp4Url } from "./operations/copy-mp4-url.operation";
 import { copyMutedUrl } from "./operations/copy-muted-url.operation";
+import { compressVideo } from "./operations/compress-video.operation";
 
 export const viaOperations = {
   showClipInfo,
@@ -12,4 +13,5 @@ export const viaOperations = {
   extractImage,
   copyMp4Url,
   copyMutedUrl,
+  compressVideo,
 };

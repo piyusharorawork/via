@@ -9,9 +9,13 @@
       "program": "${workspaceFolder}/server-workspace/cli",
       "cwd": "${workspaceFolder}/server-workspace",
       "args": [
-        "copy-muted-url",
+        "compress-video",
         "-v",
-        "https://test-v1.blr1.digitaloceanspaces.com/temp/025ceb46-3a1d-49f9-918e-1229a67cea6d/big-buck-bunny-480p-30sec-24fps.mp4"
+        "https://test-v1.blr1.digitaloceanspaces.com/temp/025ceb46-3a1d-49f9-918e-1229a67cea6d/big-buck-bunny-480p-30sec-24fps.mp4",
+        "-o",
+        "${workspaceFolder}/assets/temp/big-buck-bunny-240p.mp4",
+        "-r",
+        "EXTREMELY_LOW_SD_240p"
       ],
       "env": {}
     },

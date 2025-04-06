@@ -32,6 +32,10 @@
       {
         "command": "via.copy-muted-url",
         "title": "copy-muted-url"
+      },
+      {
+        "command": "via.compress-video",
+        "title": "compress-video"
       }
     ],
     "menus": {

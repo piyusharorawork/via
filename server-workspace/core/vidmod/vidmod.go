@@ -1,10 +1,15 @@
 package vidmod
 
-import "context"
+import (
+	"context"
+
+	"quickreel.com/core/model"
+)
 
 type IVideoModifier interface {
 	ConvertToMp4(ctx context.Context) error
 	MuteVideo(ctx context.Context) error
+	CompressVideo(ctx context.Context, resolution model.Resolution) error
 }
 
 type VideoModifier struct {
@@ -26,4 +31,14 @@ func (videoModifier *VideoModifier) MuteVideo(ctx context.Context) error {
 		OutputPath: videoModifier.OutputPath,
 	}
 	return muteVideo(ctx, input)
+}
+
+func (videoModifier *VideoModifier) CompressVideo(ctx context.Context, resolution model.Resolution) error {
+	input := ResizeVideoInput{
+		VideoPath:  videoModifier.VideoPath,
+		OutputPath: videoModifier.OutputPath,
+		Resolution: resolution,
+	}
+
+	return ResizeVideo(ctx, input)
 }

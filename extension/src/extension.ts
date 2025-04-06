@@ -50,12 +50,20 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const compressVideoCmd = vscode.commands.registerCommand(
+    "via.compress-video",
+    async () => {
+      await viaOperations.compressVideo();
+    }
+  );
+
   context.subscriptions.push(clipInfoCmd);
   context.subscriptions.push(downloadVideoCmd);
   context.subscriptions.push(uploadFileCmd);
   context.subscriptions.push(extractImageCmd);
   context.subscriptions.push(copyMp4UrlCmd);
   context.subscriptions.push(copyMutedUrlCmd);
+  context.subscriptions.push(compressVideoCmd);
 }
 
 export function deactivate() {}
