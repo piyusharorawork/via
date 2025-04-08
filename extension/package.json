@@ -36,6 +36,10 @@
       {
         "command": "via.compress-video",
         "title": "compress-video"
+      },
+      {
+        "command": "via.extract-clip",
+        "title": "extract-clip"
       }
     ],
     "menus": {

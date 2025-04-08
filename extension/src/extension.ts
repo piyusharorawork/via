@@ -57,6 +57,13 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const extractClipCmd = vscode.commands.registerCommand(
+    "via.extract-clip",
+    async () => {
+      await viaOperations.extractClip();
+    }
+  );
+
   context.subscriptions.push(clipInfoCmd);
   context.subscriptions.push(downloadVideoCmd);
   context.subscriptions.push(uploadFileCmd);
@@ -64,6 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(copyMp4UrlCmd);
   context.subscriptions.push(copyMutedUrlCmd);
   context.subscriptions.push(compressVideoCmd);
+  context.subscriptions.push(extractClipCmd);
 }
 
 export function deactivate() {}

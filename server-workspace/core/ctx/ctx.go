@@ -2,7 +2,6 @@ package myctx
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"os"
 
@@ -52,10 +51,11 @@ Generates context to be used when env needs to be loader from TEST_ENV_PATH file
 func GetTestCtx() (context.Context, error) {
 	envPath := os.Getenv("TEST_ENV_PATH")
 
-	println(envPath)
-
 	if envPath == "" {
-		return nil, errors.New("no env path provided")
+		fmt.Print("warning: no env path provided")
+		godotenv.Load(".env.test")
+		return createCtx()
+
 	}
 
 	godotenv.Load(envPath) // TODO use relative path
@@ -67,4 +67,21 @@ Generates context to be used for unit testing
 */
 func GetEmptyCtx() context.Context {
 	return context.Background()
+}
+
+/* Get the value from ctx
+ */
+
+func GetValue(ctx context.Context, key model.ContextKey) (string, error) {
+	value, ok := ctx.Value(model.FFMpegPath).(string)
+
+	if !ok {
+		return "", fmt.Errorf("no %s provided", key)
+	}
+
+	if value == "" {
+		return "", fmt.Errorf("%s is empty", key)
+	}
+
+	return value, nil
 }

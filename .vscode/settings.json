@@ -12,5 +12,5 @@
   "files.readonlyInclude": {
     "__logs/**": true
   },
-  "cSpell.words": ["FFPROBE", "godotenv", "myctx", "vidmod"]
+  "cSpell.words": ["clipinfo", "FFPROBE", "godotenv", "myctx", "vidmod"]
 }

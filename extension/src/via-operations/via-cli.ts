@@ -1,8 +1,10 @@
 import { ChildProcessWithoutNullStreams, spawn } from "child_process";
 
-export const spawnViaCli = (args: string[]) => {
+export const spawnViaCli = (args: (string | number)[]) => {
+  const strArgs = args.map((arg) => arg.toString());
+
   // TODO move it to settings for extension
-  const child = spawn(process.env.VIA_CLI_PATH!, args, {
+  const child = spawn(process.env.VIA_CLI_PATH!, strArgs, {
     env: {
       FF_PROBE_PATH: process.env.FF_PROBE_PATH,
       YT_DLP_CLI_PATH: process.env.YT_DLP_CLI_PATH,
