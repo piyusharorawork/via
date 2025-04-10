@@ -3,7 +3,6 @@
 ## TODO
 
 - execute with progress does not handle failures in extension
-- Extract image with resolution
 - Moment Testing
 - Exporter tool store
 - Convert Frames to video
