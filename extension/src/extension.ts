@@ -64,6 +64,13 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const extractCompressedImageCmd = vscode.commands.registerCommand(
+    "via.extract-compressed-image",
+    async () => {
+      await viaOperations.extractCompressedImage();
+    }
+  );
+
   context.subscriptions.push(clipInfoCmd);
   context.subscriptions.push(downloadVideoCmd);
   context.subscriptions.push(uploadFileCmd);
@@ -72,6 +79,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(copyMutedUrlCmd);
   context.subscriptions.push(compressVideoCmd);
   context.subscriptions.push(extractClipCmd);
+  context.subscriptions.push(extractCompressedImageCmd);
 }
 
 export function deactivate() {}

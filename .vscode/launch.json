@@ -9,17 +9,15 @@
       "program": "${workspaceFolder}/server-workspace/cli",
       "cwd": "${workspaceFolder}/server-workspace",
       "args": [
-        "extract-clip",
+        "extract-compressed-image",
         "-v",
-        "https://test-v1.blr1.digitaloceanspaces.com/temp/effbb04d-b2d0-4096-a6df-244f8d5d1dff/5-sec.mp4",
+        "https://test-v1.blr1.digitaloceanspaces.com/temp/c0e11e4f-d31a-40d2-884f-3b8968b59cdc/video.mp4",
         "-o",
-        "${workspaceFolder}/assets/temp/75-106.mp4",
-        "-s",
-        "75",
-        "-e",
-        "106",
+        "${workspaceFolder}/assets/temp/128-240p.png",
         "-f",
-        "25"
+        "128",
+        "-r",
+        "EXTREMELY_LOW_SD_240p"
       ],
       "env": {}
     },

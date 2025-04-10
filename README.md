@@ -2,12 +2,10 @@
 
 ## TODO
 
-- Extract clip from video for a range of frames
+- execute with progress does not handle failures in extension
 - Extract image with resolution
 - Moment Testing
 - Exporter tool store
-- Replace makefile with vscode launch
-
 - Convert Frames to video
 - Extract frames of video
 - Settings for extension for various env variables
@@ -45,6 +43,7 @@
 - Copy mp4 url from webm file
 - Copy muted url
 - Compress video to specific resolution
+- Extract clip from video from start and end frame
 
 ## Maybe later
 

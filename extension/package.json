@@ -40,6 +40,10 @@
       {
         "command": "via.extract-clip",
         "title": "extract-clip"
+      },
+      {
+        "command": "via.extract-compressed-image",
+        "title": "extract-compressed-image"
       }
     ],
     "menus": {
