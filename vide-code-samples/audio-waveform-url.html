@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MP3 Waveform Plotter with Timestamps and Scaled Y</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 2rem;
+        background: #f0f0f0;
+      }
+      canvas {
+        width: 100%;
+        height: 500px;
+        background: white;
+        border: 1px solid #ccc;
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Enter MP3 URL to View Scaled Waveform with Timestamps</h1>
+    <input type="text" id="mp3Url" placeholder="Enter MP3 URL" size="80" />
+    <button id="loadButton">Load MP3</button>
+    <canvas id="waveform"></canvas>
+
+    <script>
+      const mp3UrlInput = document.getElementById("mp3Url");
+      const loadButton = document.getElementById("loadButton");
+      const canvas = document.getElementById("waveform");
+      const ctx = canvas.getContext("2d");
+
+      function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs.toString().padStart(2, "0")}`;
+      }
+
+      async function loadAndDrawWaveform(url) {
+        try {
+          const response = await fetch(url);
+          const arrayBuffer = await response.arrayBuffer();
+          const audioCtx = new (window.AudioContext ||
+            window.webkitAudioContext)();
+          const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+          const rawData = audioBuffer.getChannelData(0); // use first channel
+          const samples = 1000; // number of samples to plot
+          const blockSize = Math.floor(rawData.length / samples);
+          const filteredData = new Float32Array(samples);
+
+          for (let i = 0; i < samples; i++) {
+            let sum = 0;
+            for (let j = 0; j < blockSize; j++) {
+              sum += Math.abs(rawData[i * blockSize + j]);
+            }
+            filteredData[i] = sum / blockSize;
+          }
+
+          const width = (canvas.width = canvas.offsetWidth);
+          const height = (canvas.height = canvas.offsetHeight);
+          const waveformHeight = height - 30;
+
+          // Scale factor for Y axis
+          const yScale = 5.5; // Increase this to make waveform more visible
+
+          ctx.clearRect(0, 0, width, height);
+          ctx.beginPath();
+          ctx.moveTo(0, waveformHeight);
+
+          for (let i = 0; i < samples; i++) {
+            const x = (i / samples) * width;
+            const y =
+              waveformHeight -
+              Math.min(
+                filteredData[i] * waveformHeight * yScale,
+                waveformHeight
+              );
+            ctx.lineTo(x, y);
+          }
+
+          ctx.lineTo(width, waveformHeight);
+          ctx.closePath();
+          ctx.fillStyle = "#3b82f6";
+          ctx.fill();
+
+          // Draw timestamps
+          const duration = audioBuffer.duration;
+          const numTicks = 10;
+          ctx.fillStyle = "#000";
+          ctx.font = "12px sans-serif";
+          ctx.textAlign = "center";
+
+          for (let i = 0; i <= numTicks; i++) {
+            const x = (i / numTicks) * width;
+            const time = (i / numTicks) * duration;
+            ctx.fillText(formatTime(time), x, height - 5);
+          }
+        } catch (error) {
+          console.error("Error loading or decoding MP3:", error);
+          alert("Failed to load MP3.  Check the console for details.");
+        }
+      }
+
+      loadButton.addEventListener("click", () => {
+        const mp3Url = mp3UrlInput.value;
+        if (mp3Url) {
+          loadAndDrawWaveform(mp3Url);
+        } else {
+          alert("Please enter an MP3 URL.");
+        }
+      });
+    </script>
+  </body>
+</html>

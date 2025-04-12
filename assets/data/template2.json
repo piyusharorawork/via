@@ -1,0 +1,44 @@
+{
+  "layers": [
+    {
+      "segments": [
+        {
+          "start": 0,
+          "end": 28,
+          "content": {
+            "type": "video",
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 29,
+          "end": 58,
+          "content": {
+            "type": "empty",
+
+            "region": null
+          }
+        },
+        {
+          "start": 59,
+          "end": 62,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

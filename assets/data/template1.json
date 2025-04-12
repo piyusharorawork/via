@@ -1,0 +1,513 @@
+{
+  "layers": [
+    {
+      "segments": [
+        {
+          "start": 0,
+          "end": 28,
+          "content": {
+            "type": "video",
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 29,
+          "end": 58,
+          "content": {
+            "type": "empty",
+
+            "region": null
+          }
+        },
+        {
+          "start": 59,
+          "end": 62,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 63,
+          "end": 64,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 65,
+          "end": 67,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 68,
+          "end": 70,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 71,
+          "end": 73,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 74,
+          "end": 76,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 77,
+          "end": 79,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 80,
+          "end": 82,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 83,
+          "end": 85,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 86,
+          "end": 88,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 89,
+          "end": 91,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 92,
+          "end": 94,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 95,
+          "end": 97,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 98,
+          "end": 100,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 101,
+          "end": 103,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 104,
+          "end": 106,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 107,
+          "end": 109,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 110,
+          "end": 127,
+          "content": {
+            "type": "video",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 128,
+          "end": 174,
+          "content": {
+            "type": "video",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 175,
+          "end": 212,
+          "content": {
+            "type": "dissolve",
+
+            "region": null
+          }
+        },
+        {
+          "start": 213,
+          "end": 246,
+          "content": {
+            "type": "video",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 247,
+          "end": 258,
+          "content": {
+            "type": "video",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 259,
+          "end": 272,
+          "content": {
+            "type": "video",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 273,
+          "end": 285,
+          "content": {
+            "type": "video",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 286,
+          "end": 299,
+          "content": {
+            "type": "video",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 300,
+          "end": 312,
+          "content": {
+            "type": "video",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 313,
+          "end": 326,
+          "content": {
+            "type": "video",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "start": 327,
+          "end": 363,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0.7,
+              "width": 1,
+              "height": 0.3
+            }
+          }
+        },
+        {
+          "start": 364,
+          "end": 422,
+          "content": {
+            "type": "video",
+
+            "region": {
+              "x": 0,
+              "y": 0.7,
+              "width": 1,
+              "height": 0.3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "start": 1,
+          "end": 341,
+          "content": {
+            "type": "empty",
+
+            "region": null
+          }
+        },
+        {
+          "start": 342,
+          "end": 378,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 0.3
+            }
+          }
+        },
+        {
+          "start": 379,
+          "end": 422,
+          "content": {
+            "type": "video",
+
+            "region": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 0.3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "start": 1,
+          "end": 353,
+          "content": {
+            "type": "empty",
+
+            "region": null
+          }
+        },
+        {
+          "start": 354,
+          "end": 392,
+          "content": {
+            "type": "image",
+
+            "region": {
+              "x": 0,
+              "y": -0.7,
+              "width": 1,
+              "height": 0.3
+            }
+          }
+        },
+        {
+          "start": 393,
+          "end": 422,
+          "content": {
+            "type": "video",
+
+            "region": {
+              "x": 0,
+              "y": -0.7,
+              "width": 1,
+              "height": 0.3
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

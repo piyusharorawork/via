@@ -2,8 +2,11 @@
 
 ## TODO
 
+- load template.json to memory
+- populate content url for each segment
+- template creator
+
 - execute with progress does not handle failures in extension
-- Moment Testing
 - Exporter tool store
 - Convert Frames to video
 - Extract frames of video
