@@ -16,6 +16,12 @@
 
 1. Run tests
    TEST_ENV_PATH=/Users/piyusharora/projects/via/server-workspace/.env.test make test-all
+2. Run all
+   TEST_ENV_PATH=/Users/piyusharora/projects/via/server-workspace/.env.test make all
+3. Specific unit test
+   cd server-workspace/core; TEST_ENV_PATH=/Users/piyusharora/projects/via/server-workspace/.env.test go test -timeout 30s -run ^TestConvertToMp4$ quickreel.com/core/vidmod -count=2 ;cd ../../
+4. Run all tests multiple times
+   cd server-workspace/core; TEST_ENV_PATH=/Users/piyusharora/projects/via/server-workspace/.env.test go test -timeout 30s quickreel.com/core/vidmod -count=2 ;cd ../../
 
 # Video Player tool
 

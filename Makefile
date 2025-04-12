@@ -37,3 +37,10 @@ test-all:
 	make test-website
 
 
+.PHONY: all
+all:
+	@echo "Running all..."
+	make build-all
+	make test-all
+	
+
