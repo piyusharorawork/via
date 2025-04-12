@@ -1,3 +1,4 @@
+@import "@fontsource/inter";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -62,6 +63,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "Inter", sans-serif;
   }
 }
 

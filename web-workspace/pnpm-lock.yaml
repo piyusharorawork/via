@@ -79,6 +79,9 @@ importers:
 
   apps/quick-reel-next:
     dependencies:
+      '@fontsource/inter':
+        specifier: ^5.2.5
+        version: 5.2.5
       '@radix-ui/react-label':
         specifier: ^2.1.2
         version: 2.1.2(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1067,6 +1070,9 @@ packages:
   '@ffmpeg/util@0.12.2':
     resolution: {integrity: sha512-ouyoW+4JB7WxjeZ2y6KpRvB+dLp7Cp4ro8z0HIVpZVCM7AwFlHa0c4R8Y/a4M3wMqATpYKhC7lSFHQ0T11MEDw==}
     engines: {node: '>=18.x'}
+
+  '@fontsource/inter@5.2.5':
+    resolution: {integrity: sha512-kbsPKj0S4p44JdYRFiW78Td8Ge2sBVxi/PIBwmih+RpSXUdvS9nbs1HIiuUSPtRMi14CqLEZ/fbk7dj7vni1Sg==}
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -3959,6 +3965,8 @@ snapshots:
   '@ffmpeg/types@0.12.4': {}
 
   '@ffmpeg/util@0.12.2': {}
+
+  '@fontsource/inter@5.2.5': {}
 
   '@isaacs/cliui@8.0.2':
     dependencies:
