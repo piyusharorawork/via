@@ -1,11 +1,14 @@
 # via
 
+# Template Builder tool
+
+- Create Template Api
+
 ## TODO
 
 - load template.json to memory
 - populate content url for each segment
 - template creator
-
 - execute with progress does not handle failures in extension
 - Exporter tool store
 - Convert Frames to video
