@@ -1,12 +1,13 @@
-package clipinfostore
+package snapshotstore
 
 import (
 	"context"
+	"fmt"
 
 	commonstore "quick-reel.com/store/store-common"
 )
 
-func removeClipInfo(ctx context.Context, id string) error {
+func remove(ctx context.Context, id string) error {
 	db, err := commonstore.CreateDb(ctx)
 
 	if err != nil {
@@ -21,8 +22,8 @@ func removeClipInfo(ctx context.Context, id string) error {
 		return err
 	}
 
-	removeDataSql := `
-	DELETE FROM clipinfo WHERE id = ?;`
+	removeDataSql := fmt.Sprintf(`
+	DELETE FROM %s WHERE id = ?;`, TABLE_NAME)
 
 	_, err = db.Exec(removeDataSql, id)
 	return err

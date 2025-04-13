@@ -19,6 +19,7 @@
     "FFPROBE",
     "godotenv",
     "myctx",
+    "snapshotstore",
     "storecommon",
     "templatestore",
     "vidmod"

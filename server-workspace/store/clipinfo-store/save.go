@@ -2,12 +2,11 @@ package clipinfostore
 
 import (
 	"context"
-	"database/sql"
 
 	_ "github.com/mattn/go-sqlite3"
+	commonstore "quick-reel.com/store/store-common"
 
 	"github.com/google/uuid"
-	"quickreel.com/core/model"
 )
 
 type SaveClipInfoInput struct {
@@ -17,9 +16,8 @@ type SaveClipInfoInput struct {
 	FrameHeight int
 }
 
-func saveClipInfo(ctx context.Context, input SaveClipInfoInput) (string, error) {
-	dbPath := ctx.Value(model.DbPath).(string)
-	db, err := sql.Open("sqlite3", dbPath)
+func save(ctx context.Context, input SaveClipInfoInput) (string, error) {
+	db, err := commonstore.CreateDb(ctx)
 
 	if err != nil {
 		return "", err

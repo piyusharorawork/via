@@ -11,9 +11,9 @@ type IClipInfoStore interface {
 type ClipInfoStore struct{}
 
 func (store *ClipInfoStore) Save(ctx context.Context, input SaveClipInfoInput) (string, error) {
-	return saveClipInfo(ctx, input)
+	return save(ctx, input)
 }
 
 func (store *ClipInfoStore) Remove(ctx context.Context, id string) error {
-	return removeClipInfo(ctx, id)
+	return remove(ctx, id)
 }
