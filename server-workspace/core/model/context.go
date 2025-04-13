@@ -16,4 +16,5 @@ const (
 	SpaceName          ContextKey = "spaceName"
 	TempDirPath        ContextKey = "tempDirPath"
 	TestSamplesDirPath ContextKey = "testSamplesDirPath"
+	DbPath             ContextKey = "dbPath"
 )

@@ -15,19 +15,20 @@
 - Extract frames of video
 - Settings for extension for various env variables
 - Better env management so only those env are required whose functionality is used
-- Anything that starts with /Users/piyusharora must be in env variable
 - copy file url to have caching to improve latency
 
 # Useful commands
 
 1. Run tests
-   TEST_ENV_PATH=/Users/piyusharora/projects/via/server-workspace/.env.test make test-all
+   make test-all
 2. Run all
-   TEST_ENV_PATH=/Users/piyusharora/projects/via/server-workspace/.env.test make all
+   make all
 3. Specific unit test
-   cd server-workspace/core; TEST_ENV_PATH=/Users/piyusharora/projects/via/server-workspace/.env.test go test -timeout 30s -run ^TestConvertToMp4$ quickreel.com/core/vidmod -count=2 ;cd ../../
+   cd server-workspace/core; go test -timeout 30s -run ^TestConvertToMp4$ quickreel.com/core/vidmod -count=2 ;cd ../../
 4. Run all tests multiple times
-   cd server-workspace/core; TEST_ENV_PATH=/Users/piyusharora/projects/via/server-workspace/.env.test go test -timeout 30s quickreel.com/core/vidmod -count=2 ;cd ../../
+   cd server-workspace/core; go test -timeout 30s quickreel.com/core/vidmod -count=2 ;cd ../../
+5. Install uuid golang
+   go get github.com/google/uuid
 
 # Video Player tool
 

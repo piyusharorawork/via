@@ -4,9 +4,11 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/joho/godotenv"
 	"quickreel.com/core/model"
+	"quickreel.com/core/util"
 )
 
 func createCtx() (context.Context, error) {
@@ -22,6 +24,7 @@ func createCtx() (context.Context, error) {
 		model.SpaceName:          os.Getenv("SPACE_NAME"),
 		model.TempDirPath:        os.Getenv("TEMP_DIR_PATH"),
 		model.TestSamplesDirPath: os.Getenv("TEST_SAMPLES_DIR_PATH"),
+		model.DbPath:             os.Getenv("DB_PATH"),
 	}
 
 	for key, val := range envs {
@@ -49,16 +52,21 @@ func GetCtx() (context.Context, error) {
 Generates context to be used when env needs to be loader from TEST_ENV_PATH file
 */
 func GetTestCtx() (context.Context, error) {
-	envPath := os.Getenv("TEST_ENV_PATH")
+	absPath, err := filepath.Abs(".")
 
-	if envPath == "" {
-		fmt.Print("warning: no env path provided")
-		godotenv.Load(".env.test")
-		return createCtx()
+	if err != nil {
+		return nil, err
+	}
+	print(absPath)
 
+	envPath := filepath.Join(absPath, "../../../assets/environments/.env.test")
+
+	if !util.IsPathExists(envPath) {
+		return nil, fmt.Errorf("%s not exist", envPath)
 	}
 
-	godotenv.Load(envPath) // TODO use relative path
+	godotenv.Load(envPath)
+
 	return createCtx()
 }
 
