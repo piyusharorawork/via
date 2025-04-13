@@ -7,6 +7,7 @@ import { copyMutedUrl } from "./operations/copy-muted-url.operation";
 import { compressVideo } from "./operations/compress-video.operation";
 import { extractClip } from "./operations/extract-clip.operation";
 import { extractCompressedImage } from "./operations/extract-compressed-image.operation";
+import { downloadAudio } from "./operations/download-audio.operation";
 
 export const viaOperations = {
   showClipInfo,
@@ -18,4 +19,5 @@ export const viaOperations = {
   compressVideo,
   extractClip,
   extractCompressedImage,
+  downloadAudio,
 };

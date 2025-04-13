@@ -16,6 +16,7 @@
     "clipinfo",
     "clipinfostore",
     "commonstore",
+    "dosa",
     "FFPROBE",
     "godotenv",
     "myctx",

@@ -44,6 +44,17 @@ Generates context to be used when env needs to be loader from .env file
 */
 func GetCtx() (context.Context, error) {
 	// Load .env file which may or may not exist
+	absPath, err := filepath.Abs(".")
+
+	if err != nil {
+		return nil, err
+	}
+
+	envPath := filepath.Join(absPath, "../../assets/environments/.env")
+
+	if !util.IsPathExists(envPath) {
+		return nil, fmt.Errorf("%s not exist", envPath)
+	}
 	godotenv.Load()
 	return createCtx()
 }
@@ -57,7 +68,6 @@ func GetTestCtx() (context.Context, error) {
 	if err != nil {
 		return nil, err
 	}
-	print(absPath)
 
 	envPath := filepath.Join(absPath, "../../../assets/environments/.env.test")
 

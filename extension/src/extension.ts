@@ -71,6 +71,13 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const downloadAudioCmd = vscode.commands.registerCommand(
+    "via.download-audio",
+    async () => {
+      await viaOperations.downloadAudio();
+    }
+  );
+
   context.subscriptions.push(clipInfoCmd);
   context.subscriptions.push(downloadVideoCmd);
   context.subscriptions.push(uploadFileCmd);
@@ -80,6 +87,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(compressVideoCmd);
   context.subscriptions.push(extractClipCmd);
   context.subscriptions.push(extractCompressedImageCmd);
+  context.subscriptions.push(downloadAudioCmd);
 }
 
 export function deactivate() {}

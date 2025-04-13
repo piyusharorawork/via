@@ -17,13 +17,13 @@ type DownloadVideoOutput struct {
 }
 
 func init() {
-	RootCmd.AddCommand(downloaderCmd)
-	downloaderCmd.Flags().StringP("website-url", "w", "", "Website Url That contains video")
-	downloaderCmd.Flags().StringP("out-dir", "d", "", "Output Directory where video will be saved")
-	downloaderCmd.Flags().StringP("out-file", "f", "", "Output File Name with extension")
+	RootCmd.AddCommand(downloadVideoCmd)
+	downloadVideoCmd.Flags().StringP("website-url", "w", "", "Website Url That contains video")
+	downloadVideoCmd.Flags().StringP("out-dir", "d", "", "Output Directory where video will be saved")
+	downloadVideoCmd.Flags().StringP("out-file", "f", "", "Output File Name with extension")
 }
 
-var downloaderCmd = &cobra.Command{
+var downloadVideoCmd = &cobra.Command{
 	Use:   "download-video",
 	Short: "Download Video",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -46,7 +46,7 @@ var downloaderCmd = &cobra.Command{
 			OutputDirPath:  outDir,
 			OutputFileName: outFileName,
 			Callback: func(percentage int) {
-				printOutput(percentage)
+				printVideoProgress(percentage)
 			},
 		}
 
@@ -66,7 +66,7 @@ var downloaderCmd = &cobra.Command{
 }
 
 // TODO see how can we move this to adapter
-func printOutput(percentage int) {
+func printVideoProgress(percentage int) {
 	output := &DownloadVideoOutput{
 		Progress: percentage,
 	}

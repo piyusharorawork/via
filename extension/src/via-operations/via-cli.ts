@@ -15,6 +15,7 @@ export const spawnViaCli = (args: (string | number)[]) => {
       SPACE_NAME: process.env.SPACE_NAME,
       TEMP_DIR_PATH: process.env.TEMP_DIR_PATH,
       TEST_SAMPLES_DIR_PATH: process.env.TEST_SAMPLES_DIR_PATH,
+      DB_PATH: process.env.DB_PATH,
     },
   });
 

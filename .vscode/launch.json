@@ -9,17 +9,15 @@
       "program": "${workspaceFolder}/server-workspace/cli",
       "cwd": "${workspaceFolder}/server-workspace",
       "args": [
-        "extract-compressed-image",
-        "-v",
-        "https://test-v1.blr1.digitaloceanspaces.com/temp/c0e11e4f-d31a-40d2-884f-3b8968b59cdc/video.mp4",
-        "-o",
-        "${workspaceFolder}/assets/temp/128-240p.png",
+        "download-audio",
+        "-w",
+        "https://www.youtube.com/shorts/tv2A0xxesZY",
+        "-d",
+        "${workspaceFolder}/assets/temp",
         "-f",
-        "128",
-        "-r",
-        "EXTREMELY_LOW_SD_240p"
+        "my-out.mp3"
       ],
-      "env": {}
+      "envFile": "${workspaceFolder}/assets/environments/.env"
     },
     {
       "name": "server",
@@ -35,7 +33,8 @@
       "request": "launch",
       "args": ["--extensionDevelopmentPath=${workspaceFolder}/extension"],
       "outFiles": ["${workspaceFolder}/extension/out/**/*.js"],
-      "preLaunchTask": "${defaultBuildTask}"
+      "preLaunchTask": "${defaultBuildTask}",
+      "envFile": "${workspaceFolder}/assets/environments/.env"
     },
     {
       "name": "quick-reel-next",

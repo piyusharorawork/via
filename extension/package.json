@@ -44,6 +44,10 @@
       {
         "command": "via.extract-compressed-image",
         "title": "extract-compressed-image"
+      },
+      {
+        "command": "via.download-audio",
+        "title": "download-audio"
       }
     ],
     "menus": {

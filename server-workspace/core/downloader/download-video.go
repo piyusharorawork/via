@@ -36,6 +36,10 @@ func downloadVideo(ctx context.Context, input DownloadVideoInput) error {
 	err := util.StreamCommand(util.StreamCommandInput{
 		Cmd: cmd,
 		Callback: func(text string) {
+			if input.Callback == nil {
+				return
+			}
+
 			if strings.Contains(text, "Downloading") {
 				input.Callback(5)
 			}
@@ -47,7 +51,9 @@ func downloadVideo(ctx context.Context, input DownloadVideoInput) error {
 		},
 	})
 
-	input.Callback(100)
+	if input.Callback != nil {
+		input.Callback(100)
+	}
 
 	return err
 
