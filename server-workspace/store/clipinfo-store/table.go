@@ -9,7 +9,9 @@ func createTable(db *sql.DB) error {
 		fps INTEGER, 
 		frame_count INTEGER, 
 		frame_width INTEGER, 
-		frame_height INTEGER
+		frame_height INTEGER,
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 	);`
 
 	_, err := db.Exec(createTableSql)
