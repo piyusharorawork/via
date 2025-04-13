@@ -23,6 +23,11 @@ test-website:
 	@echo "Testing website..."
 	cd web-workspace/apps/quick-reel-next && pnpm test
 
+.PHONY: test-store
+test-store:
+	@echo "Testing store..."
+	cd server-workspace/store && go test -count=1 ./template-store/...
+
 .PHONY: build-all
 build-all:
 	@echo "Building all..."
@@ -35,6 +40,7 @@ test-all:
 	make test-core
 	make test-cli
 	make test-website
+	make test-store
 
 
 .PHONY: all

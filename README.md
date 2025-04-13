@@ -6,6 +6,9 @@
 
 ## TODO
 
+- Template Store
+-
+
 - load template.json to memory
 - populate content url for each segment
 - template creator

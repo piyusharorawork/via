@@ -1,4 +1,4 @@
-package snapshotstore
+package templatestore
 
 import (
 	"context"
@@ -22,7 +22,7 @@ func remove(ctx context.Context, id string) error {
 	}
 
 	removeDataSql := `
-	DELETE FROM snapshot WHERE id = ?;`
+	DELETE FROM %s WHERE id = ?;`
 
 	_, err = db.Exec(removeDataSql, id)
 	return err

@@ -2,7 +2,6 @@ package snapshotstore
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 	commonstore "quick-reel.com/store/store-common"
@@ -29,9 +28,9 @@ func save(ctx context.Context, input SaveSnapShotInput) (string, error) {
 	}
 
 	// Insert data
-	insertDataSql := fmt.Sprintf(`
-	INSERT INTO %s (id, frame_no, image_url) 
-	VALUES (?, ?, ?);`, TABLE_NAME)
+	insertDataSql := `
+	INSERT INTO snapshot (id, frame_no, image_url) 
+	VALUES (?, ?, ?);`
 
 	id := uuid.NewString()
 
