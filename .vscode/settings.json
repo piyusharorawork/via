@@ -21,6 +21,7 @@
     "myctx",
     "snapshotstore",
     "storecommon",
+    "templateservice",
     "templatestore",
     "vidmod"
   ]
