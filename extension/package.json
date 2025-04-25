@@ -68,6 +68,56 @@
           "group": "1_modification"
         }
       ]
+    },
+    "configuration": {
+      "title": "via",
+      "properties": {
+        "via.viaCliPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to via cli"
+        },
+        "via.ffProbePath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to ffprobe"
+        },
+        "via.ffmpegPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to ffmpeg"
+        },
+        "via.ytDLPPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to ytDlp"
+        },
+        "via.spaceAccessKey": {
+          "type": "string",
+          "default": "",
+          "description": "Space access key"
+        },
+        "via.spaceSecretKey": {
+          "type": "string",
+          "default": "",
+          "description": "Space secret key"
+        },
+        "via.spaceRegion": {
+          "type": "string",
+          "default": "",
+          "description": "Space region"
+        },
+        "via.spaceName": {
+          "type": "string",
+          "default": "",
+          "description": "Space name"
+        },
+        "via.tempDirPath": {
+          "type": "string",
+          "default": "",
+          "description": "Temp dir path"
+        }
+      }
     }
   },
   "scripts": {

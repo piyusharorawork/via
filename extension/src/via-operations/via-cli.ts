@@ -1,21 +1,66 @@
 import { ChildProcessWithoutNullStreams, spawn } from "child_process";
+import * as vscode from "vscode";
 
 export const spawnViaCli = (args: (string | number)[]) => {
   const strArgs = args.map((arg) => arg.toString());
 
-  // TODO move it to settings for extension
-  const child = spawn(process.env.VIA_CLI_PATH!, strArgs, {
+  const config = vscode.workspace.getConfiguration("via");
+  const viaCliPath = config.get<string>("viaCliPath");
+
+  if (!viaCliPath || viaCliPath === "") {
+    throw new Error("viaCliPath is empty");
+  }
+
+  const ffprobePath = config.get<string>("ffProbePath");
+  if (!ffprobePath || ffprobePath === "") {
+    throw new Error("ffprobePath is empty");
+  }
+
+  const ffmpegPath = config.get<string>("ffmpegPath");
+  if (!ffmpegPath || ffmpegPath === "") {
+    throw new Error("ffmpegPath is empty");
+  }
+
+  const ytDLPPath = config.get<string>("ytDLPPath");
+  if (!ytDLPPath || ytDLPPath === "") {
+    throw new Error("ytDLPPath is empty");
+  }
+
+  const spaceAccessKey = config.get<string>("spaceAccessKey");
+  if (!spaceAccessKey || spaceAccessKey === "") {
+    throw new Error("spaceAccessKey is empty");
+  }
+
+  const spaceSecretKey = config.get<string>("spaceSecretKey");
+  if (!spaceSecretKey || spaceSecretKey === "") {
+    throw new Error("spaceSecretKey is empty");
+  }
+
+  const spaceRegion = config.get<string>("spaceRegion");
+  if (!spaceRegion || spaceRegion === "") {
+    throw new Error("spaceRegion is empty");
+  }
+
+  const spaceName = config.get<string>("spaceName");
+  if (!spaceName || spaceName === "") {
+    throw new Error("spaceName is empty");
+  }
+
+  const tempDirPath = config.get<string>("tempDirPath");
+  if (!tempDirPath || tempDirPath === "") {
+    throw new Error("tempDirPath is empty");
+  }
+
+  const child = spawn(viaCliPath, strArgs, {
     env: {
-      FF_PROBE_PATH: process.env.FF_PROBE_PATH,
-      YT_DLP_CLI_PATH: process.env.YT_DLP_CLI_PATH,
-      FFMPEG_PATH: process.env.FFMPEG_PATH,
-      SPACE_ACCESS_KEY: process.env.SPACE_ACCESS_KEY,
-      SPACE_SECRET_KEY: process.env.SPACE_SECRET_KEY,
-      SPACE_REGION: process.env.SPACE_REGION,
-      SPACE_NAME: process.env.SPACE_NAME,
-      TEMP_DIR_PATH: process.env.TEMP_DIR_PATH,
-      TEST_SAMPLES_DIR_PATH: process.env.TEST_SAMPLES_DIR_PATH,
-      DB_PATH: process.env.DB_PATH,
+      FF_PROBE_PATH: ffprobePath,
+      FFMPEG_PATH: ffmpegPath,
+      YT_DLP_CLI_PATH: ytDLPPath,
+      SPACE_ACCESS_KEY: spaceAccessKey,
+      SPACE_SECRET_KEY: spaceSecretKey,
+      SPACE_REGION: spaceRegion,
+      SPACE_NAME: spaceName,
+      TEMP_DIR_PATH: tempDirPath,
     },
   });
 

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os/exec"
 
+	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/model"
 	"quickreel.com/core/util"
 )
@@ -16,10 +17,10 @@ type ExtractImageInput struct {
 }
 
 func extractImage(ctx context.Context, input ExtractImageInput) error {
-	ffmpegPath, ok := ctx.Value(model.FFMpegPath).(string)
+	ffmpegPath, err := myctx.GetValue(ctx, model.FFMpegPath)
 
-	if !ok {
-		return fmt.Errorf("ffmpeg path not found in context")
+	if err != nil {
+		return err
 	}
 
 	cmd := exec.Command(
@@ -28,7 +29,7 @@ func extractImage(ctx context.Context, input ExtractImageInput) error {
 		"-vsync", "0", "-frames:v", "1", input.OutputPath,
 	)
 
-	_, err := util.RunCommand(cmd)
+	_, err = util.RunCommand(cmd)
 
 	if err != nil {
 		return err

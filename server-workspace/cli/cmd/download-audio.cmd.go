@@ -19,8 +19,11 @@ type DownloadAudioOutput struct {
 func init() {
 	RootCmd.AddCommand(downloadAudioCmd)
 	downloadAudioCmd.Flags().StringP("website-url", "w", "", "Website Url That contains audio")
+	downloadAudioCmd.MarkFlagRequired("website-url")
 	downloadAudioCmd.Flags().StringP("out-dir", "d", "", "Output Directory where audio will be saved")
+	downloadAudioCmd.MarkFlagRequired("out-dir")
 	downloadAudioCmd.Flags().StringP("out-file", "f", "", "Output File Name with extension")
+	downloadAudioCmd.MarkFlagRequired("out-file")
 }
 
 var downloadAudioCmd = &cobra.Command{

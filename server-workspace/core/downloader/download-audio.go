@@ -2,9 +2,9 @@ package downloader
 
 import (
 	"context"
-	"errors"
 	"os/exec"
 
+	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/model"
 	"quickreel.com/core/util"
 )
@@ -16,14 +16,16 @@ type DownloadAudioInput struct {
 }
 
 func downloadAudio(ctx context.Context, input DownloadAudioInput) error {
-	ytDlpCliPath, ok := ctx.Value(model.YtDlpCliPath).(string)
-	if !ok {
-		return errors.New(NO_CLI_PATH_ERROR)
+	ytDlpCliPath, err := myctx.GetValue(ctx, model.YtDlpCliPath)
+
+	if err != nil {
+		return err
 	}
 
-	ffmpegPath, ok := ctx.Value(model.FFMpegPath).(string)
-	if !ok {
-		return errors.New("no ffmpeg")
+	ffmpegPath, err := myctx.GetValue(ctx, model.FFMpegPath)
+
+	if err != nil {
+		return err
 	}
 
 	cmd := exec.Command(
@@ -37,7 +39,7 @@ func downloadAudio(ctx context.Context, input DownloadAudioInput) error {
 		input.WebsiteUrl,
 	)
 
-	_, err := util.RunCommand(cmd)
+	_, err = util.RunCommand(cmd)
 
 	if err != nil {
 		return err

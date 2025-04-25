@@ -16,6 +16,7 @@ import (
 func init() {
 	RootCmd.AddCommand(copyMutedUrlCmd)
 	copyMutedUrlCmd.Flags().StringP("video-path", "v", "", "Video url/path of video file")
+	copyMutedUrlCmd.MarkFlagRequired("video-path")
 }
 
 var copyMutedUrlCmd = &cobra.Command{

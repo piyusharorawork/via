@@ -2,10 +2,10 @@ package vidmod
 
 import (
 	"context"
-	"errors"
 	"os/exec"
 	"strconv"
 
+	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/model"
 	"quickreel.com/core/util"
 )
@@ -17,10 +17,10 @@ type ResizeVideoInput struct {
 }
 
 func ResizeVideo(ctx context.Context, input ResizeVideoInput) error {
-	ffmpegPath, ok := ctx.Value(model.FFMpegPath).(string)
+	ffmpegPath, err := myctx.GetValue(ctx, model.FFMpegPath)
 
-	if !ok {
-		return errors.New(NO_FFMPEG_PATH_ERROR)
+	if err != nil {
+		return err
 	}
 
 	dimensions, err := model.GetDimensions(input.Resolution)

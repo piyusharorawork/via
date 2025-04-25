@@ -2,9 +2,9 @@ package vidmod
 
 import (
 	"context"
-	"errors"
 	"os/exec"
 
+	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/model"
 	"quickreel.com/core/util"
 )
@@ -15,14 +15,14 @@ type MuteVideoInput struct {
 }
 
 func muteVideo(ctx context.Context, input MuteVideoInput) error {
-	ffmpegPath, ok := ctx.Value(model.FFMpegPath).(string)
+	ffmpegPath, err := myctx.GetValue(ctx, model.FFMpegPath)
 
-	if !ok {
-		return errors.New(NO_FFMPEG_PATH_ERROR)
+	if err != nil {
+		return err
 	}
 
 	cmd := exec.Command(ffmpegPath, "-i", input.VideoPath, "-an", "-vcodec", "copy", input.OutputPath)
-	_, err := util.RunCommand(cmd)
+	_, err = util.RunCommand(cmd)
 
 	if err != nil {
 		return err

@@ -14,6 +14,7 @@ import (
 func init() {
 	RootCmd.AddCommand(uploadFileCmd)
 	uploadFileCmd.Flags().StringP("file-path", "f", "", "Path of the file to upload")
+	uploadFileCmd.MarkFlagRequired("file-path")
 
 }
 

@@ -12,8 +12,11 @@ import (
 func init() {
 	RootCmd.AddCommand(extractorCmd)
 	extractorCmd.Flags().StringP("video-url", "u", "", "Video Url")
+	extractorCmd.MarkFlagRequired("video-url")
 	extractorCmd.Flags().StringP("out-file", "o", "", "Output image file path")
+	extractorCmd.MarkFlagRequired("out-file")
 	extractorCmd.Flags().IntP("frame", "f", 0, "frame number")
+	extractorCmd.MarkFlagRequired("frame")
 }
 
 var extractorCmd = &cobra.Command{

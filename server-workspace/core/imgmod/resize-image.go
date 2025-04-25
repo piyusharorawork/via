@@ -5,6 +5,7 @@ import (
 	"os/exec"
 	"strconv"
 
+	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/model"
 	"quickreel.com/core/util"
 )
@@ -23,9 +24,15 @@ func ResizeImage(input ResizeImageInput) error {
 		return errors.New("resolution not found")
 	}
 
-	cmd := exec.Command("ffmpeg", "-y", "-i", input.ImagePath, "-vf", "scale="+strconv.Itoa(dimensions.Width)+":"+strconv.Itoa(dimensions.Height), input.OutputPath)
+	ffmpegPath, err := myctx.GetValue(myctx.GetEmptyCtx(), model.FFMpegPath)
 
-	_, err := util.RunCommand(cmd)
+	if err != nil {
+		return err
+	}
+
+	cmd := exec.Command(ffmpegPath, "-y", "-i", input.ImagePath, "-vf", "scale="+strconv.Itoa(dimensions.Width)+":"+strconv.Itoa(dimensions.Height), input.OutputPath)
+
+	_, err = util.RunCommand(cmd)
 
 	if err != nil {
 		return err

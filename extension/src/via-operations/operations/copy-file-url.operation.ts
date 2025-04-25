@@ -36,6 +36,6 @@ export const copyFileUrl = async (filePath: string) => {
         });
       });
     },
-    title: "Fetching Clip Info",
+    title: "Copying file url ...",
   });
 };

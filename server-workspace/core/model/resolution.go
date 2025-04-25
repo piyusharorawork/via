@@ -21,12 +21,12 @@ const (
 	BARE_MINIMUM_SD_90p   Resolution = "BARE_MINIMUM_SD_90p"
 )
 
-type Dimenstions struct {
+type Dimensions struct {
 	Width  int
 	Height int
 }
 
-var Resolutions = map[Resolution]Dimenstions{
+var Resolutions = map[Resolution]Dimensions{
 	"ULTRA_HD_2160p": {
 		Height: 3840,
 		Width:  2160,
@@ -77,7 +77,7 @@ var Resolutions = map[Resolution]Dimenstions{
 	},
 }
 
-func GetDimensions(resolution Resolution) (*Dimenstions, error) {
+func GetDimensions(resolution Resolution) (*Dimensions, error) {
 	dimensions, found := Resolutions[resolution]
 	if !found {
 		return nil, errors.New("resolution not found")

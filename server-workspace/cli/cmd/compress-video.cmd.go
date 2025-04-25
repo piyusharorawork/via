@@ -10,8 +10,11 @@ import (
 func init() {
 	RootCmd.AddCommand(compressVideoCmd)
 	compressVideoCmd.Flags().StringP("video-path", "v", "", "Video url/path of video file to compress")
+	compressVideoCmd.MarkFlagRequired("video-path")
 	compressVideoCmd.Flags().StringP("output-path", "o", "", "Output file path")
+	compressVideoCmd.MarkFlagRequired("output-path")
 	compressVideoCmd.Flags().StringP("resolution", "r", "", "Resolution")
+	compressVideoCmd.MarkFlagRequired("resolution")
 }
 
 var compressVideoCmd = &cobra.Command{

@@ -2,9 +2,9 @@ package vidmod
 
 import (
 	"context"
-	"errors"
 	"os/exec"
 
+	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/model"
 	"quickreel.com/core/util"
 )
@@ -20,17 +20,14 @@ const (
 )
 
 func convertToMp4(ctx context.Context, input ConvertToMp4Input) error {
-	ffmpegPath, ok := ctx.Value(model.FFMpegPath).(string)
-
-	if !ok {
-		return errors.New(NO_FFMPEG_PATH_ERROR)
+	ffmpegPath, err := myctx.GetValue(ctx, model.FFMpegPath)
+	if err != nil {
+		return err
 	}
 
 	cmd := exec.Command(ffmpegPath, "-y", "-i", input.VideoPath, "-c:v", "libx264", "-crf", "23", "-preset", "fast", "-c:a", "aac", "-b:a", "128k", input.OutputPath)
 
-	println("Command: ", cmd.String()) // TODO configure logger
-
-	_, err := util.RunCommand(cmd)
+	_, err = util.RunCommand(cmd)
 
 	if err != nil {
 		return err

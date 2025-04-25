@@ -12,9 +12,13 @@ import (
 func init() {
 	RootCmd.AddCommand(extractCompressedImageCmd)
 	extractCompressedImageCmd.Flags().StringP("video-path", "v", "", "Video url/path of video file to extract clip from")
+	extractCompressedImageCmd.MarkFlagRequired("video-path")
 	extractCompressedImageCmd.Flags().StringP("output-path", "o", "", "Path where image file will be saved")
+	extractCompressedImageCmd.MarkFlagRequired("output-path")
 	extractCompressedImageCmd.Flags().IntP("frame-no", "f", 0, "Frame number")
+	extractCompressedImageCmd.MarkFlagRequired("frame-no")
 	extractCompressedImageCmd.Flags().StringP("resolution", "r", "", "Resolution of image")
+	extractCompressedImageCmd.MarkFlagRequired("resolution")
 
 }
 

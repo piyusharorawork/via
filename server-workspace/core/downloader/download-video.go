@@ -2,11 +2,11 @@ package downloader
 
 import (
 	"context"
-	"errors"
 	"os/exec"
 	"strconv"
 	"strings"
 
+	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/model"
 	"quickreel.com/core/util"
 )
@@ -26,14 +26,15 @@ type DownloadVideoInput struct {
 Reference https://chatgpt.com/c/67ea972f-f62c-8006-b942-f66a1288a52a
 */
 func downloadVideo(ctx context.Context, input DownloadVideoInput) error {
-	ytDlpCliPath, ok := ctx.Value(model.YtDlpCliPath).(string)
-	if !ok {
-		return errors.New(NO_CLI_PATH_ERROR)
+	ytDlpCliPath, err := myctx.GetValue(ctx, model.YtDlpCliPath)
+
+	if err != nil {
+		return err
 	}
 
 	cmd := exec.Command(ytDlpCliPath, "-P", input.OutputDir, "-f", "b", "-o", input.OutputFileName, "--progress", "--force-overwrites", input.WebsiteUrl)
 
-	err := util.StreamCommand(util.StreamCommandInput{
+	err = util.StreamCommand(util.StreamCommandInput{
 		Cmd: cmd,
 		Callback: func(text string) {
 			if input.Callback == nil {

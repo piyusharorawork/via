@@ -28,10 +28,6 @@ func createCtx() (context.Context, error) {
 	}
 
 	for key, val := range envs {
-		// TODO now all keys are required for all envs which does not make sense
-		if val == "" {
-			return ctx, fmt.Errorf("no %s provided", key)
-		}
 
 		ctx = context.WithValue(ctx, key, val)
 	}
@@ -43,19 +39,16 @@ func createCtx() (context.Context, error) {
 Generates context to be used when env needs to be loader from .env file
 */
 func GetCtx() (context.Context, error) {
-	// Load .env file which may or may not exist
-	absPath, err := filepath.Abs(".")
+	envPath := os.Getenv("ENV_PATH")
 
-	if err != nil {
-		return nil, err
+	if envPath == "" {
+		return createCtx()
 	}
-
-	envPath := filepath.Join(absPath, "../../assets/environments/.env")
 
 	if !util.IsPathExists(envPath) {
 		return nil, fmt.Errorf("%s not exist", envPath)
 	}
-	godotenv.Load()
+	godotenv.Load(envPath)
 	return createCtx()
 }
 
@@ -91,7 +84,7 @@ func GetEmptyCtx() context.Context {
  */
 
 func GetValue(ctx context.Context, key model.ContextKey) (string, error) {
-	value, ok := ctx.Value(model.FFMpegPath).(string)
+	value, ok := ctx.Value(key).(string)
 
 	if !ok {
 		return "", fmt.Errorf("no %s provided", key)

@@ -17,6 +17,7 @@ import (
 func init() {
 	RootCmd.AddCommand(convertToMp4Cmd)
 	convertToMp4Cmd.Flags().StringP("video-path", "v", "", "Video url/path of webm file")
+	convertToMp4Cmd.MarkFlagRequired("video-path")
 }
 
 var convertToMp4Cmd = &cobra.Command{

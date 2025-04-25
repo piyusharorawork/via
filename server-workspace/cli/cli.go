@@ -1,10 +1,11 @@
 package main
 
-import "quickreel.com/cli/cmd"
+import (
+	"quickreel.com/cli/cmd"
+)
 
 func main() {
 
-	 cmd.Execute()
+	cmd.Execute()
 
-	 
 }

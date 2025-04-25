@@ -55,15 +55,14 @@ export const downloadAudio = async () => {
 
         child.on("close", async (code) => {
           console.log(code);
-          //   if (code !== 0) {
-          //     reject(DOWNLOAD_AUDIO_EXIT_ERROR);
-          //   }
+          if (code !== 0) {
+            reject(DOWNLOAD_AUDIO_EXIT_ERROR);
+          }
 
-          //   const path = join(outDir, "audio.mp3");
-          //   const fileUri = vscode.Uri.file(path);
-          //   await vscode.commands.executeCommand("vscode.open", fileUri);
-
-          //   resolve();
+          const path = join(outDir, "audio.mp3");
+          const fileUri = vscode.Uri.file(path);
+          await vscode.commands.executeCommand("vscode.open", fileUri);
+          resolve();
         });
       });
     },

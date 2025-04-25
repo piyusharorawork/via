@@ -13,6 +13,7 @@ import (
 func init() {
 	RootCmd.AddCommand(clipInfoCmd)
 	clipInfoCmd.Flags().StringP("video-path", "v", "", "Video path")
+	clipInfoCmd.MarkFlagRequired("video-path")
 }
 
 var clipInfoCmd = &cobra.Command{

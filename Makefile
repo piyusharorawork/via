@@ -1,7 +1,7 @@
 .PHONY: build-cli
 build-cli:
 	@echo "Building cli..."
-	cd server-workspace/cli && go build -o ../../bin/via-cli
+	cd server-workspace/cli && go build -o ../../assets/bin/via-cli
 
 .PHONY: build-extention
 build-extention:

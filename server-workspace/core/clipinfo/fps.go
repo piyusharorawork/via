@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 
+	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/model"
 	"quickreel.com/core/util"
 )
@@ -16,9 +17,10 @@ const (
 )
 
 func getFPS(ctx context.Context, videoPath string) (int, error) {
-	ffProbePath, ok := ctx.Value(model.FFProbePath).(string)
-	if !ok {
-		return 0, errors.New(NO_FFPROBE_PATH_ERROR)
+	ffProbePath, err := myctx.GetValue(ctx, model.FFProbePath)
+
+	if err != nil {
+		return 0, err
 	}
 
 	cmd := exec.Command(ffProbePath, "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=r_frame_rate", "-of", "default=noprint_wrappers=1:nokey=1", videoPath)

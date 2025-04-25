@@ -19,8 +19,11 @@ type DownloadVideoOutput struct {
 func init() {
 	RootCmd.AddCommand(downloadVideoCmd)
 	downloadVideoCmd.Flags().StringP("website-url", "w", "", "Website Url That contains video")
+	downloadVideoCmd.MarkFlagRequired("website-url")
 	downloadVideoCmd.Flags().StringP("out-dir", "d", "", "Output Directory where video will be saved")
+	downloadVideoCmd.MarkFlagRequired("out-dir")
 	downloadVideoCmd.Flags().StringP("out-file", "f", "", "Output File Name with extension")
+	downloadVideoCmd.MarkFlagRequired("out-file")
 }
 
 var downloadVideoCmd = &cobra.Command{
