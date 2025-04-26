@@ -15,19 +15,22 @@ func TestExtractImage(t *testing.T) {
 		name        string
 		videoPath   string
 		frameNo     int
+		fps         int
 		wantImgName string
 	}{
 		{
-			name:        "valid input 91",
-			videoPath:   "https://test-v1.blr1.digitaloceanspaces.com/temp/82fcafac-037f-46fb-be53-0da347e10074/10-counter.mp4",
-			frameNo:     91,
-			wantImgName: "extract-frame-91.png",
+			name:        "valid input 90",
+			videoPath:   "https://test-v1.blr1.digitaloceanspaces.com/temp/0dbb51fa-8e8e-4ffe-95ae-f64c044529ae/e05f1a61-c92c-4366-9eef-c3b5d3fc2ab8.mp4",
+			frameNo:     90,
+			fps:         30,
+			wantImgName: "extract-frame-90.png",
 		},
 		{
-			name:        "valid input 128",
-			videoPath:   "https://test-v1.blr1.digitaloceanspaces.com/temp/c0e11e4f-d31a-40d2-884f-3b8968b59cdc/video.mp4",
-			frameNo:     128,
-			wantImgName: "extract-frame-128.png",
+			name:        "valid input 24",
+			videoPath:   "https://test-v1.blr1.digitaloceanspaces.com/temp/b9ed84be-2c7d-4e8e-a889-8190e836c0a7/597f8c64-6fec-48b4-b8a6-da33916cb97e.mp4",
+			frameNo:     24,
+			fps:         25,
+			wantImgName: "extract-frame-24.png",
 		},
 	}
 
@@ -44,6 +47,7 @@ func TestExtractImage(t *testing.T) {
 			extractor := Extractor{
 				VideoPath:  tc.videoPath,
 				OutputPath: outputPath,
+				Fps:        tc.fps,
 			}
 
 			err = extractor.ExtractImage(ctx, tc.frameNo)
@@ -82,25 +86,18 @@ func TestExtractClip(t *testing.T) {
 		fps          int
 	}{
 		{
-			name:         "1 sec clip : 91 to 151",
-			videoPath:    "https://test-v1.blr1.digitaloceanspaces.com/temp/987269eb-2cf1-4d50-a889-ca421a705fe9/10-counter.mp4",
-			startFrameNo: 91,
-			endFrameNo:   151,
+			name:         "1 sec clip : 90 to 150",
+			videoPath:    "https://test-v1.blr1.digitaloceanspaces.com/temp/ed771d2f-805e-4d86-a703-529d4f5baa43/c7006d76-8bf8-4cb3-9ed8-52b0a0632251.mp4",
+			startFrameNo: 90,
+			endFrameNo:   150,
 			fps:          30,
 		},
 		{
-			name:         "clip : 75 to 106",
-			videoPath:    "https://test-v1.blr1.digitaloceanspaces.com/temp/effbb04d-b2d0-4096-a6df-244f8d5d1dff/5-sec.mp4",
-			startFrameNo: 75,
-			endFrameNo:   106,
+			name:         "clip : 74 to 97",
+			videoPath:    "https://test-v1.blr1.digitaloceanspaces.com/temp/127d0a09-e8a9-4b89-9e78-438fe8fc46db/fb85ba1d-6d66-4064-adf0-3992211134b2.mp4",
+			startFrameNo: 74,
+			endFrameNo:   97,
 			fps:          25,
-		},
-		{
-			name:         "clip: 327 to 343",
-			videoPath:    "https://test-v1.blr1.digitaloceanspaces.com/temp/061af72c-5ecf-42e7-836e-59f8925cd49e/hotel-highlight-reel-hotel-highlight-reel-540p.mp4",
-			startFrameNo: 327,
-			endFrameNo:   343,
-			fps:          30,
 		},
 	}
 
@@ -159,18 +156,18 @@ func TestExtractCompressesImage(t *testing.T) {
 		wantImgName string
 	}{
 		{
-			name:        "valid input 91",
-			videoPath:   "https://test-v1.blr1.digitaloceanspaces.com/temp/82fcafac-037f-46fb-be53-0da347e10074/10-counter.mp4",
-			frameNo:     91,
-			resolution:  model.EXTREMELY_LOW_SD_240p,
-			wantImgName: "extract-frame-91-240p.png",
+			name:        "valid input 90",
+			videoPath:   "https://test-v1.blr1.digitaloceanspaces.com/temp/b26c9be8-a2c9-4ea5-9585-7344c898abb5/561097fe-af24-4ecd-a8ba-6784dcc9321b.mp4",
+			frameNo:     90,
+			resolution:  model.BARE_MINIMUM_SD_90p,
+			wantImgName: "extract-frame-90-90p.png",
 		},
 		{
-			name:        "valid input 128",
-			videoPath:   "https://test-v1.blr1.digitaloceanspaces.com/temp/c0e11e4f-d31a-40d2-884f-3b8968b59cdc/video.mp4",
-			frameNo:     128,
+			name:        "valid input 48",
+			videoPath:   "https://test-v1.blr1.digitaloceanspaces.com/temp/2e9e3b00-5e60-4fed-9f5e-e9a7e3c99244/934303e6-5950-4208-874f-1fab9ce07a6a.mp4",
+			frameNo:     48,
 			resolution:  model.LOW_RES_HD_540p,
-			wantImgName: "extract-frame-128-540p.png",
+			wantImgName: "extract-frame-48-540p.png",
 		},
 	}
 

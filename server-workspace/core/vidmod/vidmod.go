@@ -10,6 +10,7 @@ type IVideoModifier interface {
 	ConvertToMp4(ctx context.Context) error
 	MuteVideo(ctx context.Context) error
 	CompressVideo(ctx context.Context, resolution model.Resolution) error
+	KeyFrameEncode(ctx context.Context) error
 }
 
 type VideoModifier struct {
@@ -41,4 +42,12 @@ func (videoModifier *VideoModifier) CompressVideo(ctx context.Context, resolutio
 	}
 
 	return ResizeVideo(ctx, input)
+}
+
+func (videoModifier *VideoModifier) KeyFrameEncode(ctx context.Context) error {
+	input := KeyFrameEncodeInput{
+		VideoPath:  videoModifier.VideoPath,
+		OutputPath: videoModifier.OutputPath,
+	}
+	return keyframeEncode(ctx, input)
 }

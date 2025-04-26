@@ -15,6 +15,7 @@ type IExtractor interface {
 type Extractor struct {
 	VideoPath  string
 	OutputPath string
+	Fps        int
 }
 
 func (extractor *Extractor) ExtractImage(ctx context.Context, frameNo int) error {
@@ -22,6 +23,7 @@ func (extractor *Extractor) ExtractImage(ctx context.Context, frameNo int) error
 		VideoPath:  extractor.VideoPath,
 		Frame:      frameNo,
 		OutputPath: extractor.OutputPath,
+		Fps:        extractor.Fps,
 	}
 
 	return extractImage(ctx, input)

@@ -8,6 +8,7 @@ import { compressVideo } from "./operations/compress-video.operation";
 import { extractClip } from "./operations/extract-clip.operation";
 import { extractCompressedImage } from "./operations/extract-compressed-image.operation";
 import { downloadAudio } from "./operations/download-audio.operation";
+import { copyKeyFrameEncodedUrl } from "./operations/copy-keyframe-encoded-url.operation";
 
 export const viaOperations = {
   showClipInfo,
@@ -20,4 +21,5 @@ export const viaOperations = {
   extractClip,
   extractCompressedImage,
   downloadAudio,
+  copyKeyFrameEncodedUrl,
 };

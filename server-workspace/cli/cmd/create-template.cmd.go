@@ -35,7 +35,8 @@ var createTemplateCmd = &cobra.Command{
 		}
 
 		templateService := &templateservice.TemplateService{
-			MediaCreator: &templateservice.MediaCreator{},
+			MediaCreator:    &templateservice.MediaCreator{},
+			ClipInfoFactory: &templateservice.ClipInfoFactory{},
 		}
 
 		ctx, err := myctx.GetCtx()

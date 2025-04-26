@@ -77,6 +77,13 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const copyKeyframeEncodedUrlCmd = vscode.commands.registerCommand(
+    "via.copy-keyframe-encoded-url",
+    async (uri: vscode.Uri) => {
+      await viaOperations.copyKeyFrameEncodedUrl(uri.fsPath);
+    }
+  );
+
   context.subscriptions.push(clipInfoCmd);
   context.subscriptions.push(downloadVideoCmd);
   context.subscriptions.push(uploadFileCmd);
@@ -87,6 +94,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(extractClipCmd);
   context.subscriptions.push(extractCompressedImageCmd);
   context.subscriptions.push(downloadAudioCmd);
+  context.subscriptions.push(copyKeyframeEncodedUrlCmd);
 }
 
 export function deactivate() {}

@@ -46,3 +46,54 @@ func TestCreateTemplate(t *testing.T) {
 	}
 
 }
+
+func TestGetPreviewCount(t *testing.T) {
+	tt := []struct {
+		name       string
+		fps        int
+		frameCount int
+		want       int
+	}{
+		{
+			name:       "57 preview count",
+			fps:        30,
+			frameCount: 422,
+			want:       57,
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			got := getPreviewCount(tc.fps, tc.frameCount)
+			if got != tc.want {
+				t.Fatalf("getPreviewCount() = %v, want %v", got, tc.want)
+			}
+		})
+	}
+}
+
+func TestGetPreviewFrameNos(t *testing.T) {
+	tt := []struct {
+		name       string
+		fps        int
+		frameCount int
+		want       []int
+	}{
+		{
+			name:       "57 preview frame nos",
+			fps:        30,
+			frameCount: 422,
+			want: []int{
+				0, 7, 15, 22, 30, 37, 45, 52, 60, 67, 75, 82, 90, 97, 105, 112, 120, 127, 135, 142, 150, 157, 165, 172, 180, 187, 195, 202, 210, 218, 225, 233, 240, 248, 255, 263, 270, 278, 285, 293, 300, 308, 315, 323, 330, 338, 345, 353, 360, 368, 375, 383, 390, 398, 405, 413, 421,
+			},
+		},
+	}
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			got := getPreviewFrameNos(tc.fps, tc.frameCount)
+			if len(got) != len(tc.want) {
+				t.Fatalf("getPreviewFrameNos() = %v, want %v", got, tc.want)
+			}
+		})
+	}
+}

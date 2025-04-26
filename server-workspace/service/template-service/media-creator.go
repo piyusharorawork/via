@@ -38,6 +38,7 @@ func (creator *MediaCreator) CreateVideoUrl(ctx context.Context, websiteUrl stri
 	uploader := &uploader.Uploader{
 		FilePath:   filePath,
 		FolderPath: "temp",
+		RemoveFile: true,
 	}
 
 	videoUrl, err := createVideoUrl(ctx, downloader, uploader)
@@ -68,6 +69,7 @@ func (creator *MediaCreator) CreateAudioUrl(ctx context.Context, websiteUrl stri
 	uploader := &uploader.Uploader{
 		FilePath:   filePath,
 		FolderPath: "temp",
+		RemoveFile: true,
 	}
 
 	audioUrl, err := createAudioUrl(ctx, downloader, uploader)

@@ -185,3 +185,58 @@ func TestCompressVideo(t *testing.T) {
 		})
 	}
 }
+
+func TestKeyFrameEncode(t *testing.T) {
+	tt := []struct {
+		name         string
+		videoPath    string
+		wantFileName string
+	}{
+		{
+			name:         "Test with valid video path",
+			videoPath:    "https://test-v1.blr1.digitaloceanspaces.com/temp/c0e11e4f-d31a-40d2-884f-3b8968b59cdc/video.mp4",
+			wantFileName: "key-frame-encoded.mp4",
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			ctx, err := myctx.GetTestCtx()
+
+			if err != nil {
+				t.Fatal(err)
+			}
+			tempDirPath := ctx.Value(model.TempDirPath).(string)
+			outputPath := fmt.Sprintf("%s/output.mp4", tempDirPath)
+			input := KeyFrameEncodeInput{
+				VideoPath:  tc.videoPath,
+				OutputPath: outputPath,
+			}
+			err = keyframeEncode(ctx, input)
+			if err != nil {
+				t.Errorf("Error: %v", err)
+			}
+			exists := util.IsFileExists(outputPath)
+
+			if !exists {
+				t.Errorf("File not found at %s", outputPath)
+			}
+
+			defer util.RemoveFile(outputPath)
+
+			testSamplesDirPath := ctx.Value(model.TestSamplesDirPath).(string)
+			wantFilePath := fmt.Sprintf("%s/%s", testSamplesDirPath, tc.wantFileName)
+
+			eq, err := util.AreFilesEqual(wantFilePath, outputPath)
+
+			if err != nil {
+				t.Fatalf("failed to compare images: %v", err)
+			}
+
+			if !eq {
+				t.Fatalf("files are not equal")
+			}
+
+		})
+	}
+}

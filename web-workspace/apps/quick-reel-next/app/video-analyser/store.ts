@@ -54,8 +54,8 @@ const updateVideoFrame = (
 ) => {
   if (!videoElement) return;
   if (!clipInfo) return;
-  if (frameNo < 1 || frameNo > clipInfo.frameCount) return;
-  videoElement.currentTime = (frameNo - 1) / clipInfo.fps;
+  if (frameNo < 0 || frameNo >= clipInfo.frameCount) return;
+  videoElement.currentTime = frameNo / clipInfo.fps;
 };
 
 const createContext = (storage: IStorage): Context => {

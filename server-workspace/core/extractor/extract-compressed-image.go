@@ -11,7 +11,7 @@ import (
 
 type ExtractCompressedImageInput struct {
 	VideoPath  string
-	Frame      int
+	Frame      int // frame number starts from 0
 	OutputPath string
 	Resolution model.Resolution
 }
@@ -23,23 +23,21 @@ func extractCompressedImage(ctx context.Context, input ExtractCompressedImageInp
 	}
 
 	dimensions, err := model.GetDimensions(input.Resolution)
-
 	if err != nil {
 		return err
 	}
 
 	// Build the video filter string
-	vf := fmt.Sprintf("select='eq(n\\,%d)'", input.Frame-1)
-	vf = fmt.Sprintf("%s,scale=%d:%d", vf, dimensions.Width, dimensions.Height)
+	vf := fmt.Sprintf("select='eq(n\\,%d)',scale=%d:%d", input.Frame, dimensions.Width, dimensions.Height)
 
-	cmd := exec.Command(
+	cmd := exec.CommandContext(
+		ctx,
 		ffmpegPath, "-y", "-i", input.VideoPath,
 		"-vf", vf,
 		"-vsync", "0", "-frames:v", "1", input.OutputPath,
 	)
 
 	_, err = util.RunCommand(cmd)
-
 	if err != nil {
 		return err
 	}

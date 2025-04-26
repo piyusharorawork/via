@@ -12,29 +12,38 @@ import (
 
 type ExtractImageInput struct {
 	VideoPath  string
-	Frame      int
+	Frame      int // frame number starts from 0
 	OutputPath string
+	Fps        int // Int might not be correct
 }
 
 func extractImage(ctx context.Context, input ExtractImageInput) error {
 	ffmpegPath, err := myctx.GetValue(ctx, model.FFMpegPath)
-
 	if err != nil {
 		return err
 	}
 
+	frameDuration := 1.0 / float64(input.Fps)
+	seconds := float64(input.Frame)*frameDuration - (frameDuration / 2)
+	if seconds < 0 {
+		seconds = 0
+	}
+	timestamp := fmt.Sprintf("%.6f", seconds)
+
 	cmd := exec.Command(
-		ffmpegPath, "-y", "-i", input.VideoPath,
-		"-vf", fmt.Sprintf("select='eq(n\\,%d)'", input.Frame-1),
-		"-vsync", "0", "-frames:v", "1", input.OutputPath,
+		ffmpegPath, "-y",
+		"-i", input.VideoPath, // load video first
+		"-ss", timestamp, // precise seek
+		"-frames:v", "1", // capture 1 frame
+		input.OutputPath,
 	)
 
-	_, err = util.RunCommand(cmd)
+	fmt.Println(cmd.String())
 
+	_, err = util.RunCommand(cmd)
 	if err != nil {
 		return err
 	}
 
 	return nil
-
 }
