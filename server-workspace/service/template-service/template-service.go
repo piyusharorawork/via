@@ -13,7 +13,8 @@ type ITemplateService interface {
 }
 
 type TemplateService struct {
-	MediaCreator IMediaCreator
+	MediaCreator    IMediaCreator
+	ClipInfoFactory IClipInfoFactory
 }
 
 func (service *TemplateService) CreateTemplate(ctx context.Context, input CreateTemplateInput) (string, error) {
@@ -22,5 +23,10 @@ func (service *TemplateService) CreateTemplate(ctx context.Context, input Create
 	if service.MediaCreator == nil {
 		return "", errors.New("media creator is not set")
 	}
-	return createTemplate(ctx, service.MediaCreator, input)
+
+	if service.ClipInfoFactory == nil {
+		return "", errors.New("clip info factory is not set")
+	}
+
+	return createTemplate(ctx, service.MediaCreator, service.ClipInfoFactory, input)
 }

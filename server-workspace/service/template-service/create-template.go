@@ -10,7 +10,7 @@ type CreateTemplateInput struct {
 	WebsiteUrl string
 }
 
-func createTemplate(ctx context.Context, mediaCreator IMediaCreator, input CreateTemplateInput) (string, error) {
+func createTemplate(ctx context.Context, mediaCreator IMediaCreator, clipinfoFactory IClipInfoFactory, input CreateTemplateInput) (string, error) {
 
 	videoUrl, audioUrl, err := createVideoAudioUrls(ctx, mediaCreator, input.WebsiteUrl)
 
@@ -20,7 +20,36 @@ func createTemplate(ctx context.Context, mediaCreator IMediaCreator, input Creat
 
 	fmt.Println(videoUrl)
 	fmt.Println(audioUrl)
+
+	fps, frameCount, err := getFpsAndFrameCount(ctx, clipinfoFactory, videoUrl)
+
+	if err != nil {
+		return "", err
+	}
+
+	fmt.Println(fps)
+	fmt.Println(frameCount)
+
 	return "", nil
+
+}
+
+func getFpsAndFrameCount(ctx context.Context, clipinfoFactory IClipInfoFactory, videoUrl string) (int, int, error) {
+	clipInfo := clipinfoFactory.New(videoUrl)
+
+	fps, err := clipInfo.GetFPS(ctx)
+
+	if err != nil {
+		return 0, 0, err
+	}
+
+	frameCount, err := clipInfo.GetFrameCount(ctx)
+
+	if err != nil {
+		return 0, 0, err
+	}
+
+	return fps, frameCount, nil
 
 }
 

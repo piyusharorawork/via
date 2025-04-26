@@ -27,6 +27,10 @@ func TestCreateTemplate(t *testing.T) {
 					VideoUrl: "https://url.mp4",
 					AudioUrl: "https://url.mp3",
 				},
+				ClipInfoFactory: &MockClipInfoFactory{
+					Fps:        24,
+					FrameCount: 100,
+				},
 			}
 			ctx := myctx.GetEmptyCtx()
 			templateId, err := templateService.CreateTemplate(ctx, CreateTemplateInput{})
