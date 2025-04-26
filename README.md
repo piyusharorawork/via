@@ -6,7 +6,6 @@
 
 ## TODO
 
-- download audio url from website extension
 -
 
 - load template.json to memory

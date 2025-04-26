@@ -4,42 +4,41 @@ import (
 	"testing"
 
 	myctx "quickreel.com/core/ctx"
-	"quickreel.com/core/downloader"
-	"quickreel.com/core/uploader"
 	"quickreel.com/core/util"
 )
 
-func TestCreateVideoUrl(t *testing.T) {
+func TestCreateTemplate(t *testing.T) {
 	tt := []struct {
-		name    string
-		wantUrl string
-		wantErr error
+		name           string
+		wantTemplateId string
+		wantErr        error
 	}{
 		{
-			name:    "create video url",
-			wantUrl: "https://url.mp4",
+			name:           "successfully create template",
+			wantTemplateId: "",
+			wantErr:        nil,
 		},
 	}
 
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-			ctx := myctx.GetEmptyCtx()
-			downloader := &downloader.MockDownloader{}
-			uploader := &uploader.MockUploader{
-				Url: tc.wantUrl,
+			templateService := &TemplateService{
+				MediaCreator: &MockMediaCreator{
+					VideoUrl: "https://url.mp4",
+					AudioUrl: "https://url.mp3",
+				},
 			}
-
-			url, err := createVideoUrl(ctx, downloader, uploader)
+			ctx := myctx.GetEmptyCtx()
+			templateId, err := templateService.CreateTemplate(ctx, CreateTemplateInput{})
 
 			if !util.AreErrorsSame(err, tc.wantErr) {
-				t.Fatalf("createVideoUrl() error = %v, wantErr %v", err, tc.wantErr)
+				t.Fatalf("createTemplate() error = %v, wantErr %v", err, tc.wantErr)
 			}
-
-			if err == nil && url != tc.wantUrl {
-				t.Fatalf("url is not equal")
+			if err == nil && templateId != tc.wantTemplateId {
+				t.Fatalf("templateId is not equal")
 			}
 
 		})
-
 	}
+
 }

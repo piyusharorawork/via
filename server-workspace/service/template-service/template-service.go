@@ -1,13 +1,26 @@
 package templateservice
 
-import "context"
+import (
+	"context"
+	"errors"
+	"time"
+
+	"quickreel.com/core/util"
+)
 
 type ITemplateService interface {
-	createTemplate(ctx context.Context, input CreateTemplateInput) (string, error)
+	CreateTemplate(ctx context.Context, input CreateTemplateInput) (string, error)
 }
 
-type TemplateService struct{}
+type TemplateService struct {
+	MediaCreator IMediaCreator
+}
 
-func (service *TemplateService) createTemplate(ctx context.Context, input CreateTemplateInput) (string, error) {
-	return createTemplate(ctx, input)
+func (service *TemplateService) CreateTemplate(ctx context.Context, input CreateTemplateInput) (string, error) {
+	defer util.TimeTrack(time.Now(), "create template")
+
+	if service.MediaCreator == nil {
+		return "", errors.New("media creator is not set")
+	}
+	return createTemplate(ctx, service.MediaCreator, input)
 }

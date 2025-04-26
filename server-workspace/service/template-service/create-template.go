@@ -3,11 +3,6 @@ package templateservice
 import (
 	"context"
 	"fmt"
-
-	"github.com/google/uuid"
-	"quickreel.com/core/downloader"
-	"quickreel.com/core/model"
-	"quickreel.com/core/uploader"
 )
 
 type CreateTemplateInput struct {
@@ -15,57 +10,58 @@ type CreateTemplateInput struct {
 	WebsiteUrl string
 }
 
-func createTemplate(ctx context.Context, input CreateTemplateInput) (string, error) {
+func createTemplate(ctx context.Context, mediaCreator IMediaCreator, input CreateTemplateInput) (string, error) {
 
-	tempDirPath := ctx.Value(model.TempDirPath).(string)
-	outputFileName := uuid.NewString()
-
-	downloader := &downloader.Downloader{
-		WebsiteUrl:     input.WebsiteUrl,
-		OutputDirPath:  tempDirPath,
-		OutputFileName: outputFileName,
-	}
-
-	filePath := fmt.Sprintf("%s/%s", tempDirPath, outputFileName)
-	uploader := &uploader.Uploader{
-		FilePath:   filePath,
-		FolderPath: "temp",
-	}
-
-	videoUrl, err := createVideoUrl(ctx, downloader, uploader)
+	videoUrl, audioUrl, err := createVideoAudioUrls(ctx, mediaCreator, input.WebsiteUrl)
 
 	if err != nil {
 		return "", err
 	}
 
-	print(videoUrl)
-	// audioUrl, err := createAudioUrl(ctx, input.WebsiteUrl)
-
-	// if err != nil {
-	// 	return "", err
-	// }
-
-	// print(audioUrl)
-
+	fmt.Println(videoUrl)
+	fmt.Println(audioUrl)
 	return "", nil
+
 }
 
-func createVideoUrl(ctx context.Context, downloader downloader.IDownloader, uploader uploader.IUploader) (string, error) {
-	err := downloader.DownloadVideo(ctx)
+func createVideoAudioUrls(ctx context.Context, mediaCreator IMediaCreator, websiteUrl string) (string, string, error) {
+	videoChannel := make(chan struct {
+		url string
+		err error
+	})
 
-	if err != nil {
-		return "", err
+	audioChannel := make(chan struct {
+		url string
+		err error
+	})
+
+	go func() {
+		url, err := mediaCreator.CreateVideoUrl(ctx, websiteUrl)
+		videoChannel <- struct {
+			url string
+			err error
+		}{url, err}
+	}()
+
+	go func() {
+		url, err := mediaCreator.CreateAudioUrl(ctx, websiteUrl)
+		audioChannel <- struct {
+			url string
+			err error
+		}{url, err}
+	}()
+
+	videoResult := <-videoChannel
+	audioResult := <-audioChannel
+
+	if videoResult.err != nil {
+		return "", "", videoResult.err
 	}
 
-	url, err := uploader.UploadFile(ctx)
-
-	if err != nil {
-		return "", err
+	if audioResult.err != nil {
+		return "", "", audioResult.err
 	}
 
-	return url, nil
-}
+	return videoResult.url, audioResult.url, nil
 
-func createAudioUrl(ctx context.Context, websiteUrl string) (string, error) {
-	return "", nil
 }

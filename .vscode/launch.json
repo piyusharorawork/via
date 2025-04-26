@@ -9,13 +9,11 @@
       "program": "${workspaceFolder}/server-workspace/cli",
       "cwd": "${workspaceFolder}/server-workspace",
       "args": [
-        "download-audio",
-        "-w",
-        "https://www.youtube.com/shorts/tv2A0xxesZY",
-        "-d",
-        "${workspaceFolder}/assets/temp",
-        "-f",
-        "my-out.mp3"
+        "create-template",
+        "-u",
+        "https://www.youtube.com/shorts/k8XwfOTSUxo",
+        "-n",
+        "my-template"
       ],
       "envFile": "${workspaceFolder}/assets/environments/.env"
     },
