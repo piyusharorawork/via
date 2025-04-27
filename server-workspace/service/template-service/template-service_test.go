@@ -3,6 +3,9 @@ package templateservice
 import (
 	"testing"
 
+	clipinfostore "quick-reel.com/store/clipinfo-store"
+	previewframestore "quick-reel.com/store/preview-frame-store"
+	templatestore "quick-reel.com/store/template-store"
 	"quickreel.com/core/clipinfo"
 	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/extractor"
@@ -18,7 +21,7 @@ func TestCreateTemplate(t *testing.T) {
 	}{
 		{
 			name:           "successfully create template",
-			wantTemplateId: "",
+			wantTemplateId: "123",
 			wantErr:        nil,
 		},
 	}
@@ -38,6 +41,13 @@ func TestCreateTemplate(t *testing.T) {
 				UploaderFactory: &uploader.MockUploaderFactory{
 					Url: "http://preview-image.png",
 				},
+				ClipInfoStore: &clipinfostore.MockClipInfoStore{
+					SavedId: "150",
+				},
+				TemplateStore: &templatestore.MockTemplateStore{
+					SavedId: "123",
+				},
+				PreviewFrameStore: &previewframestore.MockPreviewFrameStore{},
 			}
 			ctx, err := myctx.GetTestCtx()
 			if err != nil {

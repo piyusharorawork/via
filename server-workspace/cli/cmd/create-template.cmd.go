@@ -5,6 +5,9 @@ import (
 
 	"github.com/spf13/cobra"
 	templateservice "quick-reel.com/service/template-service"
+	clipinfostore "quick-reel.com/store/clipinfo-store"
+	previewframestore "quick-reel.com/store/preview-frame-store"
+	templatestore "quick-reel.com/store/template-store"
 	"quickreel.com/cli/adapter"
 	"quickreel.com/core/clipinfo"
 	myctx "quickreel.com/core/ctx"
@@ -38,10 +41,13 @@ var createTemplateCmd = &cobra.Command{
 		}
 
 		templateService := &templateservice.TemplateService{
-			MediaCreator:     &templateservice.MediaCreator{},
-			ClipInfoFactory:  &clipinfo.ClipInfoFactory{},
-			ExtractorFactory: &extractor.ExtractorFactory{},
-			UploaderFactory:  &uploader.UploaderFactory{},
+			MediaCreator:      &templateservice.MediaCreator{},
+			ClipInfoFactory:   &clipinfo.ClipInfoFactory{},
+			ExtractorFactory:  &extractor.ExtractorFactory{},
+			UploaderFactory:   &uploader.UploaderFactory{},
+			ClipInfoStore:     &clipinfostore.ClipInfoStore{},
+			TemplateStore:     &templatestore.TemplateStore{},
+			PreviewFrameStore: &previewframestore.PreviewFrameStore{},
 		}
 
 		ctx, err := myctx.GetCtx()

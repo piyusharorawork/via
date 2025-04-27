@@ -13,7 +13,14 @@ func TestSavePreviewFrame(t *testing.T) {
 		frameNo  int
 		imageUrl string
 		wantErr  error
-	}{}
+	}{
+		{
+			name:     "save preview frame",
+			frameNo:  100,
+			imageUrl: "https://url.mp4",
+			wantErr:  nil,
+		},
+	}
 
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {

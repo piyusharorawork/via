@@ -6,6 +6,9 @@ import (
 	"math"
 
 	"github.com/google/uuid"
+	clipinfostore "quick-reel.com/store/clipinfo-store"
+	previewframestore "quick-reel.com/store/preview-frame-store"
+	templatestore "quick-reel.com/store/template-store"
 	"quickreel.com/core/clipinfo"
 	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/extractor"
@@ -23,10 +26,13 @@ type CreateTemplateInput struct {
 }
 
 type CreateTemplateDependencies struct {
-	MediaCreator     IMediaCreator
-	ClipinfoFactory  clipinfo.IClipInfoFactory
-	ExtractorFactory extractor.IExtractorFactory
-	UploaderFactory  uploader.IUploaderFactory
+	MediaCreator      IMediaCreator
+	ClipinfoFactory   clipinfo.IClipInfoFactory
+	ExtractorFactory  extractor.IExtractorFactory
+	UploaderFactory   uploader.IUploaderFactory
+	ClipInfoStore     clipinfostore.IClipInfoStore
+	TemplateStore     templatestore.ITemplateStore
+	PreviewFrameStore previewframestore.IPreviewFrameStore
 }
 
 func createTemplate(ctx context.Context, input CreateTemplateInput, dependencies CreateTemplateDependencies) (string, error) {
@@ -37,21 +43,33 @@ func createTemplate(ctx context.Context, input CreateTemplateInput, dependencies
 		return "", err
 	}
 
-	fmt.Println(videoUrl)
-	fmt.Println(audioUrl)
-
 	fps, frameCount, err := getFpsAndFrameCount(ctx, videoUrl, dependencies.ClipinfoFactory)
 
 	if err != nil {
 		return "", err
 	}
 
-	fmt.Println(fps)
-	fmt.Println(frameCount)
+	clipinfoId, err := saveClipInfo(ctx, fps, frameCount, dependencies.ClipInfoStore)
 
-	// videoUrl := "https://test-v1.blr1.digitaloceanspaces.com/temp/ef758d96-885c-40e7-9f04-b91319a161d8.mp4"
-	// fps := 30
-	// frameCount := 427
+	if err != nil {
+		return "", err
+	}
+
+	saveTemplateInput := templatestore.SaveTemplateInput{
+		Name:       input.Name,
+		WebsiteUrl: input.WebsiteUrl,
+		VideoUrl:   videoUrl,
+		AudioUrl:   audioUrl,
+		ClipInfoId: clipinfoId,
+	}
+
+	templateId, err := dependencies.TemplateStore.Save(ctx, saveTemplateInput)
+
+	if err != nil {
+		return "", err
+	}
+
+	println(templateId)
 
 	previewFrames, err := generatePreviewFrames(ctx, videoUrl, fps, frameCount, dependencies.ExtractorFactory, dependencies.UploaderFactory)
 
@@ -59,10 +77,42 @@ func createTemplate(ctx context.Context, input CreateTemplateInput, dependencies
 		return "", err
 	}
 
-	fmt.Println(previewFrames)
+	savePreviewFrames(ctx, templateId, previewFrames, dependencies.PreviewFrameStore)
 
-	return "", nil
+	return templateId, nil
 
+}
+
+func savePreviewFrames(ctx context.Context, templateId string, previewFrames []PreviewFrame, previewFramesStore previewframestore.IPreviewFrameStore) error {
+	for _, previewFrame := range previewFrames {
+		input := previewframestore.SavePreviewFrameInput{
+			FrameNo:    previewFrame.FrameNo,
+			ImageUrl:   previewFrame.PreviewUrl,
+			TemplateId: templateId,
+		}
+		_, err := previewFramesStore.Save(ctx, input)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func saveClipInfo(ctx context.Context, fps int, frameCount int, clipinfoStore clipinfostore.IClipInfoStore) (string, error) {
+
+	input := clipinfostore.SaveClipInfoInput{
+		Fps:        fps,
+		FrameCount: frameCount,
+	}
+
+	id, err := clipinfoStore.Save(ctx, input)
+
+	if err != nil {
+		return "", err
+	}
+
+	return id, nil
 }
 
 type PreviewFrame struct {

@@ -5,6 +5,9 @@ import (
 	"errors"
 	"time"
 
+	clipinfostore "quick-reel.com/store/clipinfo-store"
+	previewframestore "quick-reel.com/store/preview-frame-store"
+	templatestore "quick-reel.com/store/template-store"
 	"quickreel.com/core/clipinfo"
 	"quickreel.com/core/extractor"
 	"quickreel.com/core/uploader"
@@ -16,10 +19,13 @@ type ITemplateService interface {
 }
 
 type TemplateService struct {
-	MediaCreator     IMediaCreator
-	ClipInfoFactory  clipinfo.IClipInfoFactory
-	ExtractorFactory extractor.IExtractorFactory
-	UploaderFactory  uploader.IUploaderFactory
+	MediaCreator      IMediaCreator
+	ClipInfoFactory   clipinfo.IClipInfoFactory
+	ExtractorFactory  extractor.IExtractorFactory
+	UploaderFactory   uploader.IUploaderFactory
+	ClipInfoStore     clipinfostore.IClipInfoStore
+	TemplateStore     templatestore.ITemplateStore
+	PreviewFrameStore previewframestore.IPreviewFrameStore
 }
 
 func (service *TemplateService) CreateTemplate(ctx context.Context, input CreateTemplateInput) (string, error) {
@@ -41,11 +47,26 @@ func (service *TemplateService) CreateTemplate(ctx context.Context, input Create
 		return "", errors.New("uploader factory is not set")
 	}
 
+	if service.ClipInfoStore == nil {
+		return "", errors.New("clip info store is not set")
+	}
+
+	if service.TemplateStore == nil {
+		return "", errors.New("template store is not set")
+	}
+
+	if service.PreviewFrameStore == nil {
+		return "", errors.New("preview frame store is not set")
+	}
+
 	dependencies := CreateTemplateDependencies{
-		MediaCreator:     service.MediaCreator,
-		ClipinfoFactory:  service.ClipInfoFactory,
-		ExtractorFactory: service.ExtractorFactory,
-		UploaderFactory:  service.UploaderFactory,
+		MediaCreator:      service.MediaCreator,
+		ClipinfoFactory:   service.ClipInfoFactory,
+		ExtractorFactory:  service.ExtractorFactory,
+		UploaderFactory:   service.UploaderFactory,
+		ClipInfoStore:     service.ClipInfoStore,
+		TemplateStore:     service.TemplateStore,
+		PreviewFrameStore: service.PreviewFrameStore,
 	}
 
 	return createTemplate(ctx, input, dependencies)
