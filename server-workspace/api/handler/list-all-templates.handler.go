@@ -10,13 +10,10 @@ import (
 	"quickreel.com/core/util"
 )
 
-type ListAllTemplatesOutput struct {
-	Templates []TemplateLiteJson `json:"templates"`
-}
-
 type TemplateLiteJson struct {
-	Id   string `json:"id"`
-	Name string `json:"name"`
+	Id       string `json:"id"`
+	Name     string `json:"name"`
+	VideoUrl string `json:"videoUrl"`
 }
 
 func ListAllTemplatesHandler(w http.ResponseWriter, r *http.Request) {
@@ -44,21 +41,19 @@ func fetchAllTemplates(ctx context.Context, templateService templateservice.ITem
 
 	for _, template := range templates {
 		templatesJson = append(templatesJson, TemplateLiteJson{
-			Id:   template.Id,
-			Name: template.Name,
+			Id:       template.Id,
+			Name:     template.Name,
+			VideoUrl: template.VideoUrl,
 		})
 	}
 
-	output := ListAllTemplatesOutput{
-		Templates: templatesJson,
-	}
-
-	json, err := util.ToJSON(output)
+	json, err := util.ToJSON(templatesJson)
 
 	if err != nil {
 		panic(err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write([]byte(json))
 }

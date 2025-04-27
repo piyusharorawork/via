@@ -7,8 +7,9 @@ import (
 )
 
 type TemplateLite struct {
-	Id   string
-	Name string
+	Id       string
+	Name     string
+	VideoUrl string
 }
 
 type FetchAllTemplatesDependencies struct {
@@ -25,8 +26,9 @@ func fetchAllTemplates(ctx context.Context, dependencies FetchAllTemplatesDepend
 
 	for _, template := range templates {
 		templateLites = append(templateLites, TemplateLite{
-			Id:   template.Id,
-			Name: template.Name,
+			Id:       template.Id,
+			Name:     template.Name,
+			VideoUrl: template.VideoUrl,
 		})
 	}
 

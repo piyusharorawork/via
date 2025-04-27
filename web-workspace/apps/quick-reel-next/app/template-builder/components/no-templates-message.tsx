@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dialog,
   DialogContent,
@@ -6,8 +8,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useSelector } from "@xstate/store/react";
+import { useTemplateBuilderStore } from "../store/template-builder.provider";
 
 export const NoTemplatesMessage = () => {
+  const store = useTemplateBuilderStore();
+  const templates = useSelector(store, (state) => state.context.templates);
+
+  if (templates.length > 0) {
+    return null;
+  }
+
   return (
     <div className="h-full absolute w-full flex justify-center items-center">
       <span className="text-xl">You have not created any templates yet 😥</span>

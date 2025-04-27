@@ -80,12 +80,14 @@ func TestFetchAllTemplates(t *testing.T) {
 			name: "successfully fetch all templates",
 			wantTemplates: []TemplateLite{
 				{
-					Id:   "1",
-					Name: "template1",
+					Id:       "1",
+					Name:     "template1",
+					VideoUrl: "https://url.mp4",
 				},
 				{
-					Id:   "2",
-					Name: "template2",
+					Id:       "2",
+					Name:     "template2",
+					VideoUrl: "https://url.mp4",
 				},
 			},
 			wantErr: nil,
