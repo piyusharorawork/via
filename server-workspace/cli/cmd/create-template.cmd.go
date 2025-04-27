@@ -6,7 +6,10 @@ import (
 	"github.com/spf13/cobra"
 	templateservice "quick-reel.com/service/template-service"
 	"quickreel.com/cli/adapter"
+	"quickreel.com/core/clipinfo"
 	myctx "quickreel.com/core/ctx"
+	extractor "quickreel.com/core/extractor"
+	"quickreel.com/core/uploader"
 )
 
 func init() {
@@ -35,8 +38,10 @@ var createTemplateCmd = &cobra.Command{
 		}
 
 		templateService := &templateservice.TemplateService{
-			MediaCreator:    &templateservice.MediaCreator{},
-			ClipInfoFactory: &templateservice.ClipInfoFactory{},
+			MediaCreator:     &templateservice.MediaCreator{},
+			ClipInfoFactory:  &clipinfo.ClipInfoFactory{},
+			ExtractorFactory: &extractor.ExtractorFactory{},
+			UploaderFactory:  &uploader.UploaderFactory{},
 		}
 
 		ctx, err := myctx.GetCtx()

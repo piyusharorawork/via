@@ -3,7 +3,10 @@ package templateservice
 import (
 	"testing"
 
+	"quickreel.com/core/clipinfo"
 	myctx "quickreel.com/core/ctx"
+	"quickreel.com/core/extractor"
+	"quickreel.com/core/uploader"
 	"quickreel.com/core/util"
 )
 
@@ -27,12 +30,20 @@ func TestCreateTemplate(t *testing.T) {
 					VideoUrl: "https://url.mp4",
 					AudioUrl: "https://url.mp3",
 				},
-				ClipInfoFactory: &MockClipInfoFactory{
+				ClipInfoFactory: &clipinfo.MockClipInfoFactory{
 					Fps:        24,
 					FrameCount: 100,
 				},
+				ExtractorFactory: &extractor.MockExtractorFactory{},
+				UploaderFactory: &uploader.MockUploaderFactory{
+					Url: "http://preview-image.png",
+				},
 			}
-			ctx := myctx.GetEmptyCtx()
+			ctx, err := myctx.GetTestCtx()
+			if err != nil {
+				t.Fatal(err)
+			}
+
 			templateId, err := templateService.CreateTemplate(ctx, CreateTemplateInput{})
 
 			if !util.AreErrorsSame(err, tc.wantErr) {

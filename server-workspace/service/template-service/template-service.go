@@ -5,6 +5,9 @@ import (
 	"errors"
 	"time"
 
+	"quickreel.com/core/clipinfo"
+	"quickreel.com/core/extractor"
+	"quickreel.com/core/uploader"
 	"quickreel.com/core/util"
 )
 
@@ -13,8 +16,10 @@ type ITemplateService interface {
 }
 
 type TemplateService struct {
-	MediaCreator    IMediaCreator
-	ClipInfoFactory IClipInfoFactory
+	MediaCreator     IMediaCreator
+	ClipInfoFactory  clipinfo.IClipInfoFactory
+	ExtractorFactory extractor.IExtractorFactory
+	UploaderFactory  uploader.IUploaderFactory
 }
 
 func (service *TemplateService) CreateTemplate(ctx context.Context, input CreateTemplateInput) (string, error) {
@@ -28,5 +33,20 @@ func (service *TemplateService) CreateTemplate(ctx context.Context, input Create
 		return "", errors.New("clip info factory is not set")
 	}
 
-	return createTemplate(ctx, service.MediaCreator, service.ClipInfoFactory, input)
+	if service.ExtractorFactory == nil {
+		return "", errors.New("extractor factory is not set")
+	}
+
+	if service.UploaderFactory == nil {
+		return "", errors.New("uploader factory is not set")
+	}
+
+	dependencies := CreateTemplateDependencies{
+		MediaCreator:     service.MediaCreator,
+		ClipinfoFactory:  service.ClipInfoFactory,
+		ExtractorFactory: service.ExtractorFactory,
+		UploaderFactory:  service.UploaderFactory,
+	}
+
+	return createTemplate(ctx, input, dependencies)
 }

@@ -6,6 +6,7 @@
 
 ## TODO
 
+- generate preview frames
 -
 
 - load template.json to memory
@@ -18,6 +19,7 @@
 - Settings for extension for various env variables
 - Better env management so only those env are required whose functionality is used
 - copy file url to have caching to improve latency
+- extractor clip with files test
 
 # Useful commands
 
@@ -146,6 +148,8 @@ https://www.pexels.com/search/family/
 - own voice
 
 # Example Shorts
+
+- https://www.youtube.com/shorts/A66wk6gheSI
 
 - https://www.youtube.com/shorts/PyYfh_tHaYA
 - https://www.youtube.com/shorts/yc9mLpbxfdI

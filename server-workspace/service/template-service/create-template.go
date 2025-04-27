@@ -6,6 +6,7 @@ import (
 	"math"
 
 	"github.com/google/uuid"
+	"quickreel.com/core/clipinfo"
 	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/extractor"
 	"quickreel.com/core/model"
@@ -21,9 +22,16 @@ type CreateTemplateInput struct {
 	WebsiteUrl string
 }
 
-func createTemplate(ctx context.Context, mediaCreator IMediaCreator, clipinfoFactory IClipInfoFactory, input CreateTemplateInput) (string, error) {
+type CreateTemplateDependencies struct {
+	MediaCreator     IMediaCreator
+	ClipinfoFactory  clipinfo.IClipInfoFactory
+	ExtractorFactory extractor.IExtractorFactory
+	UploaderFactory  uploader.IUploaderFactory
+}
 
-	videoUrl, audioUrl, err := createVideoAudioUrls(ctx, mediaCreator, input.WebsiteUrl)
+func createTemplate(ctx context.Context, input CreateTemplateInput, dependencies CreateTemplateDependencies) (string, error) {
+
+	videoUrl, audioUrl, err := createVideoAudioUrls(ctx, input.WebsiteUrl, dependencies.MediaCreator)
 
 	if err != nil {
 		return "", err
@@ -32,7 +40,7 @@ func createTemplate(ctx context.Context, mediaCreator IMediaCreator, clipinfoFac
 	fmt.Println(videoUrl)
 	fmt.Println(audioUrl)
 
-	fps, frameCount, err := getFpsAndFrameCount(ctx, clipinfoFactory, videoUrl)
+	fps, frameCount, err := getFpsAndFrameCount(ctx, videoUrl, dependencies.ClipinfoFactory)
 
 	if err != nil {
 		return "", err
@@ -41,7 +49,11 @@ func createTemplate(ctx context.Context, mediaCreator IMediaCreator, clipinfoFac
 	fmt.Println(fps)
 	fmt.Println(frameCount)
 
-	previewFrames, err := generatePreviewFrames(ctx, videoUrl, fps, frameCount)
+	// videoUrl := "https://test-v1.blr1.digitaloceanspaces.com/temp/ef758d96-885c-40e7-9f04-b91319a161d8.mp4"
+	// fps := 30
+	// frameCount := 427
+
+	previewFrames, err := generatePreviewFrames(ctx, videoUrl, fps, frameCount, dependencies.ExtractorFactory, dependencies.UploaderFactory)
 
 	if err != nil {
 		return "", err
@@ -58,7 +70,7 @@ type PreviewFrame struct {
 	PreviewUrl string
 }
 
-func generatePreviewFrames(ctx context.Context, videoUrl string, fps int, frameCount int) ([]PreviewFrame, error) {
+func generatePreviewFrames(ctx context.Context, videoUrl string, fps int, frameCount int, extractorFactory extractor.IExtractorFactory, uploaderFactory uploader.IUploaderFactory) ([]PreviewFrame, error) {
 	previewFramesNos := getPreviewFrameNos(fps, frameCount)
 	previewFrames := make([]PreviewFrame, len(previewFramesNos))
 
@@ -69,13 +81,8 @@ func generatePreviewFrames(ctx context.Context, videoUrl string, fps int, frameC
 	}
 
 	for i, frameNo := range previewFramesNos {
-
 		outputPath := fmt.Sprintf("%s/%s.png", tempDirPath, uuid.NewString())
-
-		extractor := &extractor.Extractor{
-			VideoPath:  videoUrl,
-			OutputPath: outputPath,
-		}
+		extractor := extractorFactory.New(videoUrl, outputPath, fps)
 
 		err := extractor.ExtractCompressedImage(ctx, frameNo, model.EXTREMELY_LOW_SD_240p)
 
@@ -83,10 +90,7 @@ func generatePreviewFrames(ctx context.Context, videoUrl string, fps int, frameC
 			return nil, err
 		}
 
-		uploader := &uploader.Uploader{
-			FilePath:   outputPath,
-			FolderPath: "temp",
-		}
+		uploader := uploaderFactory.New(outputPath, "temp")
 		previewUrl, err := uploader.UploadFile(ctx)
 
 		if err != nil {
@@ -99,6 +103,8 @@ func generatePreviewFrames(ctx context.Context, videoUrl string, fps int, frameC
 		}
 		previewFrames[i] = previewFrame
 	}
+
+	fmt.Println(previewFrames)
 
 	return previewFrames, nil
 }
@@ -133,7 +139,7 @@ func getPreviewFrameNos(fps int, frameCount int) []int {
 
 }
 
-func getFpsAndFrameCount(ctx context.Context, clipinfoFactory IClipInfoFactory, videoUrl string) (int, int, error) {
+func getFpsAndFrameCount(ctx context.Context, videoUrl string, clipinfoFactory clipinfo.IClipInfoFactory) (int, int, error) {
 	clipInfo := clipinfoFactory.New(videoUrl)
 
 	fps, err := clipInfo.GetFPS(ctx)
@@ -152,7 +158,7 @@ func getFpsAndFrameCount(ctx context.Context, clipinfoFactory IClipInfoFactory, 
 
 }
 
-func createVideoAudioUrls(ctx context.Context, mediaCreator IMediaCreator, websiteUrl string) (string, string, error) {
+func createVideoAudioUrls(ctx context.Context, websiteUrl string, mediaCreator IMediaCreator) (string, string, error) {
 	videoChannel := make(chan struct {
 		url string
 		err error
