@@ -15,7 +15,7 @@ type PrintAllTemplatesOutput struct {
 }
 
 func PrintAllTemplates(ctx context.Context, templateService templateservice.ITemplateService, writer io.Writer) {
-	templates, err := templateService.FetchAll(ctx)
+	templates, err := templateService.ListAll(ctx)
 
 	if err != nil {
 		panic(err)

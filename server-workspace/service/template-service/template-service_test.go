@@ -137,7 +137,7 @@ func TestFetchAllTemplates(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			templates, err := templateService.FetchAll(ctx)
+			templates, err := templateService.ListAll(ctx)
 
 			if !util.AreErrorsSame(err, tc.wantErr) {
 				t.Fatalf("fetchAllTemplates() error = %v, wantErr %v", err, tc.wantErr)

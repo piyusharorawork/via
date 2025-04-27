@@ -3,7 +3,7 @@ go 1.23.6
 use (
 	./cli
 	./core
-	./server
+	./api
 	./store
 	./service
 )

@@ -1,4 +1,4 @@
-package adapter
+package handler
 
 import (
 	"bytes"
@@ -9,22 +9,28 @@ import (
 	"quickreel.com/core/util"
 )
 
-func TestPrintAllTemplates(t *testing.T) {
+func TestFetchAllTemplates(t *testing.T) {
 	tt := []struct {
 		name string
 		want string
 	}{
 		{
 			name: "success",
-			want: "[{\"id\":\"1\",\"name\":\"template1\"},{\"id\":\"2\",\"name\":\"template2\"}]",
+			want: "{\"templates\":[{\"id\":\"1\",\"name\":\"template1\"},{\"id\":\"2\",\"name\":\"template2\"}]}",
 		},
 	}
 
 	for _, tc := range tt {
-		buf := &bytes.Buffer{}
-
 		t.Run(tc.name, func(t *testing.T) {
-			ctx := myctx.GetEmptyCtx()
+			ctx, err := myctx.GetTestCtx()
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			writer := &MockWriter{
+				Body: &bytes.Buffer{},
+			}
+
 			templateService := &templateservice.MockTemplateService{
 				ListAllResult: []templateservice.TemplateLite{
 					{
@@ -37,10 +43,11 @@ func TestPrintAllTemplates(t *testing.T) {
 					},
 				},
 			}
-			PrintAllTemplates(ctx, templateService, buf)
-			if !util.CompareJSON(buf.String(), tc.want) {
-				t.Errorf("printAllTemplates() = %v, want %v", buf.String(), tc.want)
+			fetchAllTemplates(ctx, templateService, writer)
+			if !util.CompareJSON(writer.Body.String(), tc.want) {
+				t.Errorf("fetchAllTemplates() = %v, want %v", writer.Body.String(), tc.want)
 			}
 		})
 	}
+
 }

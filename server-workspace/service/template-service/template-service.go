@@ -15,7 +15,7 @@ import (
 )
 
 type ITemplateService interface {
-	FetchAll(ctx context.Context) ([]TemplateLite, error)
+	ListAll(ctx context.Context) ([]TemplateLite, error)
 	Create(ctx context.Context, input CreateTemplateInput) (string, error)
 }
 
@@ -74,7 +74,7 @@ func (service *TemplateService) Create(ctx context.Context, input CreateTemplate
 	return createTemplate(ctx, input, dependencies)
 }
 
-func (service *TemplateService) FetchAll(ctx context.Context) ([]TemplateLite, error) {
+func (service *TemplateService) ListAll(ctx context.Context) ([]TemplateLite, error) {
 	if service.ShowProcessingTime {
 		defer util.TimeTrack(time.Now(), "fetch all templates")
 	}

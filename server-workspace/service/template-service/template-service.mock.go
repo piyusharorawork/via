@@ -3,15 +3,15 @@ package templateservice
 import "context"
 
 type MockTemplateService struct {
-	FetchAllCalled    bool
-	FetchAllResult    []TemplateLite
+	ListAllCalled     bool
+	ListAllResult     []TemplateLite
 	CreateCalled      bool
 	CreatedTemplateId string
 }
 
-func (service *MockTemplateService) FetchAll(ctx context.Context) ([]TemplateLite, error) {
-	service.FetchAllCalled = true
-	return service.FetchAllResult, nil
+func (service *MockTemplateService) ListAll(ctx context.Context) ([]TemplateLite, error) {
+	service.ListAllCalled = true
+	return service.ListAllResult, nil
 }
 
 func (service *MockTemplateService) Create(ctx context.Context, input CreateTemplateInput) (string, error) {

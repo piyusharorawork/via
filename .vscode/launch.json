@@ -12,12 +12,13 @@
       "envFile": "${workspaceFolder}/assets/environments/.env"
     },
     {
-      "name": "server",
+      "name": "api",
       "type": "go",
       "request": "launch",
       "mode": "auto",
-      "program": "${workspaceFolder}/server-workspace/server",
-      "cwd": "${workspaceFolder}/server-workspace"
+      "program": "${workspaceFolder}/server-workspace/api",
+      "cwd": "${workspaceFolder}/server-workspace",
+      "envFile": "${workspaceFolder}/assets/environments/.env"
     },
     {
       "name": "extension",
