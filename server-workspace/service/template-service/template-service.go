@@ -20,13 +20,14 @@ type ITemplateService interface {
 }
 
 type TemplateService struct {
-	MediaCreator      IMediaCreator
-	ClipInfoFactory   clipinfo.IClipInfoFactory
-	ExtractorFactory  extractor.IExtractorFactory
-	UploaderFactory   uploader.IUploaderFactory
-	ClipInfoStore     clipinfostore.IClipInfoStore
-	TemplateStore     templatestore.ITemplateStore
-	PreviewFrameStore previewframestore.IPreviewFrameStore
+	ShowProcessingTime bool
+	MediaCreator       IMediaCreator
+	ClipInfoFactory    clipinfo.IClipInfoFactory
+	ExtractorFactory   extractor.IExtractorFactory
+	UploaderFactory    uploader.IUploaderFactory
+	ClipInfoStore      clipinfostore.IClipInfoStore
+	TemplateStore      templatestore.ITemplateStore
+	PreviewFrameStore  previewframestore.IPreviewFrameStore
 }
 
 func (service *TemplateService) Create(ctx context.Context, input CreateTemplateInput) (string, error) {
@@ -74,7 +75,13 @@ func (service *TemplateService) Create(ctx context.Context, input CreateTemplate
 }
 
 func (service *TemplateService) FetchAll(ctx context.Context) ([]TemplateLite, error) {
-	defer util.TimeTrack(time.Now(), "fetch all templates")
+	if service.ShowProcessingTime {
+		defer util.TimeTrack(time.Now(), "fetch all templates")
+	}
+
+	if service.TemplateStore == nil {
+		return nil, errors.New("template store is not set")
+	}
 
 	dependencies := FetchAllTemplatesDependencies{
 		TemplateStore: service.TemplateStore,
