@@ -1,4 +1,4 @@
-package snapshotstore
+package previewframestore
 
 import (
 	"context"
@@ -7,12 +7,12 @@ import (
 	commonstore "quick-reel.com/store/store-common"
 )
 
-type SaveSnapShotInput struct {
+type SavePreviewFrameInput struct {
 	FrameNo  int
 	ImageUrl string
 }
 
-func save(ctx context.Context, input SaveSnapShotInput) (string, error) {
+func save(ctx context.Context, input SavePreviewFrameInput) (string, error) {
 	db, err := commonstore.CreateDb(ctx)
 
 	if err != nil {
@@ -29,7 +29,7 @@ func save(ctx context.Context, input SaveSnapShotInput) (string, error) {
 
 	// Insert data
 	insertDataSql := `
-	INSERT INTO snapshot (id, frame_no, image_url) 
+	INSERT INTO preview_frame (id, frame_no, image_url) 
 	VALUES (?, ?, ?);`
 
 	id := uuid.NewString()

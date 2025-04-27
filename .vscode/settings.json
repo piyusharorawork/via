@@ -20,6 +20,7 @@
     "FFPROBE",
     "godotenv",
     "myctx",
+    "previewframestore",
     "snapshotstore",
     "storecommon",
     "templateservice",

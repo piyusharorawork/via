@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/google/uuid"
 	"quickreel.com/core/clipinfo"
 	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/model"
@@ -42,7 +43,7 @@ func TestExtractImage(t *testing.T) {
 			}
 
 			tempDirPath := ctx.Value(model.TempDirPath).(string)
-			outputPath := fmt.Sprintf("%s/output.png", tempDirPath)
+			outputPath := fmt.Sprintf("%s/%s-output.png", tempDirPath, uuid.NewString())
 
 			extractor := Extractor{
 				VideoPath:  tc.videoPath,
@@ -109,7 +110,7 @@ func TestExtractClip(t *testing.T) {
 			}
 
 			tempDirPath := ctx.Value(model.TempDirPath).(string)
-			outputPath := fmt.Sprintf("%s/output.mp4", tempDirPath)
+			outputPath := fmt.Sprintf("%s/%s-output.mp4", tempDirPath, uuid.NewString())
 
 			extractor := Extractor{
 				VideoPath:  tc.videoPath,
@@ -179,7 +180,7 @@ func TestExtractCompressesImage(t *testing.T) {
 			}
 
 			tempDirPath := ctx.Value(model.TempDirPath).(string)
-			outputPath := fmt.Sprintf("%s/output.png", tempDirPath)
+			outputPath := fmt.Sprintf("%s/%s-output.png", tempDirPath, uuid.NewString())
 
 			extractor := Extractor{
 				VideoPath:  tc.videoPath,

@@ -11,7 +11,7 @@ build-extention:
 .PHONY: test-core
 test-core:
 	@echo "Testing core..."
-	cd server-workspace && go test ./core/... 
+	cd server-workspace && go test ./core/...
 
 .PHONY: test-cli
 test-cli:

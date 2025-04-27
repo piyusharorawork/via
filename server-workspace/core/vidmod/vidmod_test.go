@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/google/uuid"
 	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/model"
 	"quickreel.com/core/util"
@@ -11,16 +12,14 @@ import (
 
 func TestConvertToMp4(t *testing.T) {
 	tt := []struct {
-		name           string
-		videoPath      string
-		outputFileName string
-		wantFileName   string
+		name         string
+		videoPath    string
+		wantFileName string
 	}{
 		{
-			name:           "Test with valid video path",
-			videoPath:      "https://test-v1.blr1.digitaloceanspaces.com/temp/6a0bcc68-0c97-4dcd-90c6-ca4b383513f7/big_buck_bunny.webm",
-			outputFileName: "output.mp4",
-			wantFileName:   "big-buck-bunny.mp4",
+			name:         "Test with valid video path",
+			videoPath:    "https://test-v1.blr1.digitaloceanspaces.com/temp/6a0bcc68-0c97-4dcd-90c6-ca4b383513f7/big_buck_bunny.webm",
+			wantFileName: "big-buck-bunny.mp4",
 		},
 	}
 
@@ -32,7 +31,7 @@ func TestConvertToMp4(t *testing.T) {
 				t.Fatal(err)
 			}
 			tempDirPath := ctx.Value(model.TempDirPath).(string)
-			outputPath := fmt.Sprintf("%s/%s", tempDirPath, tc.outputFileName)
+			outputPath := fmt.Sprintf("%s/%s-output.mp4", tempDirPath, uuid.NewString())
 			input := ConvertToMp4Input{
 				VideoPath:  tc.videoPath,
 				OutputPath: outputPath,
@@ -69,16 +68,14 @@ func TestConvertToMp4(t *testing.T) {
 
 func TestMuteVideo(t *testing.T) {
 	tt := []struct {
-		name           string
-		videoPath      string
-		outputFileName string
-		wantFileName   string
+		name         string
+		videoPath    string
+		wantFileName string
 	}{
 		{
-			name:           "Test with valid video path",
-			videoPath:      "https://test-v1.blr1.digitaloceanspaces.com/temp/c484f88d-0eec-4cf9-8d5f-b9d4b2f304b9/big-buck-bunny-480p-30sec-24fps.mp4",
-			outputFileName: "output.mp4",
-			wantFileName:   "big-buck-bunny-muted.mp4",
+			name:         "Test with valid video path",
+			videoPath:    "https://test-v1.blr1.digitaloceanspaces.com/temp/c484f88d-0eec-4cf9-8d5f-b9d4b2f304b9/big-buck-bunny-480p-30sec-24fps.mp4",
+			wantFileName: "big-buck-bunny-muted.mp4",
 		},
 	}
 
@@ -90,7 +87,7 @@ func TestMuteVideo(t *testing.T) {
 				t.Fatal(err)
 			}
 			tempDirPath := ctx.Value(model.TempDirPath).(string)
-			outputPath := fmt.Sprintf("%s/%s", tempDirPath, tc.outputFileName)
+			outputPath := fmt.Sprintf("%s/%s-output.mp4", tempDirPath, uuid.NewString())
 			input := MuteVideoInput{
 				VideoPath:  tc.videoPath,
 				OutputPath: outputPath,
@@ -126,18 +123,16 @@ func TestMuteVideo(t *testing.T) {
 
 func TestCompressVideo(t *testing.T) {
 	tt := []struct {
-		name           string
-		videoPath      string
-		outputFileName string
-		resolution     model.Resolution
-		wantFileName   string
+		name         string
+		videoPath    string
+		resolution   model.Resolution
+		wantFileName string
 	}{
 		{
-			name:           "Test with valid video path",
-			videoPath:      "https://test-v1.blr1.digitaloceanspaces.com/temp/5423a55b-8455-44b0-a286-b9cca68bc8a1/hotel-highlight-reel-original.mp4",
-			outputFileName: "output.mp4",
-			resolution:     model.EXTREMELY_LOW_SD_240p,
-			wantFileName:   "hotel-highlight-reel-original-240p.mp4",
+			name:         "Test with valid video path",
+			videoPath:    "https://test-v1.blr1.digitaloceanspaces.com/temp/5423a55b-8455-44b0-a286-b9cca68bc8a1/hotel-highlight-reel-original.mp4",
+			resolution:   model.EXTREMELY_LOW_SD_240p,
+			wantFileName: "hotel-highlight-reel-original-240p.mp4",
 		},
 	}
 
@@ -149,7 +144,7 @@ func TestCompressVideo(t *testing.T) {
 				t.Fatal(err)
 			}
 			tempDirPath := ctx.Value(model.TempDirPath).(string)
-			outputPath := fmt.Sprintf("%s/%s", tempDirPath, tc.outputFileName)
+			outputPath := fmt.Sprintf("%s/%s-output.mp4", tempDirPath, uuid.NewString())
 
 			modifier := &VideoModifier{
 				VideoPath:  tc.videoPath,

@@ -1,4 +1,4 @@
-package snapshotstore
+package previewframestore
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 	"quickreel.com/core/util"
 )
 
-func TestSaveSnapShot(t *testing.T) {
+func TestSavePreviewFrame(t *testing.T) {
 	tt := []struct {
 		name     string
 		frameNo  int
@@ -23,23 +23,23 @@ func TestSaveSnapShot(t *testing.T) {
 				t.Fatalf("failed to get test ctx")
 			}
 
-			snapshotStore := SnapshotStore{}
-			input := SaveSnapShotInput{
+			previewFrameStore := PreviewFrameStore{}
+			input := SavePreviewFrameInput{
 				FrameNo:  tc.frameNo,
 				ImageUrl: tc.imageUrl,
 			}
 
-			id, err := snapshotStore.Save(ctx, input)
+			id, err := previewFrameStore.Save(ctx, input)
 
 			if !util.AreErrorsSame(err, tc.wantErr) {
-				t.Fatalf("SaveSnapShot() error = %v, wantErr %v", err, tc.wantErr)
+				t.Fatalf("SavePreviewFrame() error = %v, wantErr %v", err, tc.wantErr)
 			}
 
 			if err == nil && id == "" {
 				t.Fatalf("id is empty")
 			}
 
-			snapshotStore.Remove(ctx, id)
+			previewFrameStore.Remove(ctx, id)
 
 		})
 
