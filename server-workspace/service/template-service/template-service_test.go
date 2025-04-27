@@ -1,10 +1,12 @@
 package templateservice
 
 import (
+	"reflect"
 	"testing"
 
 	clipinfostore "quick-reel.com/store/clipinfo-store"
 	previewframestore "quick-reel.com/store/preview-frame-store"
+	storemodels "quick-reel.com/store/store-models"
 	templatestore "quick-reel.com/store/template-store"
 	"quickreel.com/core/clipinfo"
 	myctx "quickreel.com/core/ctx"
@@ -54,13 +56,94 @@ func TestCreateTemplate(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			templateId, err := templateService.CreateTemplate(ctx, CreateTemplateInput{})
+			templateId, err := templateService.Create(ctx, CreateTemplateInput{})
 
 			if !util.AreErrorsSame(err, tc.wantErr) {
 				t.Fatalf("createTemplate() error = %v, wantErr %v", err, tc.wantErr)
 			}
 			if err == nil && templateId != tc.wantTemplateId {
 				t.Fatalf("templateId is not equal")
+			}
+
+		})
+	}
+
+}
+
+func TestFetchAllTemplates(t *testing.T) {
+	tt := []struct {
+		name          string
+		wantTemplates []TemplateLite
+		wantErr       error
+	}{
+		{
+			name: "successfully fetch all templates",
+			wantTemplates: []TemplateLite{
+				{
+					Id:   "1",
+					Name: "template1",
+				},
+				{
+					Id:   "2",
+					Name: "template2",
+				},
+			},
+			wantErr: nil,
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			templateService := &TemplateService{
+				TemplateStore: &templatestore.MockTemplateStore{
+					ListResult: []*storemodels.Template{
+						{
+							Id:         "1",
+							Name:       "template1",
+							WebsiteUrl: "https://www.youtube.com/shorts/hK3sHK2_osE",
+							VideoUrl:   "https://url.mp4",
+							AudioUrl:   "https://url.mp3",
+							ClipInfo: storemodels.ClipInfo{
+								Id:          "1",
+								Fps:         30,
+								FrameCount:  100,
+								FrameWidth:  1920,
+								FrameHeight: 1080,
+							},
+							CreatedAt: "2023-01-01T00:00:00Z",
+							UpdatedAt: "2023-01-01T00:00:00Z",
+						},
+						{
+							Id:         "2",
+							Name:       "template2",
+							WebsiteUrl: "https://www.youtube.com/shorts/hK3sHK2_osE",
+							VideoUrl:   "https://url.mp4",
+							AudioUrl:   "https://url.mp3",
+							ClipInfo: storemodels.ClipInfo{
+								Id:          "1",
+								Fps:         30,
+								FrameCount:  100,
+								FrameWidth:  1920,
+								FrameHeight: 1080,
+							},
+							CreatedAt: "2023-01-01T00:00:00Z",
+							UpdatedAt: "2023-01-01T00:00:00Z",
+						},
+					},
+				},
+			}
+			ctx, err := myctx.GetTestCtx()
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			templates, err := templateService.FetchAll(ctx)
+
+			if !util.AreErrorsSame(err, tc.wantErr) {
+				t.Fatalf("fetchAllTemplates() error = %v, wantErr %v", err, tc.wantErr)
+			}
+			if err == nil && !reflect.DeepEqual(templates, tc.wantTemplates) {
+				t.Fatalf("templates is not equal")
 			}
 
 		})

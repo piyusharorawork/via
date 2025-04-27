@@ -15,7 +15,8 @@ import (
 )
 
 type ITemplateService interface {
-	CreateTemplate(ctx context.Context, input CreateTemplateInput) (string, error)
+	FetchAll(ctx context.Context) ([]TemplateLite, error)
+	Create(ctx context.Context, input CreateTemplateInput) (string, error)
 }
 
 type TemplateService struct {
@@ -28,7 +29,7 @@ type TemplateService struct {
 	PreviewFrameStore previewframestore.IPreviewFrameStore
 }
 
-func (service *TemplateService) CreateTemplate(ctx context.Context, input CreateTemplateInput) (string, error) {
+func (service *TemplateService) Create(ctx context.Context, input CreateTemplateInput) (string, error) {
 	defer util.TimeTrack(time.Now(), "create template")
 
 	if service.MediaCreator == nil {
@@ -70,4 +71,14 @@ func (service *TemplateService) CreateTemplate(ctx context.Context, input Create
 	}
 
 	return createTemplate(ctx, input, dependencies)
+}
+
+func (service *TemplateService) FetchAll(ctx context.Context) ([]TemplateLite, error) {
+	defer util.TimeTrack(time.Now(), "fetch all templates")
+
+	dependencies := FetchAllTemplatesDependencies{
+		TemplateStore: service.TemplateStore,
+	}
+
+	return fetchAllTemplates(ctx, dependencies)
 }

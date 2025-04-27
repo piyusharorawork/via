@@ -6,7 +6,7 @@
 
 ## TODO
 
-- generate preview frames
+- fetch templates api
 -
 
 - load template.json to memory

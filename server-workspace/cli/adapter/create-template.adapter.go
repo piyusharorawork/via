@@ -11,5 +11,5 @@ func CreateTemplate(ctx context.Context, templateService templateservice.ITempla
 		Name:       templateName,
 		WebsiteUrl: websiteUrl,
 	}
-	return templateService.CreateTemplate(ctx, input)
+	return templateService.Create(ctx, input)
 }

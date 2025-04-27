@@ -23,6 +23,7 @@
     "previewframestore",
     "snapshotstore",
     "storecommon",
+    "storemodels",
     "templateservice",
     "templatestore",
     "vidmod"
