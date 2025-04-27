@@ -6,7 +6,7 @@ type Template struct {
 	WebsiteUrl string
 	VideoUrl   string
 	AudioUrl   string
-	ClipInfo   ClipInfo
+	ClipInfoId string
 	CreatedAt  string
 	UpdatedAt  string
 }

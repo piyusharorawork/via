@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"testing"
 
+	servicemodels "quick-reel.com/service/service-models"
 	templateservice "quick-reel.com/service/template-service"
 	myctx "quickreel.com/core/ctx"
 	"quickreel.com/core/util"
@@ -32,7 +33,7 @@ func TestFetchAllTemplates(t *testing.T) {
 			}
 
 			templateService := &templateservice.MockTemplateService{
-				ListAllResult: []templateservice.TemplateLite{
+				ListAllResult: []servicemodels.TemplateLite{
 					{
 						Id:       "1",
 						Name:     "template1",

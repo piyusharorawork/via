@@ -6,4 +6,6 @@ type ClipInfo struct {
 	FrameCount  int
 	FrameWidth  int
 	FrameHeight int
+	CreatedAt   string
+	UpdatedAt   string
 }

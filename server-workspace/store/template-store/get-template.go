@@ -7,7 +7,7 @@ import (
 	storemodels "quick-reel.com/store/store-models"
 )
 
-func listTemplates(ctx context.Context) ([]*storemodels.Template, error) {
+func getTemplate(ctx context.Context, id string) (*storemodels.Template, error) {
 	db, err := commonstore.CreateDb(ctx)
 
 	if err != nil {
@@ -22,9 +22,9 @@ func listTemplates(ctx context.Context) ([]*storemodels.Template, error) {
 		return nil, err
 	}
 
-	sql := `SELECT  * from template;`
+	sql := `SELECT  * from template where id = ?;`
 
-	rows, err := db.Query(sql)
+	rows, err := db.Query(sql, id)
 
 	if err != nil {
 		return nil, err
@@ -32,18 +32,15 @@ func listTemplates(ctx context.Context) ([]*storemodels.Template, error) {
 
 	defer rows.Close()
 
-	templates := make([]*storemodels.Template, 0)
+	template := storemodels.Template{}
 
 	for rows.Next() {
 		var template storemodels.Template
-		err = rows.Scan(&template.Id, &template.Name, &template.WebsiteUrl, &template.VideoUrl, &template.AudioUrl, &template.ClipInfoId, &template.CreatedAt, &template.UpdatedAt)
+		err = rows.Scan(&template.Id, &template.Name, &template.WebsiteUrl, &template.VideoUrl, &template.AudioUrl, &template.Id, &template.CreatedAt, &template.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
-		templates = append(templates, &template)
-
 	}
 
-	return templates, nil
-
+	return &template, nil
 }

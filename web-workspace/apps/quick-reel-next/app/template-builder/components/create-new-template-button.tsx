@@ -15,10 +15,10 @@ export const CreateNewTemplateButton = () => {
   return (
     <Dialog>
       <DialogTrigger>
-        <Button className="flex">
+        <a className="flex bg-gray-900 text-slate-200 py-2 px-4 rounded-md hover:bg-gray-700">
           <PlusIcon />
           <span>Create New</span>
-        </Button>
+        </a>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

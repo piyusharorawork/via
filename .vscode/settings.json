@@ -21,6 +21,7 @@
     "godotenv",
     "myctx",
     "previewframestore",
+    "servicemodels",
     "snapshotstore",
     "storecommon",
     "storemodels",

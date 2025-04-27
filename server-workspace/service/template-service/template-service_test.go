@@ -4,6 +4,7 @@ import (
 	"reflect"
 	"testing"
 
+	servicemodels "quick-reel.com/service/service-models"
 	clipinfostore "quick-reel.com/store/clipinfo-store"
 	previewframestore "quick-reel.com/store/preview-frame-store"
 	storemodels "quick-reel.com/store/store-models"
@@ -14,6 +15,95 @@ import (
 	"quickreel.com/core/uploader"
 	"quickreel.com/core/util"
 )
+
+func TestGetTemplate(t *testing.T) {
+	tt := []struct {
+		name          string
+		id            string
+		templateStore templatestore.ITemplateStore
+		clipInfoStore clipinfostore.IClipInfoStore
+		previewStore  previewframestore.IPreviewFrameStore
+		want          *servicemodels.TemplateFull
+		wantErr       error
+	}{
+		{
+			name: "get valid template",
+			id:   "1",
+			templateStore: &templatestore.MockTemplateStore{
+				GetResult: &storemodels.Template{
+					Id:         "1",
+					Name:       "template1",
+					WebsiteUrl: "https://www.youtube.com/shorts/hK3sHK2_osE",
+					VideoUrl:   "https://url.mp4",
+					AudioUrl:   "https://url.mp3",
+					ClipInfoId: "1",
+				},
+			},
+			clipInfoStore: &clipinfostore.MockClipInfoStore{
+				GetResult: &storemodels.ClipInfo{
+					Fps:         30,
+					FrameCount:  200,
+					FrameWidth:  1920,
+					FrameHeight: 1080,
+				},
+			},
+			previewStore: &previewframestore.MockPreviewFrameStore{
+				GetResult: &storemodels.PreviewFrame{
+					FrameNo:  150,
+					ImageUrl: "https://url.png",
+				},
+			},
+			want: &servicemodels.TemplateFull{
+				Id:         "1",
+				Name:       "template1",
+				VideoUrl:   "https://url.mp4",
+				AudioUrl:   "https://url.mp3",
+				WebsiteUrl: "https://www.youtube.com/shorts/hK3sHK2_osE",
+
+				ClipInfo: &servicemodels.ClipInfoFull{
+					Fps:         30,
+					FrameCount:  200,
+					FrameWidth:  1920,
+					FrameHeight: 1080,
+				},
+				PreviewFrames: []*servicemodels.PreviewFrame{
+					{
+						FrameNo:    150,
+						PreviewUrl: "https://url.png",
+					},
+				},
+			},
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			ctx, err := myctx.GetTestCtx()
+
+			if err != nil {
+				t.Fatalf("failed to get test ctx")
+			}
+
+			templateService := &TemplateService{
+				TemplateStore:     tc.templateStore,
+				ClipInfoStore:     tc.clipInfoStore,
+				PreviewFrameStore: tc.previewStore,
+			}
+
+			result, err := templateService.Get(ctx, tc.id)
+
+			if !util.AreErrorsSame(err, tc.wantErr) {
+				t.Fatalf("GetTemplate() error = %v, wantErr %v", err, tc.wantErr)
+			}
+
+			if err == nil && !reflect.DeepEqual(result, tc.want) {
+				t.Fatalf("result is not equal")
+			}
+
+		})
+
+	}
+}
 
 func TestCreateTemplate(t *testing.T) {
 	tt := []struct {
@@ -73,12 +163,12 @@ func TestCreateTemplate(t *testing.T) {
 func TestFetchAllTemplates(t *testing.T) {
 	tt := []struct {
 		name          string
-		wantTemplates []TemplateLite
+		wantTemplates []servicemodels.TemplateLite
 		wantErr       error
 	}{
 		{
 			name: "successfully fetch all templates",
-			wantTemplates: []TemplateLite{
+			wantTemplates: []servicemodels.TemplateLite{
 				{
 					Id:       "1",
 					Name:     "template1",
@@ -105,13 +195,7 @@ func TestFetchAllTemplates(t *testing.T) {
 							WebsiteUrl: "https://www.youtube.com/shorts/hK3sHK2_osE",
 							VideoUrl:   "https://url.mp4",
 							AudioUrl:   "https://url.mp3",
-							ClipInfo: storemodels.ClipInfo{
-								Id:          "1",
-								Fps:         30,
-								FrameCount:  100,
-								FrameWidth:  1920,
-								FrameHeight: 1080,
-							},
+
 							CreatedAt: "2023-01-01T00:00:00Z",
 							UpdatedAt: "2023-01-01T00:00:00Z",
 						},
@@ -121,13 +205,7 @@ func TestFetchAllTemplates(t *testing.T) {
 							WebsiteUrl: "https://www.youtube.com/shorts/hK3sHK2_osE",
 							VideoUrl:   "https://url.mp4",
 							AudioUrl:   "https://url.mp3",
-							ClipInfo: storemodels.ClipInfo{
-								Id:          "1",
-								Fps:         30,
-								FrameCount:  100,
-								FrameWidth:  1920,
-								FrameHeight: 1080,
-							},
+
 							CreatedAt: "2023-01-01T00:00:00Z",
 							UpdatedAt: "2023-01-01T00:00:00Z",
 						},

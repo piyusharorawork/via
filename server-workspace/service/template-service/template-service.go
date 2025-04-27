@@ -5,6 +5,7 @@ import (
 	"errors"
 	"time"
 
+	servicemodels "quick-reel.com/service/service-models"
 	clipinfostore "quick-reel.com/store/clipinfo-store"
 	previewframestore "quick-reel.com/store/preview-frame-store"
 	templatestore "quick-reel.com/store/template-store"
@@ -15,7 +16,8 @@ import (
 )
 
 type ITemplateService interface {
-	ListAll(ctx context.Context) ([]TemplateLite, error)
+	ListAll(ctx context.Context) ([]servicemodels.TemplateLite, error)
+	Get(ctx context.Context, id string) (*servicemodels.TemplateFull, error)
 	Create(ctx context.Context, input CreateTemplateInput) (string, error)
 }
 
@@ -74,7 +76,7 @@ func (service *TemplateService) Create(ctx context.Context, input CreateTemplate
 	return createTemplate(ctx, input, dependencies)
 }
 
-func (service *TemplateService) ListAll(ctx context.Context) ([]TemplateLite, error) {
+func (service *TemplateService) ListAll(ctx context.Context) ([]servicemodels.TemplateLite, error) {
 	if service.ShowProcessingTime {
 		defer util.TimeTrack(time.Now(), "fetch all templates")
 	}
@@ -88,4 +90,30 @@ func (service *TemplateService) ListAll(ctx context.Context) ([]TemplateLite, er
 	}
 
 	return fetchAllTemplates(ctx, dependencies)
+}
+
+func (service *TemplateService) Get(ctx context.Context, id string) (*servicemodels.TemplateFull, error) {
+	if service.ShowProcessingTime {
+		defer util.TimeTrack(time.Now(), "get template")
+	}
+
+	if service.TemplateStore == nil {
+		return nil, errors.New("template store is not set")
+	}
+
+	if service.ClipInfoStore == nil {
+		return nil, errors.New("clip info store is not set")
+	}
+
+	if service.PreviewFrameStore == nil {
+		return nil, errors.New("preview frame store is not set")
+	}
+
+	dependencies := GetTemplateDependencies{
+		TemplateStore:     service.TemplateStore,
+		ClipInfoStore:     service.ClipInfoStore,
+		PreviewFrameStore: service.PreviewFrameStore,
+	}
+
+	return getTemplate(ctx, id, dependencies)
 }

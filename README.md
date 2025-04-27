@@ -6,7 +6,7 @@
 
 ## TODO
 
-- fetch templates api
+- get template service api
 -
 
 - load template.json to memory
