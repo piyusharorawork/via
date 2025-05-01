@@ -52,6 +52,14 @@
       {
         "command": "via.copy-keyframe-encoded-url",
         "title": "copy-keyframe-encoded-url"
+      },
+      {
+        "command": "via.fetch-all-templates",
+        "title": "fetch-all-templates"
+      },
+      {
+        "command": "via.create-template",
+        "title": "create-template"
       }
     ],
     "menus": {
@@ -125,6 +133,11 @@
           "type": "string",
           "default": "",
           "description": "Temp dir path"
+        },
+        "via.dbPath": {
+          "type": "string",
+          "default": "",
+          "description": "DB path"
         }
       }
     }

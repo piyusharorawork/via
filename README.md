@@ -6,8 +6,13 @@
 
 ## TODO
 
-- get template service api
--
+- create template cli and extension need fixing
+- single template builder page
+
+  1. display preview
+  2. display timeline
+
+- add progress to create template
 
 - load template.json to memory
 - populate content url for each segment

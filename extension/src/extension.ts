@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { viaOperations } from "./via-operations/via-operations";
+import { ViaOperations, viaOperations } from "./via-operations/via-operations";
 import * as dotenv from "dotenv";
 import * as path from "path";
 
@@ -10,14 +10,14 @@ export function activate(context: vscode.ExtensionContext) {
   const clipInfoCmd = vscode.commands.registerCommand(
     "via.show-clip-info",
     async () => {
-      await viaOperations.showClipInfo();
+      await new ViaOperations().showClipInfo();
     }
   );
 
   const downloadVideoCmd = vscode.commands.registerCommand(
     "via.download-video",
     async () => {
-      await viaOperations.downloadVideo();
+      await new ViaOperations().downloadVideo();
     }
   );
 
@@ -84,6 +84,20 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const fetchAllTemplatesCmd = vscode.commands.registerCommand(
+    "via.fetch-all-templates",
+    async () => {
+      await new ViaOperations().fetchAllTemplates();
+    }
+  );
+
+  const createTemplateCmd = vscode.commands.registerCommand(
+    "via.create-template",
+    async () => {
+      await new ViaOperations().createTemplate();
+    }
+  );
+
   context.subscriptions.push(clipInfoCmd);
   context.subscriptions.push(downloadVideoCmd);
   context.subscriptions.push(uploadFileCmd);
@@ -95,6 +109,8 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(extractCompressedImageCmd);
   context.subscriptions.push(downloadAudioCmd);
   context.subscriptions.push(copyKeyframeEncodedUrlCmd);
+  context.subscriptions.push(fetchAllTemplatesCmd);
+  context.subscriptions.push(createTemplateCmd);
 }
 
 export function deactivate() {}

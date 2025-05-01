@@ -10,8 +10,9 @@ import (
 )
 
 type PrintAllTemplatesOutput struct {
-	Id   string `json:"id"`
-	Name string `json:"name"`
+	Id       string `json:"id"`
+	Name     string `json:"name"`
+	VideoUrl string `json:"videoUrl"`
 }
 
 func PrintAllTemplates(ctx context.Context, templateService templateservice.ITemplateService, writer io.Writer) {
@@ -25,8 +26,9 @@ func PrintAllTemplates(ctx context.Context, templateService templateservice.ITem
 
 	for _, template := range templates {
 		result = append(result, PrintAllTemplatesOutput{
-			Id:   template.Id,
-			Name: template.Name,
+			Id:       template.Id,
+			Name:     template.Name,
+			VideoUrl: template.VideoUrl,
 		})
 	}
 

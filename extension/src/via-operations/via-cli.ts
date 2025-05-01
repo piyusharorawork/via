@@ -51,6 +51,11 @@ export const spawnViaCli = (args: (string | number)[]) => {
     throw new Error("tempDirPath is empty");
   }
 
+  const dbPath = config.get<string>("dbPath");
+  if (!dbPath || dbPath === "") {
+    throw new Error("dbPath is empty");
+  }
+
   const child = spawn(viaCliPath, strArgs, {
     env: {
       FF_PROBE_PATH: ffprobePath,
@@ -61,6 +66,7 @@ export const spawnViaCli = (args: (string | number)[]) => {
       SPACE_REGION: spaceRegion,
       SPACE_NAME: spaceName,
       TEMP_DIR_PATH: tempDirPath,
+      DB_PATH: dbPath,
     },
   });
 
