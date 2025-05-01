@@ -15,10 +15,10 @@ export const TemplateList = () => {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="mx-4 my-8 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-6">
+    <div className="mx-4 my-8 grid gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 ">
       {templates.map((template) => {
         return (
-          <Card key={template.id} className="my-4 justify-self-center ">
+          <Card key={template.id} className="my-4 justify-self-center">
             <CardHeader>
               <CardTitle>{template.name}</CardTitle>
             </CardHeader>
