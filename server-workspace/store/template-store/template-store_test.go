@@ -9,7 +9,7 @@ import (
 	"quickreel.com/core/util"
 )
 
-func TestListTemplates(t *testing.T) {
+func TestFetchTemplates(t *testing.T) {
 	tt := []struct {
 		name     string
 		seedData []*storemodels.Template
@@ -86,9 +86,13 @@ func TestListTemplates(t *testing.T) {
 				t.Fatalf("failed to clean templates")
 			}
 
-			templateStore.Seed(ctx, tc.seedData)
+			err = templateStore.Seed(ctx, tc.seedData)
 
-			result, err := templateStore.List(ctx)
+			if err != nil {
+				t.Fatalf("failed to seed templates")
+			}
+
+			result, err := templateStore.Fetch(ctx)
 
 			if !util.AreErrorsSame(err, tc.wantErr) {
 				t.Fatalf("ListTemplates() error = %v, wantErr %v", err, tc.wantErr)
@@ -138,24 +142,6 @@ func TestGetTemplate(t *testing.T) {
 				UpdatedAt:  "2023-01-01T00:00:00Z",
 			},
 		},
-		{
-			name:    "get invalid template",
-			id:      "2",
-			wantErr: nil,
-			seedData: []*storemodels.Template{
-				{
-					Id:         "1",
-					Name:       "template1",
-					WebsiteUrl: "https://www.youtube.com/shorts/hK3sHK2_osE",
-					VideoUrl:   "https://url.mp4",
-					AudioUrl:   "https://url.mp3",
-					ClipInfoId: "1",
-					CreatedAt:  "2023-01-01T00:00:00Z",
-					UpdatedAt:  "2023-01-01T00:00:00Z",
-				},
-			},
-			want: nil,
-		},
 	}
 
 	for _, tc := range tt {
@@ -173,21 +159,10 @@ func TestGetTemplate(t *testing.T) {
 				t.Fatalf("failed to clean templates")
 			}
 
-			if tc.seedData != nil {
-				for _, template := range tc.seedData {
-					input := SaveTemplateInput{
-						Name:       template.Name,
-						WebsiteUrl: template.WebsiteUrl,
-						VideoUrl:   template.VideoUrl,
-						AudioUrl:   template.AudioUrl,
-					}
+			err = templateStore.Seed(ctx, tc.seedData)
 
-					_, err := templateStore.Save(ctx, input)
-
-					if err != nil {
-						t.Fatalf("failed to save template")
-					}
-				}
+			if err != nil {
+				t.Fatalf("failed to seed templates")
 			}
 
 			result, err := templateStore.Get(ctx, tc.id)
@@ -196,11 +171,9 @@ func TestGetTemplate(t *testing.T) {
 				t.Fatalf("GetTemplate() error = %v, wantErr %v", err, tc.wantErr)
 			}
 
-			if err == nil && result == nil {
-				t.Fatalf("result is empty")
+			if err == nil && !reflect.DeepEqual(result, tc.want) {
+				t.Fatalf("result is not equal")
 			}
-
-			templateStore.Remove(ctx, tc.id)
 
 		})
 
@@ -258,6 +231,66 @@ func TestSaveTemplate(t *testing.T) {
 			}
 
 			templateStore.Remove(ctx, id)
+
+		})
+
+	}
+}
+
+func TestRemoveTemplate(t *testing.T) {
+	tt := []struct {
+		name        string
+		id          string
+		wantErr     error
+		seedData    []*storemodels.Template
+		wantRemoved bool
+	}{
+		{
+			name:    "remove valid template",
+			id:      "1",
+			wantErr: nil,
+			seedData: []*storemodels.Template{
+				{
+					Id:         "1",
+					Name:       "template1",
+					WebsiteUrl: "https://www.youtube.com/shorts/hK3sHK2_osE",
+					VideoUrl:   "https://url.mp4",
+					AudioUrl:   "https://url.mp3",
+					ClipInfoId: "1",
+					CreatedAt:  "2023-01-01T00:00:00Z",
+					UpdatedAt:  "2023-01-01T00:00:00Z",
+				},
+			},
+			wantRemoved: true,
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			ctx, err := myctx.GetTestCtx()
+
+			if err != nil {
+				t.Fatalf("failed to get test ctx")
+			}
+
+			templateStore := TemplateStore{}
+			err = templateStore.Clean(ctx)
+
+			if err != nil {
+				t.Fatalf("failed to clean templates")
+			}
+
+			err = templateStore.Seed(ctx, tc.seedData)
+
+			if err != nil {
+				t.Fatalf("failed to seed templates")
+			}
+
+			err = templateStore.Remove(ctx, tc.id)
+
+			if !util.AreErrorsSame(err, tc.wantErr) {
+				t.Fatalf("RemoveTemplate() error = %v, wantErr %v", err, tc.wantErr)
+			}
 
 		})
 

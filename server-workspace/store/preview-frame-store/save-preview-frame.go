@@ -5,7 +5,7 @@ import (
 
 	"github.com/google/uuid"
 	_ "github.com/mattn/go-sqlite3"
-	commonstore "quick-reel.com/store/store-common"
+	"quick-reel.com/store/table"
 )
 
 type SavePreviewFrameInput struct {
@@ -14,29 +14,15 @@ type SavePreviewFrameInput struct {
 	ImageUrl   string
 }
 
-func save(ctx context.Context, input SavePreviewFrameInput) (string, error) {
-	db, err := commonstore.CreateDb(ctx)
-
-	if err != nil {
-		return "", err
-	}
-
-	defer db.Close()
-
-	err = createTable(db)
-
-	if err != nil {
-		return "", err
-	}
-
-	// Insert data
-	insertDataSql := `
+func savePreviewFrame(ctx context.Context, input SavePreviewFrameInput, table *table.Table) (string, error) {
+	const sql = `
 	INSERT INTO preview_frame (id,template_id,frame_no, image_url)  
-	VALUES (?, ?, ?, ?);`
+	VALUES (?, ?, ?, ?);
+	`
 
 	id := uuid.NewString()
 
-	_, err = db.Exec(insertDataSql, id, input.TemplateId, input.FrameNo, input.ImageUrl)
+	err := table.Execute(ctx, sql, id, input.TemplateId, input.FrameNo, input.ImageUrl)
 	if err != nil {
 		return "", err
 	}

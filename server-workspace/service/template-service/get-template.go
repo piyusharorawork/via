@@ -29,5 +29,36 @@ func getTemplate(ctx context.Context, id string, dependencies GetTemplateDepende
 		return nil, err
 	}
 
-	return nil, nil
+	previewFrames, err := dependencies.PreviewFrameStore.Fetch(ctx, template.Id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	mappedPreviewFrames := make([]*servicemodels.PreviewFrame, 0)
+	for _, previewFrame := range previewFrames {
+		previewFrame := &servicemodels.PreviewFrame{
+			FrameNo:    previewFrame.FrameNo,
+			PreviewUrl: previewFrame.ImageUrl,
+		}
+		mappedPreviewFrames = append(mappedPreviewFrames, previewFrame)
+	}
+
+	result := servicemodels.TemplateFull{
+		Id:         template.Id,
+		Name:       template.Name,
+		WebsiteUrl: template.WebsiteUrl,
+		VideoUrl:   template.VideoUrl,
+		AudioUrl:   template.AudioUrl,
+		ClipInfo: &servicemodels.ClipInfoFull{
+			Fps:         clipInfo.Fps,
+			FrameCount:  clipInfo.FrameCount,
+			FrameWidth:  clipInfo.FrameWidth,
+			FrameHeight: clipInfo.FrameHeight,
+		},
+		PreviewFrames: mappedPreviewFrames,
+	}
+
+	return &result, nil
+
 }

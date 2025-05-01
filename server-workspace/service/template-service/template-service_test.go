@@ -48,9 +48,23 @@ func TestGetTemplate(t *testing.T) {
 				},
 			},
 			previewStore: &previewframestore.MockPreviewFrameStore{
-				GetResult: &storemodels.PreviewFrame{
-					FrameNo:  150,
-					ImageUrl: "https://url.png",
+				FetchResult: []*storemodels.PreviewFrame{
+					{
+						Id:         "1",
+						FrameNo:    150,
+						ImageUrl:   "https://url.png",
+						TemplateId: "1",
+						CreatedAt:  "2023-01-01T00:00:00Z",
+						UpdatedAt:  "2023-01-01T00:00:00Z",
+					},
+					{
+						Id:         "2",
+						FrameNo:    120,
+						ImageUrl:   "https://url.png",
+						TemplateId: "1",
+						CreatedAt:  "2023-01-01T00:00:00Z",
+						UpdatedAt:  "2023-01-01T00:00:00Z",
+					},
 				},
 			},
 			want: &servicemodels.TemplateFull{
@@ -69,6 +83,10 @@ func TestGetTemplate(t *testing.T) {
 				PreviewFrames: []*servicemodels.PreviewFrame{
 					{
 						FrameNo:    150,
+						PreviewUrl: "https://url.png",
+					},
+					{
+						FrameNo:    120,
 						PreviewUrl: "https://url.png",
 					},
 				},
@@ -186,31 +204,34 @@ func TestFetchAllTemplates(t *testing.T) {
 
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-			templateService := &TemplateService{
-				TemplateStore: &templatestore.MockTemplateStore{
-					ListResult: []*storemodels.Template{
-						{
-							Id:         "1",
-							Name:       "template1",
-							WebsiteUrl: "https://www.youtube.com/shorts/hK3sHK2_osE",
-							VideoUrl:   "https://url.mp4",
-							AudioUrl:   "https://url.mp3",
 
-							CreatedAt: "2023-01-01T00:00:00Z",
-							UpdatedAt: "2023-01-01T00:00:00Z",
-						},
-						{
-							Id:         "2",
-							Name:       "template2",
-							WebsiteUrl: "https://www.youtube.com/shorts/hK3sHK2_osE",
-							VideoUrl:   "https://url.mp4",
-							AudioUrl:   "https://url.mp3",
-
-							CreatedAt: "2023-01-01T00:00:00Z",
-							UpdatedAt: "2023-01-01T00:00:00Z",
-						},
+			templateStore := &templatestore.MockTemplateStore{
+				FetchResult: []*storemodels.Template{
+					{
+						Id:         "1",
+						Name:       "template1",
+						WebsiteUrl: "https://www.youtube.com/shorts/hK3sHK2_osE",
+						VideoUrl:   "https://url.mp4",
+						AudioUrl:   "https://url.mp3",
+						ClipInfoId: "1",
+						CreatedAt:  "2023-01-01T00:00:00Z",
+						UpdatedAt:  "2023-01-01T00:00:00Z",
+					},
+					{
+						Id:         "2",
+						Name:       "template2",
+						WebsiteUrl: "https://www.youtube.com/shorts/hK3sHK2_osE",
+						VideoUrl:   "https://url.mp4",
+						AudioUrl:   "https://url.mp3",
+						ClipInfoId: "1",
+						CreatedAt:  "2023-01-01T00:00:00Z",
+						UpdatedAt:  "2023-01-01T00:00:00Z",
 					},
 				},
+			}
+
+			templateService := &TemplateService{
+				TemplateStore: templateStore,
 			}
 			ctx, err := myctx.GetTestCtx()
 			if err != nil {

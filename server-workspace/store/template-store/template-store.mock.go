@@ -9,10 +9,10 @@ import (
 type MockTemplateStore struct {
 	SaveCalled   bool
 	RemoveCalled bool
-	ListCalled   bool
+	FetchCalled  bool
 	GetCalled    bool
 	SavedId      string
-	ListResult   []*storemodels.Template
+	FetchResult  []*storemodels.Template
 	GetResult    *storemodels.Template
 }
 
@@ -24,9 +24,9 @@ func (m *MockTemplateStore) Seed(ctx context.Context, templates []*storemodels.T
 	return nil
 }
 
-func (m *MockTemplateStore) List(ctx context.Context) ([]*storemodels.Template, error) {
-	m.ListCalled = true
-	return m.ListResult, nil
+func (m *MockTemplateStore) Fetch(ctx context.Context) ([]*storemodels.Template, error) {
+	m.FetchCalled = true
+	return m.FetchResult, nil
 }
 
 func (m *MockTemplateStore) Get(ctx context.Context, id string) (*storemodels.Template, error) {

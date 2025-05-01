@@ -3,28 +3,15 @@ package previewframestore
 import (
 	"context"
 
-	commonstore "quick-reel.com/store/store-common"
 	storemodels "quick-reel.com/store/store-models"
+	"quick-reel.com/store/table"
 )
 
-func getPreviewFrame(ctx context.Context, id string) (*storemodels.PreviewFrame, error) {
-	db, err := commonstore.CreateDb(ctx)
+func getPreviewFrame(ctx context.Context, id string, table *table.Table) ([]*storemodels.PreviewFrame, error) {
 
-	if err != nil {
-		return nil, err
-	}
+	const sql = `SELECT  * from preview_frame where template_id = ?;`
 
-	defer db.Close()
-
-	err = createTable(db)
-
-	if err != nil {
-		return nil, err
-	}
-
-	sql := `SELECT  * from preview_frame where id = ?;`
-
-	rows, err := db.Query(sql, id)
+	rows, err := table.Query(ctx, sql, id)
 
 	if err != nil {
 		return nil, err
@@ -32,14 +19,16 @@ func getPreviewFrame(ctx context.Context, id string) (*storemodels.PreviewFrame,
 
 	defer rows.Close()
 
-	previewFrame := storemodels.PreviewFrame{}
+	previewFrames := []*storemodels.PreviewFrame{}
 
 	for rows.Next() {
+		var previewFrame storemodels.PreviewFrame
 		err = rows.Scan(&previewFrame.Id, &previewFrame.FrameNo, &previewFrame.ImageUrl, &previewFrame.TemplateId, &previewFrame.CreatedAt, &previewFrame.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
+		previewFrames = append(previewFrames, &previewFrame)
 	}
 
-	return &previewFrame, nil
+	return previewFrames, nil
 }

@@ -3,28 +3,15 @@ package previewframestore
 import (
 	"context"
 
-	commonstore "quick-reel.com/store/store-common"
+	"quick-reel.com/store/table"
 )
 
-func cleanPreviewFrames(ctx context.Context) error {
-	db, err := commonstore.CreateDb(ctx)
+func cleanPreviewFrames(ctx context.Context, table *table.Table) error {
+	const sql = ` 
+	DELETE FROM preview_frame;
+	`
 
-	if err != nil {
-		return err
-	}
-
-	defer db.Close()
-
-	err = createTable(db)
-
-	if err != nil {
-		return err
-	}
-
-	sql := `
-	DELETE FROM preview_frame;`
-
-	_, err = db.Exec(sql)
+	err := table.Execute(ctx, sql)
 
 	return err
 

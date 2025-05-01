@@ -8,7 +8,7 @@
       "mode": "auto",
       "program": "${workspaceFolder}/server-workspace/cli",
       "cwd": "${workspaceFolder}/server-workspace",
-      "args": ["fetch-all-templates"],
+      "args": ["get-template", "-t", "55ed6c55-1fcf-47e0-8ab0-5789d2d9f02b"],
       "envFile": "${workspaceFolder}/assets/environments/.env"
     },
     {

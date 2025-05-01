@@ -7,11 +7,11 @@ import (
 )
 
 type MockPreviewFrameStore struct {
-	SaveCalled   bool
-	RemoveCalled bool
-	SavedId      string
-	GetCalled    bool
-	GetResult    *storemodels.PreviewFrame
+	SaveCalled       bool
+	RemoveManyCalled bool
+	SavedId          string
+	FetchCalled      bool
+	FetchResult      []*storemodels.PreviewFrame
 }
 
 func (m *MockPreviewFrameStore) Clean(ctx context.Context) error {
@@ -22,9 +22,9 @@ func (m *MockPreviewFrameStore) Seed(ctx context.Context, previewFrames []*store
 	return nil
 }
 
-func (m *MockPreviewFrameStore) Get(ctx context.Context, id string) (*storemodels.PreviewFrame, error) {
-	m.GetCalled = true
-	return m.GetResult, nil
+func (m *MockPreviewFrameStore) Fetch(ctx context.Context, templateId string) ([]*storemodels.PreviewFrame, error) {
+	m.FetchCalled = true
+	return m.FetchResult, nil
 }
 
 func (m *MockPreviewFrameStore) Save(ctx context.Context, input SavePreviewFrameInput) (string, error) {
@@ -32,7 +32,7 @@ func (m *MockPreviewFrameStore) Save(ctx context.Context, input SavePreviewFrame
 	return m.SavedId, nil
 }
 
-func (m *MockPreviewFrameStore) Remove(ctx context.Context, id string) error {
-	m.RemoveCalled = true
+func (m *MockPreviewFrameStore) RemoveMany(ctx context.Context, id string) error {
+	m.RemoveManyCalled = true
 	return nil
 }

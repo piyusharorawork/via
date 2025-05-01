@@ -123,3 +123,60 @@ func TestSaveClipInfo(t *testing.T) {
 	}
 
 }
+
+func TestRemoveClipInfo(t *testing.T) {
+	tt := []struct {
+		name     string
+		id       string
+		wantErr  error
+		seedData []*storemodels.ClipInfo
+	}{
+		{
+			name:    "remove valid clipinfo",
+			id:      "1",
+			wantErr: nil,
+			seedData: []*storemodels.ClipInfo{
+				{
+					Id:          "1",
+					Fps:         30,
+					FrameCount:  100,
+					FrameWidth:  1920,
+					FrameHeight: 1080,
+					CreatedAt:   "2023-01-01T00:00:00Z",
+					UpdatedAt:   "2023-01-01T00:00:00Z",
+				},
+			},
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			ctx, err := myctx.GetTestCtx()
+
+			if err != nil {
+				t.Fatalf("failed to get test ctx")
+			}
+
+			clipInfoStore := ClipInfoStore{}
+			err = clipInfoStore.Clean(ctx)
+
+			if err != nil {
+				t.Fatalf("failed to clean clipinfo")
+			}
+
+			err = clipInfoStore.Seed(ctx, tc.seedData)
+
+			if err != nil {
+				t.Fatalf("failed to seed clipinfo")
+			}
+
+			err = clipInfoStore.Remove(ctx, tc.id)
+
+			if !util.AreErrorsSame(err, tc.wantErr) {
+				t.Fatalf("RemoveClipInfo() error = %v, wantErr %v", err, tc.wantErr)
+			}
+
+		})
+
+	}
+}

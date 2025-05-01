@@ -3,27 +3,14 @@ package clipinfostore
 import (
 	"context"
 
-	commonstore "quick-reel.com/store/store-common"
 	storemodels "quick-reel.com/store/store-models"
+	"quick-reel.com/store/table"
 )
 
-func getClipInfo(ctx context.Context, id string) (*storemodels.ClipInfo, error) {
-	db, err := commonstore.CreateDb(ctx)
+func getClipInfo(ctx context.Context, id string, table *table.Table) (*storemodels.ClipInfo, error) {
+	const sql = `SELECT  * from clipinfo where id = ?;`
 
-	if err != nil {
-		return nil, err
-	}
-
-	defer db.Close()
-
-	err = createTable(db)
-
-	if err != nil {
-		return nil, err
-	}
-	sql := `SELECT  * from clipinfo where id = ?;`
-
-	rows, err := db.Query(sql, id)
+	rows, err := table.Query(ctx, sql, id)
 
 	if err != nil {
 		return nil, err

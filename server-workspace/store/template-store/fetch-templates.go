@@ -3,28 +3,13 @@ package templatestore
 import (
 	"context"
 
-	commonstore "quick-reel.com/store/store-common"
 	storemodels "quick-reel.com/store/store-models"
+	"quick-reel.com/store/table"
 )
 
-func listTemplates(ctx context.Context) ([]*storemodels.Template, error) {
-	db, err := commonstore.CreateDb(ctx)
-
-	if err != nil {
-		return nil, err
-	}
-
-	defer db.Close()
-
-	err = createTable(db)
-
-	if err != nil {
-		return nil, err
-	}
-
-	sql := `SELECT  * from template;`
-
-	rows, err := db.Query(sql)
+func fetchTemplates(ctx context.Context, table *table.Table) ([]*storemodels.Template, error) {
+	const sql = `SELECT * FROM template;`
+	rows, err := table.Query(ctx, sql)
 
 	if err != nil {
 		return nil, err

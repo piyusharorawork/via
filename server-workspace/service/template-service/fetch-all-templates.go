@@ -12,7 +12,7 @@ type FetchAllTemplatesDependencies struct {
 }
 
 func fetchAllTemplates(ctx context.Context, dependencies FetchAllTemplatesDependencies) ([]servicemodels.TemplateLite, error) {
-	templates, err := dependencies.TemplateStore.List(ctx)
+	templates, err := dependencies.TemplateStore.Fetch(ctx)
 	if err != nil {
 		return nil, err
 	}

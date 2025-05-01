@@ -4,7 +4,7 @@ import (
 	"context"
 
 	_ "github.com/mattn/go-sqlite3"
-	commonstore "quick-reel.com/store/store-common"
+	"quick-reel.com/store/table"
 
 	"github.com/google/uuid"
 )
@@ -16,27 +16,15 @@ type SaveClipInfoInput struct {
 	FrameHeight int
 }
 
-func save(ctx context.Context, input SaveClipInfoInput) (string, error) {
-	db, err := commonstore.CreateDb(ctx)
-
-	if err != nil {
-		return "", err
-	}
-	defer db.Close()
-
-	err = createTable(db)
-	if err != nil {
-		return "", err
-	}
-
-	// Insert data
-	insertDataSql := `
+func saveClipInfo(ctx context.Context, input SaveClipInfoInput, table *table.Table) (string, error) {
+	const sql = `
 	INSERT INTO clipinfo(id, fps, frame_count, frame_width, frame_height) 
-	VALUES (?, ?, ?, ?, ?);`
+	VALUES (?, ?, ?, ?, ?);
+	`
 
 	id := uuid.NewString()
 
-	_, err = db.Exec(insertDataSql, id, input.Fps, input.FrameCount, input.FrameWidth, input.FrameHeight)
+	err := table.Execute(ctx, sql, id, input.Fps, input.FrameCount, input.FrameWidth, input.FrameHeight)
 	if err != nil {
 		return "", err
 	}
