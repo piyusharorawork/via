@@ -33,7 +33,9 @@ type TemplateService struct {
 }
 
 func (service *TemplateService) Create(ctx context.Context, input CreateTemplateInput) (string, error) {
-	defer util.TimeTrack(time.Now(), "create template")
+	if service.ShowProcessingTime {
+		defer util.TimeTrack(time.Now(), "create template")
+	}
 
 	if service.MediaCreator == nil {
 		return "", errors.New("media creator is not set")

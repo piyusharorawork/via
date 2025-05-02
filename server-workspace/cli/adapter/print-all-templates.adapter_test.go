@@ -17,7 +17,7 @@ func TestPrintAllTemplates(t *testing.T) {
 	}{
 		{
 			name: "success",
-			want: "[{\"id\":\"1\",\"name\":\"template1\"},{\"id\":\"2\",\"name\":\"template2\"}]",
+			want: "[{\"id\":\"1\",\"name\":\"template1\",\"videoUrl\":\"https://url.mp4\"},{\"id\":\"2\",\"name\":\"template2\",\"videoUrl\":\"https://url.mp4\"}]",
 		},
 	}
 
@@ -29,12 +29,14 @@ func TestPrintAllTemplates(t *testing.T) {
 			templateService := &templateservice.MockTemplateService{
 				ListAllResult: []servicemodels.TemplateLite{
 					{
-						Id:   "1",
-						Name: "template1",
+						Id:       "1",
+						Name:     "template1",
+						VideoUrl: "https://url.mp4",
 					},
 					{
-						Id:   "2",
-						Name: "template2",
+						Id:       "2",
+						Name:     "template2",
+						VideoUrl: "https://url.mp4",
 					},
 				},
 			}

@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 	templateservice "quick-reel.com/service/template-service"
@@ -56,12 +56,7 @@ var createTemplateCmd = &cobra.Command{
 			panic(err)
 		}
 
-		templateId, err := adapter.CreateTemplate(ctx, templateService, templateName, websiteUrl)
-
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(templateId)
+		adapter.CreateTemplate(ctx, templateService, templateName, websiteUrl, os.Stdout)
 
 	},
 }

@@ -8,7 +8,13 @@
       "mode": "auto",
       "program": "${workspaceFolder}/server-workspace/cli",
       "cwd": "${workspaceFolder}/server-workspace",
-      "args": ["get-template", "-t", "55ed6c55-1fcf-47e0-8ab0-5789d2d9f02b"],
+      "args": [
+        "create-template",
+        "-u",
+        "https://www.youtube.com/shorts/xe-l0anES4A",
+        "-n",
+        "timer"
+      ],
       "envFile": "${workspaceFolder}/assets/environments/.env"
     },
     {

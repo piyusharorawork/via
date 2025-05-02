@@ -230,7 +230,14 @@ func TestSaveTemplate(t *testing.T) {
 				t.Fatalf("id is empty")
 			}
 
-			templateStore.Remove(ctx, id)
+			result, err := templateStore.Get(ctx, id)
+			if err != nil {
+				t.Fatalf("failed to get template")
+			}
+
+			if result.Name != tc.name || result.Id != id {
+				t.Fatalf("template is not equal")
+			}
 
 		})
 

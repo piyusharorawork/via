@@ -25,7 +25,7 @@ func saveTemplate(ctx context.Context, input SaveTemplateInput, table *table.Tab
 	VALUES (?, ?, ?, ?, ?, ?);
 	`
 
-	_, err := table.Query(ctx, sql, id, input.Name, input.WebsiteUrl, input.VideoUrl, input.AudioUrl, input.ClipInfoId)
+	err := table.Execute(ctx, sql, id, input.Name, input.WebsiteUrl, input.VideoUrl, input.AudioUrl, input.ClipInfoId)
 
 	if err != nil {
 		return "", err

@@ -52,13 +52,10 @@ export class ViaSdk {
   async createTemplate(
     websiteUrl: string,
     templateName: string
-  ): Promise<void> {
-    try {
-      const args = ["create-template", "-u", websiteUrl, "-n", templateName];
-      await this.execute(args);
-    } catch (error) {
-      console.log(error);
-    }
+  ): Promise<{ templateId: string }> {
+    const args = ["create-template", "-u", websiteUrl, "-n", templateName];
+    const result = await this.execute(args);
+    return result;
   }
 
   private execute(args: string[]) {

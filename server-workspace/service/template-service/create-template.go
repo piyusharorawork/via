@@ -69,8 +69,6 @@ func createTemplate(ctx context.Context, input CreateTemplateInput, dependencies
 		return "", err
 	}
 
-	println(templateId)
-
 	previewFrames, err := generatePreviewFrames(ctx, videoUrl, fps, frameCount, dependencies.ExtractorFactory, dependencies.UploaderFactory)
 
 	if err != nil {
@@ -153,8 +151,6 @@ func generatePreviewFrames(ctx context.Context, videoUrl string, fps int, frameC
 		}
 		previewFrames[i] = previewFrame
 	}
-
-	fmt.Println(previewFrames)
 
 	return previewFrames, nil
 }
