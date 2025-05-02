@@ -86,13 +86,18 @@ export class ViaSdk {
     await this.executeWithoutOutput(args);
   }
 
+  // TODO refactor all execute functions with options
+  // after all test cases are done
+
+  // It saves the streamed output to a full output
+  // and then parses it to JSON
   private execute(args: string[]) {
     return new Promise<any>((resolve, reject) => {
+      let fullOutput: string = "";
       this.child = spawnViaCli(args);
       this.child.stdout.on("data", async (data) => {
         const text = data.toString();
-        const output = JSON.parse(text);
-        return resolve(output);
+        fullOutput += text;
       });
       this.child.stderr.on("data", (data) => {
         const text = data.toString();
@@ -102,10 +107,14 @@ export class ViaSdk {
         if (code !== 0) {
           return reject("non zero exit code");
         }
+        const output = JSON.parse(fullOutput);
+        return resolve(output);
       });
     });
   }
 
+  // It parses the streamed output to JSON
+  // and then calls the onProgress function
   private executeWithProgress(
     args: string[],
     onProgress: (percent: number, message: string) => void
@@ -137,6 +146,7 @@ export class ViaSdk {
     });
   }
 
+  // It doesn't parse the output to JSON
   private executeWithoutOutput(args: string[]) {
     return new Promise<void>((resolve, reject) => {
       this.child = spawnViaCli(args);

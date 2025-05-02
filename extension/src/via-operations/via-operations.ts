@@ -152,7 +152,7 @@ export class ViaOperations {
 
   async removeTemplate() {
     executeWithProgress({
-      task: async ({ onCancellationRequested }) => {
+      task: async ({ onCancellationRequested, showMessage }) => {
         const viaSdk = new ViaSdk();
         onCancellationRequested(viaSdk.kill);
         const templates = await viaSdk.fetchAllTemplates();
@@ -168,7 +168,7 @@ export class ViaOperations {
         }
         const templateId = template.id;
         await viaSdk.removeTemplate(templateId);
-        vscode.window.showInformationMessage("Template removed");
+        showMessage("Template removed");
       },
       title: "Removing template",
     });
