@@ -128,16 +128,52 @@ func TestCreateTemplate(t *testing.T) {
 		name           string
 		wantTemplateId string
 		wantErr        error
+		wantProgress   []struct {
+			percent int
+			message string
+		}
 	}{
 		{
 			name:           "successfully create template",
 			wantTemplateId: "123",
 			wantErr:        nil,
+			wantProgress: []struct {
+				percent int
+				message string
+			}{
+				{
+					percent: 20,
+					message: "video and audio urls created",
+				},
+				{
+					percent: 30,
+					message: "fps and frame count extracted",
+				},
+				{
+					percent: 80,
+					message: "Preview frames generated",
+				},
+				{
+					percent: 100,
+					message: "Template saved",
+				},
+			},
 		},
 	}
 
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
+			var progressCalls []struct {
+				percent int
+				message string
+			}
+			mockProgress := func(percent int, message string) {
+				progressCalls = append(progressCalls, struct {
+					percent int
+					message string
+				}{percent, message})
+			}
+
 			templateService := &TemplateService{
 				MediaCreator: &MockMediaCreator{
 					VideoUrl: "https://url.mp4",
@@ -164,13 +200,21 @@ func TestCreateTemplate(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			templateId, err := templateService.Create(ctx, CreateTemplateInput{})
+			input := CreateTemplateInput{
+				OnProgress: mockProgress,
+			}
+
+			templateId, err := templateService.Create(ctx, input)
 
 			if !util.AreErrorsSame(err, tc.wantErr) {
 				t.Fatalf("createTemplate() error = %v, wantErr %v", err, tc.wantErr)
 			}
 			if err == nil && templateId != tc.wantTemplateId {
 				t.Fatalf("templateId is not equal")
+			}
+
+			if err == nil && !reflect.DeepEqual(progressCalls, tc.wantProgress) {
+				t.Fatalf("progressCalls is not equal")
 			}
 
 		})

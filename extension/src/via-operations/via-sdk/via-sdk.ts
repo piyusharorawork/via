@@ -23,7 +23,7 @@ export class ViaSdk {
   async downloadVideo(
     websiteUrl: string,
     outputDir: string,
-    onProgress: (progress: number) => void
+    onProgress: (percent: number, message: string) => void
   ) {
     const args = [
       "download-video",
@@ -51,26 +51,11 @@ export class ViaSdk {
 
   async createTemplate(
     websiteUrl: string,
-    templateName: string
-  ): Promise<{
-    id: string;
-    name: string;
-    websiteUrl: string;
-    videoUrl: string;
-    audioUrl: string;
-    clipInfo: {
-      fps: number;
-      frameCount: number;
-      frameWidth: number;
-      frameHeight: number;
-    };
-    previewFrames: {
-      frameNo: number;
-      previewUrl: string;
-    }[];
-  }> {
+    templateName: string,
+    onProgress: (percent: number, message: string) => void
+  ) {
     const args = ["create-template", "-u", websiteUrl, "-n", templateName];
-    const result = await this.execute(args);
+    const result = await this.executeWithProgress(args, onProgress);
     return result;
   }
 
@@ -123,14 +108,18 @@ export class ViaSdk {
 
   private executeWithProgress(
     args: string[],
-    onProgress: (progress: number) => void
+    onProgress: (percent: number, message: string) => void
   ) {
     return new Promise<void>((resolve, reject) => {
       this.child = spawnViaCli(args);
       this.child.stdout.on("data", async (data) => {
         const text = data.toString();
         const output = JSON.parse(text);
-        onProgress(output.progress);
+
+        const percent = output.percent;
+        const message = output.message || "";
+
+        onProgress(percent, message);
       });
 
       this.child.stderr.on("data", (data) => {

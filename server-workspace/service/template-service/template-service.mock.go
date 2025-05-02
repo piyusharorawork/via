@@ -7,13 +7,17 @@ import (
 )
 
 type MockTemplateService struct {
-	ListAllCalled     bool
-	ListAllResult     []servicemodels.TemplateLite
-	CreateCalled      bool
-	CreatedTemplateId string
-	GetCalled         bool
-	GetResult         *servicemodels.TemplateFull
-	RemoveCalled      bool
+	ListAllCalled        bool
+	ListAllResult        []servicemodels.TemplateLite
+	CreateCalled         bool
+	CreatedTemplateId    string
+	CreatedProgressCalls []struct {
+		Progress int
+		Message  string
+	}
+	GetCalled    bool
+	GetResult    *servicemodels.TemplateFull
+	RemoveCalled bool
 }
 
 func (service *MockTemplateService) ListAll(ctx context.Context) ([]servicemodels.TemplateLite, error) {
@@ -23,6 +27,11 @@ func (service *MockTemplateService) ListAll(ctx context.Context) ([]servicemodel
 
 func (service *MockTemplateService) Create(ctx context.Context, input CreateTemplateInput) (string, error) {
 	service.CreateCalled = true
+	if input.OnProgress != nil {
+		for _, progress := range service.CreatedProgressCalls {
+			input.OnProgress(progress.Progress, progress.Message)
+		}
+	}
 	return service.CreatedTemplateId, nil
 }
 

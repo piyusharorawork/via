@@ -13,6 +13,7 @@
     "__logs/**": true
   },
   "cSpell.words": [
+    "climodels",
     "clipinfo",
     "clipinfostore",
     "commonstore",
@@ -21,6 +22,7 @@
     "godotenv",
     "myctx",
     "previewframestore",
+    "servicecommon",
     "servicemodels",
     "snapshotstore",
     "storecommon",

@@ -4,19 +4,18 @@ import (
 	"bytes"
 	"testing"
 
-	servicemodels "quick-reel.com/service/service-models"
 	templateservice "quick-reel.com/service/template-service"
 	myctx "quickreel.com/core/ctx"
 )
 
-func TestCreateAdapter(t *testing.T) {
+func TestCreateTemplate(t *testing.T) {
 	tt := []struct {
 		name string
 		want string
 	}{
 		{
 			name: "success",
-			want: `{"id":"12345","name":"templateName","websiteUrl":"","videoUrl":"https://url.com","audioUrl":"","clipInfo":null,"previewFrames":null}`,
+			want: `{"percent":20,"message":"video and audio urls created"}{"percent":100,"message":"Template saved"}`,
 		},
 	}
 
@@ -32,10 +31,18 @@ func TestCreateAdapter(t *testing.T) {
 
 			templateService := &templateservice.MockTemplateService{
 				CreatedTemplateId: "12345",
-				GetResult: &servicemodels.TemplateFull{
-					Id:       "12345",
-					Name:     "templateName",
-					VideoUrl: "https://url.com",
+				CreatedProgressCalls: []struct {
+					Progress int
+					Message  string
+				}{
+					{
+						Progress: 20,
+						Message:  "video and audio urls created",
+					},
+					{
+						Progress: 100,
+						Message:  "Template saved",
+					},
 				},
 			}
 

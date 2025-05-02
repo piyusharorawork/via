@@ -12,8 +12,9 @@ import (
 )
 
 // TODO see how can we move this to adapter
+// TODO add test for this
 type DownloadVideoOutput struct {
-	Progress int `json:"progress"`
+	Percent int `json:"percent"`
 }
 
 func init() {
@@ -71,7 +72,7 @@ var downloadVideoCmd = &cobra.Command{
 // TODO see how can we move this to adapter
 func printVideoProgress(percentage int) {
 	output := &DownloadVideoOutput{
-		Progress: percentage,
+		Percent: percentage,
 	}
 	json, err := util.ToJSON(output)
 	if err != nil {

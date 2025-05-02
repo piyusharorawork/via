@@ -6,7 +6,7 @@ type Input = {
 };
 
 type TaskInput = {
-  showProgress: (amount: number) => void;
+  showProgress: (percent: number, message: string) => void;
   showMessage: (message: string) => void;
   onCancellationRequested: (callback: Callback) => void;
 };
@@ -23,8 +23,8 @@ export const executeWithProgress = (input: Input) => {
     (token, { onCancellationRequested }) => {
       return new Promise<void>(async (resolve) => {
         await input.task({
-          showProgress: (amount) => {
-            token.report({ increment: amount });
+          showProgress: (percent, message) => {
+            token.report({ increment: percent, message });
           },
           showMessage: (message) => {
             token.report({ message: message });

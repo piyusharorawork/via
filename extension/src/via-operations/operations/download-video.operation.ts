@@ -44,7 +44,7 @@ export const downloadVideo = async () => {
         child.stdout.on("data", async (data) => {
           const text = data.toString();
           const output = JSON.parse(text) as DownloadVideoOutput;
-          showProgress(output.progress);
+          showProgress(output.progress, "");
         });
 
         child.stderr.on("data", (data) => {

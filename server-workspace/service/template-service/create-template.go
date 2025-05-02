@@ -6,6 +6,7 @@ import (
 	"math"
 
 	"github.com/google/uuid"
+	servicecommon "quick-reel.com/service/service-common"
 	clipinfostore "quick-reel.com/store/clipinfo-store"
 	previewframestore "quick-reel.com/store/preview-frame-store"
 	templatestore "quick-reel.com/store/template-store"
@@ -23,6 +24,7 @@ const (
 type CreateTemplateInput struct {
 	Name       string
 	WebsiteUrl string
+	OnProgress func(progress int, message string)
 }
 
 type CreateTemplateDependencies struct {
@@ -43,11 +45,15 @@ func createTemplate(ctx context.Context, input CreateTemplateInput, dependencies
 		return "", err
 	}
 
+	servicecommon.ReportProgress(input.OnProgress, 20, "video and audio urls created")
+
 	fps, frameCount, err := getFpsAndFrameCount(ctx, videoUrl, dependencies.ClipinfoFactory)
 
 	if err != nil {
 		return "", err
 	}
+
+	servicecommon.ReportProgress(input.OnProgress, 30, "fps and frame count extracted")
 
 	clipinfoId, err := saveClipInfo(ctx, fps, frameCount, dependencies.ClipInfoStore)
 
@@ -75,7 +81,15 @@ func createTemplate(ctx context.Context, input CreateTemplateInput, dependencies
 		return "", err
 	}
 
-	savePreviewFrames(ctx, templateId, previewFrames, dependencies.PreviewFrameStore)
+	servicecommon.ReportProgress(input.OnProgress, 80, "Preview frames generated")
+
+	err = savePreviewFrames(ctx, templateId, previewFrames, dependencies.PreviewFrameStore)
+
+	if err != nil {
+		return "", err
+	}
+
+	servicecommon.ReportProgress(input.OnProgress, 100, "Template saved")
 
 	return templateId, nil
 

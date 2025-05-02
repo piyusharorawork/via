@@ -109,13 +109,16 @@ export class ViaOperations {
     }
 
     executeWithProgress({
-      task: async ({ onCancellationRequested }) => {
+      task: async ({ onCancellationRequested, showProgress }) => {
         const viaSdk = new ViaSdk();
         onCancellationRequested(viaSdk.kill);
-        const template = await viaSdk.createTemplate(websiteUrl, templateName);
-        const path = saveJsonFile(template, "template.json");
-        const doc = await vscode.workspace.openTextDocument(path);
-        await vscode.window.showTextDocument(doc);
+        await viaSdk.createTemplate(
+          websiteUrl,
+          templateName,
+          (percent, message) => {
+            showProgress(percent, message);
+          }
+        );
       },
       title: "Creating template",
     });

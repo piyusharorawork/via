@@ -8,7 +8,13 @@
       "mode": "auto",
       "program": "${workspaceFolder}/server-workspace/cli",
       "cwd": "${workspaceFolder}/server-workspace",
-      "args": ["remove-template", "-t", "361d6339-1947-4f40-9656-6fc5d4febf28"],
+      "args": [
+        "create-template",
+        "-u",
+        "https://www.youtube.com/shorts/xMANNahZlXA",
+        "-n",
+        "wow"
+      ],
       "envFile": "${workspaceFolder}/assets/environments/.env"
     },
     {

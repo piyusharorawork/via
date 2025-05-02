@@ -6,6 +6,7 @@ import (
 	"io"
 
 	templateservice "quick-reel.com/service/template-service"
+	climodels "quickreel.com/cli/cli-models"
 	"quickreel.com/core/util"
 )
 
@@ -13,26 +14,23 @@ func CreateTemplate(ctx context.Context, templateService templateservice.ITempla
 	input := templateservice.CreateTemplateInput{
 		Name:       templateName,
 		WebsiteUrl: websiteUrl,
+		OnProgress: func(percent int, message string) {
+			progressOutput := climodels.ProgressOutput{
+				Percent: percent,
+				Message: message,
+			}
+			json, err := util.ToJSON(progressOutput)
+			if err != nil {
+				panic(err)
+			}
+			fmt.Fprint(out, json)
+		},
 	}
 
-	templateId, err := templateService.Create(ctx, input)
+	_, err := templateService.Create(ctx, input)
 
 	if err != nil {
 		panic(err)
 	}
-
-	template, err := templateService.Get(ctx, templateId)
-
-	if err != nil {
-		panic(err)
-	}
-
-	json, err := util.ToJSON(template)
-
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Fprint(out, json)
 
 }
