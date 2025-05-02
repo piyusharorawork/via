@@ -60,6 +60,10 @@
       {
         "command": "via.create-template",
         "title": "create-template"
+      },
+      {
+        "command": "via.view-template",
+        "title": "view-template"
       }
     ],
     "menus": {

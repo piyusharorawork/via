@@ -17,7 +17,7 @@ func TestPrintTemplate(t *testing.T) {
 	}{
 		{
 			name: "success",
-			want: "{\"id\":\"1\",\"name\":\"template1\",\"websiteUrl\":\"\",\"videoUrl\":\"\",\"audioUrl\":\"\",\"clipInfo\":null,\"previewFrames\":null}",
+			want: `{"id":"1","name":"template1","websiteUrl":"","videoUrl":"","audioUrl":"","clipInfo":null,"previewFrames":null}`,
 		},
 	}
 

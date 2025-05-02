@@ -74,6 +74,28 @@ export class ViaSdk {
     return result;
   }
 
+  async getTemplate(templateId: string): Promise<{
+    id: string;
+    name: string;
+    websiteUrl: string;
+    videoUrl: string;
+    audioUrl: string;
+    clipInfo: {
+      fps: number;
+      frameCount: number;
+      frameWidth: number;
+      frameHeight: number;
+    };
+    previewFrames: {
+      frameNo: number;
+      previewUrl: string;
+    }[];
+  }> {
+    const args = ["get-template", "-t", templateId];
+    const result = await this.execute(args);
+    return result;
+  }
+
   private execute(args: string[]) {
     return new Promise<any>((resolve, reject) => {
       this.child = spawnViaCli(args);

@@ -98,6 +98,13 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const viewTemplateCmd = vscode.commands.registerCommand(
+    "via.view-template",
+    async () => {
+      await new ViaOperations().viewTemplate();
+    }
+  );
+
   context.subscriptions.push(clipInfoCmd);
   context.subscriptions.push(downloadVideoCmd);
   context.subscriptions.push(uploadFileCmd);
@@ -111,6 +118,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(copyKeyframeEncodedUrlCmd);
   context.subscriptions.push(fetchAllTemplatesCmd);
   context.subscriptions.push(createTemplateCmd);
+  context.subscriptions.push(viewTemplateCmd);
 }
 
 export function deactivate() {}

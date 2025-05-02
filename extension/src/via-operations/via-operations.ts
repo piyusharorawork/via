@@ -15,6 +15,7 @@ import { ViaSdk } from "./via-sdk/via-sdk";
 import { saveJsonFile } from "../keeper/keeper";
 import { getNowDirPath } from "../keeper/now";
 import { join } from "path";
+import { title } from "process";
 
 // TODO move it to via sdk
 export const viaOperations = {
@@ -117,6 +118,32 @@ export class ViaOperations {
         await vscode.window.showTextDocument(doc);
       },
       title: "Creating template",
+    });
+  }
+
+  async viewTemplate() {
+    executeWithProgress({
+      task: async ({ onCancellationRequested }) => {
+        const viaSdk = new ViaSdk();
+        onCancellationRequested(viaSdk.kill);
+        const templates = await viaSdk.fetchAllTemplates();
+        const templateNames = templates.map((template) => template.name);
+        const chosenTemplateName = await vscode.window.showQuickPick(
+          templateNames
+        );
+        const template = templates.find(
+          (template) => template.name === chosenTemplateName
+        );
+        if (!template) {
+          return;
+        }
+        const templateId = template.id;
+        const templateInfo = await viaSdk.getTemplate(templateId);
+        const path = saveJsonFile(templateInfo, "template.json");
+        const doc = await vscode.workspace.openTextDocument(path);
+        await vscode.window.showTextDocument(doc);
+      },
+      title: "Viewing template",
     });
   }
 }
