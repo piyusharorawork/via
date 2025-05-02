@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"testing"
 
+	servicemodels "quick-reel.com/service/service-models"
 	templateservice "quick-reel.com/service/template-service"
 	myctx "quickreel.com/core/ctx"
 )
@@ -15,7 +16,7 @@ func TestCreateAdapter(t *testing.T) {
 	}{
 		{
 			name: "success",
-			want: `{"templateId":"12345"}`,
+			want: `{"id":"12345","name":"templateName","websiteUrl":"","videoUrl":"https://url.com","audioUrl":"","clipInfo":null,"previewFrames":null}`,
 		},
 	}
 
@@ -31,6 +32,11 @@ func TestCreateAdapter(t *testing.T) {
 
 			templateService := &templateservice.MockTemplateService{
 				CreatedTemplateId: "12345",
+				GetResult: &servicemodels.TemplateFull{
+					Id:       "12345",
+					Name:     "templateName",
+					VideoUrl: "https://url.com",
+				},
 			}
 
 			CreateTemplate(ctx, templateService, "templateName", "https://url.com", buf)

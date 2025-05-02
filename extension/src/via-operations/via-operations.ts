@@ -111,8 +111,10 @@ export class ViaOperations {
       task: async ({ onCancellationRequested }) => {
         const viaSdk = new ViaSdk();
         onCancellationRequested(viaSdk.kill);
-        await viaSdk.createTemplate(websiteUrl, templateName);
-        vscode.window.showInformationMessage("Template created successfully");
+        const template = await viaSdk.createTemplate(websiteUrl, templateName);
+        const path = saveJsonFile(template, "template.json");
+        const doc = await vscode.workspace.openTextDocument(path);
+        await vscode.window.showTextDocument(doc);
       },
       title: "Creating template",
     });

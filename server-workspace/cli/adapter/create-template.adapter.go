@@ -9,10 +9,6 @@ import (
 	"quickreel.com/core/util"
 )
 
-type CreateTemplateOutput struct {
-	TemplateId string `json:"templateId"`
-}
-
 func CreateTemplate(ctx context.Context, templateService templateservice.ITemplateService, templateName string, websiteUrl string, out io.Writer) {
 	input := templateservice.CreateTemplateInput{
 		Name:       templateName,
@@ -25,11 +21,13 @@ func CreateTemplate(ctx context.Context, templateService templateservice.ITempla
 		panic(err)
 	}
 
-	output := &CreateTemplateOutput{
-		TemplateId: templateId,
+	template, err := templateService.Get(ctx, templateId)
+
+	if err != nil {
+		panic(err)
 	}
 
-	json, err := util.ToJSON(output)
+	json, err := util.ToJSON(template)
 
 	if err != nil {
 		panic(err)

@@ -52,7 +52,23 @@ export class ViaSdk {
   async createTemplate(
     websiteUrl: string,
     templateName: string
-  ): Promise<{ templateId: string }> {
+  ): Promise<{
+    id: string;
+    name: string;
+    websiteUrl: string;
+    videoUrl: string;
+    audioUrl: string;
+    clipInfo: {
+      fps: number;
+      frameCount: number;
+      frameWidth: number;
+      frameHeight: number;
+    };
+    previewFrames: {
+      frameNo: number;
+      previewUrl: string;
+    }[];
+  }> {
     const args = ["create-template", "-u", websiteUrl, "-n", templateName];
     const result = await this.execute(args);
     return result;
