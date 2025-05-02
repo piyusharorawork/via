@@ -96,6 +96,11 @@ export class ViaSdk {
     return result;
   }
 
+  async removeTemplate(templateId: string): Promise<void> {
+    const args = ["remove-template", "-t", templateId];
+    await this.executeWithoutOutput(args);
+  }
+
   private execute(args: string[]) {
     return new Promise<any>((resolve, reject) => {
       this.child = spawnViaCli(args);
@@ -138,6 +143,27 @@ export class ViaSdk {
           return reject("non zero exit code");
         }
 
+        return resolve();
+      });
+    });
+  }
+
+  private executeWithoutOutput(args: string[]) {
+    return new Promise<void>((resolve, reject) => {
+      this.child = spawnViaCli(args);
+      this.child.stdout.on("data", async (data) => {
+        const text = data.toString();
+        const output = JSON.parse(text);
+        console.log("output", output);
+      });
+      this.child.stderr.on("data", (data) => {
+        const text = data.toString();
+        return reject(text);
+      });
+      this.child.on("close", async (code) => {
+        if (code !== 0) {
+          return reject("non zero exit code");
+        }
         return resolve();
       });
     });

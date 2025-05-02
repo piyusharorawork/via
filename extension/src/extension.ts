@@ -105,6 +105,13 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const removeTemplateCmd = vscode.commands.registerCommand(
+    "via.remove-template",
+    async () => {
+      await new ViaOperations().removeTemplate();
+    }
+  );
+
   context.subscriptions.push(clipInfoCmd);
   context.subscriptions.push(downloadVideoCmd);
   context.subscriptions.push(uploadFileCmd);
@@ -119,6 +126,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(fetchAllTemplatesCmd);
   context.subscriptions.push(createTemplateCmd);
   context.subscriptions.push(viewTemplateCmd);
+  context.subscriptions.push(removeTemplateCmd);
 }
 
 export function deactivate() {}

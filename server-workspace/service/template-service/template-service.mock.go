@@ -13,6 +13,7 @@ type MockTemplateService struct {
 	CreatedTemplateId string
 	GetCalled         bool
 	GetResult         *servicemodels.TemplateFull
+	RemoveCalled      bool
 }
 
 func (service *MockTemplateService) ListAll(ctx context.Context) ([]servicemodels.TemplateLite, error) {
@@ -28,4 +29,9 @@ func (service *MockTemplateService) Create(ctx context.Context, input CreateTemp
 func (service *MockTemplateService) Get(ctx context.Context, id string) (*servicemodels.TemplateFull, error) {
 	service.GetCalled = true
 	return service.GetResult, nil
+}
+
+func (service *MockTemplateService) Remove(ctx context.Context, id string) error {
+	service.RemoveCalled = true
+	return nil
 }

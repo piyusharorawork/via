@@ -19,6 +19,7 @@ type ITemplateService interface {
 	ListAll(ctx context.Context) ([]servicemodels.TemplateLite, error)
 	Get(ctx context.Context, id string) (*servicemodels.TemplateFull, error)
 	Create(ctx context.Context, input CreateTemplateInput) (string, error)
+	Remove(ctx context.Context, id string) error
 }
 
 type TemplateService struct {
@@ -118,4 +119,30 @@ func (service *TemplateService) Get(ctx context.Context, id string) (*servicemod
 	}
 
 	return getTemplate(ctx, id, dependencies)
+}
+
+func (service *TemplateService) Remove(ctx context.Context, id string) error {
+	if service.ShowProcessingTime {
+		defer util.TimeTrack(time.Now(), "remove template")
+	}
+
+	if service.TemplateStore == nil {
+		return errors.New("template store is not set")
+	}
+
+	if service.ClipInfoStore == nil {
+		return errors.New("clip info store is not set")
+	}
+
+	if service.PreviewFrameStore == nil {
+		return errors.New("preview frame store is not set")
+	}
+
+	dependencies := RemoveTemplateDependencies{
+		TemplateStore:     service.TemplateStore,
+		ClipInfoStore:     service.ClipInfoStore,
+		PreviewFrameStore: service.PreviewFrameStore,
+	}
+
+	return removeTemplate(ctx, id, dependencies)
 }

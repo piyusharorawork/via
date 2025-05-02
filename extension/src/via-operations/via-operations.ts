@@ -146,4 +146,28 @@ export class ViaOperations {
       title: "Viewing template",
     });
   }
+
+  async removeTemplate() {
+    executeWithProgress({
+      task: async ({ onCancellationRequested }) => {
+        const viaSdk = new ViaSdk();
+        onCancellationRequested(viaSdk.kill);
+        const templates = await viaSdk.fetchAllTemplates();
+        const templateNames = templates.map((template) => template.name);
+        const chosenTemplateName = await vscode.window.showQuickPick(
+          templateNames
+        );
+        const template = templates.find(
+          (template) => template.name === chosenTemplateName
+        );
+        if (!template) {
+          return;
+        }
+        const templateId = template.id;
+        await viaSdk.removeTemplate(templateId);
+        vscode.window.showInformationMessage("Template removed");
+      },
+      title: "Removing template",
+    });
+  }
 }

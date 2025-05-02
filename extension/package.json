@@ -64,6 +64,10 @@
       {
         "command": "via.view-template",
         "title": "view-template"
+      },
+      {
+        "command": "via.remove-template",
+        "title": "remove-template"
       }
     ],
     "menus": {

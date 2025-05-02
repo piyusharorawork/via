@@ -302,3 +302,54 @@ func TestGetPreviewFrameNos(t *testing.T) {
 		})
 	}
 }
+
+func TestRemoveTemplate(t *testing.T) {
+	tt := []struct {
+		name    string
+		wantErr error
+	}{
+		{
+			name:    "successfully remove template",
+			wantErr: nil,
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			templateStore := &templatestore.MockTemplateStore{}
+			clipInfoStore := &clipinfostore.MockClipInfoStore{}
+			previewFrameStore := &previewframestore.MockPreviewFrameStore{}
+
+			templateService := &TemplateService{
+				TemplateStore:     templateStore,
+				ClipInfoStore:     clipInfoStore,
+				PreviewFrameStore: previewFrameStore,
+			}
+
+			ctx, err := myctx.GetTestCtx()
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			err = templateService.Remove(ctx, "1")
+
+			if !util.AreErrorsSame(err, tc.wantErr) {
+				t.Fatalf("removeTemplate() error = %v, wantErr %v", err, tc.wantErr)
+			}
+
+			if err == nil && !templateStore.RemoveCalled {
+				t.Fatalf("removeTemplate() RemoveCalled = %v, want %v", templateStore.RemoveCalled, true)
+			}
+
+			if err == nil && !clipInfoStore.RemoveCalled {
+				t.Fatalf("removeTemplate() RemoveCalled = %v, want %v", clipInfoStore.RemoveCalled, true)
+			}
+
+			if err == nil && !previewFrameStore.RemoveManyCalled {
+				t.Fatalf("removeTemplate() RemoveManyCalled = %v, want %v", previewFrameStore.RemoveManyCalled, true)
+			}
+
+		})
+	}
+
+}
