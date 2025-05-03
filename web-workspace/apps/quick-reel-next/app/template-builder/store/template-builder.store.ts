@@ -1,3 +1,4 @@
+import { IStorage } from "@/lib/storage";
 import { createStore } from "@xstate/store";
 
 export type Template = {
@@ -17,7 +18,7 @@ type Context = {
   state: TemplateBuilderState;
 };
 
-export const createTemplateBuilderStore = () => {
+export const createTemplateBuilderStore = (storage: IStorage) => {
   const context: Context = {
     templates: [],
     template: null,

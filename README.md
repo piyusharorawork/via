@@ -4,7 +4,8 @@
 
 ## TODO
 
-- Remove template in progress
+- use Store hook to have external dependencies : router , storage , query client
+- move most of the logic to centralized store
 - add progress to create template
 - single template builder page
 

@@ -5,9 +5,9 @@ import { useTemplateBuilderStore } from "../store/template-builder.provider";
 
 export const useRemoveTemplate = () => {
   const { id } = useParams();
-  //   const queryClient = useQueryClient();
-  //   const router = useRouter();
-  //   const store = useTemplateBuilderStore();
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  const store = useTemplateBuilderStore();
 
   const { isPending, mutate } = useMutation({
     mutationKey: ["removeTemplate", id],
@@ -17,13 +17,11 @@ export const useRemoveTemplate = () => {
       if (!res.ok) {
         throw new Error("Failed to delete template");
       }
-      return res.json();
     },
     onSuccess: () => {
-      console.log("success");
-      //   router.push("/template-builder");
-      //   queryClient.invalidateQueries({ exact: true, queryKey: ["templates"] });
-      //   store.send({ type: "removeTemplateSuccess" });
+      router.push("/template-builder");
+      queryClient.invalidateQueries({ exact: true, queryKey: ["templates"] });
+      store.send({ type: "removeTemplateSuccess" });
     },
   });
 
