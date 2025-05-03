@@ -10,10 +10,15 @@ import (
 	previewframestore "quick-reel.com/store/preview-frame-store"
 	templatestore "quick-reel.com/store/template-store"
 	myctx "quickreel.com/core/ctx"
-	"quickreel.com/core/util"
 )
 
-func GetTemplateHandler(w http.ResponseWriter, r *http.Request) {
+func RemoveTemplateHandler(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
 	vars := mux.Vars(r)
 	id := vars["id"]
 
@@ -23,28 +28,23 @@ func GetTemplateHandler(w http.ResponseWriter, r *http.Request) {
 		PreviewFrameStore: &previewframestore.PreviewFrameStore{},
 	}
 	ctx, err := myctx.GetCtx()
-
 	if err != nil {
-		panic(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"error":"internal context error"}`))
+		return
 	}
-	getTemplate(ctx, id, &templateService, w)
+
+	removeTemplate(ctx, id, &templateService, w)
 
 }
 
-func getTemplate(ctx context.Context, id string, templateService templateservice.ITemplateService, w Writer) {
-	template, err := templateService.Get(ctx, id)
-
-	if err != nil {
-		panic(err)
-	}
-
-	json, err := util.ToJSON(template)
+func removeTemplate(ctx context.Context, id string, templateService templateservice.ITemplateService, w Writer) {
+	err := templateService.Remove(ctx, id)
 
 	if err != nil {
 		panic(err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte(json))
-
+	w.Write([]byte("ok"))
 }

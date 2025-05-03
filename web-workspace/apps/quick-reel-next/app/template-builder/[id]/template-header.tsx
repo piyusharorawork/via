@@ -20,6 +20,7 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { TemplateRemoveDialog } from "./remove-template-dialog";
 
 export const TemplateHeader = () => {
   const store = useTemplateBuilderStore();
@@ -30,18 +31,16 @@ export const TemplateHeader = () => {
   useTemplate();
 
   return (
-    <div className="flex h-full relative">
-      <section className="w-8 h-full flex justify-center items-center mx-2 z-10">
-        <Link href="/template-builder">
+    <div className="flex h-full relative px-4">
+      <section className="w-16 h-full flex items-center">
+        <Link href="/template-builder" className="w-12">
           <LeftDirectionIcon />
         </Link>
       </section>
-
-      <section className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
+      <section className=" flex-grow flex justify-center items-center">
         <h1 className="text-2xl font-bold">{templateName} </h1>
       </section>
-
-      <section className="absolute top-0 left-0 w-full h-full flex justify-end items-center px-4">
+      <section className="w-16 h-full flex justify-center items-center">
         <Menubar>
           <MenubarMenu>
             <MenubarTrigger>
@@ -62,7 +61,10 @@ export const TemplateHeader = () => {
                 <span>Publish</span>
               </MenubarItem>
               <MenubarSeparator />
-              <MenubarItem className="flex items-center gap-2">
+              <MenubarItem
+                className="flex items-center gap-2"
+                onClick={() => store.send({ type: "clickRemoveTemplate" })}
+              >
                 <TrashIcon />
                 <span>Delete</span>
               </MenubarItem>
@@ -70,6 +72,8 @@ export const TemplateHeader = () => {
           </MenubarMenu>
         </Menubar>
       </section>
+
+      <TemplateRemoveDialog />
     </div>
   );
 };

@@ -8,7 +8,7 @@ export const useTemplates = () => {
     queryFn: async () => {
       const res = await fetch("http://localhost:8080/api/templates");
       const templates = await res.json();
-      store.send({ type: "setTemplates", templates });
+      store.send({ type: "fetchTemplatesSuccess", templates });
       return templates;
     },
   });

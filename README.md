@@ -2,10 +2,9 @@
 
 # Template Builder tool
 
-- Create Template Api
-
 ## TODO
 
+- Remove template in progress
 - add progress to create template
 - single template builder page
 

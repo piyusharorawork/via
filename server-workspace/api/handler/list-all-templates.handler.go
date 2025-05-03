@@ -49,6 +49,5 @@ func fetchAllTemplates(ctx context.Context, templateService templateservice.ITem
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write([]byte(json))
 }

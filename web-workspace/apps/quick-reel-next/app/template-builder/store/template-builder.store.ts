@@ -6,25 +6,41 @@ export type Template = {
   videoUrl: string;
 };
 
+export enum TemplateBuilderState {
+  IDLE,
+  REMOVE_TEMPLATE_DIALOG_OPENED,
+}
+
 type Context = {
   templates: Template[];
   template: Template | null;
+  state: TemplateBuilderState;
 };
 
 export const createTemplateBuilderStore = () => {
   const context: Context = {
     templates: [],
     template: null,
+    state: TemplateBuilderState.IDLE,
   };
 
   const store = createStore({
     context,
     on: {
-      setTemplates: ({}, event: { templates: Template[] }) => {
+      fetchTemplatesSuccess: ({}, event: { templates: Template[] }) => {
         return { templates: event.templates };
       },
-      setTemplate: ({}, event: { template: Template }) => {
+      fetchSingleTemplateSuccess: ({}, event: { template: Template }) => {
         return { template: event.template };
+      },
+      clickRemoveTemplate: ({}) => {
+        return { state: TemplateBuilderState.REMOVE_TEMPLATE_DIALOG_OPENED };
+      },
+      clickCancelRemoveTemplate: ({}) => {
+        return { state: TemplateBuilderState.IDLE };
+      },
+      removeTemplateSuccess: ({}) => {
+        return { state: TemplateBuilderState.IDLE };
       },
     },
   });

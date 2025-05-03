@@ -12,7 +12,7 @@ export const useTemplate = () => {
       const url = `http://localhost:8080/api/templates/${id}`;
       const res = await fetch(url);
       const template = await res.json();
-      store.send({ type: "setTemplate", template });
+      store.send({ type: "fetchSingleTemplateSuccess", template });
       return template;
     },
   });
