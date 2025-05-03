@@ -3,7 +3,7 @@ import { useTemplateBuilderStore } from "../store/template-builder.provider";
 
 export const useTemplates = () => {
   const store = useTemplateBuilderStore();
-  const { isLoading } = useQuery({
+  const { isLoading, isError } = useQuery({
     queryKey: ["templates"],
     queryFn: async () => {
       const res = await fetch("http://localhost:8080/api/templates");
@@ -13,5 +13,5 @@ export const useTemplates = () => {
     },
   });
 
-  return { isLoading };
+  return { isLoading, isError };
 };

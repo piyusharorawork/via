@@ -5,14 +5,17 @@ import { useTemplateBuilderStore } from "../store/template-builder.provider";
 import { useTemplates } from "../hooks/use-templates";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import { Loader2 } from "lucide-react";
+import { Loader2, Terminal } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export const TemplateList = () => {
   const store = useTemplateBuilderStore();
   const templates = useSelector(store, (state) => state.context.templates);
-  const { isLoading } = useTemplates();
+  const { isLoading, isError } = useTemplates();
 
   if (isLoading) return <LoadingSpinner />;
+
+  if (isError) return <SomethingWentWrong />;
 
   return (
     <div className="mx-4 my-8 grid gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 ">
@@ -56,5 +59,17 @@ const LoadingSpinner = () => {
     <div className="h-full w-full absolute flex justify-center items-center">
       <Loader2 className="h-12 w-12 animate-spin text-primary" />
     </div>
+  );
+};
+
+const SomethingWentWrong = () => {
+  return (
+    <Alert>
+      <Terminal className="h-4 w-4" />
+      <AlertTitle>Oops!</AlertTitle>
+      <AlertDescription>
+        Something went wrong. Please try again later :(
+      </AlertDescription>
+    </Alert>
   );
 };
