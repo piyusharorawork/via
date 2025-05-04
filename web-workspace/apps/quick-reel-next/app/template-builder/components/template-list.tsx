@@ -18,16 +18,16 @@ export const TemplateList = () => {
   if (isError) return <SomethingWentWrong />;
 
   return (
-    <div className="mx-4 my-8 grid gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-6 ">
+    <div className="mx-4 my-8 grid gap-6 grid-cols-1  sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 ">
       {templates.map((template) => {
         return (
-          <Card key={template.id} className="my-4 justify-self-center">
-            <CardHeader>
-              <CardTitle>{template.name}</CardTitle>
-            </CardHeader>
+          <Link href={`/template-builder/${template.id}`} key={template.id}>
+            <Card className="my-4 justify-self-center">
+              <CardHeader>
+                <CardTitle>{template.name}</CardTitle>
+              </CardHeader>
 
-            <CardContent className="relative cursor-pointer">
-              <Link href={`/template-builder/${template.id}`}>
+              <CardContent className="relative cursor-pointer">
                 <video
                   className="rounded-lg"
                   crossOrigin="anonymous"
@@ -45,9 +45,9 @@ export const TemplateList = () => {
                 >
                   <source src={template.videoUrl} type="video/mp4" />
                 </video>
-              </Link>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </Link>
         );
       })}
     </div>
