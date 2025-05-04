@@ -1,7 +1,7 @@
 "use client";
 
 import { useSelector } from "@xstate/store/react";
-import { useTemplateBuilderStore } from "../store/template-builder.provider";
+import { useDraftTemplatesStore } from "../draft-templates.provider";
 import { useTemplates } from "../hooks/use-templates";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import { Loader2, Terminal } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export const TemplateList = () => {
-  const store = useTemplateBuilderStore();
+  const store = useDraftTemplatesStore();
   const templates = useSelector(store, (state) => state.context.templates);
   const { isLoading, isError } = useTemplates();
 
@@ -21,7 +21,7 @@ export const TemplateList = () => {
     <div className="mx-4 my-8 grid gap-6 grid-cols-1  sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 ">
       {templates.map((template) => {
         return (
-          <Link href={`/template-builder/${template.id}`} key={template.id}>
+          <Link href={`/draft-templates/${template.id}`} key={template.id}>
             <Card className="my-4 justify-self-center">
               <CardHeader>
                 <CardTitle>{template.name}</CardTitle>

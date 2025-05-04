@@ -1,11 +1,11 @@
 "use client";
 
 import { useSelector } from "@xstate/store/react";
-import { useTemplateBuilderStore } from "../store/template-builder.provider";
+import { useDraftTemplatesStore } from "../draft-templates.provider";
 import { useTemplate } from "../hooks/use-template";
 
 export const VideoPreview = () => {
-  const store = useTemplateBuilderStore();
+  const store = useDraftTemplatesStore();
   const videoURL = useSelector(
     store,
     (state) => state.context.template?.videoUrl
@@ -13,8 +13,6 @@ export const VideoPreview = () => {
   useTemplate();
 
   if (!videoURL) return null;
-
-  console.log(videoURL);
 
   return (
     <div className="h-full flex justify-center py-2">

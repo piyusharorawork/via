@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { useTemplateBuilderStore } from "../store/template-builder.provider";
+import { useDraftTemplatesStore } from "../draft-templates.provider";
 import { useParams } from "next/navigation";
 
 export const useTemplate = () => {
   const { id } = useParams();
 
-  const store = useTemplateBuilderStore();
+  const store = useDraftTemplatesStore();
   const { isLoading, isError } = useQuery({
     queryKey: ["template", id],
     queryFn: async () => {

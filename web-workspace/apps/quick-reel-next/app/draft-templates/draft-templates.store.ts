@@ -7,7 +7,7 @@ export type Template = {
   videoUrl: string;
 };
 
-export enum TemplateBuilderState {
+export enum DraftTemplatesState {
   IDLE,
   REMOVE_TEMPLATE_DIALOG_OPENED,
 }
@@ -15,14 +15,14 @@ export enum TemplateBuilderState {
 type Context = {
   templates: Template[];
   template: Template | null;
-  state: TemplateBuilderState;
+  state: DraftTemplatesState;
 };
 
-export const createTemplateBuilderStore = (storage: IStorage) => {
+export const createDraftTemplatesStore = (storage: IStorage) => {
   const context: Context = {
     templates: [],
     template: null,
-    state: TemplateBuilderState.IDLE,
+    state: DraftTemplatesState.IDLE,
   };
 
   const store = createStore({
@@ -35,13 +35,13 @@ export const createTemplateBuilderStore = (storage: IStorage) => {
         return { template: event.template };
       },
       clickRemoveTemplate: ({}) => {
-        return { state: TemplateBuilderState.REMOVE_TEMPLATE_DIALOG_OPENED };
+        return { state: DraftTemplatesState.REMOVE_TEMPLATE_DIALOG_OPENED };
       },
       clickCancelRemoveTemplate: ({}) => {
-        return { state: TemplateBuilderState.IDLE };
+        return { state: DraftTemplatesState.IDLE };
       },
       removeTemplateSuccess: ({}) => {
-        return { state: TemplateBuilderState.IDLE };
+        return { state: DraftTemplatesState.IDLE };
       },
     },
   });

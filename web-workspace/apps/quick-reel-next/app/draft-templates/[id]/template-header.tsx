@@ -8,7 +8,7 @@ import {
   ThreeDotsIcon,
   TrashIcon,
 } from "@/components/features/icons";
-import { useTemplateBuilderStore } from "../store/template-builder.provider";
+import { useDraftTemplatesStore } from "../draft-templates.provider";
 import { useSelector } from "@xstate/store/react";
 import { useTemplate } from "../hooks/use-template";
 import Link from "next/link";
@@ -23,7 +23,7 @@ import {
 import { TemplateRemoveDialog } from "./remove-template-dialog";
 
 export const TemplateHeader = () => {
-  const store = useTemplateBuilderStore();
+  const store = useDraftTemplatesStore();
   const templateName = useSelector(
     store,
     (state) => state.context.template?.name
@@ -33,7 +33,7 @@ export const TemplateHeader = () => {
   return (
     <div className="flex h-full relative px-4">
       <section className="w-16 h-full flex items-center">
-        <Link href="/template-builder" className="w-12">
+        <Link href="/draft-templates" className="w-12">
           <LeftDirectionIcon />
         </Link>
       </section>

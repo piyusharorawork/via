@@ -1,18 +1,18 @@
 "use client";
 import React from "react";
 import { useStoreInit } from "@/lib/use-store.init";
-import { createTemplateBuilderStore } from "./template-builder.store";
+import { createDraftTemplatesStore } from "./draft-templates.store";
 
 type Props = {
   children: React.ReactNode;
 };
 
 const Context = React.createContext<ReturnType<
-  typeof createTemplateBuilderStore
+  typeof createDraftTemplatesStore
 > | null>(null);
 
-export const TemplateBuilderProvider: React.FC<Props> = (props) => {
-  const { isReady, store } = useStoreInit(createTemplateBuilderStore);
+export const DraftTemplatesProvider: React.FC<Props> = (props) => {
+  const { isReady, store } = useStoreInit(createDraftTemplatesStore);
 
   if (!isReady) {
     return null;
@@ -21,11 +21,11 @@ export const TemplateBuilderProvider: React.FC<Props> = (props) => {
   return <Context.Provider value={store}>{props.children}</Context.Provider>;
 };
 
-export const useTemplateBuilderStore = () => {
+export const useDraftTemplatesStore = () => {
   const store = React.useContext(Context);
   if (!store) {
     throw new Error(
-      "useTemplateBuilderStore must be used within a TemplateBuilderProvider"
+      "useDraftTemplatesStore must be used within a DraftTemplatesProvider"
     );
   }
   return store;

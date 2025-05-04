@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { useTemplateBuilderStore } from "../store/template-builder.provider";
+import { useDraftTemplatesStore } from "../draft-templates.provider";
 
 export const useTemplates = () => {
-  const store = useTemplateBuilderStore();
+  const store = useDraftTemplatesStore();
   const { isLoading, isError } = useQuery({
     queryKey: ["templates"],
     queryFn: async () => {

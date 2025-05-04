@@ -10,17 +10,17 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useTemplateBuilderStore } from "../store/template-builder.provider";
+import { useDraftTemplatesStore } from "../draft-templates.provider";
 import { useSelector } from "@xstate/store/react";
-import { TemplateBuilderState } from "../store/template-builder.store";
+import { DraftTemplatesState } from "../draft-templates.store";
 import { useRemoveTemplate } from "../hooks/use-remove-template";
 
 export const TemplateRemoveDialog = () => {
-  const store = useTemplateBuilderStore();
+  const store = useDraftTemplatesStore();
   const state = useSelector(store, (state) => state.context.state);
   const { deleteTemplate } = useRemoveTemplate();
 
-  if (state !== TemplateBuilderState.REMOVE_TEMPLATE_DIALOG_OPENED) {
+  if (state !== DraftTemplatesState.REMOVE_TEMPLATE_DIALOG_OPENED) {
     return null;
   }
 

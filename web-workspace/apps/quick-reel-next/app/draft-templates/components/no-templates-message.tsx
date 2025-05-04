@@ -9,10 +9,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useSelector } from "@xstate/store/react";
-import { useTemplateBuilderStore } from "../store/template-builder.provider";
+import { useDraftTemplatesStore } from "../draft-templates.provider";
 
 export const NoTemplatesMessage = () => {
-  const store = useTemplateBuilderStore();
+  const store = useDraftTemplatesStore();
   const templates = useSelector(store, (state) => state.context.templates);
 
   if (templates.length > 0) {
