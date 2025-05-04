@@ -39,21 +39,21 @@ type CreateTemplateDependencies struct {
 
 func createTemplate(ctx context.Context, input CreateTemplateInput, dependencies CreateTemplateDependencies) (string, error) {
 
+	servicecommon.ReportProgress(input.OnProgress, 5, "Extracting video and audio from website ...")
+
 	videoUrl, audioUrl, err := createVideoAudioUrls(ctx, input.WebsiteUrl, dependencies.MediaCreator)
 
 	if err != nil {
 		return "", err
 	}
 
-	servicecommon.ReportProgress(input.OnProgress, 20, "video and audio urls created")
+	servicecommon.ReportProgress(input.OnProgress, 20, "Extracting Fps and Frame count...")
 
 	fps, frameCount, err := getFpsAndFrameCount(ctx, videoUrl, dependencies.ClipinfoFactory)
 
 	if err != nil {
 		return "", err
 	}
-
-	servicecommon.ReportProgress(input.OnProgress, 30, "fps and frame count extracted")
 
 	clipinfoId, err := saveClipInfo(ctx, fps, frameCount, dependencies.ClipInfoStore)
 
@@ -75,13 +75,15 @@ func createTemplate(ctx context.Context, input CreateTemplateInput, dependencies
 		return "", err
 	}
 
+	servicecommon.ReportProgress(input.OnProgress, 30, "Extracting Preview Frames")
+
 	previewFrames, err := generatePreviewFrames(ctx, videoUrl, fps, frameCount, dependencies.ExtractorFactory, dependencies.UploaderFactory)
 
 	if err != nil {
 		return "", err
 	}
 
-	servicecommon.ReportProgress(input.OnProgress, 80, "Preview frames generated")
+	servicecommon.ReportProgress(input.OnProgress, 90, "Saving Template")
 
 	err = savePreviewFrames(ctx, templateId, previewFrames, dependencies.PreviewFrameStore)
 
