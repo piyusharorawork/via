@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
-import { NoTemplatesMessage } from "./components/no-templates-message";
-import { CreateNewTemplateButton } from "./components/create-new-template-button";
-import { TemplateList } from "./components/template-list";
+import { NoTemplatesMessage } from "./no-templates-message";
+import { CreateNewTemplateButton } from "./create-new-template-button";
+import { TemplateList } from "./template-list";
 
 export default function DraftTemplatesPage() {
   return (

@@ -1,8 +1,8 @@
 "use client";
 
 import { useSelector } from "@xstate/store/react";
-import { useDraftTemplatesStore } from "../draft-templates.provider";
-import { useFetchTemplates } from "../use-fetch-templates";
+import { useDraftTemplatesStore } from "./draft-templates.provider";
+import { useFetchTemplates } from "./use-fetch-templates";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Loader2, Terminal } from "lucide-react";

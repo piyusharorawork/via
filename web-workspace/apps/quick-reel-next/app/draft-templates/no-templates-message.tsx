@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useSelector } from "@xstate/store/react";
-import { useDraftTemplatesStore } from "../draft-templates.provider";
+import { useDraftTemplatesStore } from "./draft-templates.provider";
 
 export const NoTemplatesMessage = () => {
   const store = useDraftTemplatesStore();
