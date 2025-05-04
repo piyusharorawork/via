@@ -1,13 +1,13 @@
 "use client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
-import { useDraftTemplatesStore } from "../draft-templates.provider";
+import { useDraftSingleTemplateStore } from "./draft-single-template.provider";
 
 export const useRemoveTemplate = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const router = useRouter();
-  const store = useDraftTemplatesStore();
+  const store = useDraftSingleTemplateStore();
 
   const { isPending, mutate } = useMutation({
     mutationKey: ["removeTemplate", id],

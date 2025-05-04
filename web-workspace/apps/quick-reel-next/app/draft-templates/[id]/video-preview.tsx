@@ -1,11 +1,11 @@
 "use client";
 
 import { useSelector } from "@xstate/store/react";
-import { useDraftTemplatesStore } from "../draft-templates.provider";
+import { useDraftSingleTemplateStore } from "./draft-single-template.provider";
 import { useFetchTemplate } from "./use-fetch-template";
 
 export const VideoPreview = () => {
-  const store = useDraftTemplatesStore();
+  const store = useDraftSingleTemplateStore();
   const videoURL = useSelector(
     store,
     (state) => state.context.template?.videoUrl
@@ -15,8 +15,12 @@ export const VideoPreview = () => {
   if (!videoURL) return null;
 
   return (
-    <div className="h-full flex justify-center py-2">
-      <video crossOrigin="anonymous" className="h-full wf" preload="auto">
+    <div className="h-full flex justify-center py-4">
+      <video
+        crossOrigin="anonymous"
+        className="h-full wf rounded-xl"
+        preload="auto"
+      >
         <source src={videoURL} type="video/mp4" />
       </video>
     </div>

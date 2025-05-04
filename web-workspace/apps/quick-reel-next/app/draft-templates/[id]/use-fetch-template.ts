@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { useDraftTemplatesStore } from "../draft-templates.provider";
+import { useDraftSingleTemplateStore } from "./draft-single-template.provider";
 import { useParams } from "next/navigation";
 
 export const useFetchTemplate = () => {
   const { id } = useParams();
 
-  const store = useDraftTemplatesStore();
+  const store = useDraftSingleTemplateStore();
   const { isLoading, isError } = useQuery({
     queryKey: ["template", id],
     queryFn: async () => {

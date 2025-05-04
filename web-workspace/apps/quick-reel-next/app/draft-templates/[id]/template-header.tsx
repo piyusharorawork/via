@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowOutIcon,
   DuplicateIcon,
   EditIcon,
   LeftDirectionIcon,
@@ -8,7 +9,7 @@ import {
   ThreeDotsIcon,
   TrashIcon,
 } from "@/components/features/icons";
-import { useDraftTemplatesStore } from "../draft-templates.provider";
+
 import { useSelector } from "@xstate/store/react";
 import Link from "next/link";
 import {
@@ -21,27 +22,27 @@ import {
 } from "@/components/ui/menubar";
 import { TemplateRemoveDialog } from "./remove-template-dialog";
 import { useFetchTemplate } from "./use-fetch-template";
+import { useDraftSingleTemplateStore } from "./draft-single-template.provider";
 
 export const TemplateHeader = () => {
-  const store = useDraftTemplatesStore();
-  const templateName = useSelector(
-    store,
-    (state) => state.context.template?.name
-  );
+  const store = useDraftSingleTemplateStore();
+  const template = useSelector(store, (state) => state.context.template);
   useFetchTemplate();
 
+  if (!template) return null;
+
   return (
-    <div className="flex h-full relative px-4">
-      <section className="w-16 h-full flex items-center">
-        <Link href="/draft-templates" className="w-12">
+    <div className="flex h-full relative px-4 py-2">
+      <section className="h-full flex items-center">
+        <Link href="/draft-templates" className="w-6">
           <LeftDirectionIcon />
         </Link>
       </section>
       <section className=" flex-grow flex justify-center items-center">
-        <h1 className="text-2xl font-bold">{templateName} </h1>
+        <h1 className="text-xl">{template.name} </h1>
       </section>
-      <section className="w-16 h-full flex justify-center items-center">
-        <Menubar>
+      <section className="w-8 h-full flex justify-center items-center">
+        <Menubar className="border-none">
           <MenubarMenu>
             <MenubarTrigger>
               <ThreeDotsIcon />
@@ -60,7 +61,14 @@ export const TemplateHeader = () => {
                 <PublishIcon />
                 <span>Publish</span>
               </MenubarItem>
+
               <MenubarSeparator />
+              <Link href={template.websiteUrl} target="_blank">
+                <MenubarItem className="flex items-center gap-2">
+                  <ArrowOutIcon />
+                  <span>View Original</span>
+                </MenubarItem>
+              </Link>
               <MenubarItem
                 className="flex items-center gap-2"
                 onClick={() => store.send({ type: "clickRemoveTemplate" })}
