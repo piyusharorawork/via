@@ -156,3 +156,10 @@ https://www.pexels.com/search/family/
 
 - https://www.youtube.com/shorts/PyYfh_tHaYA
 - https://www.youtube.com/shorts/yc9mLpbxfdI
+
+streaming create template curl
+
+curl -X POST http://localhost:8080/api/templates \
+-H "Content-Type: application/json" \
+--data-binary '{"name":"wow","websiteUrl":"https://www.youtube.com/shorts/xMANNahZlXA"}' \
+--no-buffer

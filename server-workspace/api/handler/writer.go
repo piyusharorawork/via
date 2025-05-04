@@ -22,3 +22,7 @@ func (writer *MockWriter) Write(p []byte) (int, error) {
 func (writer *MockWriter) Header() http.Header {
 	return http.Header{}
 }
+
+func (writer *MockWriter) Flush() {
+
+}
