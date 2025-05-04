@@ -1,11 +1,17 @@
 import { createStore } from "@xstate/store";
 
+type PreviewFrame = {
+  frameNo: number;
+  previewUrl: string;
+};
+
 export type DraftTemplateFull = {
   id: string;
   name: string;
   videoUrl: string;
   websiteUrl: string;
   clipInfo: ClipInfo;
+  previewFrames: PreviewFrame[];
 };
 
 type ClipInfo = {
@@ -38,6 +44,8 @@ export const createDraftSingleTemplateStore = () => {
         {},
         event: { template: DraftTemplateFull }
       ) => {
+        console.log(event.template);
+
         const timeStamps = createTimeStamps(
           event.template.clipInfo.fps,
           event.template.clipInfo.frameCount

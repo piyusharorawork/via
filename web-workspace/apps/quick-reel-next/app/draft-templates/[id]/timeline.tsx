@@ -2,6 +2,7 @@
 import { PlayIcon } from "@/components/features/icons";
 import { PlayerController } from "./player-controller";
 import { Ruler } from "./ruler";
+import { PrimaryLayer } from "./primary-layer";
 
 export const Timeline = () => {
   return (
@@ -10,9 +11,12 @@ export const Timeline = () => {
         <PlayerController />
       </section>
 
-      <section className="grow w-full flex flex-col-reverse">
+      <section className="grow w-full flex flex-col-reverse overflow-x-auto gap-1">
         <section className="h-12">
           <Ruler />
+        </section>
+        <section className="h-20">
+          <PrimaryLayer />
         </section>
       </section>
 
