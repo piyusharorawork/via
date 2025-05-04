@@ -2,7 +2,7 @@
 
 import { useSelector } from "@xstate/store/react";
 import { useDraftTemplatesStore } from "../draft-templates.provider";
-import { useTemplates } from "../hooks/use-templates";
+import { useFetchTemplates } from "../use-fetch-templates";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Loader2, Terminal } from "lucide-react";
@@ -11,10 +11,9 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 export const TemplateList = () => {
   const store = useDraftTemplatesStore();
   const templates = useSelector(store, (state) => state.context.templates);
-  const { isLoading, isError } = useTemplates();
+  const { isLoading, isError } = useFetchTemplates();
 
   if (isLoading) return <LoadingSpinner />;
-
   if (isError) return <SomethingWentWrong />;
 
   return (

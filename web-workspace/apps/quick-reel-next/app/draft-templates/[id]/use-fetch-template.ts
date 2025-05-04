@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useDraftTemplatesStore } from "../draft-templates.provider";
 import { useParams } from "next/navigation";
 
-export const useTemplate = () => {
+export const useFetchTemplate = () => {
   const { id } = useParams();
 
   const store = useDraftTemplatesStore();

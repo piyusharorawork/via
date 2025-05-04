@@ -13,7 +13,7 @@ import {
 import { useDraftTemplatesStore } from "../draft-templates.provider";
 import { useSelector } from "@xstate/store/react";
 import { DraftTemplatesState } from "../draft-templates.store";
-import { useRemoveTemplate } from "../hooks/use-remove-template";
+import { useRemoveTemplate } from "./use-remove-template";
 
 export const TemplateRemoveDialog = () => {
   const store = useDraftTemplatesStore();

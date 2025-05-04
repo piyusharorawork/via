@@ -10,7 +10,6 @@ import {
 } from "@/components/features/icons";
 import { useDraftTemplatesStore } from "../draft-templates.provider";
 import { useSelector } from "@xstate/store/react";
-import { useTemplate } from "../hooks/use-template";
 import Link from "next/link";
 import {
   Menubar,
@@ -21,6 +20,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { TemplateRemoveDialog } from "./remove-template-dialog";
+import { useFetchTemplate } from "./use-fetch-template";
 
 export const TemplateHeader = () => {
   const store = useDraftTemplatesStore();
@@ -28,7 +28,7 @@ export const TemplateHeader = () => {
     store,
     (state) => state.context.template?.name
   );
-  useTemplate();
+  useFetchTemplate();
 
   return (
     <div className="flex h-full relative px-4">

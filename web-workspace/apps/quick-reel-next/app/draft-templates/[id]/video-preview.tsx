@@ -2,7 +2,7 @@
 
 import { useSelector } from "@xstate/store/react";
 import { useDraftTemplatesStore } from "../draft-templates.provider";
-import { useTemplate } from "../hooks/use-template";
+import { useFetchTemplate } from "./use-fetch-template";
 
 export const VideoPreview = () => {
   const store = useDraftTemplatesStore();
@@ -10,7 +10,7 @@ export const VideoPreview = () => {
     store,
     (state) => state.context.template?.videoUrl
   );
-  useTemplate();
+  useFetchTemplate();
 
   if (!videoURL) return null;
 
