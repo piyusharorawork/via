@@ -4,13 +4,8 @@
 
 ## TODO
 
-- use Store hook to have external dependencies : router , storage , query client
-- move most of the logic to centralized store
-- add progress to create template
-- single template builder page
-
-  1. display preview
-  2. display timeline
+- create template from website
+- support streaming in create template api
 
 - load template.json to memory
 - populate content url for each segment
@@ -23,6 +18,8 @@
 - Better env management so only those env are required whose functionality is used
 - copy file url to have caching to improve latency
 - extractor clip with files test
+- use Store hook to have external dependencies : router , storage , query client
+- add progress to create template (low level)
 
 # Useful commands
 
