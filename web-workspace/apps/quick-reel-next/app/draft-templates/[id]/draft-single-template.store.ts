@@ -5,6 +5,12 @@ export type DraftTemplateFull = {
   name: string;
   videoUrl: string;
   websiteUrl: string;
+  clipInfo: ClipInfo;
+};
+
+type ClipInfo = {
+  fps: number;
+  frameCount: number;
 };
 
 export enum DraftSingleTemplateState {
@@ -15,12 +21,14 @@ export enum DraftSingleTemplateState {
 type Context = {
   template: DraftTemplateFull | null;
   state: DraftSingleTemplateState;
+  timeStamps: number[];
 };
 
 export const createDraftSingleTemplateStore = () => {
   const context: Context = {
     template: null,
     state: DraftSingleTemplateState.IDLE,
+    timeStamps: [],
   };
 
   const store = createStore({
@@ -30,7 +38,11 @@ export const createDraftSingleTemplateStore = () => {
         {},
         event: { template: DraftTemplateFull }
       ) => {
-        return { template: event.template };
+        const timeStamps = createTimeStamps(
+          event.template.clipInfo.fps,
+          event.template.clipInfo.frameCount
+        );
+        return { template: event.template, timeStamps };
       },
       clickRemoveTemplate: ({}) => {
         return {
@@ -41,10 +53,19 @@ export const createDraftSingleTemplateStore = () => {
         return { state: DraftSingleTemplateState.IDLE };
       },
       removeTemplateSuccess: ({}) => {
-        return { state: DraftSingleTemplateState.IDLE };
+        return {
+          state: DraftSingleTemplateState.IDLE,
+          timeStamps: [],
+          template: null,
+        };
       },
     },
   });
 
   return store;
+};
+
+const createTimeStamps = (fps: number, frameCount: number): number[] => {
+  const seconds = Math.ceil(frameCount / fps);
+  return Array.from({ length: seconds }, (_, i) => i);
 };

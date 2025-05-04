@@ -1,6 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { TemplateHeader } from "./template-header";
 import { VideoPreview } from "./video-preview";
+import { Timeline } from "./timeline";
 
 export default function SingleTemplatePage() {
   return (
@@ -13,8 +14,9 @@ export default function SingleTemplatePage() {
       <section className="h-[45vh] ">
         <VideoPreview />
       </section>
-      <section className="h-[45vh] "></section>
-      <section className="h-[5vh]"></section>
+      <section className="h-[50vh]">
+        <Timeline />
+      </section>
     </div>
   );
 }
