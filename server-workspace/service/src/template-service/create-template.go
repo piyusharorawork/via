@@ -81,13 +81,16 @@ func createTemplate(ctx context.Context, input CreateTemplateInput, dependencies
 
 	servicecommon.ReportProgress(input.OnProgress, 55, "Extracting Preview Frames")
 
-	previewFrames, err := generatePreviewFrames(ctx, videoUrl, fps, frameCount, dependencies.ExtractorFactory, dependencies.UploaderFactory)
+	previewFrames, err := generatePreviewFrames(ctx, videoUrl, fps, frameCount, func(percentage int) {
+		reportedPercentage := util.InterpolateAmount(55, 90, percentage)
+		servicecommon.ReportProgress(input.OnProgress, reportedPercentage, "Extracting Preview Frames")
+	}, dependencies.ExtractorFactory, dependencies.UploaderFactory)
 
 	if err != nil {
 		return "", err
 	}
 
-	servicecommon.ReportProgress(input.OnProgress, 90, "Saving Template")
+	servicecommon.ReportProgress(input.OnProgress, 91, "Saving Template")
 
 	err = savePreviewFrames(ctx, templateId, previewFrames, dependencies.PreviewFrameStore)
 
@@ -138,7 +141,7 @@ type PreviewFrame struct {
 	PreviewUrl string
 }
 
-func generatePreviewFrames(ctx context.Context, videoUrl string, fps int, frameCount int, extractorFactory extractor.IExtractorFactory, uploaderFactory uploader.IUploaderFactory) ([]PreviewFrame, error) {
+func generatePreviewFrames(ctx context.Context, videoUrl string, fps int, frameCount int, progressCallback func(percentage int), extractorFactory extractor.IExtractorFactory, uploaderFactory uploader.IUploaderFactory) ([]PreviewFrame, error) {
 	previewFramesNos := getPreviewFrameNos(fps, frameCount)
 	previewFrames := make([]PreviewFrame, len(previewFramesNos))
 
@@ -170,7 +173,11 @@ func generatePreviewFrames(ctx context.Context, videoUrl string, fps int, frameC
 			PreviewUrl: previewUrl,
 		}
 		previewFrames[i] = previewFrame
+		percentage := int(math.Floor(float64(i+1) * 100 / float64(len(previewFrames))))
+		progressCallback(percentage)
 	}
+
+	progressCallback(100)
 
 	return previewFrames, nil
 }

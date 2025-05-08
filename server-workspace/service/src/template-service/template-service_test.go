@@ -154,7 +154,43 @@ func TestCreateTemplate(t *testing.T) {
 					message: "Extracting Preview Frames",
 				},
 				{
+					percent: 59,
+					message: "Extracting Preview Frames",
+				},
+				{
+					percent: 63,
+					message: "Extracting Preview Frames",
+				},
+				{
+					percent: 67,
+					message: "Extracting Preview Frames",
+				},
+				{
+					percent: 72,
+					message: "Extracting Preview Frames",
+				},
+				{
+					percent: 76,
+					message: "Extracting Preview Frames",
+				},
+				{
+					percent: 81,
+					message: "Extracting Preview Frames",
+				},
+				{
+					percent: 85,
+					message: "Extracting Preview Frames",
+				},
+				{
 					percent: 90,
+					message: "Extracting Preview Frames",
+				},
+				{
+					percent: 90,
+					message: "Extracting Preview Frames",
+				},
+				{
+					percent: 91,
 					message: "Saving Template",
 				},
 				{
@@ -184,8 +220,8 @@ func TestCreateTemplate(t *testing.T) {
 					AudioUrl: "https://url.mp3",
 				},
 				ClipInfoFactory: &clipinfo.MockClipInfoFactory{
-					Fps:        24,
-					FrameCount: 100,
+					Fps:        1,
+					FrameCount: 2,
 				},
 				ExtractorFactory: &extractor.MockExtractorFactory{},
 				UploaderFactory: &uploader.MockUploaderFactory{
