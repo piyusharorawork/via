@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -17,7 +18,12 @@ func main() {
 	router.HandleFunc("/api/templates/{id}", handler.GetTemplateHandler).Methods("GET")
 	router.HandleFunc("/api/templates/{id}", handler.RemoveTemplateHandler).Methods("DELETE", "OPTIONS")
 
-	http.ListenAndServe(":8080", router)
+	fmt.Println("Starting server at port 8080")
+	err := http.ListenAndServe(":8080", router)
+
+	if err != nil {
+		panic(err)
+	}
 
 }
 
