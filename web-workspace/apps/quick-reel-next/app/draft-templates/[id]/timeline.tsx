@@ -12,7 +12,7 @@ export const Timeline = () => {
       </section>
 
       <section className="grow w-full flex flex-col-reverse overflow-x-auto gap-1">
-        <section className="h-12">
+        <section className="h-8">
           <Ruler />
         </section>
         <section className="h-20">

@@ -7,7 +7,7 @@ export const Ruler = () => {
 
   return (
     <div className="h-full flex overflow-hidden ">
-      <section className="w-32  shrink-0"></section>
+      <section className="w-12  shrink-0"></section>
       <section className="grow  flex  px-4">
         {timeStamps.map((timestamp) => {
           return (
