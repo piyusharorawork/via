@@ -60,20 +60,34 @@ func downloadVideo(ctx context.Context, input DownloadVideoInput) error {
 
 }
 
+/*
+It reached here it means it will return download percentage
+from 10 to 99 inclusive
+*/
 func getDownloadPercent(text string) int {
 	words := strings.Split(text, " ")
+	percentages := make([]string, 0)
 	for _, word := range words {
 		if strings.Contains(word, "%") {
-			valStr := strings.Replace(word, "%", "", -1)
-			num, err := strconv.ParseFloat(valStr, 64)
-
-			if err != nil {
-				return 5
-			}
-
-			return util.InterpolateAmount(10, 99, int(num))
-
+			percentages = append(percentages, word)
 		}
 	}
-	return 5
+
+	if len(percentages) == 0 {
+		return 10
+	}
+
+	downloadedPercentage := percentages[len(percentages)-1]
+
+	valStr := strings.Replace(downloadedPercentage, "%", "", -1)
+	num, err := strconv.ParseFloat(valStr, 64)
+
+	if err != nil {
+		return 10
+	}
+
+	percentage := util.InterpolateAmount(10, 99, int(num))
+
+	return percentage
+
 }

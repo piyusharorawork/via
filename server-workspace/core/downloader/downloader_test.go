@@ -32,10 +32,15 @@ func TestDownloadVideo(t *testing.T) {
 
 			tempDirPath := ctx.Value(model.TempDirPath).(string)
 
+			percentages := make([]int, 0)
+
 			downloader := &Downloader{
 				WebsiteUrl:     tc.websiteUrl,
 				OutputDirPath:  tempDirPath,
 				OutputFileName: "out.mp4",
+				Callback: func(percentage int) {
+					percentages = append(percentages, percentage)
+				},
 			}
 
 			err = downloader.DownloadVideo(ctx)
@@ -60,6 +65,31 @@ func TestDownloadVideo(t *testing.T) {
 			}
 			if !eq {
 				t.Fatalf("files are not equal")
+			}
+
+			if len(percentages) == 0 {
+				t.Errorf("no percentages found")
+				return
+			}
+
+			if percentages[len(percentages)-1] != 100 {
+				t.Errorf("last percentage is not 100")
+				return
+			}
+
+			// percentages should contain values other than 5, 10 and 100
+			count := 0
+			for _, percentage := range percentages {
+				ignorePercentages := []int{5, 10, 100}
+				for _, ignorePercentage := range ignorePercentages {
+					if percentage != ignorePercentage {
+						count++
+					}
+				}
+			}
+
+			if count < 3 {
+				t.Errorf("percentages should contain values other than 5, 10 and 100")
 			}
 
 			util.RemoveFile(outFilePath)

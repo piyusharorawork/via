@@ -1,7 +1,6 @@
 package util
 
 import (
-	"bufio"
 	"fmt"
 	"io"
 	"os/exec"
@@ -13,10 +12,15 @@ type StreamCommandInput struct {
 	Callback func(string)
 }
 
+/*
+https://chatgpt.com/c/681c48d3-6098-8006-967b-e1916368ed91
+1. Replaced bufio.Scanner with pipe.Read(...) to read raw bytes.
+2. Callback is called as soon as any chunk is read, regardless of line endings.
+3.Ensures responsiveness for stream data like progress bars or real-time logs.
+*/
 func StreamCommand(input StreamCommandInput) error {
 	cmd := input.Cmd
 
-	// Get stdout and stderr pipes
 	stdoutPipe, err := cmd.StdoutPipe()
 	if err != nil {
 		return fmt.Errorf("failed to get stdout: %w", err)
@@ -27,29 +31,25 @@ func StreamCommand(input StreamCommandInput) error {
 		return fmt.Errorf("failed to get stderr: %w", err)
 	}
 
-	// Start the command
 	if err := cmd.Start(); err != nil {
 		return fmt.Errorf("failed to start command: %w", err)
 	}
 
-	// Use WaitGroup to ensure both streams are fully read
 	var wg sync.WaitGroup
 	wg.Add(2)
 
 	go func() {
 		defer wg.Done()
-		streamOutput(stdoutPipe, input.Callback)
+		streamOutputNonBlocking(stdoutPipe, input.Callback)
 	}()
 
 	go func() {
 		defer wg.Done()
-		streamOutput(stderrPipe, input.Callback)
+		streamOutputNonBlocking(stderrPipe, input.Callback)
 	}()
 
-	// Wait for both streams to be read completely
 	wg.Wait()
 
-	// Wait for command to finish execution
 	if err := cmd.Wait(); err != nil {
 		return fmt.Errorf("command execution failed: %w", err)
 	}
@@ -57,13 +57,20 @@ func StreamCommand(input StreamCommandInput) error {
 	return nil
 }
 
-// Stream output from reader to writer in real-time
-func streamOutput(pipe io.ReadCloser, callback func(string)) {
-	scanner := bufio.NewScanner(pipe)
-	for scanner.Scan() {
-		callback(scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
-		callback(fmt.Sprintf("error reading output: %v", err))
+// Stream output from reader and invoke callback on any data change
+func streamOutputNonBlocking(pipe io.ReadCloser, callback func(string)) {
+	defer pipe.Close()
+	buf := make([]byte, 1024)
+	for {
+		n, err := pipe.Read(buf)
+		if n > 0 {
+			callback(string(buf[:n]))
+		}
+		if err != nil {
+			if err != io.EOF {
+				callback(fmt.Sprintf("error reading output: %v", err))
+			}
+			break
+		}
 	}
 }
