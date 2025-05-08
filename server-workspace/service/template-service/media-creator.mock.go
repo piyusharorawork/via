@@ -9,7 +9,7 @@ type MockMediaCreator struct {
 	AudioUrl             string
 }
 
-func (creator *MockMediaCreator) CreateVideoUrl(ctx context.Context, websiteUrl string) (string, error) {
+func (creator *MockMediaCreator) CreateVideoUrl(ctx context.Context, websiteUrl string, progressCallback func(percentage int)) (string, error) {
 	creator.CreateVideoUrlCalled = true
 	return creator.VideoUrl, nil
 }

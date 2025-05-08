@@ -23,7 +23,7 @@ func CreateTemplate(ctx context.Context, templateService templateservice.ITempla
 			if err != nil {
 				panic(err)
 			}
-			fmt.Fprint(out, json)
+			fmt.Fprintln(out, json)
 		},
 	}
 

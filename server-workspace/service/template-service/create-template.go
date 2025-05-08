@@ -15,6 +15,7 @@ import (
 	"quickreel.com/core/extractor"
 	"quickreel.com/core/model"
 	"quickreel.com/core/uploader"
+	"quickreel.com/core/util"
 )
 
 const (
@@ -41,7 +42,10 @@ func createTemplate(ctx context.Context, input CreateTemplateInput, dependencies
 
 	servicecommon.ReportProgress(input.OnProgress, 5, "Extracting video and audio from website ...")
 
-	videoUrl, audioUrl, err := createVideoAudioUrls(ctx, input.WebsiteUrl, dependencies.MediaCreator)
+	videoUrl, audioUrl, err := createVideoAudioUrls(ctx, input.WebsiteUrl, dependencies.MediaCreator, func(percentage int) {
+		reportedPercentage := util.InterpolateAmount(5, 20, percentage)
+		servicecommon.ReportProgress(input.OnProgress, reportedPercentage, "Extracting video and audio from website ...")
+	})
 
 	if err != nil {
 		return "", err
@@ -220,7 +224,7 @@ func getFpsAndFrameCount(ctx context.Context, videoUrl string, clipinfoFactory c
 
 }
 
-func createVideoAudioUrls(ctx context.Context, websiteUrl string, mediaCreator IMediaCreator) (string, string, error) {
+func createVideoAudioUrls(ctx context.Context, websiteUrl string, mediaCreator IMediaCreator, progressCallback func(percentage int)) (string, string, error) {
 	videoChannel := make(chan struct {
 		url string
 		err error
@@ -232,7 +236,7 @@ func createVideoAudioUrls(ctx context.Context, websiteUrl string, mediaCreator I
 	})
 
 	go func() {
-		url, err := mediaCreator.CreateVideoUrl(ctx, websiteUrl)
+		url, err := mediaCreator.CreateVideoUrl(ctx, websiteUrl, progressCallback)
 		videoChannel <- struct {
 			url string
 			err error

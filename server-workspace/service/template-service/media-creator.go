@@ -12,14 +12,14 @@ import (
 )
 
 type IMediaCreator interface {
-	CreateVideoUrl(ctx context.Context, websiteUrl string) (string, error)
+	CreateVideoUrl(ctx context.Context, websiteUrl string, progressCallback func(percentage int)) (string, error)
 	CreateAudioUrl(ctx context.Context, websiteUrl string) (string, error)
 }
 
 type MediaCreator struct {
 }
 
-func (creator *MediaCreator) CreateVideoUrl(ctx context.Context, websiteUrl string) (string, error) {
+func (creator *MediaCreator) CreateVideoUrl(ctx context.Context, websiteUrl string, progressCallback func(percentage int)) (string, error) {
 	tempDirPath, err := myctx.GetValue(ctx, model.TempDirPath)
 
 	if err != nil {
@@ -32,6 +32,7 @@ func (creator *MediaCreator) CreateVideoUrl(ctx context.Context, websiteUrl stri
 		WebsiteUrl:     websiteUrl,
 		OutputDirPath:  tempDirPath,
 		OutputFileName: outputFileName,
+		Callback:       progressCallback,
 	}
 
 	filePath := fmt.Sprintf("%s/%s", tempDirPath, outputFileName)
