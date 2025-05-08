@@ -28,9 +28,9 @@
 2. Run all
    make all
 3. Specific unit test
-   cd server-workspace/core; go test -timeout 30s -run ^TestConvertToMp4$ quickreel.com/core/vidmod -count=2 ;cd ../../
+   cd server-workspace/core; go test -timeout 30s -run ^TestConvertToMp4$ quickreel.com/core/src/vidmod -count=2 ;cd ../../
 4. Run all tests multiple times
-   cd server-workspace/core; go test -timeout 30s quickreel.com/core/vidmod -count=2 ;cd ../../
+   cd server-workspace/core; go test -timeout 30s quickreel.com/core/src/vidmod -count=2 ;cd ../../
 5. Install uuid golang
    go get github.com/google/uuid
 

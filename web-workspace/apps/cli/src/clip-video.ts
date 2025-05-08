@@ -1,5 +1,5 @@
 import { getSampleVideoFilePath } from "@via/common/path";
-import { clipVideo } from "@via/core/clip-video";
+import { clipVideo } from "@via/core/src/clip-video";
 
 (async () => {
   const transitions = [

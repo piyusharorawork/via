@@ -1,5 +1,8 @@
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
-import { GenerateReelInput, GenerateReelOutput } from "@via/core/video-manager";
+import {
+  GenerateReelInput,
+  GenerateReelOutput,
+} from "@via/core/src/video-manager";
 import { AppRouter } from "@via/server/app-router";
 import { assign, createActor, fromPromise, setup } from "xstate";
 import {

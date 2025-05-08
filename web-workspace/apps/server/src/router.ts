@@ -8,7 +8,7 @@ import {
   VideoManager,
   makeVideoInput,
   generateReelInput,
-} from "@via/core/video-manager";
+} from "@via/core/src/video-manager";
 
 // TODO create router input
 export const createRouter = (

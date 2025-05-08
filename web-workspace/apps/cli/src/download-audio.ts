@@ -1,5 +1,5 @@
 import { getSampleVideoFilePath } from "@via/common/path";
-import { downloadAudioFromVideo } from "@via/core/video-downloader";
+import { downloadAudioFromVideo } from "@via/core/src/video-downloader";
 
 (async () => {
   console.log("downloading audio");

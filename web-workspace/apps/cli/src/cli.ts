@@ -2,7 +2,7 @@ import { AppRouter } from "@via/server/app-router";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import nodeFetch from "node-fetch";
 import { getTempFilePath } from "@via/common/path";
-import { downloadYoutubeVideo } from "@via/core/video-downloader";
+import { downloadYoutubeVideo } from "@via/core/src/video-downloader";
 
 (async () => {
   try {

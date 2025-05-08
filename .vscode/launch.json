@@ -11,9 +11,9 @@
       "args": [
         "create-template",
         "-u",
-        "https://www.youtube.com/shorts/xMANNahZlXA",
+        "https://www.youtube.com/shorts/s-MsZo02dos",
         "-n",
-        "wow"
+        "dosa"
       ],
       "envFile": "${workspaceFolder}/assets/environments/.env"
     },

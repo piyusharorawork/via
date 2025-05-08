@@ -3,7 +3,7 @@ import {
   downloadAudioFromVideo,
   downloadYoutubeVideo,
   combineVideoAudio,
-} from "@via/core/video-downloader";
+} from "@via/core/src/video-downloader";
 
 (async () => {
   try {

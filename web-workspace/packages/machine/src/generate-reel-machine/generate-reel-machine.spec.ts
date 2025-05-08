@@ -9,7 +9,10 @@ import {
   createActor,
   fromPromise,
 } from "xstate";
-import { GenerateReelInput, GenerateReelOutput } from "@via/core/video-manager";
+import {
+  GenerateReelInput,
+  GenerateReelOutput,
+} from "@via/core/src/video-manager";
 import { deepEqual } from "../machine.util.js";
 import {
   defaultGenerateReelActorResponses,

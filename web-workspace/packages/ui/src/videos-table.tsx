@@ -1,4 +1,4 @@
-import type { ListVideosOutput } from "@via/core/video-manager";
+import type { ListVideosOutput } from "@via/core/src/video-manager";
 
 type Props = {
   videos: ListVideosOutput;

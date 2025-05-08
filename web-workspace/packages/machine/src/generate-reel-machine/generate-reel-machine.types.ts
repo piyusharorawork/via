@@ -1,4 +1,4 @@
-import { GenerateReelOutput } from "@via/core/video-manager";
+import { GenerateReelOutput } from "@via/core/src/video-manager";
 
 export type GenerateReelContext = {
   errorMessage: string | null;

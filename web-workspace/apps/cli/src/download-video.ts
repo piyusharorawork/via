@@ -1,7 +1,7 @@
 import { getSampleVideoFilePath, getTempFilePath } from "@via/common/path";
-import { downloadYoutubeVideo } from "@via/core/video-downloader";
-import { resizeVideo } from "@via/core/video-resizer";
-import { trimVideo } from "@via/core/video-timmer";
+import { downloadYoutubeVideo } from "@via/core/src/video-downloader";
+import { resizeVideo } from "@via/core/src/video-resizer";
+import { trimVideo } from "@via/core/src/video-timmer";
 
 (async () => {
   console.log("downloading video");

@@ -13,7 +13,7 @@ import {
   ListVideosOutput,
   RemoveVideoOutput,
   ViewVideoOutput,
-} from "@via/core/video-manager";
+} from "@via/core/src/video-manager";
 
 describe("video-management-machine", () => {
   const fetchMock = vi.fn();

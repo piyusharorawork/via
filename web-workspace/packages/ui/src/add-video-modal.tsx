@@ -1,4 +1,4 @@
-import { AddVideoInput } from "@via/core/video-manager";
+import { AddVideoInput } from "@via/core/src/video-manager";
 import { useState } from "react";
 import classNames from "classnames";
 

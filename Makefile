@@ -3,36 +3,49 @@ build-cli:
 	@echo "Building cli..."
 	cd server-workspace/cli && go build -o ../../assets/bin/via-cli
 
-.PHONY: build-extention
-build-extention:
+.PHONY: build-extension
+build-extension:
 	@echo "Building extension..."
 	cd extension && pnpm compile
 
 .PHONY: test-core
 test-core:
 	@echo "Testing core..."
-	cd server-workspace && go test ./core/...
+	cd server-workspace && go test ./core/src/...
+
+.PHONY: test-store
+test-store:
+	@echo "Testing store..."
+	cd server-workspace && go test -count=2 ./store/src/... 
+
+
+.PHONY: test-service
+test-service:
+	@echo "Testing service..."
+	cd server-workspace && go test -count=5 ./service/src/... 
 
 .PHONY: test-cli
 test-cli:
 	@echo "Testing cli..."
-	cd server-workspace && go test -count=5 ./cli/... 
+	cd server-workspace && go test -count=5 ./cli/src/... 
+
+.PHONY: test-api
+test-api:
+	@echo "Testing api..."
+	cd server-workspace && go test -count=5 ./api/src/... 
 
 .PHONY: test-website
 test-website:
 	@echo "Testing website..."
 	cd web-workspace/apps/quick-reel-next && pnpm test
 
-.PHONY: test-store
-test-store:
-	@echo "Testing store..."
-	cd server-workspace/store && go test -count=1 ./template-store/...
+
 
 .PHONY: build-all
 build-all:
 	@echo "Building all..."
 	make build-cli
-	make build-extention
+	make build-extension
 
 .PHONY: test-all
 test-all:
@@ -41,6 +54,8 @@ test-all:
 	make test-cli
 	make test-website
 	make test-store
+	make test-service
+	make test-api
 
 
 .PHONY: all

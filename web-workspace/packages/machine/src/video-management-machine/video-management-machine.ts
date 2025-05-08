@@ -9,7 +9,7 @@ import {
   RemoveVideoOutput,
   ViewVideoInput,
   ViewVideoOutput,
-} from "@via/core/video-manager";
+} from "@via/core/src/video-manager";
 
 export const getVideoManagementMachine = (fetch: any) => {
   const trpc = createTRPCProxyClient<AppRouter>({

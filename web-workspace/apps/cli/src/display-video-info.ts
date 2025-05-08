@@ -1,5 +1,5 @@
 import { getSampleVideoFilePath, getTempFilePath } from "@via/common/path";
-import { VideoInfo } from "@via/core/video-info";
+import { VideoInfo } from "@via/core/src/video-info";
 
 (async () => {
   const videoPath = getSampleVideoFilePath("v1-240p.mp4");
