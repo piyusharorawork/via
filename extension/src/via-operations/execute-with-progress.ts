@@ -24,7 +24,8 @@ export const executeWithProgress = (input: Input) => {
       return new Promise<void>(async (resolve) => {
         await input.task({
           showProgress: (percent, message) => {
-            token.report({ increment: percent, message });
+            const reporter = new ProgressReporter(token);
+            reporter.set(percent, message);
           },
           showMessage: (message) => {
             token.report({ message: message });
@@ -41,3 +42,23 @@ export const executeWithProgress = (input: Input) => {
     }
   );
 };
+
+class ProgressReporter {
+  private lastPercent = 0;
+  private token: vscode.Progress<{ message?: string; increment?: number }>;
+
+  constructor(
+    token: vscode.Progress<{ message?: string; increment?: number }>
+  ) {
+    this.token = token;
+  }
+
+  set(percent: number, message?: string) {
+    const clamped = Math.max(0, Math.min(100, percent)); // Clamp to [0, 100]
+    const increment = clamped - this.lastPercent;
+    if (increment !== 0) {
+      this.token.report({ increment, message });
+      this.lastPercent = clamped;
+    }
+  }
+}
