@@ -4,6 +4,7 @@
 
 ## TODO
 
+- create template from extension progress issue
 - create template from website
 - support streaming in create template api
 

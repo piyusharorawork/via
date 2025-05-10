@@ -20,44 +20,42 @@ export const executeWithProgress = (input: Input) => {
       title: input.title,
       cancellable: true,
     },
-    (token, { onCancellationRequested }) => {
-      return new Promise<void>(async (resolve) => {
-        await input.task({
-          showProgress: (percent, message) => {
-            const reporter = new ProgressReporter(token);
-            reporter.set(percent, message);
-          },
-          showMessage: (message) => {
-            token.report({ message: message });
-          },
-          onCancellationRequested: (callback) => {
-            onCancellationRequested(callback);
-          },
-        });
-
-        token.report({ increment: 100, message: "Done" });
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        resolve();
+    async (progress, token) => {
+      // wire up cancellation
+      token.onCancellationRequested(() => {
+        // if your task needs to handle cancellation, you can hook into this
       });
+
+      // create a reporter tied to the VS Code progress API
+      const reporter = new ProgressReporter(progress);
+
+      await input.task({
+        showProgress: (percent, message) => reporter.set(percent, message),
+        showMessage: (message) => progress.report({ message }),
+        onCancellationRequested: (callback) =>
+          token.onCancellationRequested(callback),
+      });
+
+      // ensure we finish at 100%
+      reporter.set(100, "Done");
+      // small delay so user sees "Done"
+      await new Promise((r) => setTimeout(r, 500));
     }
   );
 };
 
 class ProgressReporter {
   private lastPercent = 0;
-  private token: vscode.Progress<{ message?: string; increment?: number }>;
 
   constructor(
-    token: vscode.Progress<{ message?: string; increment?: number }>
-  ) {
-    this.token = token;
-  }
+    private progress: vscode.Progress<{ message?: string; increment?: number }>
+  ) {}
 
   set(percent: number, message?: string) {
-    const clamped = Math.max(0, Math.min(100, percent)); // Clamp to [0, 100]
+    const clamped = Math.max(0, Math.min(100, percent));
     const increment = clamped - this.lastPercent;
     if (increment !== 0) {
-      this.token.report({ increment, message });
+      this.progress.report({ increment, message });
       this.lastPercent = clamped;
     }
   }
