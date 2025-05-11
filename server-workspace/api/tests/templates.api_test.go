@@ -8,7 +8,8 @@ import (
 
 	servicemodels "quick-reel.com/service/src/service-models"
 	templateservice "quick-reel.com/service/src/template-service"
-	"quickreel.com/api/src/handler"
+
+	"quickreel.com/api/src/templates"
 	myctx "quickreel.com/core/src/ctx"
 	"quickreel.com/core/src/util"
 )
@@ -40,9 +41,9 @@ func TestCreateTemplateHandler(t *testing.T) {
 				CreatedTemplateId: tc.createdTemplateId,
 			}
 
-			apiHandler := handler.ApiHandler{}
+			templatesApi := templates.TemplatesApi{}
 
-			handler := apiHandler.CreateTemplate(ctx, templateService)
+			handler := templatesApi.Create(ctx, templateService)
 			body := bytes.NewBufferString(tc.reqBody)
 			req := httptest.NewRequest("POST", "/api/templates", body)
 			res := httptest.NewRecorder()
@@ -95,9 +96,9 @@ func TestListAllTemplatesHandler(t *testing.T) {
 				},
 			}
 
-			apiHandler := handler.ApiHandler{}
+			templatesApi := templates.TemplatesApi{}
 
-			handler := apiHandler.ListAllTemplates(ctx, templateService)
+			handler := templatesApi.ListAll(ctx, templateService)
 			req := httptest.NewRequest("GET", "/api/templates", nil)
 			res := httptest.NewRecorder()
 
@@ -148,9 +149,9 @@ func TestGetTemplateHandler(t *testing.T) {
 				GetResult: &tc.getResult,
 			}
 
-			apiHandler := handler.ApiHandler{}
+			templatesApi := templates.TemplatesApi{}
 
-			handler := apiHandler.GetTemplate(ctx, templateService)
+			handler := templatesApi.Get(ctx, templateService)
 			req := httptest.NewRequest("GET", "/api/templates/1", nil)
 			res := httptest.NewRecorder()
 
@@ -193,9 +194,9 @@ func TestRemoveTemplateHandler(t *testing.T) {
 
 			templateService := &templateservice.MockTemplateService{}
 
-			apiHandler := handler.ApiHandler{}
+			templatesApi := templates.TemplatesApi{}
 
-			handler := apiHandler.RemoveTemplate(ctx, templateService)
+			handler := templatesApi.Remove(ctx, templateService)
 			req := httptest.NewRequest("DELETE", "/api/templates/1", nil)
 			res := httptest.NewRecorder()
 

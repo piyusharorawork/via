@@ -9,7 +9,8 @@ import (
 	clipinfostore "quick-reel.com/store/src/clipinfo-store"
 	previewframestore "quick-reel.com/store/src/preview-frame-store"
 	templatestore "quick-reel.com/store/src/template-store"
-	"quickreel.com/api/src/handler"
+
+	"quickreel.com/api/src/templates"
 	"quickreel.com/core/src/clipinfo"
 	myctx "quickreel.com/core/src/ctx"
 	"quickreel.com/core/src/extractor"
@@ -37,12 +38,12 @@ func main() {
 		PreviewFrameStore: &previewframestore.PreviewFrameStore{},
 	}
 
-	apiHandler := handler.ApiHandler{}
+	templatesApi := templates.TemplatesApi{}
 
-	router.HandleFunc("/api/templates", apiHandler.CreateTemplate(ctx, &templateService)).Methods("POST", "OPTIONS")
-	router.HandleFunc("/api/templates", apiHandler.ListAllTemplates(ctx, &templateService)).Methods("GET")
-	router.HandleFunc("/api/templates/{id}", apiHandler.GetTemplate(ctx, &templateService)).Methods("GET")
-	router.HandleFunc("/api/templates/{id}", apiHandler.RemoveTemplate(ctx, &templateService)).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/api/templates", templatesApi.Create(ctx, &templateService)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/templates", templatesApi.ListAll(ctx, &templateService)).Methods("GET")
+	router.HandleFunc("/api/templates/{id}", templatesApi.Get(ctx, &templateService)).Methods("GET")
+	router.HandleFunc("/api/templates/{id}", templatesApi.Remove(ctx, &templateService)).Methods("DELETE", "OPTIONS")
 
 	fmt.Println("Starting server at port 8080")
 	err = http.ListenAndServe(":8080", router)
@@ -90,7 +91,6 @@ func abortMiddleware(next http.Handler) http.Handler {
 			fmt.Println("Request aborted by client")
 			return
 		case <-done:
-			fmt.Println("Handler completed")
 			// Handler completed
 			return
 		}
