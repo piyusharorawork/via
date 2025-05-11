@@ -19,7 +19,7 @@ import (
 )
 
 const (
-	PREVIEW_FRAMES_PER_SECOND = 4
+	PREVIEW_FRAMES_PER_SECOND = 16
 )
 
 type CreateTemplateInput struct {

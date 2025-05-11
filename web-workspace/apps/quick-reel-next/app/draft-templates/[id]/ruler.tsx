@@ -1,5 +1,10 @@
 import { useSelector } from "@xstate/store/react";
 import { useDraftSingleTemplateStore } from "./draft-single-template.provider";
+import { cn } from "@/lib/utils";
+import { PREVIEW_FRAME_WIDTH } from "./primary-layer";
+
+// This can be fetched from server
+export const PREVIEW_FRAMES_PER_SECOND = 16;
 
 export const Ruler = () => {
   const store = useDraftSingleTemplateStore();
@@ -13,7 +18,10 @@ export const Ruler = () => {
           return (
             <div
               key={timestamp}
-              className="w-32 shrink-0 flex flex-col gap-0.5 "
+              className="shrink-0 flex flex-col gap-0.5"
+              style={{
+                width: PREVIEW_FRAME_WIDTH * 4 * PREVIEW_FRAMES_PER_SECOND,
+              }}
             >
               <div className="w-1 bg-gray-950 h-4" />
               <span className="text-sm">{timestamp}s</span>

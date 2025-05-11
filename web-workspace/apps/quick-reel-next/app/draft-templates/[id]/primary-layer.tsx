@@ -9,6 +9,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+export const PREVIEW_FRAME_WIDTH = 12;
+
 export const PrimaryLayer = () => {
   const store = useDraftSingleTemplateStore();
   const template = useSelector(store, (state) => state.context.template);
@@ -37,7 +39,8 @@ export const PrimaryLayer = () => {
             <img
               src={previewFrame.previewUrl}
               key={previewFrame.frameNo}
-              className="w-8 border-2 border-gray-950 select-none pointer-events-none"
+              className="border-2 border-gray-950 select-none pointer-events-none"
+              style={{ width: PREVIEW_FRAME_WIDTH * 4 }}
             />
           );
         })}

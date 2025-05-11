@@ -18,7 +18,7 @@ export const useRemoveTemplate = () => {
       if (!res.ok) {
         throw new Error("Failed to delete template");
       }
-      await sleep(2000);
+      await sleep(1000);
     },
     onSuccess: () => {
       router.push("/draft-templates");

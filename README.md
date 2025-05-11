@@ -4,8 +4,8 @@
 
 ## TODO
 
-- create template from website
-- support streaming in create template api
+- upload progress
+- make reel api
 
 - load template.json to memory
 - populate content url for each segment
@@ -21,6 +21,7 @@
 - use Store hook to have external dependencies : router , storage , query client
 - add progress to create template (low level)
 - support cancel create template at server side
+- support streaming in create template api (might use websocket instead)
 
 # Useful commands
 
