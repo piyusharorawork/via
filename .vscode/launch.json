@@ -9,11 +9,9 @@
       "program": "${workspaceFolder}/server-workspace/cli/src/cli.go",
       "cwd": "${workspaceFolder}/server-workspace",
       "args": [
-        "create-template",
-        "-u",
-        "https://www.youtube.com/shorts/_3u1mXaCJLw",
-        "-n",
-        "dosa"
+        "upload-file",
+        "-f",
+        "/Users/piyusharora/projects/via/assets/sample-videos/combined.mp4"
       ],
       "envFile": "${workspaceFolder}/assets/environments/.env"
     },

@@ -11,10 +11,10 @@ type IUploader interface {
 }
 
 type Uploader struct {
-	FilePath   string
-	FolderPath string
-	// RemoveFile is used to remove the file after upload
-	RemoveFile bool
+	FilePath         string
+	FolderPath       string
+	ProgressCallback func(percentage int)
+	RemoveFile       bool // RemoveFile is used to remove the file after upload
 }
 
 func (uploader *Uploader) UploadFile(ctx context.Context) (string, error) {
@@ -22,9 +22,10 @@ func (uploader *Uploader) UploadFile(ctx context.Context) (string, error) {
 		defer util.RemoveFile(uploader.FilePath)
 	}
 
-	input := UploadFileInput{
-		FilePath:   uploader.FilePath,
-		FolderPath: uploader.FolderPath,
+	input := uploadFileInput{
+		FilePath:         uploader.FilePath,
+		FolderPath:       uploader.FolderPath,
+		ProgressCallback: uploader.ProgressCallback,
 	}
 
 	res, err := uploadFile(ctx, input)

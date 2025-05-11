@@ -81,7 +81,7 @@ func createTemplate(ctx context.Context, input CreateTemplateInput, dependencies
 
 	servicecommon.ReportProgress(input.OnProgress, 55, "Extracting Preview Frames")
 
-	previewFrames, err := generatePreviewFrames(ctx, videoUrl, fps, frameCount, func(percentage int) {
+	previewFrames, err := generatePreviewFrames(ctx, videoUrl, fps, frameCount, PREVIEW_FRAMES_PER_SECOND, func(percentage int) {
 		reportedPercentage := util.InterpolateAmount(55, 90, percentage)
 		servicecommon.ReportProgress(input.OnProgress, reportedPercentage, "Extracting Preview Frames")
 	}, dependencies.ExtractorFactory, dependencies.UploaderFactory)
@@ -141,8 +141,8 @@ type PreviewFrame struct {
 	PreviewUrl string
 }
 
-func generatePreviewFrames(ctx context.Context, videoUrl string, fps int, frameCount int, progressCallback func(percentage int), extractorFactory extractor.IExtractorFactory, uploaderFactory uploader.IUploaderFactory) ([]PreviewFrame, error) {
-	previewFramesNos := getPreviewFrameNos(fps, frameCount)
+func generatePreviewFrames(ctx context.Context, videoUrl string, fps int, frameCount int, previewFramesPerSecond int, progressCallback func(percentage int), extractorFactory extractor.IExtractorFactory, uploaderFactory uploader.IUploaderFactory) ([]PreviewFrame, error) {
+	previewFramesNos := getPreviewFrameNos(fps, frameCount, previewFramesPerSecond)
 	previewFrames := make([]PreviewFrame, len(previewFramesNos))
 
 	tempDirPath, err := myctx.GetValue(ctx, model.TempDirPath)
@@ -182,21 +182,20 @@ func generatePreviewFrames(ctx context.Context, videoUrl string, fps int, frameC
 	return previewFrames, nil
 }
 
-func getPreviewCount(fps int, frameCount int) int {
+func getPreviewCount(fps int, frameCount int, previewFramesPerSecond int) int {
 
 	videoDurationSeconds := float64(frameCount) / float64(fps)
-
-	previewFramesCount := (videoDurationSeconds * float64(PREVIEW_FRAMES_PER_SECOND))
+	previewFramesCount := (videoDurationSeconds * float64(previewFramesPerSecond))
 	previewFramesCountInt := int(math.Ceil(previewFramesCount))
 	return previewFramesCountInt
 }
 
-func getPreviewFrameNos(fps int, frameCount int) []int {
+func getPreviewFrameNos(fps int, frameCount int, previewFramesPerSecond int) []int {
 	if frameCount == 0 {
 		return []int{}
 	}
 
-	previewCount := getPreviewCount(fps, frameCount)
+	previewCount := getPreviewCount(fps, frameCount, previewFramesPerSecond)
 	if previewCount <= 1 {
 		return []int{0}
 	}

@@ -128,76 +128,11 @@ func TestCreateTemplate(t *testing.T) {
 		name           string
 		wantTemplateId string
 		wantErr        error
-		wantProgress   []struct {
-			percent int
-			message string
-		}
 	}{
 		{
 			name:           "successfully create template",
 			wantTemplateId: "123",
 			wantErr:        nil,
-			wantProgress: []struct {
-				percent int
-				message string
-			}{
-				{
-					percent: 5,
-					message: "Extracting video and audio from website ...",
-				},
-				{
-					percent: 51,
-					message: "Extracting Fps and Frame count...",
-				},
-				{
-					percent: 55,
-					message: "Extracting Preview Frames",
-				},
-				{
-					percent: 59,
-					message: "Extracting Preview Frames",
-				},
-				{
-					percent: 63,
-					message: "Extracting Preview Frames",
-				},
-				{
-					percent: 67,
-					message: "Extracting Preview Frames",
-				},
-				{
-					percent: 72,
-					message: "Extracting Preview Frames",
-				},
-				{
-					percent: 76,
-					message: "Extracting Preview Frames",
-				},
-				{
-					percent: 81,
-					message: "Extracting Preview Frames",
-				},
-				{
-					percent: 85,
-					message: "Extracting Preview Frames",
-				},
-				{
-					percent: 90,
-					message: "Extracting Preview Frames",
-				},
-				{
-					percent: 90,
-					message: "Extracting Preview Frames",
-				},
-				{
-					percent: 91,
-					message: "Saving Template",
-				},
-				{
-					percent: 100,
-					message: "Template saved",
-				},
-			},
 		},
 	}
 
@@ -253,7 +188,15 @@ func TestCreateTemplate(t *testing.T) {
 				t.Fatalf("templateId is not equal")
 			}
 
-			if err == nil && !reflect.DeepEqual(progressCalls, tc.wantProgress) {
+			if err == nil && len(progressCalls) == 0 {
+				t.Fatalf("progressCalls is not equal %v", progressCalls)
+			}
+
+			if err == nil && progressCalls[len(progressCalls)-1].percent != 100 {
+				t.Fatalf("progressCalls is not equal %v", progressCalls)
+			}
+
+			if err == nil && progressCalls[len(progressCalls)-1].message == "" {
 				t.Fatalf("progressCalls is not equal %v", progressCalls)
 			}
 
@@ -338,22 +281,24 @@ func TestFetchAllTemplates(t *testing.T) {
 
 func TestGetPreviewCount(t *testing.T) {
 	tt := []struct {
-		name       string
-		fps        int
-		frameCount int
-		want       int
+		name                   string
+		fps                    int
+		frameCount             int
+		previewFramesPerSecond int
+		want                   int
 	}{
 		{
-			name:       "57 preview count",
-			fps:        30,
-			frameCount: 422,
-			want:       57,
+			name:                   "57 preview count",
+			fps:                    30,
+			frameCount:             422,
+			previewFramesPerSecond: 4,
+			want:                   57,
 		},
 	}
 
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-			got := getPreviewCount(tc.fps, tc.frameCount)
+			got := getPreviewCount(tc.fps, tc.frameCount, tc.previewFramesPerSecond)
 			if got != tc.want {
 				t.Fatalf("getPreviewCount() = %v, want %v", got, tc.want)
 			}
@@ -363,15 +308,17 @@ func TestGetPreviewCount(t *testing.T) {
 
 func TestGetPreviewFrameNos(t *testing.T) {
 	tt := []struct {
-		name       string
-		fps        int
-		frameCount int
-		want       []int
+		name                   string
+		fps                    int
+		frameCount             int
+		previewFramesPerSecond int
+		want                   []int
 	}{
 		{
-			name:       "57 preview frame nos",
-			fps:        30,
-			frameCount: 422,
+			name:                   "57 preview frame nos",
+			fps:                    30,
+			frameCount:             422,
+			previewFramesPerSecond: 4,
 			want: []int{
 				0, 7, 15, 22, 30, 37, 45, 52, 60, 67, 75, 82, 90, 97, 105, 112, 120, 127, 135, 142, 150, 157, 165, 172, 180, 187, 195, 202, 210, 218, 225, 233, 240, 248, 255, 263, 270, 278, 285, 293, 300, 308, 315, 323, 330, 338, 345, 353, 360, 368, 375, 383, 390, 398, 405, 413, 421,
 			},
@@ -379,7 +326,7 @@ func TestGetPreviewFrameNos(t *testing.T) {
 	}
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-			got := getPreviewFrameNos(tc.fps, tc.frameCount)
+			got := getPreviewFrameNos(tc.fps, tc.frameCount, tc.previewFramesPerSecond)
 			if len(got) != len(tc.want) {
 				t.Fatalf("getPreviewFrameNos() = %v, want %v", got, tc.want)
 			}

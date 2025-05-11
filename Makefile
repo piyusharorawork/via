@@ -11,7 +11,7 @@ build-extension:
 .PHONY: test-core
 test-core:
 	@echo "Testing core..."
-	cd server-workspace && go test ./core/src/...
+	cd server-workspace && go test ./core/src/... && go test ./core/tests/...
 
 .PHONY: test-store
 test-store:
