@@ -18,7 +18,7 @@ type TemplatesApi struct {
 }
 
 func (handler *TemplatesApi) Create(ctx context.Context, templateService templateservice.ITemplateService) http.HandlerFunc {
-	return createTemplateHandler(ctx, templateService)
+	return createTemplateApi(ctx, templateService)
 }
 
 func (handler *TemplatesApi) ListAll(ctx context.Context, templateService templateservice.ITemplateService) http.HandlerFunc {

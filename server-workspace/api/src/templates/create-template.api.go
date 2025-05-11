@@ -14,7 +14,7 @@ type CreateTemplateInput struct {
 	WebsiteUrl string `json:"websiteUrl"`
 }
 
-func createTemplateHandler(ctx context.Context, templateService templateservice.ITemplateService) http.HandlerFunc {
+func createTemplateApi(ctx context.Context, templateService templateservice.ITemplateService) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		body, err := io.ReadAll(r.Body)
 
@@ -36,6 +36,9 @@ func createTemplateHandler(ctx context.Context, templateService templateservice.
 		in := templateservice.CreateTemplateInput{
 			Name:       input.Name,
 			WebsiteUrl: input.WebsiteUrl,
+			OnProgress: func(progress int, message string) {
+				// sendChunk(w, flusher, message, progress)
+			},
 		}
 
 		templateId, err := templateService.Create(ctx, in)
