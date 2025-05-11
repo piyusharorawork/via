@@ -14,19 +14,23 @@ import { useSelector } from "@xstate/store/react";
 import { useDraftSingleTemplateStore } from "./draft-single-template.provider";
 
 import { useRemoveTemplate } from "./use-remove-template";
-import { DraftSingleTemplateState } from "./draft-single-template.store";
+import { Loader2 } from "lucide-react";
 
 export const TemplateRemoveDialog = () => {
   const store = useDraftSingleTemplateStore();
-  const state = useSelector(store, (state) => state.context.state);
-  const { deleteTemplate } = useRemoveTemplate();
-
-  if (state !== DraftSingleTemplateState.REMOVE_TEMPLATE_DIALOG_OPENED) {
-    return null;
-  }
+  const { deleteTemplate, isPending } = useRemoveTemplate();
+  const openRemoveTemplateDialog = useSelector(
+    store,
+    (state) => state.context.openRemoveTemplateDialog
+  );
 
   return (
-    <AlertDialog open>
+    <AlertDialog
+      open={openRemoveTemplateDialog}
+      onOpenChange={(open) =>
+        store.send({ type: "changeOpenRemoveTemplateDialog", open })
+      }
+    >
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -36,16 +40,25 @@ export const TemplateRemoveDialog = () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel
-            onClick={() => store.send({ type: "clickCancelRemoveTemplate" })}
-          >
-            Cancel
-          </AlertDialogCancel>
+          <AlertDialogCancel onClick={() => {}}>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={() => deleteTemplate()}>
-            Continue
+            <TemplateRemoveDialogText isPending={isPending} />
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+  );
+};
+
+const TemplateRemoveDialogText = (props: { isPending: boolean }) => {
+  if (!props.isPending) {
+    return <span>Continue</span>;
+  }
+
+  return (
+    <span className="flex justify-center items-center gap-1">
+      <Loader2 className="animate-spin" />
+      Deleting ...
+    </span>
   );
 };

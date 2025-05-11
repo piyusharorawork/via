@@ -71,7 +71,12 @@ export const TemplateHeader = () => {
               </Link>
               <MenubarItem
                 className="flex items-center gap-2"
-                onClick={() => store.send({ type: "clickRemoveTemplate" })}
+                onClick={() =>
+                  store.send({
+                    type: "changeOpenRemoveTemplateDialog",
+                    open: true,
+                  })
+                }
               >
                 <TrashIcon />
                 <span>Delete</span>

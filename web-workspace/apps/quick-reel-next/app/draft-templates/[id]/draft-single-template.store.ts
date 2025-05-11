@@ -19,22 +19,17 @@ type ClipInfo = {
   frameCount: number;
 };
 
-export enum DraftSingleTemplateState {
-  IDLE,
-  REMOVE_TEMPLATE_DIALOG_OPENED,
-}
-
 type Context = {
   template: DraftTemplateFull | null;
-  state: DraftSingleTemplateState;
   timeStamps: number[];
+  openRemoveTemplateDialog: boolean;
 };
 
 export const createDraftSingleTemplateStore = () => {
   const context: Context = {
     template: null,
-    state: DraftSingleTemplateState.IDLE,
     timeStamps: [],
+    openRemoveTemplateDialog: false,
   };
 
   const store = createStore({
@@ -44,25 +39,17 @@ export const createDraftSingleTemplateStore = () => {
         {},
         event: { template: DraftTemplateFull }
       ) => {
-        console.log(event.template);
-
         const timeStamps = createTimeStamps(
           event.template.clipInfo.fps,
           event.template.clipInfo.frameCount
         );
         return { template: event.template, timeStamps };
       },
-      clickRemoveTemplate: ({}) => {
-        return {
-          state: DraftSingleTemplateState.REMOVE_TEMPLATE_DIALOG_OPENED,
-        };
-      },
-      clickCancelRemoveTemplate: ({}) => {
-        return { state: DraftSingleTemplateState.IDLE };
+      changeOpenRemoveTemplateDialog: ({}, event: { open: boolean }) => {
+        return { openRemoveTemplateDialog: event.open };
       },
       removeTemplateSuccess: ({}) => {
         return {
-          state: DraftSingleTemplateState.IDLE,
           timeStamps: [],
           template: null,
         };
