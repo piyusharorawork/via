@@ -39,9 +39,8 @@ func main() {
 
 	apiHandler := handler.ApiHandler{}
 
-	router.HandleFunc("/api", handler.HomeHandler).Methods("GET")
 	router.HandleFunc("/api/templates", apiHandler.CreateTemplate(ctx, &templateService)).Methods("POST", "OPTIONS")
-	router.HandleFunc("/api/templates", handler.ListAllTemplatesHandler).Methods("GET")
+	router.HandleFunc("/api/templates", apiHandler.ListAllTemplates(ctx, &templateService)).Methods("GET")
 	router.HandleFunc("/api/templates/{id}", handler.GetTemplateHandler).Methods("GET")
 	router.HandleFunc("/api/templates/{id}", handler.RemoveTemplateHandler).Methods("DELETE", "OPTIONS")
 
