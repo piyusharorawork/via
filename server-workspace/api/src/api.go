@@ -41,8 +41,8 @@ func main() {
 
 	router.HandleFunc("/api/templates", apiHandler.CreateTemplate(ctx, &templateService)).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/templates", apiHandler.ListAllTemplates(ctx, &templateService)).Methods("GET")
-	router.HandleFunc("/api/templates/{id}", handler.GetTemplateHandler).Methods("GET")
-	router.HandleFunc("/api/templates/{id}", handler.RemoveTemplateHandler).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/api/templates/{id}", apiHandler.GetTemplate(ctx, &templateService)).Methods("GET")
+	router.HandleFunc("/api/templates/{id}", apiHandler.RemoveTemplate(ctx, &templateService)).Methods("DELETE", "OPTIONS")
 
 	fmt.Println("Starting server at port 8080")
 	err = http.ListenAndServe(":8080", router)
