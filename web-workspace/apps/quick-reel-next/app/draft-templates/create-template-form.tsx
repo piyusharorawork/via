@@ -41,36 +41,6 @@ export const CreateTemplateForm = () => {
           }
         />
       </span>
-
-      <CreateTemplateButton />
-    </span>
-  );
-};
-
-const CreateTemplateButton = () => {
-  const { createTemplate, isPending } = useCreateTemplate();
-
-  return (
-    <Button
-      onClick={() => {
-        createTemplate();
-      }}
-      disabled={isPending}
-    >
-      <CreateTemplateButtonText isPending={isPending} />
-    </Button>
-  );
-};
-
-const CreateTemplateButtonText = (props: { isPending: boolean }) => {
-  if (!props.isPending) {
-    return <span>Create</span>;
-  }
-
-  return (
-    <span className="flex justify-center items-center gap-1">
-      <Loader2 className="animate-spin" />
-      Creating
     </span>
   );
 };
