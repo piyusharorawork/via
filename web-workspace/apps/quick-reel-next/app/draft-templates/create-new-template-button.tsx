@@ -1,6 +1,5 @@
 "use client";
 import { PlusIcon } from "@/components/features/icons";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,10 +9,23 @@ import {
 } from "@/components/ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { CreateTemplateForm } from "./create-template-form";
+import { useDraftTemplatesStore } from "./draft-templates.provider";
+import { useSelector } from "@xstate/store/react";
 
 export const CreateNewTemplateButton = () => {
+  const store = useDraftTemplatesStore();
+  const createTemplateDialogOpened = useSelector(
+    store,
+    (state) => state.context.createTemplateDialogOpened
+  );
+
   return (
-    <Dialog>
+    <Dialog
+      open={createTemplateDialogOpened}
+      onOpenChange={(open) =>
+        store.send({ type: "changeTemplateDialogOpened", open })
+      }
+    >
       <DialogTrigger>
         <a className="flex bg-gray-900 text-slate-200 py-2 px-4 rounded-md hover:bg-gray-700">
           <PlusIcon />
@@ -24,9 +36,7 @@ export const CreateNewTemplateButton = () => {
         <DialogHeader>
           <DialogTitle>Fill Template Form</DialogTitle>
           <DialogDescription>
-            <section className="relative">
-              <CreateTemplateForm />
-            </section>
+            <CreateTemplateForm />
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

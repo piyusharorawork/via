@@ -8,7 +8,7 @@ import (
 )
 
 func fetchTemplates(ctx context.Context, table *table.Table) ([]*storemodels.Template, error) {
-	const sql = `SELECT * FROM template;`
+	const sql = `SELECT * FROM template ORDER BY created_at DESC;`
 	rows, err := table.Query(ctx, sql)
 
 	if err != nil {

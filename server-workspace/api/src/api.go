@@ -13,7 +13,7 @@ func main() {
 	router.Use(corsMiddleware)
 
 	router.HandleFunc("/api", handler.HomeHandler).Methods("GET")
-	router.HandleFunc("/api/templates", handler.CreateTemplateHandler).Methods("POST")
+	router.HandleFunc("/api/templates", handler.CreateTemplateHandler).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/templates", handler.ListAllTemplatesHandler).Methods("GET")
 	router.HandleFunc("/api/templates/{id}", handler.GetTemplateHandler).Methods("GET")
 	router.HandleFunc("/api/templates/{id}", handler.RemoveTemplateHandler).Methods("DELETE", "OPTIONS")
