@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"path/filepath"
 
 	"github.com/joho/godotenv"
 	"quickreel.com/core/src/model"
@@ -56,13 +55,9 @@ func GetCtx() (context.Context, error) {
 Generates context to be used when env needs to be loader from TEST_ENV_PATH file
 */
 func GetTestCtx() (context.Context, error) {
-	absPath, err := filepath.Abs(".")
 
-	if err != nil {
-		return nil, err
-	}
-
-	envPath := filepath.Join(absPath, "../../../../assets/environments/.env.test")
+	// TODO need to fix this
+	envPath := "/Users/piyusharora/projects/via/assets/environments/.env.test"
 
 	if !util.IsPathExists(envPath) {
 		return nil, fmt.Errorf("%s not exist", envPath)

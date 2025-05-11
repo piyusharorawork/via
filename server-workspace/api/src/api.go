@@ -5,7 +5,15 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	templateservice "quick-reel.com/service/src/template-service"
+	clipinfostore "quick-reel.com/store/src/clipinfo-store"
+	previewframestore "quick-reel.com/store/src/preview-frame-store"
+	templatestore "quick-reel.com/store/src/template-store"
 	"quickreel.com/api/src/handler"
+	"quickreel.com/core/src/clipinfo"
+	myctx "quickreel.com/core/src/ctx"
+	"quickreel.com/core/src/extractor"
+	"quickreel.com/core/src/uploader"
 )
 
 func main() {
@@ -13,14 +21,32 @@ func main() {
 	router.Use(corsMiddleware)
 	router.Use(abortMiddleware)
 
+	ctx, err := myctx.GetCtx()
+
+	if err != nil {
+		panic(err)
+	}
+
+	templateService := templateservice.TemplateService{
+		MediaCreator:      &templateservice.MediaCreator{},
+		ClipInfoFactory:   &clipinfo.ClipInfoFactory{},
+		ExtractorFactory:  &extractor.ExtractorFactory{},
+		UploaderFactory:   &uploader.UploaderFactory{},
+		ClipInfoStore:     &clipinfostore.ClipInfoStore{},
+		TemplateStore:     &templatestore.TemplateStore{},
+		PreviewFrameStore: &previewframestore.PreviewFrameStore{},
+	}
+
+	apiHandler := handler.ApiHandler{}
+
 	router.HandleFunc("/api", handler.HomeHandler).Methods("GET")
-	router.HandleFunc("/api/templates", handler.CreateTemplateHandler).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/templates", apiHandler.CreateTemplate(ctx, &templateService)).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/templates", handler.ListAllTemplatesHandler).Methods("GET")
 	router.HandleFunc("/api/templates/{id}", handler.GetTemplateHandler).Methods("GET")
 	router.HandleFunc("/api/templates/{id}", handler.RemoveTemplateHandler).Methods("DELETE", "OPTIONS")
 
 	fmt.Println("Starting server at port 8080")
-	err := http.ListenAndServe(":8080", router)
+	err = http.ListenAndServe(":8080", router)
 
 	if err != nil {
 		panic(err)
