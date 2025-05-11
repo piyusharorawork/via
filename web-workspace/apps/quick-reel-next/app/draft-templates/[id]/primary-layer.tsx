@@ -9,7 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export const PREVIEW_FRAME_WIDTH = 12;
+export const PREVIEW_FRAME_WIDTH = 8;
 
 export const PrimaryLayer = () => {
   const store = useDraftSingleTemplateStore();
