@@ -41,7 +41,12 @@ export const TemplateRemoveDialog = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => {}}>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => deleteTemplate()}>
+          <AlertDialogAction
+            onClick={(e) => {
+              e.preventDefault();
+              deleteTemplate();
+            }}
+          >
             <TemplateRemoveDialogText isPending={isPending} />
           </AlertDialogAction>
         </AlertDialogFooter>

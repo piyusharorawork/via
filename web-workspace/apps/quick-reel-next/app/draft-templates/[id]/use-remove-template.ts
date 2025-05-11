@@ -2,6 +2,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { useDraftSingleTemplateStore } from "./draft-single-template.provider";
+import { sleep } from "@/lib/utils";
 
 export const useRemoveTemplate = () => {
   const { id } = useParams();
@@ -17,6 +18,7 @@ export const useRemoveTemplate = () => {
       if (!res.ok) {
         throw new Error("Failed to delete template");
       }
+      await sleep(2000);
     },
     onSuccess: () => {
       router.push("/draft-templates");
