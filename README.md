@@ -20,6 +20,7 @@
 - extractor clip with files test
 - use Store hook to have external dependencies : router , storage , query client
 - add progress to create template (low level)
+- support cancel create template at server side
 
 # Useful commands
 

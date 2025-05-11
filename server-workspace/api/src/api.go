@@ -11,6 +11,7 @@ import (
 func main() {
 	router := mux.NewRouter()
 	router.Use(corsMiddleware)
+	router.Use(abortMiddleware)
 
 	router.HandleFunc("/api", handler.HomeHandler).Methods("GET")
 	router.HandleFunc("/api/templates", handler.CreateTemplateHandler).Methods("POST", "OPTIONS")
@@ -40,5 +41,33 @@ func corsMiddleware(next http.Handler) http.Handler {
 		}
 
 		next.ServeHTTP(w, r)
+	})
+}
+
+/*
+Abort Middleware to handle client disconnections
+*/
+func abortMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		notify := r.Context().Done()
+
+		// Create a channel to signal when the handler is done
+		done := make(chan struct{})
+
+		go func() {
+			next.ServeHTTP(w, r)
+			close(done)
+		}()
+
+		select {
+		case <-notify:
+			// Client disconnected
+			fmt.Println("Request aborted by client")
+			return
+		case <-done:
+			fmt.Println("Handler completed")
+			// Handler completed
+			return
+		}
 	})
 }
